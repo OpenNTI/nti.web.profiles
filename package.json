@@ -1,0 +1,42 @@
+{
+  "name": "@nti/web-profiles",
+  "version": "1.0.0",
+  "description": "NextThought components for profiles",
+  "main": "index.js",
+  "scripts": {
+    "test": "nti-cmp-scripts test",
+    "start": "nti-cmp-scripts start",
+    "prepack": "nti-cmp-scripts build",
+    "build": "nti-cmp-scripts build",
+    "clean": "nti-cmp-scripts clean",
+    "check": "nti-cmp-scripts check",
+    "release": "nti-cmp-scripts release",
+    "install-snapshots": "nti-cmp-scripts install-snapshots",
+    "fix": "nti-cmp-scripts fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NextThought/nti.web.profiles.git"
+  },
+  "keywords": [
+    "nextthought",
+    "profiles"
+  ],
+  "author": "NextThought",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/NextThought/nti.web.profiles/issues"
+  },
+  "homepage": "https://github.com/NextThought/nti.web.profiles#readme",
+  "dependencies": {
+  },
+  "devDependencies": {
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
+    "nti-cmp-scripts": "^1.15.23",
+    "prop-types": "^15.6.1",
+    "raf": "^3.4.0",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0"
+  }
+}
