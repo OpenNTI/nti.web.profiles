@@ -1,0 +1,19 @@
+@import '~nti-style-common';
+
+.nti-profile-update {
+	background: white;
+	width: rem-calc(800px);
+	max-width: 88vw;
+
+	.header {
+		border-bottom: 1px solid $border-grey-light;
+		padding: 0.5625rem 0.5rem;
+		font: normal 300 1.5rem/1.25 $body-font-family;
+		color: $primary-grey;
+	}
+
+	.contents {
+		position: relative;
+		min-height: 200px;
+	}
+}
