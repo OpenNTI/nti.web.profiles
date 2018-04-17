@@ -23,10 +23,11 @@ export default class ProfileUpdateStore extends Stores.SimpleStore {
 			const profile = await entity.fetchLink('account.profile');
 			const {ProfileSchema:schema, ValidationErrors:errors} = profile;
 
+			this.set('loading', false);
 			this.set('schema', schema);
 			this.set('errors', errors);
 			this.set('fields', getFields(schema, errors));
-			this.emitChange('fields', 'schema', 'errors');
+			this.emitChange('fields', 'schema', 'errors', 'loading');
 		} catch (e) {
 			this.set('error', e);
 			this.emitChange('error');

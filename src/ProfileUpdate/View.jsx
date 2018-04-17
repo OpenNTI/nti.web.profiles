@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {Loading, DialogButtons} from 'nti-web-commons';
 import {scoped} from 'nti-lib-locale';
 
+import Fields from './fields';
 import Store from './Store';
 
 const t = scoped('nti-web-profile.ProfileUpdate.View', {
@@ -26,7 +27,6 @@ class ProfileUpdate extends React.Component {
 
 		loading: PropTypes.bool,
 		error: PropTypes.object,
-		errors: PropTypes.array,
 		fields: PropTypes.array
 	}
 
@@ -44,7 +44,7 @@ class ProfileUpdate extends React.Component {
 
 
 	render () {
-		const {loading} = this.props;
+		const {loading, fields} = this.props;
 
 		return (
 			<div className="nti-profile-update">
@@ -53,6 +53,7 @@ class ProfileUpdate extends React.Component {
 				</div>
 				<div className="contents">
 					{loading && (<Loading.Mask />)}
+					{!loading && (<Fields fields={fields} />)}
 				</div>
 				<DialogButtons
 					buttons={[
