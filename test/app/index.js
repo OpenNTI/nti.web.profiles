@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {getAppUser} from 'nti-web-client';
-import {Prompt} from 'nti-web-commons';
+import {getAppUser} from '@nti/web-client';
+import {Prompt} from '@nti/web-commons';
 
 import {ProfileUpdate} from '../../src';
 

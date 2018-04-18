@@ -1,4 +1,4 @@
-import {Stores} from 'nti-lib-store';
+import {Stores} from '@nti/lib-store';
 
 import {getFields} from './utils';
 

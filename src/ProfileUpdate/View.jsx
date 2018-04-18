@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Loading, DialogButtons} from 'nti-web-commons';
-import {scoped} from 'nti-lib-locale';
+import {Loading, DialogButtons} from '@nti/web-commons';
+import {scoped} from '@nti/lib-locale';
 
 import Fields from './fields';
 import Store from './Store';
