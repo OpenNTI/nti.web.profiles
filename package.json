@@ -4,15 +4,15 @@
   "description": "NextThought components for profiles",
   "main": "index.js",
   "scripts": {
-    "test": "nti-cmp-scripts test",
-    "start": "nti-cmp-scripts start",
-    "prepack": "nti-cmp-scripts build",
-    "build": "nti-cmp-scripts build",
-    "clean": "nti-cmp-scripts clean",
-    "check": "nti-cmp-scripts check",
-    "release": "nti-cmp-scripts release",
-    "install-snapshots": "nti-cmp-scripts install-snapshots",
-    "fix": "nti-cmp-scripts fix"
+    "test": "cmp-scripts test",
+    "start": "cmp-scripts start",
+    "prepack": "cmp-scripts build",
+    "build": "cmp-scripts build",
+    "clean": "cmp-scripts clean",
+    "check": "cmp-scripts check",
+    "release": "cmp-scripts release",
+    "install-snapshots": "cmp-scripts install-snapshots",
+    "fix": "cmp-scripts fix"
   },
   "repository": {
     "type": "git",
@@ -36,7 +36,7 @@
     "@nti/web-commons": "^0.31.0"
   },
   "devDependencies": {
-    "nti-cmp-scripts": "^1.15.23",
+    "@nti/cmp-scripts": "^1.16.0",
     "@nti/style-common": "^1.4.6",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
