@@ -7,13 +7,20 @@ import Fields from './fields';
 import Store from './Store';
 
 const t = scoped('nti-web-profile.ProfileUpdate.View', {
-	title: 'Update Profile',
+	title: 'Tell us About Yourself',
 	error: 'Unable to load profile.',
 	save: 'Save'
 });
 
 export default
-@Store.connect({loading: 'loading', fields: 'fields', error: 'error'})
+@Store.connect({
+	loading: 'loading',
+	fields: 'fields',
+	error: 'error',
+	onFieldChange: 'onFieldChange',
+	values: 'values',
+	isValid: 'isValid'
+})
 class ProfileUpdate extends React.Component {
 	static profileNeedsUpdate (entity) {
 		return entity.hasLink('user-profile-update');
@@ -21,13 +28,16 @@ class ProfileUpdate extends React.Component {
 
 	static propTypes = {
 		entity: PropTypes.object,
-		store: PropTypes.object,
 
 		onDismiss: PropTypes.func,
 
+		store: PropTypes.object,
 		loading: PropTypes.bool,
 		error: PropTypes.object,
-		fields: PropTypes.array
+		isValid: PropTypes.bool,
+		fields: PropTypes.array,
+		values: PropTypes.object,
+		onFieldChange: PropTypes.func
 	}
 
 
@@ -38,13 +48,22 @@ class ProfileUpdate extends React.Component {
 	}
 
 
+	onFieldChange = (field, value) => {
+		const {onFieldChange} = this.props;
+
+		if (onFieldChange) {
+			onFieldChange(field, value);
+		}
+	}
+
+
 	onSave = () => {
 
 	}
 
 
 	render () {
-		const {loading, fields} = this.props;
+		const {entity, loading, fields, values, isValid} = this.props;
 
 		return (
 			<div className="nti-profile-update">
@@ -53,14 +72,14 @@ class ProfileUpdate extends React.Component {
 				</div>
 				<div className="contents">
 					{loading && (<Loading.Mask />)}
-					{!loading && (<Fields fields={fields} />)}
+					{!loading && (<Fields fields={fields} values={values} onChange={this.onFieldChange} entity={entity} />)}
 				</div>
 				<DialogButtons
 					buttons={[
 						{
 							label: t('save'),
 							onClick: this.onSave,
-							className: 'disabled'
+							className: isValid ? null : 'disabled'
 						}
 					]}
 				/>

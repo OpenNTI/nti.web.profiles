@@ -1,1 +1,2 @@
-export getFields from './get-fields';
+export getFieldGroup from './get-field-group';
+export mergeFieldGroups from './merge-field-groups';
