@@ -90,6 +90,13 @@ export default class ProfileUpdateStore extends Stores.SimpleStore {
 			this.emitChange('isValid');
 		} catch (e) {
 			const {ValidationErrors} = e;
+
+			if (field.schema.name === 'role' && dataToSend.role === 'Employer/Community Member') {
+				ValidationErrors.push({
+					field: 'positions'
+				});
+			}
+
 			this.set('isValid', false);
 			this.set('fieldGroups', mergeFieldGroups(...groupsToSend, ...getFieldGroup(schema, ValidationErrors)));
 			this.emitChange('isValid', 'fieldGroups', 'field');

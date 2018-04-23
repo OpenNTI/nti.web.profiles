@@ -33,7 +33,7 @@
     "@nti/lib-locale": "^1.2.0",
     "@nti/lib-store": "^1.3.0",
     "@nti/web-client": "^1.4.0",
-    "@nti/web-commons": "^0.31.0",
+    "@nti/web-commons": "0.x.x",
     "classnames": "^2.2.5"
   },
   "devDependencies": {

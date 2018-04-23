@@ -29,7 +29,7 @@ class EducationField extends React.Component {
 	static propTypes = {
 		entity: PropTypes.object,
 		field: PropTypes.object,
-		value: PropTypes.object,
+		value: PropTypes.array,
 		onChange: PropTypes.func
 	}
 
@@ -70,7 +70,13 @@ class EducationField extends React.Component {
 
 
 	setupFor (props) {
+		const {value} = props;
+		const education = value && value[0];
 
+		this.setState({
+			school: education && education.school,
+			graduationDate: education && new Date(education['expected_graduation'] * 1000)
+		});
 	}
 
 
@@ -82,7 +88,7 @@ class EducationField extends React.Component {
 			[{
 				MimeType: 'application/vnd.nextthought.profile.educationalexperience',
 				school,
-				'expected_graduation': graduationDate.toString()
+				'expected_graduation': graduationDate.getTime() / 1000
 			}];
 
 		if (onChange && oldValue !== value) {

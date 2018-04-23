@@ -17,13 +17,13 @@ export default class ProfileUpdateFields extends React.Component {
 
 		if (!fields) { return null; }
 
-		const fieldInputs = fields.filter(field => !!registry.getItemFor(field));
+		const fieldInputs = fields.filter(field => !!registry.getItemFor(field, values));
 
 		return (
 			<ul className="nti-profile-update-fields">
 				{fieldInputs.map((field, index) => {
-					const Cmp = registry.getItemFor(field);
 					const value = values[field.schema.name];
+					const Cmp = registry.getItemFor(field, values);
 
 					return (
 						<li key={index}>

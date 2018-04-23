@@ -45,7 +45,7 @@ class ProfileUpdateLocationField extends React.Component {
 	setupFor (props) {
 		const {value} = props;
 
-		this.setState({value});
+		this.setState({value: value});
 	}
 
 
@@ -58,9 +58,9 @@ class ProfileUpdateLocationField extends React.Component {
 		clearTimeout(this.onChangeTimeout);
 
 		this.onChangeTimeout = setTimeout(() => {
-			const {onChange, field} = this.props;
+			const {onChange, field, value:oldValue} = this.props;
 
-			if (onChange) {
+			if (onChange && oldValue !== value) {
 				onChange(field, value);
 			}
 		}, 500);
