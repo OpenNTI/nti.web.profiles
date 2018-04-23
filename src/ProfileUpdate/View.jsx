@@ -9,12 +9,15 @@ import Store from './Store';
 const t = scoped('nti-web-profile.ProfileUpdate.View', {
 	title: 'Tell us About Yourself',
 	error: 'Unable to load profile.',
-	save: 'Save'
+	save: 'Save',
+	saving: 'Saving',
+	unknownError: 'Unable to update profile.'
 });
 
 export default
 @Store.connect({
 	loading: 'loading',
+	saving: 'saving',
 	fields: 'fields',
 	error: 'error',
 	onFieldChange: 'onFieldChange',
@@ -33,6 +36,7 @@ class ProfileUpdate extends React.Component {
 
 		store: PropTypes.object,
 		loading: PropTypes.bool,
+		saving: PropTypes.bool,
 		error: PropTypes.object,
 		isValid: PropTypes.bool,
 		fields: PropTypes.array,
@@ -57,13 +61,23 @@ class ProfileUpdate extends React.Component {
 	}
 
 
-	onSave = () => {
+	onSave = async () => {
+		const {store, onDismiss} = this.props;
 
+		try {
+			await store.saveValues();
+
+			if (onDismiss) {
+				onDismiss();
+			}
+		} catch (e) {
+			//The store is handling the error, so we don't need to do anything
+		}
 	}
 
 
 	render () {
-		const {entity, loading, fields, values, isValid} = this.props;
+		const {entity, loading, saving, error, fields, values, isValid} = this.props;
 
 		return (
 			<div className="nti-profile-update">
@@ -72,17 +86,28 @@ class ProfileUpdate extends React.Component {
 				</div>
 				<div className="contents">
 					{loading && (<Loading.Mask />)}
-					{!loading && (<Fields fields={fields} values={values} onChange={this.onFieldChange} entity={entity} />)}
+					{saving && (<Loading.Mask message={t('saving')}/>)}
+					{!loading && !saving && error && this.renderError(error)}
+					{!loading && !saving && (<Fields fields={fields} values={values} onChange={this.onFieldChange} entity={entity} />)}
 				</div>
 				<DialogButtons
 					buttons={[
 						{
 							label: t('save'),
 							onClick: this.onSave,
-							className: isValid ? null : 'disabled'
+							className: isValid && !error ? null : 'disabled'
 						}
 					]}
 				/>
+			</div>
+		);
+	}
+
+
+	renderError (error) {
+		return (
+			<div className="error">
+				{(error && (error.message || error.Message)) || t('unknownError')}
 			</div>
 		);
 	}
