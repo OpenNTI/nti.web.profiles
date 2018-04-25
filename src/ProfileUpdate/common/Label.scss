@@ -26,6 +26,7 @@
 	&:not(.first) {
 		padding: 1rem 2rem;
 		width: 500px;
+		max-width: 100%;
 
 		.label {
 			color: $secondary-grey;
@@ -36,10 +37,16 @@
 
 		.nti-text-input {
 			width: 400px;
+			max-width: 100%;
 		}
 
 		.nti-select-input {
 			width: 400px;
+			max-width: 100%;
+
+			.select-label {
+				max-width: 100%;
+			}
 
 			.options {
 				max-height: 300px;
@@ -54,6 +61,26 @@
 
 			.nti-number-input {
 				width: 200px;
+			}
+		}
+
+
+		@include responsive-range(mobile) {
+			& {
+				padding: 1rem 0.5rem;
+
+				.nti-date-input {
+					width: 100%;
+
+					.nti-select-input, .nti-select-input .nti-text-input {
+						width: 100%;
+						border-right-width: 1px;
+					}
+
+					.nti-number-input {
+						width: 100%;
+					}
+				}
 			}
 		}
 	}
