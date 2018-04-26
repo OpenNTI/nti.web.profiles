@@ -111,7 +111,6 @@ class EducationField extends React.Component {
 		clearTimeout(this.graduationDateChangeTimeout);
 
 		this.graduationDateChangeTimeout = setTimeout(() => {
-			debugger;
 			const {value} = this.props;
 
 			if (value) {
