@@ -27,6 +27,35 @@ export default class ProfileUpdateStore extends Stores.SimpleStore {
 	}
 
 
+	getValueFor (name) {
+		const values = this.get('values');
+		const value = values[name];
+
+		return value.serialize ? value.serialize() : value;
+	}
+
+
+	setFieldGroups (groups) {
+		const values = this.get('values');
+		const newValues = {};
+
+		for (let group of groups) {
+			for (let field of group) {
+				const {name} = field.schema;
+				const value = values[name];
+
+				if (value != null) {
+					newValues[name] = value;
+				}
+			}
+		}
+
+		this.set('values', newValues);
+		this.set('fieldGroups', groups);
+		this.emitChange('values', 'fieldGroups');
+	}
+
+
 	async setEntity (entity) {
 		this.set('entity', entity);
 		this.set('loading', true);
@@ -39,7 +68,7 @@ export default class ProfileUpdateStore extends Stores.SimpleStore {
 			this.set('loading', false);
 			this.set('schema', schema);
 			this.set('errors', errors);
-			this.set('fieldGroups', getFieldGroup(schema, errors));
+			this.setFieldGroups(getFieldGroup(schema, errors));
 			this.emitChange('fields', 'fieldGroups', 'schema', 'errors', 'loading');
 		} catch (e) {
 			this.set('error', e);
@@ -62,7 +91,6 @@ export default class ProfileUpdateStore extends Stores.SimpleStore {
 	async validateAfterFieldChange (field) {
 		const entity = this.get('entity');
 		const groups = this.get('fieldGroups');
-		const values = this.get('values');
 		const schema = this.get('schema');
 		const groupsToSend = [];
 		const dataToSend = {};
@@ -77,7 +105,7 @@ export default class ProfileUpdateStore extends Stores.SimpleStore {
 
 				const {name} = f.schema;
 
-				dataToSend[name] = values[name];
+				dataToSend[name] = this.getValueFor(name);
 			}
 
 			groupsToSend.push(group);
@@ -99,8 +127,8 @@ export default class ProfileUpdateStore extends Stores.SimpleStore {
 			}
 
 			this.set('isValid', false);
-			this.set('fieldGroups', mergeFieldGroups(...groupsToSend, ...getFieldGroup(schema, ValidationErrors)));
-			this.emitChange('isValid', 'fieldGroups', 'field');
+			this.setFieldGroups(mergeFieldGroups(...groupsToSend, ...getFieldGroup(schema, ValidationErrors)));
+			this.emitChange('isValid', 'fields');
 		}
 	}
 
@@ -108,7 +136,6 @@ export default class ProfileUpdateStore extends Stores.SimpleStore {
 	async saveValues () {
 		const entity = this.get('entity');
 		const groups = this.get('fieldGroups');
-		const values = this.get('values');
 
 		const dataToSend = {};
 
@@ -116,7 +143,7 @@ export default class ProfileUpdateStore extends Stores.SimpleStore {
 			for (let field of group) {
 				const {name} = field.schema;
 
-				dataToSend[name] = values[name];
+				dataToSend[name] = this.getValueFor(name);
 			}
 		}
 
@@ -129,6 +156,7 @@ export default class ProfileUpdateStore extends Stores.SimpleStore {
 			this.set('saving', false);
 			this.emitChange('saving');
 		} catch (e) {
+			this.set('isValid', false);
 			this.set('saving', false);
 			this.set('error', e);
 			this.emitChange('error', 'saving');

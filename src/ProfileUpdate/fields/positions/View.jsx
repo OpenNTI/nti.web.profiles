@@ -78,12 +78,15 @@ class ProfileUpdatePositionField extends React.Component {
 
 	setupFor (props) {
 		const {value} = props;
-		const position = value &&  value[0];
+		const position = value && value[0];
 
-		this.setState({
-			companyName: position && position.companyName,
-			title: position && position.title
-		});
+		if (position) {
+			this.setState({
+				companyName: position && position.companyName,
+				title: position && position.title
+			});
+		}
+
 	}
 
 
@@ -91,7 +94,7 @@ class ProfileUpdatePositionField extends React.Component {
 		const {onChange, field, value: oldValue} = this.props;
 		const {companyName, title} = this.state;
 		const value = !companyName || !title ?
-			oldValue :
+			null :
 			[{
 				MimeType: 'application/vnd.nextthought.profile.professionalposition',
 				companyName,

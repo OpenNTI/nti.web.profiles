@@ -6,6 +6,8 @@ import {Input}  from '@nti/web-commons';
 import Registry from '../Registry';
 import Label from '../../common/Label';
 
+import Value from './Value';
+
 const t = scoped('nti-web-profiles.profile-update.fields', {
 	education: {
 		graduationDate: {
@@ -29,7 +31,7 @@ class EducationField extends React.Component {
 	static propTypes = {
 		entity: PropTypes.object,
 		field: PropTypes.object,
-		value: PropTypes.array,
+		value: PropTypes.object,
 		onChange: PropTypes.func
 	}
 
@@ -37,19 +39,14 @@ class EducationField extends React.Component {
 
 	componentDidMount () {
 		this.loadForEntity(this.props);
-		this.setupFor(this.props);
 	}
 
 	componentDidUpdate (prevProps) {
-		const {entity: oldEntity, value: oldValue} = prevProps;
-		const {entity: newEntity, value: newValue} = this.props;
+		const {entity: oldEntity} = prevProps;
+		const {entity: newEntity} = this.props;
 
 		if (oldEntity !== newEntity) {
 			this.loadForEntity(this.props);
-		}
-
-		if (oldValue !== newValue) {
-			this.setupFor(this.props);
 		}
 	}
 
@@ -69,83 +66,73 @@ class EducationField extends React.Component {
 	}
 
 
-	setupFor (props) {
-		const {value} = props;
-		const education = value && value[0];
-
-		this.setState({
-			school: education && education.school,
-			graduationDate: education && new Date(education['expected_graduation'] * 1000)
-		});
-	}
-
-
-	onChange () {
+	onChange (value) {
 		const {onChange, field, value:oldValue} = this.props;
-		const {school, graduationDate} = this.state;
-		const value = !school || !graduationDate ?
-			oldValue :
-			[{
-				MimeType: 'application/vnd.nextthought.profile.educationalexperience',
-				school,
-				'expected_graduation': graduationDate.getTime() / 1000
-			}];
 
-		if (onChange && oldValue !== value) {
+		if (onChange && (!oldValue || !oldValue.isEqualTo(value))) {
 			onChange(field, value);
 		}
 	}
 
 
-	onGraduationDateChange = (date) => {
-		const {graduationDate} = this.state;
+	onSchoolChange = (school) => {
+		const {value} = this.props;
 
-		if (graduationDate !== date) {
-			this.setState({
-				graduationDate: date
-			}, () => this.onChange());
+		if (value) {
+			this.onChange(value.setSchool(school));
+		} else {
+			this.onChange(new Value(school, null));
 		}
 	}
 
 
-	onSchoolChange = (school) => {
-		const {school:prevSchool} = this.state;
+	onGraduationDateChange = (graduationDate) => {
+		const {value} = this.props;
 
-		if (prevSchool !== school) {
-			this.setState({
-				school
-			}, () => this.onChange());
+		if (value) {
+			this.onChange(value.setGraduationDate(graduationDate));
+		} else {
+			this.onChange(new Value(null, graduationDate));
 		}
 	}
 
 
 	render () {
+		const {value} = this.props;
+
 		return (
 			<div className="profile-update-education-field">
-				{this.renderGraduationDate()}
-				{this.renderSchool()}
+				{this.renderGraduationDate(value)}
+				{this.renderSchool(value)}
 			</div>
 		);
 	}
 
 
-	renderGraduationDate () {
-		const {graduationDate} = this.state;
-
+	renderGraduationDate (value) {
 		return (
 			<Label label={t('education.graduationDate.label')} className="education-graduation-date-field">
-				<Input.Date value={graduationDate} onChange={this.onGraduationDateChange} precision={Input.Date.Precision.month} />
+				<Input.Date
+					value={value && value.graduationDate}
+					onChange={this.onGraduationDateChange}
+					precision={Input.Date.Precision.month}
+				/>
 			</Label>
 		);
 	}
 
 
-	renderSchool () {
-		const {schools, school} = this.state;
+	renderSchool (value) {
+		const {schools} = this.state;
 
 		return (
 			<Label label={t('education.school.label')} className="education-school-field">
-				<Input.Select value={school} onChange={this.onSchoolChange} placeholder={t('education.school.placeholder')} searchable>
+				<Input.Select
+					value={value && value.school}
+					onChange={this.onSchoolChange}
+					placeholder={t('education.school.placeholder')}
+					searchable
+				>
 					{(schools || []).map((option, index) => {
 						return (
 							<Input.Select.Option value={option} key={index}>
