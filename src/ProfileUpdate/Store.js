@@ -78,7 +78,14 @@ export default class ProfileUpdateStore extends Stores.SimpleStore {
 
 	onFieldChange (field, value) {
 		const {name} = field.schema;
-		const values = {...this.get('values'), [name]: value};
+		let values = {...this.get('values'), [name]: value};
+
+		//TODO: figure out how not to need this.
+		//for OSDE the parent role and the employer/community member role both need to fill
+		//out location, but we don't want to leave it filled in when they switch...
+		if (name === 'role') {
+			values = {role: value};
+		}
 
 		this.set('error', null);
 		this.set('values', values);

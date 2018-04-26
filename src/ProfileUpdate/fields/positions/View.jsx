@@ -37,6 +37,11 @@ class ProfileUpdatePositionField extends React.Component {
 
 	state = {}
 
+
+	componentWillUnmount () {
+		this.setState = () => {};
+	}
+
 	componentDidMount () {
 		this.loadForEntity(this.props);
 		this.setupFor(this.props);

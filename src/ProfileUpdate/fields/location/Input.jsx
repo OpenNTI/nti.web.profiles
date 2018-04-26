@@ -32,7 +32,7 @@ class ProfileUpdateLocationField extends React.Component {
 		this.setupFor(this.props);
 	}
 
-	compoentDidUpdate (prevProps) {
+	componentDidUpdate (prevProps) {
 		const {value:oldValue} = prevProps;
 		const {value: newValue} = this.props;
 
