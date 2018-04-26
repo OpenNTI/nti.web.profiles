@@ -7,7 +7,7 @@
 		background: rgb(21,122,255);
 		background: linear-gradient(145deg, rgba(21,122,255,1) 0%, rgba(63,179,246,1) 50%);
 		text-align: center;
-		padding: 5rem 0;
+		padding: 5rem 0.5rem;
 
 		.label {
 			color: white;
@@ -64,22 +64,30 @@
 			}
 		}
 
-
 		@include responsive-range(mobile) {
 			& {
 				padding: 1rem 0.5rem;
+			}
+		}
 
+
+		@include responsive-range(mobile-tablet) {
+			& {
 				.nti-date-input {
 					width: 100%;
 
 					.nti-select-input, .nti-select-input .nti-text-input {
 						width: 100%;
-						border-right-width: 1px;
 					}
 
 					.nti-number-input {
 						width: 100%;
+						border-left-width: 1px;
 					}
+				}
+
+				.nti-select-input, .nti-select-input .nti-text-input {
+					width: 100%;
 				}
 			}
 		}
