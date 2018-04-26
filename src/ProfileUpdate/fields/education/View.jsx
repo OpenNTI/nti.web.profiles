@@ -20,6 +20,9 @@ const t = scoped('nti-web-profiles.profile-update.fields', {
 	}
 });
 
+const MIN_DATE = new Date('January 1, 2000');
+const MAX_DATE = new Date('December 31, 3000');
+
 
 function handles (field) {
 	return field.schema.name === 'education';
@@ -39,14 +42,19 @@ class EducationField extends React.Component {
 
 	componentDidMount () {
 		this.loadForEntity(this.props);
+		this.setupFor(this.props);
 	}
 
 	componentDidUpdate (prevProps) {
-		const {entity: oldEntity} = prevProps;
-		const {entity: newEntity} = this.props;
+		const {entity: oldEntity, value:oldValue} = prevProps;
+		const {entity: newEntity, value:newValue} = this.props;
 
 		if (oldEntity !== newEntity) {
 			this.loadForEntity(this.props);
+		}
+
+		if (oldValue !== newValue) {
+			this.setupFor(this.props);
 		}
 	}
 
@@ -62,6 +70,17 @@ class EducationField extends React.Component {
 			});
 		} catch (e) {
 			//For now do nothing, just don't show the school drop down
+		}
+	}
+
+
+	setupFor (props) {
+		const {value} = props;
+
+		if (value && value instanceof Value) {
+			this.setState({
+				graduationDate: value.graduateionDate
+			});
 		}
 	}
 
@@ -87,13 +106,21 @@ class EducationField extends React.Component {
 
 
 	onGraduationDateChange = (graduationDate) => {
-		const {value} = this.props;
+		this.setState({graduationDate});
 
-		if (value) {
-			this.onChange(value.setGraduationDate(graduationDate));
-		} else {
-			this.onChange(new Value(null, graduationDate));
-		}
+		clearTimeout(this.graduationDateChangeTimeout);
+
+		this.graduationDateChangeTimeout = setTimeout(() => {
+			debugger;
+			const {value} = this.props;
+
+			if (value) {
+				this.onChange(value.setGraduationDate(graduationDate));
+			} else {
+				this.onChange(new Value(null, graduationDate));
+			}
+		}, 500);
+
 	}
 
 
@@ -109,13 +136,17 @@ class EducationField extends React.Component {
 	}
 
 
-	renderGraduationDate (value) {
+	renderGraduationDate () {
+		const {graduationDate} = this.state;
+
 		return (
 			<Label label={t('education.graduationDate.label')} className="education-graduation-date-field">
 				<Input.Date
-					value={value && value.graduationDate}
+					value={graduationDate}
 					onChange={this.onGraduationDateChange}
 					precision={Input.Date.Precision.month}
+					min={MIN_DATE}
+					max={MAX_DATE}
 				/>
 			</Label>
 		);
