@@ -84,6 +84,23 @@
 						width: 100%;
 						border-left-width: 1px;
 					}
+
+					&.error:not(.focused) {
+						.nti-select-input .nti-text-input {
+							border-top-width: 1px;
+							border-right-width: 1px;
+							border-bottom-width: 0px;
+							border-left-width: 1px;
+							border-right-color: $primary-red;
+						}
+
+						.nti-number-input {
+							border-top-width: 1px;
+							border-right-width: 1px;
+							border-bottom-width: 1px;
+							border-left-width: 1px;
+						}
+					}
 				}
 
 				.nti-select-input, .nti-select-input .nti-text-input {
