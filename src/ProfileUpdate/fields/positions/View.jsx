@@ -6,6 +6,8 @@ import {Input}  from '@nti/web-commons';
 import Registry from '../Registry';
 import Label from '../../common/Label';
 
+import Value from './Value';
+
 const t = scoped('nti-web-profiles.profile-update.fields', {
 	positions: {
 		companyName: {
@@ -27,7 +29,7 @@ export default
 @Registry.register(handles)
 class ProfileUpdatePositionField extends React.Component {
 	static propTypes = {
-		value: PropTypes.array,
+		value: PropTypes.object,
 		field: PropTypes.object,
 		entity: PropTypes.object,
 		onChange: PropTypes.func
@@ -78,77 +80,74 @@ class ProfileUpdatePositionField extends React.Component {
 
 	setupFor (props) {
 		const {value} = props;
-		const position = value && value[0];
 
-		if (position) {
+		if (value instanceof Value) {
 			this.setState({
-				companyName: position && position.companyName,
-				title: position && position.title
+				title: value.title
 			});
+		//if we get a value that isn't an instance of a PositionsValue we need to remove it
+		} else if (value) {
+			this.onChange(null);
 		}
-
 	}
 
 
-	onChange () {
-		const {onChange, field, value: oldValue} = this.props;
-		const {companyName, title} = this.state;
-		const value = !companyName || !title ?
-			null :
-			[{
-				MimeType: 'application/vnd.nextthought.profile.professionalposition',
-				companyName,
-				title
-			}];
+	onChange (value) {
+		const {onChange, field, value:oldValue} = this.props;
 
-		if (onChange && value !== oldValue) {
+		if (onChange && (!oldValue || !oldValue.isEqualTo(value))) {
 			onChange(field, value);
 		}
 	}
 
 
 	onCompanyChange = (companyName) => {
-		if (this.state.companyName !== companyName) {
-			this.setState({
-				companyName
-			}, () => this.onChange());
+		const {value} = this.props;
+
+		if (value) {
+			this.onChange(value.setCompanyName(companyName));
+		} else {
+			this.onChange(new Value(companyName, null));
 		}
 	}
 
 
 	onTitleChange = (title) => {
-		if (this.state.title !== title) {
-			this.setState({
-				title
-			}, () => {
-				clearTimeout(this.titleChangeTimeout);
+		this.setState({title});
 
-				this.titleChangeTimeout = setTimeout(() => {
-					this.onChange();
-				}, 500);
-			});
-		}
+		clearTimeout(this.titleChangeTimeout);
 
+		this.titleChangeTimeout = setTimeout(() => {
+			const {value} = this.props;
+
+			if (value) {
+				this.onChange(value.setTitle(title));
+			} else {
+				this.onChange(new Value(null, title));
+			}
+		}, 500);
 	}
 
 
 	render () {
+		const {value} = this.props;
+
 		return (
 			<div className="profile-update-positions-field">
-				{this.renderCompanyName()}
-				{this.renderTitle()}
+				{this.renderCompanyName(value)}
+				{this.renderTitle(value)}
 			</div>
 		);
 	}
 
 
-	renderCompanyName () {
-		const {schools, companyName} = this.state;
+	renderCompanyName (value) {
+		const {schools} = this.state;
 
 		return (
 			<Label label={t('positions.companyName.label')}>
 				<Input.Select
-					value={companyName}
+					value={value && value.companyName}
 					onChange={this.onCompanyChange}
 					placeholder={t('positions.companyName.placeholder')}
 					searchable

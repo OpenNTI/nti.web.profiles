@@ -6,6 +6,8 @@ import {scoped} from '@nti/lib-locale';
 import Registry from '../Registry';
 import Label from '../../common/Label';
 
+import Value from './Value';
+
 const t = scoped('nti-web-profiles.profile-update.fields', {
 	companyName: {
 		label: 'What company are you with? (if applicable)',
@@ -22,8 +24,8 @@ export default
 class ProfileUpdateCompanyNameField extends React.Component {
 	static propTypes = {
 		field: PropTypes.object,
-		value: PropTypes.array,
-		onChange: PropTypes.string
+		value: PropTypes.object,
+		onChange: PropTypes.func
 	}
 
 	state = {}
@@ -43,38 +45,48 @@ class ProfileUpdateCompanyNameField extends React.Component {
 
 	setupFor (props) {
 		const {value} = props;
-		const position = value && value[0];
 
-		this.setState({
-			value: position && position.companyName
-		});
+		if (value instanceof Value) {
+			this.setState({companyName: value.companyName});
+		} else if (value) {
+			this.onChange(null);
+		}
 	}
 
 
-	onChange = (value) => {
-		this.setState({value});
+	onChange (value) {
+		const {field, onChange, value:oldValue} = this.props;
+
+		if (onChange && (!oldValue || !oldValue.isEqualTo(value))) {
+			onChange(field, value);
+		}
+	}
+
+
+	onCompanyNameChange = (companyName) => {
+		this.setState({companyName});
 
 		clearTimeout(this.onChangeTimeout);
 
 		this.onChangeTimeout = setTimeout(() => {
-			const {field, onChange, value:oldValue} = this.props;
+			const {value} = this.props;
 
-			if (onChange && oldValue !== value) {
-				onChange(field, [{
-					MimeType: 'application/vnd.nextthought.profile.professionalposition',
-					companyName: value
-				}]);
+			if (value) {
+				this.onChange(value.setCompanyName(companyName));
+			} else {
+				this.onChange(new Value(companyName));
 			}
+
 		}, 500);
 	}
 
 
 	render () {
-		const {value} = this.state;
+		const {companyName} = this.state;
 
 		return (
 			<Label label={t('companyName.label')}>
-				<Input.Text value={value} onChange={this.onChange} placeholder={t('companyName.placeholder')} />
+				<Input.Text value={companyName} onChange={this.onCompanyNameChange} placeholder={t('companyName.placeholder')} />
 			</Label>
 		);
 	}

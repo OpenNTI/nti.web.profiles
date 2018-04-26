@@ -31,7 +31,7 @@ export default class ProfileUpdateStore extends Stores.SimpleStore {
 		const values = this.get('values');
 		const value = values[name];
 
-		return value.serialize ? value.serialize() : value;
+		return value && value.serialize ? value.serialize() : value;
 	}
 
 

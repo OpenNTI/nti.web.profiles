@@ -15,7 +15,7 @@ export default class EducationValue {
 	}
 
 	isEqualTo (value) {
-		return this.school === value.school && this.graduationDate === value.graduationDate;
+		return value && this.school === value.school && this.graduationDate === value.graduationDate;
 	}
 
 	isValid () {
