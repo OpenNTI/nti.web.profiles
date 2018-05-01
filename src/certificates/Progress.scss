@@ -1,0 +1,27 @@
+@import '~@nti/style-common';
+
+.progress-container {
+	display: flex;
+
+	.progress {
+		height: 6px;
+		width: 200px;
+		position: relative;
+		background-color: #ccc;
+		border-radius: 20px;
+		margin-top: 4px;
+
+		.bar {
+			background-color: $primary-green;
+			border-radius: 20px;
+			position: absolute;
+			height: 6px;
+		}
+	}
+
+	.progress-label {
+		font-size: 10px;
+		color: $tertiary-grey;
+		margin-left: 10px;
+	}
+}
