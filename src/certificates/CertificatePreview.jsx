@@ -37,7 +37,7 @@ export default class CertificatePreview extends React.Component {
 			<div key={CatalogEntry.ProviderUniqueID} className="certificate-preview">
 				{this.state.showCertificate && (
 					<Prompt.Dialog onBeforeDismiss={this.hideCertificate}>
-						<Iframe src={certLink} title={t('certificateTitle', {title: CatalogEntry.title})} />
+						<Iframe downloadable src={certLink} title={t('certificateTitle', {title: CatalogEntry.title})} />
 					</Prompt.Dialog>
 				)}
 				<div className="preview-image" onClick={this.onImgClick}>
