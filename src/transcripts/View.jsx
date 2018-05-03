@@ -1,19 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Loading} from '@nti/web-commons';
 
-TranscriptsView.propTypes = {
-	entity: PropTypes.object
-};
+import Table from './table/View';
 
-export default function TranscriptsView ({entity}) {
-	if(!entity) {
-		return <Loading.Ellipsis/>;
+export default class TranscriptsView extends React.Component {
+	static propTypes = {
+		entity: PropTypes.object
 	}
 
-	return (
-		<div className="nti-profile-transcripts">
-			Transcripts
-		</div>
-	);
+	render () {
+		return (
+			<div className="nti-profile-transcripts">
+				<Table/>
+			</div>
+		);
+	}
 }

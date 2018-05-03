@@ -1,0 +1,41 @@
+@import '~@nti/style-common';
+
+.nti-profile-transcripts-table {
+	max-width: 60rem;
+	margin: 2rem;
+	border-collapse: collapse;
+
+	thead {
+		padding: 0.5rem;
+		border-bottom: solid 1px #ddd;
+
+		tr {
+			height: 2rem;
+
+			th div {
+				font-size: 10px;
+				color: $tertiary-grey;
+				font-weight: 600;
+				text-transform: uppercase;
+
+				&.sortable {
+					cursor: pointer;
+
+					i {
+						margin-left: 5px;
+					}
+				}
+			}
+		}
+	}
+
+	td {
+		text-align: center;
+		padding-top: 0.5rem;
+		padding-bottom: 0.5rem;
+
+		div {
+			font-size: 14px;
+		}
+	}
+}
