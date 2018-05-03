@@ -30,7 +30,14 @@
 
 			&.completed {
 				border-left: solid 1px #ddd;
-				padding: 10px 20px;
+
+				.subtitle {
+					padding-left: 20px;
+				}
+
+				.certificate-preview {
+					margin: 20px 0 0 19px;
+				}
 			}
 
 			.subtitle {
