@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import Header from './Header';
 
-export default class Title extends React.Component {
+export default class Value extends React.Component {
 	static propTypes = {
 		item: PropTypes.object.isRequired
 	}

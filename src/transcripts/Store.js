@@ -2,9 +2,9 @@ import {Stores} from '@nti/lib-store';
 import {getService} from '@nti/web-client';
 
 const MOCK_ITEMS = [
-	{ title: 'abc', date: 'May 3rd, 2018', type: 'Credit hours', value: '15' },
-	{ title: 'def', date: 'May 1st, 2018', type: 'CEU credits', value: '3' },
-	{ title: '555', date: 'April 27th, 2018', type: 'My points', value: '55' }
+	{ title: 'abc', date: new Date('5/2/2018'), type: 'Credit hours', value: 1.5 },
+	{ title: 'def', date: new Date('5/1/2017'), type: 'CEU credits', value: 3 },
+	{ title: '555', date: new Date('4/27/2018'), type: 'My points', value: 5.5 }
 ];
 
 export default class TranscriptTableStore extends Stores.SimpleStore {
@@ -13,6 +13,7 @@ export default class TranscriptTableStore extends Stores.SimpleStore {
 
 		this.set('items', null);
 		this.set('loading', true);
+		this.set('dateFilter', null);
 	}
 
 	getSortOn () {
@@ -32,6 +33,12 @@ export default class TranscriptTableStore extends Stores.SimpleStore {
 		return this.sortOrder || 'ascending';
 	}
 
+	setDateFilter (newDateFilter) {
+		this.set('dateFilter', newDateFilter);
+
+		this.loadTranscript();
+	}
+
 	// TODO: remove this, let server do sorting
 	mockSorted (data) {
 		const compare = (a, b) => {
@@ -46,6 +53,27 @@ export default class TranscriptTableStore extends Stores.SimpleStore {
 		};
 
 		return [...data].sort(compare);
+	}
+
+	// TODO: remove this, let server do filtering
+	mockFiltered (data) {
+		const dateFilter = this.get('dateFilter');
+
+		let filtered = [...data];
+
+		if(dateFilter) {
+			const {startDate, endDate} = dateFilter;
+
+			if(startDate) {
+				filtered = filtered.filter(x => x.date.getTime() >= startDate.getTime());
+			}
+
+			if(endDate) {
+				filtered = filtered.filter(x => x.date.getTime() <= endDate.getTime());
+			}
+		}
+
+		return filtered;
 	}
 
 	async loadTranscript () {
@@ -68,7 +96,7 @@ export default class TranscriptTableStore extends Stores.SimpleStore {
 		// const inProgressCourses = allCompletable.filter(c => !c.CourseProgress.CompletedDate);
 
 		this.set('loading', false);
-		this.set('items', this.mockSorted(MOCK_ITEMS));
-		this.emitChange('loading', 'items');
+		this.set('items', this.mockFiltered(this.mockSorted(MOCK_ITEMS)));
+		this.emitChange('loading', 'items', 'dateFilter');
 	}
 }

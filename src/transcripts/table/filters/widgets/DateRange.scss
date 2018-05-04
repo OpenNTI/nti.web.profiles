@@ -1,0 +1,48 @@
+@import '~@nti/style-common';
+
+.transcript-date-range {
+	background-color: white;
+	width: 300px;
+	padding: 0.75rem 0.75rem 0.5rem;
+
+	.date-picker-range .selected-dates {
+		margin: 0;
+
+		.date .value {
+			font-size: 24px;
+		}
+	}
+
+	.DayPicker-wrapper {
+		width: 100%;
+	}
+
+	.controls {
+		height: 2.5rem;
+
+		.buttons {
+			float: right;
+			display: flex;
+
+			.cancel {
+				color: $primary-blue;
+				margin-right: 1rem;
+				padding-top: 0.6rem;
+				font-size: 12px;
+				cursor: pointer;
+			}
+
+			.save {
+				width: 4rem;
+				background-color: $primary-blue;
+				color: white;
+				text-align: center;
+				height: 2.3rem;
+				padding-top: 0.5rem;
+				border-radius: 3px;
+				cursor: pointer;
+				font-size: 14px;
+			}
+		}
+	}
+}

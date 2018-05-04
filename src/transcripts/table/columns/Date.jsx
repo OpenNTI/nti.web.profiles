@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {DateTime} from '@nti/web-commons';
 
 import Header from './Header';
 
-export default class Title extends React.Component {
+export default class Date extends React.Component {
 	static propTypes = {
 		item: PropTypes.object.isRequired
 	}
@@ -13,6 +14,8 @@ export default class Title extends React.Component {
 	);
 
 	render () {
-		return <div>{this.props.item.date}</div>;
+		const {date} = this.props.item;
+
+		return <div>{date && DateTime.format(date, 'LL')}</div>;
 	}
 }
