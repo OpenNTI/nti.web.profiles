@@ -1,18 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Flyout} from '@nti/web-commons';
+import {scoped} from '@nti/lib-locale';
 
 import Store from './Store';
+import AggregateTable from './table/aggregate/View';
 import Table from './table/View';
 import DateFilter from './table/filters/Date';
 import TypeFilter from './table/filters/Type';
+
+const t = scoped('nti-web-profile.transcripts.View', {
+	aggregate: 'Summary',
+	detailed: 'Detailed',
+	csv: 'CSV',
+	pdf: 'PDF',
+	download: 'Download'
+});
 
 export default
 @Store.connect({
 	loading: 'loading',
 	dateFilter: 'dateFilter',
 	typeFilter: 'typeFilter',
-	items: 'items'
+	items: 'items',
+	aggregateItems: 'aggregateItems'
 })
 class TranscriptsView extends React.Component {
 	static propTypes = {
@@ -26,8 +37,14 @@ class TranscriptsView extends React.Component {
 
 	attachFlyoutRef = x => this.flyout = x
 
+	componentDidMount () {
+		const {entity, store} = this.props;
+
+		store.loadTranscript(entity);
+	}
+
 	renderDownloadTrigger () {
-		return <div className="download">Download</div>;
+		return <div className="download">{t('download')}</div>;
 	}
 
 	downloadCSV = () => {
@@ -70,12 +87,19 @@ class TranscriptsView extends React.Component {
 						ref={this.attachFlyoutRef}
 					>
 						<div>
-							<div className="download-option" onClick={this.downloadCSV}>CSV</div>
-							<div className="download-option" onClick={this.downloadPDF}>PDF</div>
+							<div className="download-option" onClick={this.downloadCSV}>{t('csv')}</div>
+							<div className="download-option" onClick={this.downloadPDF}>{t('pdf')}</div>
 						</div>
 					</Flyout.Triggered>
 				</div>
-				<Table {...this.props}/>
+				<div className="table-container">
+					<div className="table-title">{t('aggregate')}</div>
+					<AggregateTable {...this.props}/>
+				</div>
+				<div className="table-container">
+					<div className="table-title">{t('detailed')}</div>
+					<Table {...this.props}/>
+				</div>
 			</div>
 		);
 	}

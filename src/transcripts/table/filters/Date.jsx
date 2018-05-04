@@ -1,8 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Flyout, DateTime, Prompt} from '@nti/web-commons';
+import {scoped} from '@nti/lib-locale';
 
 import DateRange from './widgets/DateRange';
+
+const t = scoped('nti-web-profile.transcripts.table.filters.Date', {
+	reset: 'Reset',
+	filterByDate: 'Filter by date',
+	yearToDate: 'Year-to-date',
+	last30Days: 'Last 30 days',
+	customRange: 'Custom range...',
+	today: 'Today',
+	from: 'From',
+	to: 'To'
+});
+
 
 export default class DateFilter extends React.Component {
 	static propTypes = {
@@ -78,13 +91,13 @@ export default class DateFilter extends React.Component {
 		const { filterValue } = this.props;
 
 		if(!filterValue) {
-			return (<div className="date no-date">{'Filter by date'}</div>);
+			return (<div className="date no-date">{t('filterByDate')}</div>);
 		}
 
 		return (
 			<div className="date">
-				<div className="date-value start-date"><span className="date-info">From</span><span>{DateTime.format(filterValue.startDate, 'll')}</span></div>
-				<div className="date-value end-date"><span className="date-info">To</span><span>{filterValue.endDate ? DateTime.format(filterValue.endDate, 'll') : 'Today'}</span></div>
+				<div className="date-value start-date"><span className="date-info">{t('from')}</span><span>{DateTime.format(filterValue.startDate, 'll')}</span></div>
+				<div className="date-value end-date"><span className="date-info">{t('to')}</span><span>{filterValue.endDate ? DateTime.format(filterValue.endDate, 'll') : t('today')}</span></div>
 			</div>
 		);
 	}
@@ -109,10 +122,10 @@ export default class DateFilter extends React.Component {
 				ref={this.attachFlyoutRef}
 			>
 				<div>
-					{this.props.filterValue && <div className="date-filter-option reset" onClick={this.reset}>Reset</div>}
-					<div className="date-filter-option" onClick={this.filterYearToDate}>Year-to-date</div>
-					<div className="date-filter-option" onClick={this.filterLast30Days}>Last 30 Days</div>
-					<div className="date-filter-option" onClick={this.filterCustomRange}>Custom range...</div>
+					{this.props.filterValue && <div className="date-filter-option reset" onClick={this.reset}>{t('reset')}</div>}
+					<div className="date-filter-option" onClick={this.filterYearToDate}>{t('yearToDate')}</div>
+					<div className="date-filter-option" onClick={this.filterLast30Days}>{t('last30Days')}</div>
+					<div className="date-filter-option" onClick={this.filterCustomRange}>{t('customRange')}</div>
 				</div>
 			</Flyout.Triggered>
 		);

@@ -1,6 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {DayPickerRange} from '@nti/web-commons';
+import {scoped} from '@nti/lib-locale';
+
+const t = scoped('nti-web-profile.transcripts.table.filters.widgets.DateRange', {
+	ok: 'OK',
+	cancel: 'Cancel'
+});
 
 export default class DateFilter extends React.Component {
 	static propTypes = {
@@ -62,8 +68,8 @@ export default class DateFilter extends React.Component {
 				/>
 				<div className="controls">
 					<div className="buttons">
-						<div className="cancel" onClick={this.cancel}>Cancel</div>
-						<div className="save" onClick={this.save}>OK</div>
+						<div className="cancel" onClick={this.cancel}>{t('cancel')}</div>
+						<div className="save" onClick={this.save}>{t('ok')}</div>
 					</div>
 				</div>
 			</div>

@@ -4,7 +4,7 @@ import {scoped} from '@nti/lib-locale';
 
 import Header from './Header';
 
-const t = scoped('nti-web-profile.transcripts.table.columns.Value', {
+const t = scoped('nti-web-profile.transcripts.table.columns.AggregateValue', {
 	headerTitle: 'Amount'
 });
 
@@ -16,7 +16,7 @@ export default class Value extends React.Component {
 	static cssClassName = 'value-col';
 
 	static HeaderComponent = ({store}) => (
-		<Header field="value" store={store}><span>{t('headerTitle')}</span></Header>
+		<Header field="agg-value" store={store} sortKey="agg"><span>{t('headerTitle')}</span></Header>
 	);
 
 	render () {

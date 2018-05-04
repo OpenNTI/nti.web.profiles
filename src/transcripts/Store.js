@@ -1,37 +1,50 @@
 import {Stores} from '@nti/lib-store';
-import {getService} from '@nti/web-client';
+// import {getService} from '@nti/web-client';
 
 const MOCK_ITEMS = [
 	{ title: 'Introduction to David Mancia', date: new Date('5/2/2018'), type: 'Credit hours', value: 1.5 },
+	{ title: 'Introduction to David Mancia', date: new Date('4/24/2018'), type: 'My points', value: 7 },
 	{ title: 'Brian Kuh\'s Donkey Kong Strategies', date: new Date('5/1/2017'), type: 'CEU credits', value: 3 },
+	{ title: 'Brian Kuh\'s Donkey Kong Strategies', date: new Date('5/1/2017'), type: 'Credit hours', value: 9 },
 	{ title: 'Carrot Juicer 5000', date: new Date('4/27/2018'), type: 'My points', value: 5.5 }
 ];
+
+// const AGG_KEY = 'agg';
+const DEFAULT_KEY = 'defaultKey';
 
 export default class TranscriptTableStore extends Stores.SimpleStore {
 	constructor () {
 		super();
 
+		this.sortOn = {};
+		this.sortOrder = {};
+
 		this.set('items', null);
+		this.set('aggregateItems', null);
 		this.set('loading', true);
 		this.set('dateFilter', null);
 		this.set('typeFilter', null);
 	}
 
-	getSortOn () {
-		return this.sortOn;
+	getSortOn (sortKey) {
+		return this.sortOn[sortKey || DEFAULT_KEY];
 	}
 
-	setSortOn (sortOn) {
-		if (this.sortOn === sortOn) {
-			this.sortOrder = this.getSortOrder() === 'ascending' ? 'descending' : 'ascending';
+	setSortOn (sortOn, sortKey) {
+		const effectiveSortKey = sortKey || DEFAULT_KEY;
+
+		if (this.sortOn[effectiveSortKey] === sortOn) {
+			this.sortOrder[effectiveSortKey] = this.getSortOrder(sortKey) === 'ascending' ? 'descending' : 'ascending';
 		}
-		this.sortOn = sortOn;
+		this.sortOn[effectiveSortKey] = sortOn;
 
 		this.loadTranscript();
 	}
 
-	getSortOrder () {
-		return this.sortOrder || 'ascending';
+	getSortOrder (sortKey) {
+		const effectiveSortKey = sortKey || DEFAULT_KEY;
+
+		return this.sortOrder[effectiveSortKey] || 'ascending';
 	}
 
 	setDateFilter (newDateFilter) {
@@ -47,13 +60,15 @@ export default class TranscriptTableStore extends Stores.SimpleStore {
 	}
 
 	// TODO: remove this, let server do sorting
-	mockSorted (data) {
+	mockSorted (data, sortKey) {
 		const compare = (a, b) => {
-			if(a[this.sortOn] < b[this.sortOn]) {
-				return this.getSortOrder() === 'ascending' ? -1 : 1;
+			const sortOn = sortKey ? this.sortOn[sortKey] && this.sortOn[sortKey].replace(sortKey + '-', '') : this.sortOn['defaultKey'];
+
+			if(a[sortOn] < b[sortOn]) {
+				return this.getSortOrder(sortKey || 'defaultKey') === 'ascending' ? -1 : 1;
 			}
-			else if(a[this.sortOn] > b[this.sortOn]) {
-				return this.getSortOrder() === 'ascending' ? 1 : -1;
+			else if(a[sortOn] > b[sortOn]) {
+				return this.getSortOrder(sortKey || 'defaultKey') === 'ascending' ? 1 : -1;
 			}
 
 			return 0;
@@ -88,30 +103,53 @@ export default class TranscriptTableStore extends Stores.SimpleStore {
 		return filtered;
 	}
 
+	// TODO: let server do this
+	buildAggregates (items) {
+		let agg = [];
+		let aggMap = {};
+
+		items.forEach(item => {
+			if(aggMap[item.type]) {
+				aggMap[item.type] += item.value;
+			}
+			else {
+				aggMap[item.type] = item.value;
+			}
+		});
+
+		Object.keys(aggMap).forEach(k => {
+			agg.push({type: k, value: aggMap[k]});
+		});
+
+		return agg;
+	}
+
 	getAvailableTypes () {
 		return this._availableTypes || [];
 	}
 
-	async loadTranscript () {
+	async loadTranscript (entity) {
 		this.set('loading', true);
 		this.emitChange('loading');
 
-		// const service = await getService();
+		// TODO: load aggregate data from server based on entity
+
+		// const aggSort = this.sortOn[AGG_KEY] && this.sortOn[AGG_KEY].replace(AGG_KEY + '-', '');
+		// const aggSortOrder = this.getSortOrder(AGG_KEY);
 		//
-		// const enrolledCourses = await service.getCollection('EnrolledCourses', 'Courses');
+		// const normalSort = this.sortOn[DEFAULT_KEY] && this.sortOn[DEFAULT_KEY];
+		// const normalSortOrder = this.getSortOrder(DEFAULT_KEY);
 		//
-		// const currentLink = enrolledCourses.Links.filter(x => x.rel === 'Current')[0];
-		// const archivedLink = enrolledCourses.Links.filter(x => x.rel === 'Archived')[0];
 		//
-		// const current = currentLink ? await service.getBatch(currentLink.href) : null;
-		// const archived = archivedLink ? await service.getBatch(archivedLink.href) : null;
-		//
-		// const allCompletable = [...this.getCompletableFrom(current), ...this.getCompletableFrom(archived)];
-		//
-		// const completedCourses = allCompletable.filter(c => c.CourseProgress.CompletedDate);
-		// const inProgressCourses = allCompletable.filter(c => !c.CourseProgress.CompletedDate);
+		// console.log(aggSort + ' ' + aggSortOrder + ' ---- ' + normalSort + ' ' + normalSortOrder);
+
+		// TODO: load detailed data from server
+
+
 
 		const items = this.mockFiltered(this.mockSorted(MOCK_ITEMS));
+
+		const aggregateItems = this.mockSorted(this.buildAggregates(this.mockFiltered(MOCK_ITEMS)), 'agg');
 
 		// only load first time?
 		if(!this._availableTypes) {
@@ -120,6 +158,7 @@ export default class TranscriptTableStore extends Stores.SimpleStore {
 
 		this.set('loading', false);
 		this.set('items', items);
-		this.emitChange('loading', 'items', 'dateFilter', 'typeFilter');
+		this.set('aggregateItems', aggregateItems);
+		this.emitChange('loading', 'items', 'aggregateItems', 'dateFilter', 'typeFilter');
 	}
 }

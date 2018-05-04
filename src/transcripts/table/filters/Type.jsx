@@ -1,12 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Flyout} from '@nti/web-commons';
+import {scoped} from '@nti/lib-locale';
 
 import TypeOption from './TypeOption';
 
+const t = scoped('nti-web-profile.transcripts.table.filters.Type', {
+	reset: 'Reset',
+	filterByType: 'Filter by type',
+	by: 'By'
+});
+
 export default class TypeFilter extends React.Component {
 	static propTypes = {
-		filterValue: PropTypes.object,
+		filterValue: PropTypes.string,
 		store: PropTypes.object,
 		onChange: PropTypes.func
 	}
@@ -41,12 +48,12 @@ export default class TypeFilter extends React.Component {
 		const { filterValue } = this.props;
 
 		if(!filterValue) {
-			return (<div className="type-value no-type">{'Filter by type'}</div>);
+			return (<div className="type-value no-type">{t('filterByType')}</div>);
 		}
 
 		return (
 			<div className="type-value">
-				<div className="value"><span className="type-info">By</span><span>{filterValue}</span></div>
+				<div className="value"><span className="type-info">{t('by')}</span><span>{filterValue}</span></div>
 			</div>
 		);
 	}
@@ -75,7 +82,7 @@ export default class TypeFilter extends React.Component {
 				ref={this.attachFlyoutRef}
 			>
 				<div>
-					{this.props.filterValue && <div className="type-filter-option reset" onClick={this.reset}>Reset</div>}
+					{this.props.filterValue && <div className="type-filter-option reset" onClick={this.reset}>{t('reset')}</div>}
 					{store.getAvailableTypes().map(this.renderTypeOption)}
 				</div>
 			</Flyout.Triggered>

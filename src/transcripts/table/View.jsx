@@ -15,16 +15,12 @@ const columns = [
 	ValueColumn
 ];
 
-export default class TranscriptsView extends React.Component {
+export default class TranscriptTable extends React.Component {
 	propTypes = {
 		entity: PropTypes.object,
 		store: PropTypes.object,
 		loading: PropTypes.bool,
 		items: PropTypes.arrayOf(PropTypes.object)
-	}
-
-	componentDidMount () {
-		this.props.store.loadTranscript();
 	}
 
 	render () {

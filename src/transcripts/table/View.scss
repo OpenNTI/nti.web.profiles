@@ -1,16 +1,31 @@
 @import '~@nti/style-common';
 
 .nti-profile-transcripts-table {
-	max-width: 60rem;
+	max-width: 40rem;
 	margin: 2rem;
 	border-collapse: collapse;
 
+	&.aggregate {
+		max-width: 16rem;
+	}
+
 	thead {
 		padding: 0.5rem;
-		border-bottom: solid 1px #ddd;
 
 		tr {
 			height: 2rem;
+
+			th.value-col {
+				width: 7rem;
+			}
+
+			th.date-col {
+				width: 10rem;
+			}
+
+			th.type-col {
+				width: 8rem;
+			}
 
 			th div {
 				font-size: 10px;

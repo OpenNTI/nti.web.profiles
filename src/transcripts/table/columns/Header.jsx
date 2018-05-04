@@ -7,19 +7,20 @@ export default class Header extends React.Component {
 	static propTypes = {
 		store: PropTypes.object,
 		field: PropTypes.string,
+		sortKey: PropTypes.string,
 		children: PropTypes.any
 	}
 
 	sort = () => {
-		const {store, field} = this.props;
-		return store && store.setSortOn(field);
+		const {store, sortKey, field} = this.props;
+		return store && store.setSortOn(field, sortKey);
 	}
 
 
 	render () {
-		const {store, field, children} = this.props;
-		const isSorted = store && store.getSortOn() === field;
-		const direction = store && store.getSortOrder();
+		const {store, field, sortKey, children} = this.props;
+		const isSorted = store && store.getSortOn(sortKey) === field;
+		const direction = store && store.getSortOrder(sortKey);
 
 		const classes = cx(
 			'sortable',
@@ -31,7 +32,10 @@ export default class Header extends React.Component {
 		);
 
 		return (
-			<div onClick={this.sort} className={classes}><span>{children}</span>{isSorted ? direction === 'ascending' ? <i className="icon-chevron-down"/> : <i className="icon-chevron-up"/> : null}</div>
+			<div onClick={this.sort} className={classes}>
+				<span>{children}</span>
+				{isSorted ? direction === 'ascending' ? <i className="icon-chevron-down"/> : <i className="icon-chevron-up"/> : null}
+			</div>
 		);
 	}
 }
