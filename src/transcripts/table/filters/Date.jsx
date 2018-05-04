@@ -28,6 +28,12 @@ export default class DateFilter extends React.Component {
 		if(onChange) {
 			onChange(newValue);
 		}
+
+		this.flyout.dismiss();
+	}
+
+	reset = () => {
+		this.updateValue(null);
 	}
 
 	filterYearToDate = () => {
@@ -103,6 +109,7 @@ export default class DateFilter extends React.Component {
 				ref={this.attachFlyoutRef}
 			>
 				<div>
+					{this.props.filterValue && <div className="date-filter-option reset" onClick={this.reset}>Reset</div>}
 					<div className="date-filter-option" onClick={this.filterYearToDate}>Year-to-date</div>
 					<div className="date-filter-option" onClick={this.filterLast30Days}>Last 30 Days</div>
 					<div className="date-filter-option" onClick={this.filterCustomRange}>Custom range...</div>

@@ -10,10 +10,17 @@
 	.top-controls {
 		display: flex;
 		padding: 1rem;
+		padding-right: 2rem;
 
 		.filters {
 			width: 80%;
 			margin: 0 1rem 0 0;
+			display: flex;
+			padding-left: 7rem;
+
+			.transcript-date-filter-value {
+				margin-right: 5rem;
+			}
 		}
 
 		.download {
@@ -39,6 +46,8 @@
 			padding: 0.5rem;
 			cursor: pointer;
 			font-size: 14px;
+			font-weight: 300;
+			text-align: center;
 		}
 	}
 }

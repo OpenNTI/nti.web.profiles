@@ -2,9 +2,9 @@ import {Stores} from '@nti/lib-store';
 import {getService} from '@nti/web-client';
 
 const MOCK_ITEMS = [
-	{ title: 'abc', date: new Date('5/2/2018'), type: 'Credit hours', value: 1.5 },
-	{ title: 'def', date: new Date('5/1/2017'), type: 'CEU credits', value: 3 },
-	{ title: '555', date: new Date('4/27/2018'), type: 'My points', value: 5.5 }
+	{ title: 'Introduction to David Mancia', date: new Date('5/2/2018'), type: 'Credit hours', value: 1.5 },
+	{ title: 'Brian Kuh\'s Donkey Kong Strategies', date: new Date('5/1/2017'), type: 'CEU credits', value: 3 },
+	{ title: 'Carrot Juicer 5000', date: new Date('4/27/2018'), type: 'My points', value: 5.5 }
 ];
 
 export default class TranscriptTableStore extends Stores.SimpleStore {
@@ -14,6 +14,7 @@ export default class TranscriptTableStore extends Stores.SimpleStore {
 		this.set('items', null);
 		this.set('loading', true);
 		this.set('dateFilter', null);
+		this.set('typeFilter', null);
 	}
 
 	getSortOn () {
@@ -39,6 +40,12 @@ export default class TranscriptTableStore extends Stores.SimpleStore {
 		this.loadTranscript();
 	}
 
+	setTypeFilter (newTypeFilter) {
+		this.set('typeFilter', newTypeFilter);
+
+		this.loadTranscript();
+	}
+
 	// TODO: remove this, let server do sorting
 	mockSorted (data) {
 		const compare = (a, b) => {
@@ -58,6 +65,7 @@ export default class TranscriptTableStore extends Stores.SimpleStore {
 	// TODO: remove this, let server do filtering
 	mockFiltered (data) {
 		const dateFilter = this.get('dateFilter');
+		const typeFilter = this.get('typeFilter');
 
 		let filtered = [...data];
 
@@ -73,7 +81,15 @@ export default class TranscriptTableStore extends Stores.SimpleStore {
 			}
 		}
 
+		if(typeFilter) {
+			filtered = filtered.filter(x => x.type === typeFilter);
+		}
+
 		return filtered;
+	}
+
+	getAvailableTypes () {
+		return this._availableTypes || [];
 	}
 
 	async loadTranscript () {
@@ -95,8 +111,15 @@ export default class TranscriptTableStore extends Stores.SimpleStore {
 		// const completedCourses = allCompletable.filter(c => c.CourseProgress.CompletedDate);
 		// const inProgressCourses = allCompletable.filter(c => !c.CourseProgress.CompletedDate);
 
+		const items = this.mockFiltered(this.mockSorted(MOCK_ITEMS));
+
+		// only load first time?
+		if(!this._availableTypes) {
+			this._availableTypes = Array.from(new Set(items.map(x => x.type)));
+		}
+
 		this.set('loading', false);
-		this.set('items', this.mockFiltered(this.mockSorted(MOCK_ITEMS)));
-		this.emitChange('loading', 'items', 'dateFilter');
+		this.set('items', items);
+		this.emitChange('loading', 'items', 'dateFilter', 'typeFilter');
 	}
 }

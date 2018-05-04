@@ -9,10 +9,10 @@ export default class Value extends React.Component {
 	}
 
 	static HeaderComponent = ({store}) => (
-		<Header field="value" store={store}><span>Value</span></Header>
+		<Header field="value" store={store}><span>Amount</span></Header>
 	);
 
 	render () {
-		return <div>{this.props.item.value}</div>;
+		return <div>{parseFloat(Math.round(this.props.item.value * 100) / 100).toFixed(2)}</div>;
 	}
 }

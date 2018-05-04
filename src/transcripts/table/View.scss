@@ -17,6 +17,7 @@
 				color: $tertiary-grey;
 				font-weight: 600;
 				text-transform: uppercase;
+				text-align: right;
 
 				&.sortable {
 					cursor: pointer;
@@ -37,6 +38,7 @@
 		div {
 			font-size: 14px;
 			font-weight: 300;
+			text-align: right;
 		}
 	}
 }

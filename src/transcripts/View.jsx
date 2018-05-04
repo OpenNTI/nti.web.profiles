@@ -5,18 +5,21 @@ import {Flyout} from '@nti/web-commons';
 import Store from './Store';
 import Table from './table/View';
 import DateFilter from './table/filters/Date';
+import TypeFilter from './table/filters/Type';
 
 export default
 @Store.connect({
 	loading: 'loading',
 	dateFilter: 'dateFilter',
+	typeFilter: 'typeFilter',
 	items: 'items'
 })
 class TranscriptsView extends React.Component {
 	static propTypes = {
 		entity: PropTypes.object,
 		store: PropTypes.object,
-		dateFilter: PropTypes.object
+		dateFilter: PropTypes.object,
+		typeFilter: PropTypes.string
 	}
 
 	state = {}
@@ -45,12 +48,19 @@ class TranscriptsView extends React.Component {
 		store.setDateFilter(dateFilterValue);
 	}
 
+	onTypeFilterChange = (typeFilterValue) => {
+		const {store} = this.props;
+
+		store.setTypeFilter(typeFilterValue);
+	}
+
 	render () {
 		return (
 			<div className="nti-profile-transcripts">
 				<div className="top-controls">
 					<div className="filters">
 						<DateFilter onChange={this.onDateFilterChange} filterValue={this.props.dateFilter}/>
+						<TypeFilter store={this.props.store} onChange={this.onTypeFilterChange} filterValue={this.props.typeFilter}/>
 					</div>
 					<Flyout.Triggered
 						className="transcript-download"
