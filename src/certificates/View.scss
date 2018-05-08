@@ -31,7 +31,7 @@
 			&.completed {
 				border-left: solid 1px #ddd;
 
-				.subtitle {
+				.subtitle, .empty-state {
 					padding-left: 20px;
 				}
 
