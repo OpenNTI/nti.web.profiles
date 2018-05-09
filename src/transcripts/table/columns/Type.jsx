@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {scoped} from '@nti/lib-locale';
 
 import Header from './Header';
+import DetailViewable from './DetailViewable';
 
 const t = scoped('nti-web-profile.transcripts.table.columns.Type', {
 	headerTitle: 'Type'
@@ -31,6 +32,6 @@ export default class Type extends React.Component {
 	};
 
 	render () {
-		return <div>{this.props.item.type}</div>;
+		return <DetailViewable item={this.props.item}><div>{this.props.item.creditDefinition.type}</div></DetailViewable>;
 	}
 }

@@ -9,6 +9,10 @@
 		max-width: 16rem;
 	}
 
+	.detail-viewable {
+		cursor: pointer;
+	}
+
 	thead {
 		padding: 0.5rem;
 
@@ -32,7 +36,7 @@
 				color: $tertiary-grey;
 				font-weight: 600;
 				text-transform: uppercase;
-				text-align: center;
+				text-align: right;
 
 				&.sortable {
 					cursor: pointer;
@@ -53,7 +57,7 @@
 		div {
 			font-size: 14px;
 			font-weight: 300;
-			text-align: center;
+			text-align: right;
 		}
 	}
 
@@ -61,7 +65,7 @@
 		th {
 			.title {
 				height: 2.5rem;
-				font-weight: bold;
+				font-weight: 600;
 				padding-top: 0.5rem;
 			}
 
@@ -69,6 +73,7 @@
 				font-size: 14px;
 				font-weight: 300;
 				height: 2rem;
+				text-align: right;
 			}
 
 			&.value-col, &.type-col {

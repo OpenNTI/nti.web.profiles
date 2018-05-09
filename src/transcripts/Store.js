@@ -1,13 +1,5 @@
 import {Stores} from '@nti/lib-store';
-// import {getService} from '@nti/web-client';
-
-const MOCK_ITEMS = [
-	{ title: 'Introduction to David Mancia', date: new Date('5/2/2018'), type: 'Credit', unit: 'hours', value: 1.5 },
-	{ title: 'Introduction to David Mancia', date: new Date('4/24/2018'), type: 'My', unit: 'points', value: 7 },
-	{ title: 'Brian Kuh\'s Donkey Kong Strategies', date: new Date('5/1/2017'), type: 'CEU', unit: 'credits', value: 3 },
-	{ title: 'Brian Kuh\'s Donkey Kong Strategies', date: new Date('5/1/2017'), type: 'Credit', unit: 'hours', value: 9 },
-	{ title: 'Carrot Juicer 5000', date: new Date('4/27/2018'), type: 'My', unit: 'points', value: 5.5 }
-];
+import {getService} from '@nti/web-client';
 
 // const AGG_KEY = 'agg';
 const DEFAULT_KEY = 'defaultKey';
@@ -107,19 +99,23 @@ export default class TranscriptTableStore extends Stores.SimpleStore {
 	buildAggregates (items) {
 		let agg = [];
 		let aggMap = {};
+		let defMap = {};
 
 		items.forEach(item => {
-			let combined = item.type + ' ' + item.unit;
-			if(aggMap[combined]) {
-				aggMap[combined] += item.value;
+			let key = item.creditDefinition.type + ' ' + item.creditDefinition.unit;
+			if(aggMap[key]) {
+				aggMap[key] += item.amount;
 			}
 			else {
-				aggMap[combined] = item.value;
+				aggMap[key] = item.amount;
 			}
+
+			defMap[key] = item.creditDefinition;
 		});
 
 		Object.keys(aggMap).forEach(k => {
-			agg.push({type: k.split(' ')[0], unit: k.split(' ')[1], value: aggMap[k]});
+			const def = defMap[k];
+			agg.push({creditDefinition: def, amount: aggMap[k]});
 		});
 
 		return agg;
@@ -131,41 +127,49 @@ export default class TranscriptTableStore extends Stores.SimpleStore {
 		return this.buildAggregates(items);
 	}
 
+
 	getAvailableTypes () {
 		return this._availableTypes || [];
 	}
 
 	async loadTranscript (entity) {
+		if(entity) {
+			this.entity = entity;
+		}
+
 		this.set('loading', true);
 		this.emitChange('loading');
 
-		// TODO: load aggregate data from server based on entity
+		const typeFilter = this.get('typeFilter');
+		const dateFilter = this.get('dateFilter');
 
-		// const aggSort = this.sortOn[AGG_KEY] && this.sortOn[AGG_KEY].replace(AGG_KEY + '-', '');
-		// const aggSortOrder = this.getSortOrder(AGG_KEY);
-		//
-		// const normalSort = this.sortOn[DEFAULT_KEY] && this.sortOn[DEFAULT_KEY];
-		// const normalSortOrder = this.getSortOrder(DEFAULT_KEY);
-		//
-		//
-		// console.log(aggSort + ' ' + aggSortOrder + ' ---- ' + normalSort + ' ' + normalSortOrder);
+		let params = {};
 
-		// TODO: load detailed data from server
+		if(typeFilter) {
+			params.definitionType = typeFilter;
+		}
 
+		if(dateFilter) {
+			if(dateFilter.startDate) {
+				params.notBefore = dateFilter.startDate.getTime() / 1000;
+			}
 
+			if(dateFilter.endDate) {
+				params.notAfter = dateFilter.endDate.getTime() / 1000;
+			}
+		}
 
-		const items = this.mockFiltered(this.mockSorted(MOCK_ITEMS));
-
-		const aggregateItems = this.mockSorted(this.buildAggregates(this.mockFiltered(MOCK_ITEMS)), 'agg');
+		const service = await getService();
+		const results = await service.getBatch(this.entity.getLink('transcript'), params);
+		const items = results && results.Items || [];
 
 		// only load first time?
 		if(!this._availableTypes) {
-			this._availableTypes = Array.from(new Set(items.map(x => x.type)));
+			this._availableTypes = Array.from(new Set(items.map(x => x.creditDefinition.type)));
 		}
 
 		this.set('loading', false);
 		this.set('items', items);
-		this.set('aggregateItems', aggregateItems);
-		this.emitChange('loading', 'items', 'aggregateItems', 'dateFilter', 'typeFilter');
+		this.emitChange('loading', 'items', 'dateFilter', 'typeFilter');
 	}
 }

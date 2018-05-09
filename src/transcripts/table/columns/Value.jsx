@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {scoped} from '@nti/lib-locale';
 
 import Header from './Header';
+import DetailViewable from './DetailViewable';
 
 const t = scoped('nti-web-profile.transcripts.table.columns.Value', {
 	headerTitle: 'Amount',
@@ -32,6 +33,8 @@ export default class Value extends React.Component {
 	};
 
 	render () {
-		return <div>{parseFloat(Math.round(this.props.item.value * 100) / 100).toFixed(2) + ' ' + this.props.item.unit}</div>;
+		const {item} = this.props;
+
+		return <DetailViewable item={item}><div>{parseFloat(Math.round(item.amount * 100) / 100).toFixed(2) + ' ' + item.creditDefinition.unit}</div></DetailViewable>;
 	}
 }
