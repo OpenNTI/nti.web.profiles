@@ -11,7 +11,8 @@ const t = scoped('nti-web-profile.transcripts.table.columns.Type', {
 
 export default class Type extends React.Component {
 	static propTypes = {
-		item: PropTypes.object.isRequired
+		item: PropTypes.object.isRequired,
+		nonViewable: PropTypes.bool
 	}
 
 	static cssClassName = 'type-col';
@@ -21,7 +22,7 @@ export default class Type extends React.Component {
 	);
 
 	static FooterComponent = ({store}) => {
-		const renderFn = v => <Type item={v}/>;
+		const renderFn = v => <Type key={v.creditDefinition.type + '-' + v.creditDefinition.unit} item={v} nonViewable/>;
 
 		return (
 			<div className="type-footer">
@@ -31,7 +32,17 @@ export default class Type extends React.Component {
 		);
 	};
 
+	renderContent () {
+		return <div>{this.props.item.creditDefinition.type}</div>;
+	}
+
 	render () {
-		return <DetailViewable item={this.props.item}><div>{this.props.item.creditDefinition.type}</div></DetailViewable>;
+		const {nonViewable, item} = this.props;
+
+		if(nonViewable) {
+			return this.renderContent();
+		}
+
+		return <DetailViewable item={item}>{this.renderContent()}</DetailViewable>;
 	}
 }

@@ -51,50 +51,6 @@ export default class TranscriptTableStore extends Stores.SimpleStore {
 		this.loadTranscript();
 	}
 
-	// TODO: remove this, let server do sorting
-	mockSorted (data, sortKey) {
-		const compare = (a, b) => {
-			const sortOn = sortKey ? this.sortOn[sortKey] && this.sortOn[sortKey].replace(sortKey + '-', '') : this.sortOn['defaultKey'];
-
-			if(a[sortOn] < b[sortOn]) {
-				return this.getSortOrder(sortKey || 'defaultKey') === 'ascending' ? -1 : 1;
-			}
-			else if(a[sortOn] > b[sortOn]) {
-				return this.getSortOrder(sortKey || 'defaultKey') === 'ascending' ? 1 : -1;
-			}
-
-			return 0;
-		};
-
-		return [...data].sort(compare);
-	}
-
-	// TODO: remove this, let server do filtering
-	mockFiltered (data) {
-		const dateFilter = this.get('dateFilter');
-		const typeFilter = this.get('typeFilter');
-
-		let filtered = [...data];
-
-		if(dateFilter) {
-			const {startDate, endDate} = dateFilter;
-
-			if(startDate) {
-				filtered = filtered.filter(x => x.date.getTime() >= startDate.getTime());
-			}
-
-			if(endDate) {
-				filtered = filtered.filter(x => x.date.getTime() <= endDate.getTime());
-			}
-		}
-
-		if(typeFilter) {
-			filtered = filtered.filter(x => x.type === typeFilter);
-		}
-
-		return filtered;
-	}
-
 	// TODO: let server do this
 	buildAggregates (items) {
 		let agg = [];
@@ -126,7 +82,6 @@ export default class TranscriptTableStore extends Stores.SimpleStore {
 
 		return this.buildAggregates(items);
 	}
-
 
 	getAvailableTypes () {
 		return this._availableTypes || [];

@@ -12,7 +12,8 @@ const t = scoped('nti-web-profile.transcripts.table.columns.Value', {
 
 export default class Value extends React.Component {
 	static propTypes = {
-		item: PropTypes.object.isRequired
+		item: PropTypes.object.isRequired,
+		nonViewable: PropTypes.bool
 	}
 
 	static cssClassName = 'value-col';
@@ -22,7 +23,7 @@ export default class Value extends React.Component {
 	);
 
 	static FooterComponent = ({store}) => {
-		const renderFn = v => <Value item={v}/>;
+		const renderFn = v => <Value key={v.creditDefinition.type + '-' + v.creditDefinition.unit} item={v} nonViewable/>;
 
 		return (
 			<div className="value-footer">
@@ -32,9 +33,19 @@ export default class Value extends React.Component {
 		);
 	};
 
-	render () {
+	renderContent () {
 		const {item} = this.props;
 
-		return <DetailViewable item={item}><div>{parseFloat(Math.round(item.amount * 100) / 100).toFixed(2) + ' ' + item.creditDefinition.unit}</div></DetailViewable>;
+		return <div>{parseFloat(Math.round(item.amount * 100) / 100).toFixed(2) + ' ' + item.creditDefinition.unit}</div>;
+	}
+
+	render () {
+		const {item, nonViewable} = this.props;
+
+		if(nonViewable) {
+			return this.renderContent();
+		}
+
+		return <DetailViewable item={item}>{this.renderContent()}</DetailViewable>;
 	}
 }
