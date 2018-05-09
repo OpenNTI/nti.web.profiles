@@ -4,7 +4,6 @@ import {Flyout} from '@nti/web-commons';
 import {scoped} from '@nti/lib-locale';
 
 import Store from './Store';
-import AggregateTable from './table/aggregate/View';
 import Table from './table/View';
 import DateFilter from './table/filters/Date';
 import TypeFilter from './table/filters/Type';
@@ -72,6 +71,14 @@ class TranscriptsView extends React.Component {
 	}
 
 	render () {
+		const {store} = this.props;
+
+		const aggregateItems = store.getAggregateValues();
+
+		const containerStyle = {
+			paddingBottom: (aggregateItems.length * 2) + 'rem'
+		};
+
 		return (
 			<div className="nti-profile-transcripts">
 				<div className="top-controls">
@@ -92,12 +99,7 @@ class TranscriptsView extends React.Component {
 						</div>
 					</Flyout.Triggered>
 				</div>
-				<div className="table-container">
-					<div className="table-title">{t('aggregate')}</div>
-					<AggregateTable {...this.props}/>
-				</div>
-				<div className="table-container">
-					<div className="table-title">{t('detailed')}</div>
+				<div className="table-container" style={containerStyle}>
 					<Table {...this.props}/>
 				</div>
 			</div>

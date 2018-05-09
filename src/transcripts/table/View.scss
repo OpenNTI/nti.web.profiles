@@ -16,7 +16,7 @@
 			height: 2rem;
 
 			th.value-col {
-				width: 7rem;
+				width: 8rem;
 			}
 
 			th.date-col {
@@ -24,7 +24,7 @@
 			}
 
 			th.type-col {
-				width: 8rem;
+				width: 6rem;
 			}
 
 			th div {
@@ -32,7 +32,7 @@
 				color: $tertiary-grey;
 				font-weight: 600;
 				text-transform: uppercase;
-				text-align: right;
+				text-align: center;
 
 				&.sortable {
 					cursor: pointer;
@@ -53,7 +53,27 @@
 		div {
 			font-size: 14px;
 			font-weight: 300;
-			text-align: right;
+			text-align: center;
+		}
+	}
+
+	tfoot {
+		th {
+			.title {
+				height: 2.5rem;
+				font-weight: bold;
+				padding-top: 0.5rem;
+			}
+
+			div {
+				font-size: 14px;
+				font-weight: 300;
+				height: 2rem;
+			}
+
+			&.value-col, &.type-col {
+				border-top: solid 1px #ddd;
+			}
 		}
 	}
 }

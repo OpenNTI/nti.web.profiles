@@ -2,11 +2,11 @@ import {Stores} from '@nti/lib-store';
 // import {getService} from '@nti/web-client';
 
 const MOCK_ITEMS = [
-	{ title: 'Introduction to David Mancia', date: new Date('5/2/2018'), type: 'Credit hours', value: 1.5 },
-	{ title: 'Introduction to David Mancia', date: new Date('4/24/2018'), type: 'My points', value: 7 },
-	{ title: 'Brian Kuh\'s Donkey Kong Strategies', date: new Date('5/1/2017'), type: 'CEU credits', value: 3 },
-	{ title: 'Brian Kuh\'s Donkey Kong Strategies', date: new Date('5/1/2017'), type: 'Credit hours', value: 9 },
-	{ title: 'Carrot Juicer 5000', date: new Date('4/27/2018'), type: 'My points', value: 5.5 }
+	{ title: 'Introduction to David Mancia', date: new Date('5/2/2018'), type: 'Credit', unit: 'hours', value: 1.5 },
+	{ title: 'Introduction to David Mancia', date: new Date('4/24/2018'), type: 'My', unit: 'points', value: 7 },
+	{ title: 'Brian Kuh\'s Donkey Kong Strategies', date: new Date('5/1/2017'), type: 'CEU', unit: 'credits', value: 3 },
+	{ title: 'Brian Kuh\'s Donkey Kong Strategies', date: new Date('5/1/2017'), type: 'Credit', unit: 'hours', value: 9 },
+	{ title: 'Carrot Juicer 5000', date: new Date('4/27/2018'), type: 'My', unit: 'points', value: 5.5 }
 ];
 
 // const AGG_KEY = 'agg';
@@ -109,19 +109,26 @@ export default class TranscriptTableStore extends Stores.SimpleStore {
 		let aggMap = {};
 
 		items.forEach(item => {
-			if(aggMap[item.type]) {
-				aggMap[item.type] += item.value;
+			let combined = item.type + ' ' + item.unit;
+			if(aggMap[combined]) {
+				aggMap[combined] += item.value;
 			}
 			else {
-				aggMap[item.type] = item.value;
+				aggMap[combined] = item.value;
 			}
 		});
 
 		Object.keys(aggMap).forEach(k => {
-			agg.push({type: k, value: aggMap[k]});
+			agg.push({type: k.split(' ')[0], unit: k.split(' ')[1], value: aggMap[k]});
 		});
 
 		return agg;
+	}
+
+	getAggregateValues () {
+		const items = this.get('items') || [];
+
+		return this.buildAggregates(items);
 	}
 
 	getAvailableTypes () {

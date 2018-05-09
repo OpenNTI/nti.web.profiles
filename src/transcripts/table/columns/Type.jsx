@@ -19,6 +19,17 @@ export default class Type extends React.Component {
 		<Header field="type" store={store}><span>{t('headerTitle')}</span></Header>
 	);
 
+	static FooterComponent = ({store}) => {
+		const renderFn = v => <Type item={v}/>;
+
+		return (
+			<div className="type-footer">
+				<div className="title"/>
+				<div className="values">{store.getAggregateValues().map(renderFn)}</div>
+			</div>
+		);
+	};
+
 	render () {
 		return <div>{this.props.item.type}</div>;
 	}

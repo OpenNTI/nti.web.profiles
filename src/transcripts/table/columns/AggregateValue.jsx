@@ -20,6 +20,6 @@ export default class Value extends React.Component {
 	);
 
 	render () {
-		return <div>{parseFloat(Math.round(this.props.item.value * 100) / 100).toFixed(2)}</div>;
+		return <div>{parseFloat(Math.round(this.props.item.value * 100) / 100).toFixed(2) + ' ' + this.props.item.unit}</div>;
 	}
 }
