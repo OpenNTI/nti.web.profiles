@@ -47,7 +47,7 @@ class TranscriptsView extends React.Component {
 		store.loadTranscript(entity);
 
 		getService().then(service => {
-			if(service.getCollection('CreditDefinitions', 'Global')) {
+			if(entity.hasLink('add_credit')) {
 				this.setState({canAddCredit: true});
 			}
 		});
