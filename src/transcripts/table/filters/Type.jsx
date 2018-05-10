@@ -14,7 +14,7 @@ const t = scoped('nti-web-profile.transcripts.table.filters.Type', {
 export default class TypeFilter extends React.Component {
 	static propTypes = {
 		filterValue: PropTypes.string,
-		availableTypes: PropTypes.arrayOf(PropTypes.object),
+		availableTypes: PropTypes.arrayOf(PropTypes.string),
 		onChange: PropTypes.func
 	}
 

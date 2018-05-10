@@ -34,7 +34,7 @@ class TranscriptsView extends React.Component {
 		store: PropTypes.object,
 		dateFilter: PropTypes.object,
 		typeFilter: PropTypes.string,
-		availableTypes: PropTypes.objectOf(PropTypes.string)
+		availableTypes: PropTypes.arrayOf(PropTypes.string)
 	}
 
 	state = {}
