@@ -14,7 +14,7 @@ const t = scoped('nti-web-profile.transcripts.table.filters.Type', {
 export default class TypeFilter extends React.Component {
 	static propTypes = {
 		filterValue: PropTypes.string,
-		store: PropTypes.object,
+		availableTypes: PropTypes.arrayOf(PropTypes.object),
 		onChange: PropTypes.func
 	}
 
@@ -71,7 +71,7 @@ export default class TypeFilter extends React.Component {
 	}
 
 	render () {
-		const {store} = this.props;
+		const {availableTypes} = this.props;
 
 		return (
 			<Flyout.Triggered
@@ -83,7 +83,7 @@ export default class TypeFilter extends React.Component {
 			>
 				<div>
 					{this.props.filterValue && <div className="type-filter-option reset" onClick={this.reset}>{t('reset')}</div>}
-					{store.getAvailableTypes().map(this.renderTypeOption)}
+					{availableTypes.map(this.renderTypeOption)}
 				</div>
 			</Flyout.Triggered>
 		);

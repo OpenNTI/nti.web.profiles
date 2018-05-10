@@ -2,9 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {Flyout} from '@nti/web-commons';
 import {scoped} from '@nti/lib-locale';
+import {getService} from '@nti/web-client';
 
 import Store from './Store';
 import Table from './table/View';
+import UserAwardedCredit from './userawarded/View';
 import DateFilter from './table/filters/Date';
 import TypeFilter from './table/filters/Type';
 
@@ -13,7 +15,8 @@ const t = scoped('nti-web-profile.transcripts.View', {
 	detailed: 'Detailed',
 	csv: 'CSV',
 	pdf: 'PDF',
-	download: 'Download'
+	download: 'Download',
+	addCredit: 'Add Credit'
 });
 
 export default
@@ -22,14 +25,16 @@ export default
 	dateFilter: 'dateFilter',
 	typeFilter: 'typeFilter',
 	items: 'items',
-	aggregateItems: 'aggregateItems'
+	aggregateItems: 'aggregateItems',
+	availableTypes: 'availableTypes'
 })
 class TranscriptsView extends React.Component {
 	static propTypes = {
 		entity: PropTypes.object,
 		store: PropTypes.object,
 		dateFilter: PropTypes.object,
-		typeFilter: PropTypes.string
+		typeFilter: PropTypes.string,
+		availableTypes: PropTypes.objectOf(PropTypes.string)
 	}
 
 	state = {}
@@ -40,6 +45,12 @@ class TranscriptsView extends React.Component {
 		const {entity, store} = this.props;
 
 		store.loadTranscript(entity);
+
+		getService().then(service => {
+			if(service.getCollection('CreditDefinitions', 'Global')) {
+				this.setState({canAddCredit: true});
+			}
+		});
 	}
 
 	renderDownloadTrigger () {
@@ -70,6 +81,10 @@ class TranscriptsView extends React.Component {
 		store.setTypeFilter(typeFilterValue);
 	}
 
+	launchUserAwardedEditor = () => {
+		UserAwardedCredit.show(this.state.entity);
+	}
+
 	render () {
 		const {store} = this.props;
 
@@ -84,8 +99,9 @@ class TranscriptsView extends React.Component {
 				<div className="top-controls">
 					<div className="filters">
 						<DateFilter onChange={this.onDateFilterChange} filterValue={this.props.dateFilter}/>
-						<TypeFilter store={this.props.store} onChange={this.onTypeFilterChange} filterValue={this.props.typeFilter}/>
+						<TypeFilter availableTypes={this.props.availableTypes || []} onChange={this.onTypeFilterChange} filterValue={this.props.typeFilter}/>
 					</div>
+					{this.state.canAddCredit && <div className="award-credit" onClick={this.launchUserAwardedEditor}>{t('addCredit')}</div>}
 					<Flyout.Triggered
 						className="transcript-download"
 						trigger={this.renderDownloadTrigger()}

@@ -87,6 +87,37 @@ export default class TranscriptTableStore extends Stores.SimpleStore {
 		return this._availableTypes || [];
 	}
 
+	getEntity () {
+		return this.entity;
+	}
+
+	async addUserAwardedCredit (data) {
+		const transcriptLink = this.entity.getLink('transcript');
+		const service = await getService();
+
+		await service.put(transcriptLink, data);
+
+		await this.loadTranscript();
+	}
+
+	async editUserAwardedCredit (credit, data) {
+		const itemLink = credit.getLink('edit');
+		const service = await getService();
+
+		await service.put(itemLink, data);
+
+		await this.loadTranscript();
+	}
+
+	async deleteUserAwardedCredit (credit) {
+		const deleteLink = credit.getLink('delete');
+		const service = await getService();
+
+		await service.delete(deleteLink);
+
+		await this.loadTranscript();
+	}
+
 	async loadTranscript (entity) {
 		if(entity) {
 			this.entity = entity;
@@ -118,13 +149,11 @@ export default class TranscriptTableStore extends Stores.SimpleStore {
 		const results = await service.getBatch(this.entity.getLink('transcript'), params);
 		const items = results && results.Items || [];
 
-		// only load first time?
-		if(!this._availableTypes) {
-			this._availableTypes = Array.from(new Set(items.map(x => x.creditDefinition.type)));
-		}
+		this._availableTypes = Array.from(new Set(items.map(x => x.creditDefinition.type)));
 
 		this.set('loading', false);
 		this.set('items', items);
-		this.emitChange('loading', 'items', 'dateFilter', 'typeFilter');
+		this.set('availableTypes', this._availableTypes);
+		this.emitChange('loading', 'items', 'dateFilter', 'typeFilter', 'availableTypes');
 	}
 }

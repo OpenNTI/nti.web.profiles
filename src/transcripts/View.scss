@@ -22,7 +22,7 @@
 
 		.filters {
 			width: calc(100% - 12rem);
-			margin: 0 5rem 0 0;
+			margin: 0 1rem 0 0;
 			display: flex;
 
 			.transcript-date-filter-value {
@@ -30,7 +30,7 @@
 			}
 		}
 
-		.download {
+		.download, .award-credit {
 			background-color: $primary-blue;
 			color: white;
 			border-radius: 3px;
@@ -41,6 +41,10 @@
 			line-height: 2.5rem;
 			margin-top: 0.3rem;
 			font-size: 14px;
+		}
+
+		.award-credit {
+			margin-right: 1rem;
 		}
 	}
 }

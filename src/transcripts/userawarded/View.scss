@@ -1,0 +1,98 @@
+@import '~@nti/style-common';
+
+.user-awarded-credits {
+	background-color: white;
+
+	.content {
+		padding: 1rem;
+
+		.header {
+			font-size: 26px;
+			font-weight: 300;
+			border-bottom: solid 1px #ddd;
+			margin-bottom: 0.5rem;
+		}
+	}
+
+	.nti-text-input {
+		background-color: white;
+	}
+
+	.values-container {
+		padding: 0.5rem;
+
+		.label {
+			width: 10rem;
+			font-size: 10px;
+			padding-top: 0.3rem;
+			text-transform: uppercase;
+			font-weight: 600;
+			color: $tertiary-grey;
+		}
+
+		.nti-text-input {
+			width: 15rem;
+		}
+
+		&.awards {
+			.inputs {
+				display: flex;
+
+				.nti-text-input {
+					width: 4rem;
+					margin-right: 1rem;
+				}
+
+				.selected-credit-type {
+					width: 10rem;
+					text-align: left;
+					padding-left: 1rem;
+					font-size: 14px;
+					padding-top: 0.4rem;
+					border: solid 1px #ddd;
+					border-radius: 5px;
+					cursor: pointer;
+					color: $secondary-grey;
+
+					i {
+						float: right;
+						margin-right: 0.6rem;
+						padding-top: 0.2rem;
+					}
+				}
+			}
+		}
+
+		.award-credit-date-value {
+			width: 15rem;
+			text-align: left;
+			padding-left: 1rem;
+			font-size: 14px;
+			padding-top: 0.4rem;
+			border: solid 1px #ddd;
+			border-radius: 5px;
+			height: 2.1rem;
+			cursor: pointer;
+			color: $secondary-grey;
+
+			i {
+				float: right;
+				margin-right: 0.6rem;
+				padding-top: 0.2rem;
+			}
+		}
+	}
+}
+
+.flyout.award-credit-type {
+	.flyout-inner {
+		width: 10rem;
+
+		.award-type-option {
+			font-size: 12px;
+			padding: 0.5rem;
+			color: $secondary-grey;
+			cursor: pointer;
+		}
+	}
+}

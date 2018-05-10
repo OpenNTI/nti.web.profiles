@@ -1,5 +1,18 @@
 @import '~@nti/style-common';
 
+.flyout.award-credit-type {
+	.credit-row-option {
+		font-size: 14px;
+		padding: 0.5rem;
+		cursor: pointer;
+
+		&.delete {
+			color: red;
+			font-weight: 600;
+		}
+	}
+}
+
 .nti-profile-transcripts-table {
 	max-width: 40rem;
 	margin: 2rem;
@@ -11,6 +24,13 @@
 
 	.detail-viewable {
 		cursor: pointer;
+	}
+
+	.credit-row-option-trigger {
+		i {
+			font-size: 16px;
+			cursor: pointer;
+		}
 	}
 
 	thead {
@@ -29,6 +49,10 @@
 
 			th.type-col {
 				width: 6rem;
+			}
+
+			th.options-col {
+				width: 3rem;
 			}
 
 			th div {
@@ -58,6 +82,7 @@
 			font-size: 14px;
 			font-weight: 300;
 			text-align: right;
+			line-height: 16px;
 		}
 	}
 

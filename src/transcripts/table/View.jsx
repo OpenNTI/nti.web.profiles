@@ -6,17 +6,19 @@ import TitleColumn from './columns/Title';
 import DateColumn from './columns/Date';
 import TypeColumn from './columns/Type';
 import ValueColumn from './columns/Value';
+import OptionsColumn from './columns/Options';
 
 
 const columns = [
 	TitleColumn,
 	DateColumn,
 	TypeColumn,
-	ValueColumn
+	ValueColumn,
+	OptionsColumn
 ];
 
 export default class TranscriptTable extends React.Component {
-	propTypes = {
+	static propTypes = {
 		entity: PropTypes.object,
 		store: PropTypes.object,
 		loading: PropTypes.bool,
