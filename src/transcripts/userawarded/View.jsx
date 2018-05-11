@@ -8,6 +8,12 @@ import Store from '../Store';
 
 import TypeOption from './TypeOption';
 
+const FIELD_MAP = {
+	'title': 'Title',
+	'amount': 'Credit amount',
+	'credit_definition': 'Credit type'
+};
+
 const t = scoped('nti-web-profile.transcripts.userawarded.View', {
 	awardCredit: 'Award Credit',
 	issuer: 'Issuer',
@@ -43,6 +49,8 @@ export default class UserAwardedCreditView extends React.Component {
 	state = {
 		types: []
 	}
+
+	attachInputRef = x => this.input = x;
 
 	attachFlyoutRef = x => this.flyout = x
 
@@ -92,7 +100,7 @@ export default class UserAwardedCreditView extends React.Component {
 	}
 
 	renderAmountInput () {
-		return <Input.Text value={this.state.amount} onChange={this.updateAmount}/>;
+		return <Input.Text value={this.state.amount} onChange={this.updateAmount} pattern="[0-9]+([.,][0-9]+)?" ref={this.attachInputRef}/>;
 	}
 
 	renderDateTrigger () {
@@ -182,24 +190,35 @@ export default class UserAwardedCreditView extends React.Component {
 			description: this.state.description,
 			title: this.state.title,
 			amount: this.state.amount,
-			'credit_definition': this.state.selectedType.NTIID,
+			'credit_definition': this.state.selectedType && this.state.selectedType.NTIID,
 			issuer: this.state.issuer,
 			'awarded_date': this.state.date && this.state.date.getTime() / 1000
 		};
 
-		if(item) {
-			// saving an existing object
-			await this.store.editUserAwardedCredit(item, payload);
-		}
-		else {
+		try {
+			if(item) {
+				// saving an existing object
+				await this.store.editUserAwardedCredit(item, payload);
+			}
+			else {
 			// adding a new object
-			payload.MimeType = 'application/vnd.nextthought.credit.userawardedcredit';
+				payload.MimeType = 'application/vnd.nextthought.credit.userawardedcredit';
 
-			await this.store.addUserAwardedCredit(payload);
+				await this.store.addUserAwardedCredit(payload);
+			}
+
+			if(onDismiss) {
+				onDismiss();
+			}
 		}
+		catch (e) {
+			let error = e.message || e;
 
-		if(onDismiss) {
-			onDismiss();
+			if(e.code === 'RequiredMissing') {
+				error = 'Missing value: ' + (FIELD_MAP[e.message] || e.message);
+			}
+
+			this.setState({error});
 		}
 	}
 
@@ -212,10 +231,13 @@ export default class UserAwardedCreditView extends React.Component {
 	}
 
 	render () {
+		const {error} = this.state;
+
 		return (
 			<div className="user-awarded-credits">
 				<div className="content">
 					<div className="header">{t('awardCredit')}</div>
+					<div className="error">{error}</div>
 					<div className="values-container">
 						<div className="label">{t('title')}</div>
 						{this.renderTitleInput()}
@@ -248,7 +270,7 @@ export default class UserAwardedCreditView extends React.Component {
 						},
 						{
 							label: t('save'),
-							onClick: this.onSave,
+							onClick: this.onSave
 						}
 					]}
 				/>

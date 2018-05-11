@@ -2,6 +2,12 @@
 
 .user-awarded-credits {
 	background-color: white;
+	max-width: 18rem;
+
+	.error {
+		color: $primary-red;
+		text-align: center;
+	}
 
 	.content {
 		padding: 1rem;
@@ -41,6 +47,10 @@
 				.nti-text-input {
 					width: 4rem;
 					margin-right: 1rem;
+
+					&:invalid {
+						background-color: rgba($primary-red, 0.1);
+					}
 				}
 
 				.selected-credit-type {
