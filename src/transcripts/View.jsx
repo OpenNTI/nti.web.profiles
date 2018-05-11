@@ -32,6 +32,7 @@ class TranscriptsView extends React.Component {
 	static propTypes = {
 		entity: PropTypes.object,
 		store: PropTypes.object,
+		items: PropTypes.arrayOf(PropTypes.object),
 		dateFilter: PropTypes.object,
 		typeFilter: PropTypes.string,
 		availableTypes: PropTypes.arrayOf(PropTypes.string)
@@ -85,8 +86,8 @@ class TranscriptsView extends React.Component {
 		UserAwardedCredit.show(this.state.entity);
 	}
 
-	render () {
-		const {store} = this.props;
+	renderContent () {
+		const {items, dateFilter, typeFilter, store} = this.props;
 
 		const aggregateItems = store.getAggregateValues();
 
@@ -94,6 +95,22 @@ class TranscriptsView extends React.Component {
 			paddingBottom: (aggregateItems.length * 2) + 'rem'
 		};
 
+		if(items && items.length > 0) {
+			return (
+				<div className="table-container" style={containerStyle}>
+					<Table {...this.props}/>
+				</div>
+			);
+		}
+
+		if(dateFilter || typeFilter) {
+			return <div className="empty-message">No credits match your filter</div>;
+		}
+
+		return <div className="empty-message">No credits received yet</div>;
+	}
+
+	render () {
 		return (
 			<div className="nti-profile-transcripts">
 				<div className="top-controls">
@@ -115,9 +132,7 @@ class TranscriptsView extends React.Component {
 						</div>
 					</Flyout.Triggered>
 				</div>
-				<div className="table-container" style={containerStyle}>
-					<Table {...this.props}/>
-				</div>
+				{this.renderContent()}
 			</div>
 		);
 	}
