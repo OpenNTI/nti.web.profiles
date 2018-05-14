@@ -21,25 +21,13 @@
 }
 
 .transcript-type-filter-value {
-	border: solid 1px #eaeaea;
-	border-radius: 5px;
-	width: 224px;
-	height: 50px;
-	background-color: white;
-	display: flex;
-	padding: 8px;
-	cursor: pointer;
-
 	.type-value {
 		font-size: 12px;
-		min-width: 150px;
 		color: #757474;
 		text-align: left;
-		padding-left: 0;
 
 		&.no-type, .value {
 			font-size: 14px;
-			padding-top: 6px;
 			font-weight: 300;
 			text-align: center;
 		}
@@ -52,21 +40,6 @@
 			width: 2rem;
 			display: inline-block;
 			text-align: center;
-		}
-	}
-
-	.icon {
-		min-width: 43px;
-		border-right: solid 1px #eaeaea;
-		padding: 7px 0 0 9px;
-	}
-
-	.trigger {
-		margin-top: 5px;
-		color: #b8b8b8;
-
-		i[class^="icon-"].small {
-			font-size: 12px !important;
 		}
 	}
 }

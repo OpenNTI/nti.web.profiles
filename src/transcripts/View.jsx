@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Flyout} from '@nti/web-commons';
+import cx from 'classnames';
+import {Flyout, Button} from '@nti/web-commons';
 import {scoped} from '@nti/lib-locale';
 import {getService} from '@nti/web-client';
 
@@ -48,14 +49,14 @@ class TranscriptsView extends React.Component {
 		store.loadTranscript(entity);
 
 		getService().then(service => {
-			if(entity.hasLink('add_credit')) {
+			if (entity.hasLink('add_credit')) {
 				this.setState({canAddCredit: true});
 			}
 		});
 	}
 
 	renderDownloadTrigger () {
-		return <div className="download">{t('download')}</div>;
+		return <Button className="download" rounded>{t('download')}</Button>;
 	}
 
 	downloadCSV = () => {
@@ -111,26 +112,30 @@ class TranscriptsView extends React.Component {
 	}
 
 	render () {
+		const {canAddCredit} = this.state;
+
 		return (
 			<div className="nti-profile-transcripts">
-				<div className="top-controls">
-					<div className="filters">
+				<div className={cx('top-controls', {'can-add-credit': canAddCredit})}>
+					<div className="transcript-filters">
 						<DateFilter onChange={this.onDateFilterChange} filterValue={this.props.dateFilter}/>
 						<TypeFilter availableTypes={this.props.availableTypes || []} onChange={this.onTypeFilterChange} filterValue={this.props.typeFilter}/>
 					</div>
-					{this.state.canAddCredit && <div className="award-credit" onClick={this.launchUserAwardedEditor}>{t('addCredit')}</div>}
-					<Flyout.Triggered
-						className="transcript-download"
-						trigger={this.renderDownloadTrigger()}
-						horizontalAlign={Flyout.ALIGNMENTS.LEFT}
-						sizing={Flyout.SIZES.MATCH_SIDE}
-						ref={this.attachFlyoutRef}
-					>
-						<div>
-							<div className="download-option" onClick={this.downloadCSV}>{t('csv')}</div>
-							<div className="download-option" onClick={this.downloadPDF}>{t('pdf')}</div>
-						</div>
-					</Flyout.Triggered>
+					<div className="transcript-actions">
+						{this.state.canAddCredit && <Button className="award-credit" onClick={this.launchUserAwardedEditor} rounded>{t('addCredit')}</Button>}
+						<Flyout.Triggered
+							className="transcript-download"
+							trigger={this.renderDownloadTrigger()}
+							horizontalAlign={Flyout.ALIGNMENTS.LEFT}
+							sizing={Flyout.SIZES.MATCH_SIDE}
+							ref={this.attachFlyoutRef}
+						>
+							<div>
+								<div className="download-option" onClick={this.downloadCSV}>{t('csv')}</div>
+								<div className="download-option" onClick={this.downloadPDF}>{t('pdf')}</div>
+							</div>
+						</Flyout.Triggered>
+					</div>
 				</div>
 				{this.renderContent()}
 			</div>

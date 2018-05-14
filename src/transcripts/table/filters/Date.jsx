@@ -4,6 +4,7 @@ import {Flyout, DateTime, Prompt} from '@nti/web-commons';
 import {scoped} from '@nti/lib-locale';
 
 import DateRange from './widgets/DateRange';
+import FilterButton from './FilterButton';
 
 const t = scoped('nti-web-profile.transcripts.table.filters.Date', {
 	reset: 'Reset',
@@ -27,11 +28,11 @@ export default class DateFilter extends React.Component {
 
 	renderFilterTrigger () {
 		return (
-			<div className="transcript-date-filter-value">
-				{this.renderIcon()}
-				{this.renderDateDisplay()}
-				<div className="trigger"><i className="icon-chevron-down small"/></div>
-			</div>
+			<FilterButton
+				className="transcript-date-filter-value"
+				icon={this.renderIcon()}
+				display={this.renderDateDisplay()}
+			/>
 		);
 	}
 
@@ -104,7 +105,7 @@ export default class DateFilter extends React.Component {
 
 	renderIcon () {
 		return (
-			<div className="icon">
+			<div className="calendar-icon">
 				<div className="calendar-hanger"/>
 				<div className="calendar-top"/>
 				<div className="calendar-bottom"/>

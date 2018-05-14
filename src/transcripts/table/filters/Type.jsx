@@ -4,6 +4,7 @@ import {Flyout} from '@nti/web-commons';
 import {scoped} from '@nti/lib-locale';
 
 import TypeOption from './TypeOption';
+import FilterButton from './FilterButton';
 
 const t = scoped('nti-web-profile.transcripts.table.filters.Type', {
 	reset: 'Reset',
@@ -22,11 +23,11 @@ export default class TypeFilter extends React.Component {
 
 	renderFilterTrigger () {
 		return (
-			<div className="transcript-type-filter-value">
-				{this.renderIcon()}
-				{this.renderTypeDisplay()}
-				<div className="trigger"><i className="icon-chevron-down small"/></div>
-			</div>
+			<FilterButton
+				className="transcript-type-filter-value"
+				icon={this.renderIcon()}
+				display={this.renderTypeDisplay()}
+			/>
 		);
 	}
 
