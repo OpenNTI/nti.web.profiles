@@ -24,18 +24,12 @@ export default class ProfileCertificatesStore extends Stores.SimpleStore {
 
 		const service = await getService();
 
-		const enrolledCourses = await service.getCollection('EnrolledCourses', 'Courses');
+		const userEnrollments = await service.getBatch(entity.getLink('UserEnrollments'));
 
-		const currentLink = enrolledCourses.Links.filter(x => x.rel === 'Current')[0];
-		const archivedLink = enrolledCourses.Links.filter(x => x.rel === 'Archived')[0];
+		const allCourses = (userEnrollments && userEnrollments.Items) || [];
 
-		const current = currentLink ? await service.getBatch(currentLink.href) : null;
-		const archived = archivedLink ? await service.getBatch(archivedLink.href) : null;
-
-		const allCompletable = [...this.getCompletableFrom(current), ...this.getCompletableFrom(archived)];
-
-		const completedCourses = allCompletable.filter(c => c.CourseProgress.CompletedDate);
-		const inProgressCourses = allCompletable.filter(c => !c.CourseProgress.CompletedDate);
+		const completedCourses = allCourses.filter(c => c.CourseProgress.CompletedDate);
+		const inProgressCourses = allCourses.filter(c => !c.CourseProgress.CompletedDate);
 
 		this.set('loading', false);
 		this.set('completedCourses', completedCourses);

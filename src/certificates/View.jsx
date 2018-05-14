@@ -20,6 +20,7 @@ export default
 })
 class ProfileCertificatesView extends React.Component {
 	static propTypes = {
+		entity: PropTypes.object.isRequired,
 		store: PropTypes.object,
 		loading: PropTypes.bool,
 		inProgressCourses: PropTypes.arrayOf(PropTypes.object),
@@ -27,9 +28,9 @@ class ProfileCertificatesView extends React.Component {
 	}
 
 	componentDidMount () {
-		const {store} = this.props;
+		const {store, entity} = this.props;
 
-		store.loadCertificates();
+		store.loadCertificates(entity);
 	}
 
 	renderCertificatePreview = (course) => {
