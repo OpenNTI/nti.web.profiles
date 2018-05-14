@@ -144,7 +144,7 @@ export default class UserAwardedCreditView extends React.Component {
 
 	renderTrigger () {
 		const {selectedType} = this.state;
-		return <div className="selected-credit-type">{selectedType && (selectedType.type + ' ' + selectedType.unit)}<i className="icon-chevron-down"/></div>;
+		return <div className="selected-credit-type"><div className="type-value">{selectedType && (selectedType.type + ' ' + selectedType.unit)}</div><i className="icon-chevron-down"/></div>;
 	}
 
 	renderOption = (type) => {

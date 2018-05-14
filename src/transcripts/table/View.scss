@@ -24,6 +24,12 @@
 
 	.detail-viewable {
 		cursor: pointer;
+
+		div {
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
 	}
 
 	.credit-row-option-trigger {
@@ -40,15 +46,15 @@
 			height: 2rem;
 
 			th.value-col {
-				width: 8rem;
+				width: 9rem;
 			}
 
 			th.date-col {
-				width: 10rem;
+				width: 9rem;
 			}
 
 			th.type-col {
-				width: 6rem;
+				width: 7rem;
 			}
 
 			th.options-col {

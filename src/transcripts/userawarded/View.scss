@@ -2,11 +2,11 @@
 
 .user-awarded-credits {
 	background-color: white;
-	max-width: 18rem;
 
 	.error {
 		color: $primary-red;
 		text-align: center;
+		max-width: 16rem;
 	}
 
 	.content {
@@ -62,12 +62,21 @@
 					border: solid 1px #ddd;
 					border-radius: 5px;
 					cursor: pointer;
+					display: flex;
+					position: relative;
 					color: $secondary-grey;
 
+					.type-value {
+						overflow: hidden;
+						text-overflow: ellipsis;
+						white-space: nowrap;
+						width: 80%;
+					}
+
 					i {
-						float: right;
-						margin-right: 0.6rem;
-						padding-top: 0.2rem;
+						position: absolute;
+						right: 0.6rem;
+						top: 0.6rem;
 					}
 				}
 			}
