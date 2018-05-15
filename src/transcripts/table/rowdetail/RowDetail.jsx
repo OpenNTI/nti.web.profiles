@@ -52,6 +52,7 @@ export default class RowDetail extends React.Component {
 			<div className="transcript-row-detail">
 				<div className="content">
 					<div className="detail-title">{item.title}</div>
+					{item.description && (<div className="detail-description">{item.description}</div>)}
 					<div className="details">
 						{this.renderDetailInfo(t('earned'), item.amount + ' ' + item.creditDefinition.type + ' ' + item.creditDefinition.unit)}
 						{this.renderDetailInfo(t('earnedOn'), DateTime.format(item.getAwardedDate(), 'LL'))}
