@@ -15,8 +15,10 @@
 
 .nti-profile-transcripts-table {
 	max-width: 40rem;
-	margin: 2rem;
+	margin: 2rem auto;
 	border-collapse: collapse;
+	overflow-x: auto;
+	overflow-y: visible;
 
 	&.aggregate {
 		max-width: 16rem;
@@ -37,6 +39,10 @@
 			font-size: 16px;
 			cursor: pointer;
 		}
+	}
+
+	table {
+		table-layout: auto;
 	}
 
 	thead {
@@ -103,7 +109,7 @@
 			div {
 				font-size: 14px;
 				font-weight: 300;
-				height: 2rem;
+				min-height: 2rem;
 				text-align: right;
 			}
 
