@@ -129,18 +129,24 @@ class TranscriptsView extends React.Component {
 	render () {
 		const {canAddCredit} = this.state;
 
+		const {items, dateFilter, typeFilter} = this.props;
+
+		const noData = (!items || items.length === 0) && !dateFilter && !typeFilter;
+
 		return (
 			<div className="nti-profile-transcripts">
-				<div className={cx('top-controls', {'can-add-credit': canAddCredit})}>
-					<div className="transcript-filters">
-						<DateFilter onChange={this.onDateFilterChange} filterValue={this.props.dateFilter}/>
-						<TypeFilter availableTypes={this.props.availableTypes || []} onChange={this.onTypeFilterChange} filterValue={this.props.typeFilter}/>
+				{!noData && (
+					<div className={cx('top-controls', {'can-add-credit': canAddCredit})}>
+						<div className="transcript-filters">
+							<DateFilter onChange={this.onDateFilterChange} filterValue={this.props.dateFilter}/>
+							<TypeFilter availableTypes={this.props.availableTypes || []} onChange={this.onTypeFilterChange} filterValue={this.props.typeFilter}/>
+						</div>
+						<div className="transcript-actions">
+							{this.state.canAddCredit && <Button className="award-credit" onClick={this.launchUserAwardedEditor} rounded>{t('addCredit')}</Button>}
+							{this.renderDownloadButton()}
+						</div>
 					</div>
-					<div className="transcript-actions">
-						{this.state.canAddCredit && <Button className="award-credit" onClick={this.launchUserAwardedEditor} rounded>{t('addCredit')}</Button>}
-						{this.renderDownloadButton()}
-					</div>
-				</div>
+				)}
 				{this.renderContent()}
 			</div>
 		);
