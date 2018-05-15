@@ -15,7 +15,7 @@ export default class ProfileCertificatesStore extends Stores.SimpleStore {
 			return [];
 		}
 
-		return courses.Items.filter(c => c.CourseProgress);
+		return courses.Items.filter(c => c.CourseProgress).filter(c => c.CatalogEntry.AwardsCertificate);
 	}
 
 	async loadCertificates (entity) {
