@@ -19,6 +19,16 @@ export default class ProfileCertificatesStore extends Stores.SimpleStore {
 	}
 
 	async loadCertificates (entity) {
+		if(!entity.hasLink('UserEnrollments')) {
+			// if a user doesn't have the link, treat it as the empty state
+			this.set('loading', false);
+			this.set('completedCourses', []);
+			this.set('inProgressCourses', []);
+			this.emitChange('loading', 'completedCourses', 'inProgressCourses');
+
+			return;
+		}
+
 		this.set('loading', true);
 		this.emitChange('loading');
 
