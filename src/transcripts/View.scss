@@ -83,7 +83,6 @@ $header-ranges: (
 		}
 
 		@include responsive-range(one-column, $header-ranges) {
-
 			.transcript-filters, .transcript-actions {
 				width: 224px;
 				margin: 0 auto;
@@ -95,6 +94,21 @@ $header-ranges: (
 				.nti-button {
 					width: 100%;
 				}
+			}
+		}
+	}
+
+	.transcript-actions {
+		.download {
+			color: $primary-blue;
+			cursor: pointer;
+			font-size: 14px;
+			display: inline-block;
+			margin-left: 1rem;
+			margin-right: 0.5rem;
+
+			i {
+				margin-right: 5px;
 			}
 		}
 	}
@@ -118,6 +132,21 @@ $header-ranges: (
 			font-size: 14px;
 			font-weight: 300;
 			text-align: center;
+
+			a {
+				text-decoration: none;
+				color: $primary-blue;
+				font-weight: 500;
+			}
+
+			&.disabled {
+				pointer-events: none;
+
+				a {
+					color: $tertiary-grey;
+					font-weight: 300;
+				}
+			}
 		}
 	}
 }

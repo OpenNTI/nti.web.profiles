@@ -27,7 +27,9 @@ export default
 	typeFilter: 'typeFilter',
 	items: 'items',
 	aggregateItems: 'aggregateItems',
-	availableTypes: 'availableTypes'
+	availableTypes: 'availableTypes',
+	csvLink: 'csvLink',
+	pdfLink: 'pdfLink'
 })
 class TranscriptsView extends React.Component {
 	static propTypes = {
@@ -36,7 +38,9 @@ class TranscriptsView extends React.Component {
 		items: PropTypes.arrayOf(PropTypes.object),
 		dateFilter: PropTypes.object,
 		typeFilter: PropTypes.string,
-		availableTypes: PropTypes.arrayOf(PropTypes.string)
+		availableTypes: PropTypes.arrayOf(PropTypes.string),
+		csvLink: PropTypes.string,
+		pdfLink: PropTypes.string
 	}
 
 	state = {}
@@ -56,19 +60,7 @@ class TranscriptsView extends React.Component {
 	}
 
 	renderDownloadTrigger () {
-		return <Button className="download" rounded>{t('download')}</Button>;
-	}
-
-	downloadCSV = () => {
-		// TODO: Get download CSV link from transcript
-
-		this.flyout.dismiss();
-	}
-
-	downloadPDF = () => {
-		// TODO: Get download PDF link from transcript
-
-		this.flyout.dismiss();
+		return <div className="download"><i className="icon-download"/><span>{t('download')}</span></div>;
 	}
 
 	onDateFilterChange = (dateFilterValue) => {
@@ -111,6 +103,29 @@ class TranscriptsView extends React.Component {
 		return <div className="empty-message">No credits received yet</div>;
 	}
 
+	dismissDownloadFlyout = () => {
+		this.flyout.dismiss();
+	}
+
+	renderDownloadButton () {
+		const {csvLink, pdfLink} = this.props;
+
+		return (
+			<Flyout.Triggered
+				className="transcript-download"
+				trigger={this.renderDownloadTrigger()}
+				horizontalAlign={Flyout.ALIGNMENTS.LEFT}
+				sizing={Flyout.SIZES.MATCH_SIDE}
+				ref={this.attachFlyoutRef}
+			>
+				<div>
+					<div className={cx('download-option', {disabled: !csvLink})} onClick={this.dismissDownloadFlyout}><a href={csvLink}>{t('csv')}</a></div>
+					<div className={cx('download-option', {disabled: !pdfLink})} onClick={this.dismissDownloadFlyout}><a href={pdfLink}>{t('pdf')}</a></div>
+				</div>
+			</Flyout.Triggered>
+		);
+	}
+
 	render () {
 		const {canAddCredit} = this.state;
 
@@ -123,18 +138,7 @@ class TranscriptsView extends React.Component {
 					</div>
 					<div className="transcript-actions">
 						{this.state.canAddCredit && <Button className="award-credit" onClick={this.launchUserAwardedEditor} rounded>{t('addCredit')}</Button>}
-						<Flyout.Triggered
-							className="transcript-download"
-							trigger={this.renderDownloadTrigger()}
-							horizontalAlign={Flyout.ALIGNMENTS.LEFT}
-							sizing={Flyout.SIZES.MATCH_SIDE}
-							ref={this.attachFlyoutRef}
-						>
-							<div>
-								<div className="download-option" onClick={this.downloadCSV}>{t('csv')}</div>
-								<div className="download-option" onClick={this.downloadPDF}>{t('pdf')}</div>
-							</div>
-						</Flyout.Triggered>
+						{this.renderDownloadButton()}
 					</div>
 				</div>
 				{this.renderContent()}

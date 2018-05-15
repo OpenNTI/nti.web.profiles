@@ -16,6 +16,8 @@ export default class TranscriptTableStore extends Stores.SimpleStore {
 		this.set('loading', true);
 		this.set('dateFilter', null);
 		this.set('typeFilter', null);
+		this.set('csvLink', null);
+		this.set('pdfLink', null);
 	}
 
 	getSortOn (sortKey) {
@@ -49,6 +51,47 @@ export default class TranscriptTableStore extends Stores.SimpleStore {
 		this.set('typeFilter', newTypeFilter);
 
 		this.loadTranscript();
+	}
+
+	makeFilterParams () {
+		const typeFilter = this.get('typeFilter');
+		const dateFilter = this.get('dateFilter');
+
+		let params = '';
+
+		if(typeFilter) {
+			params += '&definitionType=' + typeFilter;
+		}
+
+		if(dateFilter) {
+			if(dateFilter.startDate) {
+				params += '&notBefore=' + dateFilter.startDate.getTime() / 1000;
+			}
+
+			if(dateFilter.endDate) {
+				params += '&notAfter=' + dateFilter.endDate.getTime() / 1000;
+			}
+		}
+
+		return params;
+	}
+
+	getReport (rel, type) {
+		const report = this.entity && this.entity.Reports && this.entity.Reports.filter(x => x.rel === rel)[0];
+
+		if(!report || !report.supportedTypes.includes(type)) {
+			return null;
+		}
+
+		return report.href + '?format=' + type + this.makeFilterParams();
+	}
+
+	getCSVReport () {
+		return this.getReport('report-UserTranscriptReport', 'text/csv');
+	}
+
+	getPDFReport () {
+		return this.getReport('report-UserTranscriptReport', 'application/pdf');
 	}
 
 	// TODO: let server do this
@@ -151,9 +194,11 @@ export default class TranscriptTableStore extends Stores.SimpleStore {
 
 		this._availableTypes = Array.from(new Set(items.map(x => x.creditDefinition.type)));
 
+		this.set('csvLink', this.getCSVReport());
+		this.set('pdfLink', this.getPDFReport());
 		this.set('loading', false);
 		this.set('items', items);
 		this.set('availableTypes', this._availableTypes);
-		this.emitChange('loading', 'items', 'dateFilter', 'typeFilter', 'availableTypes');
+		this.emitChange('loading', 'items', 'dateFilter', 'typeFilter', 'availableTypes', 'csvLink', 'pdfLink');
 	}
 }
