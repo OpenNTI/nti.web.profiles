@@ -135,18 +135,18 @@ class TranscriptsView extends React.Component {
 
 		return (
 			<div className="nti-profile-transcripts">
-				{!noData && (
-					<div className={cx('top-controls', {'can-add-credit': canAddCredit})}>
+				<div className={cx('top-controls', {'can-add-credit': canAddCredit})}>
+					{!noData && (
 						<div className="transcript-filters">
 							<DateFilter onChange={this.onDateFilterChange} filterValue={this.props.dateFilter}/>
 							<TypeFilter availableTypes={this.props.availableTypes || []} onChange={this.onTypeFilterChange} filterValue={this.props.typeFilter}/>
 						</div>
-						<div className="transcript-actions">
-							{this.state.canAddCredit && <Button className="award-credit" onClick={this.launchUserAwardedEditor} rounded>{t('addCredit')}</Button>}
-							{this.renderDownloadButton()}
-						</div>
+					)}
+					<div className="transcript-actions">
+						{this.state.canAddCredit && <Button className="award-credit" onClick={this.launchUserAwardedEditor} rounded>{t('addCredit')}</Button>}
+						{!noData && this.renderDownloadButton()}
 					</div>
-				)}
+				</div>
 				{this.renderContent()}
 			</div>
 		);
