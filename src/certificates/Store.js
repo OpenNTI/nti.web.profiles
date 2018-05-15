@@ -26,7 +26,7 @@ export default class ProfileCertificatesStore extends Stores.SimpleStore {
 
 		const userEnrollments = await service.getBatch(entity.getLink('UserEnrollments'));
 
-		const allCourses = (userEnrollments && userEnrollments.Items) || [];
+		const allCourses = this.getCompletableFrom(userEnrollments);
 
 		const completedCourses = allCourses.filter(c => c.CourseProgress.CompletedDate);
 		const inProgressCourses = allCourses.filter(c => !c.CourseProgress.CompletedDate);
