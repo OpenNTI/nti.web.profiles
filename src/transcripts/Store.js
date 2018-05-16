@@ -59,6 +59,16 @@ export default class TranscriptTableStore extends Stores.SimpleStore {
 		this.loadTranscript();
 	}
 
+	getEndOfDay (endDate) {
+		const endOfDay = new Date(endDate);
+		endOfDay.setHours(23);
+		endOfDay.setMinutes(59);
+		endOfDay.setSeconds(59);
+		endOfDay.setMilliseconds(999);
+
+		return endOfDay;
+	}
+
 	makeFilterParams () {
 		const typeFilter = this.get('typeFilter');
 		const dateFilter = this.get('dateFilter');
@@ -75,7 +85,7 @@ export default class TranscriptTableStore extends Stores.SimpleStore {
 			}
 
 			if(dateFilter.endDate) {
-				params += '&notAfter=' + dateFilter.endDate.getTime() / 1000;
+				params += '&notAfter=' + this.getEndOfDay(dateFilter.endDate).getTime() / 1000;
 			}
 		}
 
@@ -204,7 +214,7 @@ export default class TranscriptTableStore extends Stores.SimpleStore {
 			}
 
 			if(dateFilter.endDate) {
-				params.notAfter = dateFilter.endDate.getTime() / 1000;
+				params.notAfter = this.getEndOfDay(dateFilter.endDate).getTime() / 1000;
 			}
 		}
 
