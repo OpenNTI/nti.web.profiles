@@ -5,6 +5,10 @@
 		width: 170px;
 		margin-left: 52px;
 
+		> div {
+			max-height: 11rem;
+		}
+
 		.type-filter-option {
 			padding: 0.75rem;
 			font-size: 12px;
