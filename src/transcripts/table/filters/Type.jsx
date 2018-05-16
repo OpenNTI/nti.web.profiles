@@ -61,9 +61,7 @@ export default class TypeFilter extends React.Component {
 
 	renderIcon () {
 		return (
-			<div className="icon">
-				<i className="icon-view"/>
-			</div>
+			<i className="icon-view"/>
 		);
 	}
 
