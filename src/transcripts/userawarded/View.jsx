@@ -100,7 +100,7 @@ export default class UserAwardedCreditView extends React.Component {
 	}
 
 	renderAmountInput () {
-		return <Input.Text value={this.state.amount} onChange={this.updateAmount} pattern="[0-9]+([.,][0-9]+)?" ref={this.attachInputRef}/>;
+		return <Input.Text value={this.state.amount} maxLength="6" onChange={this.updateAmount} pattern="[0-9]+([.,][0-9]+)?" ref={this.attachInputRef}/>;
 	}
 
 	renderDateTrigger () {
