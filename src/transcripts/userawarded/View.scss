@@ -109,6 +109,10 @@
 	.flyout-inner {
 		width: 10rem;
 
+		> div {
+			max-height: 11rem;
+		}
+
 		.award-type-option {
 			font-size: 12px;
 			padding: 0.5rem;
