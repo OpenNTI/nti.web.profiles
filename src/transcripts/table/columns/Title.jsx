@@ -20,6 +20,6 @@ export default class Title extends React.Component {
 	);
 
 	render () {
-		return <DetailViewable item={this.props.item}><div>{this.props.item.title}</div></DetailViewable>;
+		return <DetailViewable item={this.props.item}><div className="transcript-row-title">{this.props.item.title}</div></DetailViewable>;
 	}
 }
