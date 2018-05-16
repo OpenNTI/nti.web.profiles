@@ -4,6 +4,12 @@ import {getService} from '@nti/web-client';
 // const AGG_KEY = 'agg';
 const DEFAULT_KEY = 'defaultKey';
 
+const FIELD_MAP = {
+	value: 'amount',
+	date: 'awarded_date',
+	type: 'credit_definition'
+};
+
 export default class TranscriptTableStore extends Stores.SimpleStore {
 	constructor () {
 		super();
@@ -76,6 +82,20 @@ export default class TranscriptTableStore extends Stores.SimpleStore {
 		return params;
 	}
 
+	makeSortParams () {
+		let params = '';
+
+		if(this.getSortOn()) {
+			params += '&sortOn=' + FIELD_MAP[this.getSortOn()];
+		}
+
+		if(this.getSortOrder()) {
+			params += '&sortOrder=' + this.getSortOrder();
+		}
+
+		return params;
+	}
+
 	getReport (rel, type) {
 		const report = this.entity && this.entity.Reports && this.entity.Reports.filter(x => x.rel === rel)[0];
 
@@ -83,7 +103,7 @@ export default class TranscriptTableStore extends Stores.SimpleStore {
 			return null;
 		}
 
-		return report.href + '?format=' + type + this.makeFilterParams();
+		return report.href + '?format=' + type + this.makeFilterParams() + this.makeSortParams();
 	}
 
 	getCSVReport () {
@@ -186,6 +206,14 @@ export default class TranscriptTableStore extends Stores.SimpleStore {
 			if(dateFilter.endDate) {
 				params.notAfter = dateFilter.endDate.getTime() / 1000;
 			}
+		}
+
+		if(this.getSortOn()) {
+			params.sortOn = FIELD_MAP[this.getSortOn()];
+		}
+
+		if(this.getSortOrder()) {
+			params.sortOrder = this.getSortOrder();
 		}
 
 		const service = await getService();
