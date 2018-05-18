@@ -8,8 +8,6 @@ import {getService} from '@nti/web-client';
 import Store from './Store';
 import Table from './table/View';
 import UserAwardedCredit from './userawarded/View';
-import DateFilter from './table/filters/Date';
-import TypeFilter from './table/filters/Type';
 import FilterMenu from './table/filters/FilterMenu';
 
 const t = scoped('nti-web-profile.transcripts.View', {
