@@ -6,145 +6,149 @@ $header-ranges: (
 	four-column: (801px, null)
 );
 
-.nti-profile-transcripts {
-	background: white;
-	color: $primary-grey;
-	margin: 0 auto;
-	padding: 1rem;
-	min-height: 20rem;
+.nti-profile-transcripts-container {
+	display: flex;
 
-	.table-container {
-		.table-title {
-			font-size: 26px;
-			font-weight: 300;
-			border-bottom: solid 1px #ddd;
-			padding-bottom: 0.5rem;
-		}
-	}
+	.nti-profile-transcripts {
+		background: white;
+		color: $primary-grey;
+		// margin: 0 auto;
+		padding: 1rem;
+		min-height: 20rem;
 
-	.top-controls {
-		padding: 1rem 0;
-
-		.nti-button {
-			text-align: center;
-		}
-
-		@include responsive-range(four-column, $header-ranges) {
-			display: flex;
-			justify-content: space-between;
-			align-items: center;
-
-			.transcript-filters {
-				flex: 0 0 auto;
-
-				.transcript-date-filter-value {
-					margin-right: 0.5rem;
-				}
-			}
-
-			.transcript-actions {
-				flex: 0 0 auto;
-
-				.nti-button {
-					width: 7rem;
-				}
-
-				.award-credit {
-					margin-right: 0.5rem;
-				}
+		.table-container {
+			.table-title {
+				font-size: 26px;
+				font-weight: 300;
+				border-bottom: solid 1px #ddd;
+				padding-bottom: 0.5rem;
 			}
 		}
 
-		@include responsive-range(two-column, $header-ranges) {
-			.transcript-filters, .transcript-actions {
-				max-width: 460px;
-				margin: 0 auto;
+		.top-controls {
+			padding: 1rem 0;
+
+			.nti-button {
+				text-align: center;
 			}
 
-			.transcript-filters {
+			@include responsive-range(four-column, $header-ranges) {
 				display: flex;
 				justify-content: space-between;
-				margin-bottom: 1rem;
-			}
+				align-items: center;
 
-			.transcript-actions {
-				display: flex;
+				.transcript-filters {
+					flex: 0 0 auto;
 
-				.nti-button {
-					width: 224px;
+					.transcript-date-filter-value {
+						margin-right: 0.5rem;
+					}
 				}
-			}
 
-			&.can-add-credit {
 				.transcript-actions {
+					flex: 0 0 auto;
+
+					.nti-button {
+						width: 7rem;
+					}
+
+					.award-credit {
+						margin-right: 0.5rem;
+					}
+				}
+			}
+
+			@include responsive-range(two-column, $header-ranges) {
+				.transcript-filters, .transcript-actions {
+					max-width: 460px;
+					margin: 0 auto;
+				}
+
+				.transcript-filters {
+					display: flex;
 					justify-content: space-between;
+					margin-bottom: 1rem;
+				}
+
+				.transcript-actions {
+					display: flex;
+
+					.nti-button {
+						width: 224px;
+					}
+				}
+
+				&.can-add-credit {
+					.transcript-actions {
+						justify-content: space-between;
+					}
+				}
+			}
+
+			@include responsive-range(one-column, $header-ranges) {
+				.transcript-filters, .transcript-actions {
+					width: 224px;
+					margin: 0 auto;
+
+					.nti-button, .profile-transcript-filter-button {
+						margin-bottom: 0.5rem;
+					}
+
+					.nti-button {
+						width: 100%;
+					}
 				}
 			}
 		}
 
-		@include responsive-range(one-column, $header-ranges) {
-			.transcript-filters, .transcript-actions {
-				width: 224px;
-				margin: 0 auto;
-
-				.nti-button, .profile-transcript-filter-button {
-					margin-bottom: 0.5rem;
-				}
-
-				.nti-button {
-					width: 100%;
-				}
-			}
-		}
-	}
-
-	.transcript-actions {
-		.download {
-			color: $primary-blue;
-			cursor: pointer;
-			font-size: 14px;
-			display: inline-block;
-			margin-left: 1rem;
-			margin-right: 0.5rem;
-
-			i {
-				margin-right: 5px;
-			}
-		}
-	}
-
-	.empty-message {
-		text-align: center;
-		font-size: 24px;
-		color: #b8b8b8;
-		margin-top: 2rem;
-	}
-}
-
-.flyout.transcript-download {
-	.flyout-inner {
-		width: 7rem;
-
-		.download-option {
-			color: $primary-grey;
-			padding: 0.5rem;
-			cursor: pointer;
-			font-size: 14px;
-			font-weight: 300;
-			text-align: center;
-
-			a {
-				text-decoration: none;
+		.transcript-actions {
+			.download {
 				color: $primary-blue;
-				font-weight: 500;
-			}
+				cursor: pointer;
+				font-size: 14px;
+				display: inline-block;
+				margin-left: 1rem;
+				margin-right: 0.5rem;
 
-			&.disabled {
-				pointer-events: none;
+				i {
+					margin-right: 5px;
+				}
+			}
+		}
+
+		.empty-message {
+			text-align: center;
+			font-size: 24px;
+			color: #b8b8b8;
+			margin-top: 2rem;
+		}
+	}
+
+	.flyout.transcript-download {
+		.flyout-inner {
+			width: 7rem;
+
+			.download-option {
+				color: $primary-grey;
+				padding: 0.5rem;
+				cursor: pointer;
+				font-size: 14px;
+				font-weight: 300;
+				text-align: center;
 
 				a {
-					color: $tertiary-grey;
-					font-weight: 300;
+					text-decoration: none;
+					color: $primary-blue;
+					font-weight: 500;
+				}
+
+				&.disabled {
+					pointer-events: none;
+
+					a {
+						color: $tertiary-grey;
+						font-weight: 300;
+					}
 				}
 			}
 		}

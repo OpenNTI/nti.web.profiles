@@ -194,6 +194,7 @@ export default class TranscriptTableStore extends Stores.SimpleStore {
 	async loadTranscript (entity) {
 		if(entity) {
 			this.entity = entity;
+			this._availableTypes = null;
 		}
 
 		this.set('loading', true);
@@ -230,7 +231,9 @@ export default class TranscriptTableStore extends Stores.SimpleStore {
 		const results = await service.getBatch(this.entity.getLink('transcript'), params);
 		const items = results && results.Items || [];
 
-		this._availableTypes = Array.from(new Set(items.map(x => x.creditDefinition.type)));
+		if(!this._availableTypes) {
+			this._availableTypes = Array.from(new Set(items.map(x => x.creditDefinition.type)));
+		}
 
 		this.set('csvLink', this.getCSVReport());
 		this.set('pdfLink', this.getPDFReport());

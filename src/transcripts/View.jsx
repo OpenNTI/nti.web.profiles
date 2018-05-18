@@ -10,6 +10,7 @@ import Table from './table/View';
 import UserAwardedCredit from './userawarded/View';
 import DateFilter from './table/filters/Date';
 import TypeFilter from './table/filters/Type';
+import FilterMenu from './table/filters/FilterMenu';
 
 const t = scoped('nti-web-profile.transcripts.View', {
 	aggregate: 'Summary',
@@ -134,20 +135,17 @@ class TranscriptsView extends React.Component {
 		const noData = (!items || items.length === 0) && !dateFilter && !typeFilter;
 
 		return (
-			<div className="nti-profile-transcripts">
-				<div className={cx('top-controls', {'can-add-credit': canAddCredit})}>
-					{!noData && (
-						<div className="transcript-filters">
-							<DateFilter onChange={this.onDateFilterChange} filterValue={this.props.dateFilter}/>
-							<TypeFilter availableTypes={this.props.availableTypes || []} onChange={this.onTypeFilterChange} filterValue={this.props.typeFilter}/>
+			<div className="nti-profile-transcripts-container">
+				<div className="nti-profile-transcripts">
+					<div className={cx('top-controls', {'can-add-credit': canAddCredit})}>
+						<div className="transcript-actions">
+							{this.state.canAddCredit && <Button className="award-credit" onClick={this.launchUserAwardedEditor} rounded>{t('addCredit')}</Button>}
+							{!noData && this.renderDownloadButton()}
 						</div>
-					)}
-					<div className="transcript-actions">
-						{this.state.canAddCredit && <Button className="award-credit" onClick={this.launchUserAwardedEditor} rounded>{t('addCredit')}</Button>}
-						{!noData && this.renderDownloadButton()}
 					</div>
+					{this.renderContent()}
 				</div>
-				{this.renderContent()}
+				<FilterMenu/>
 			</div>
 		);
 	}
