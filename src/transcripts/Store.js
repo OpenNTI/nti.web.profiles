@@ -164,20 +164,33 @@ export default class TranscriptTableStore extends Stores.SimpleStore {
 		return this.entity;
 	}
 
-	async addUserAwardedCredit (data) {
+	maybeAddToAvailableTypes (creditDefinition) {
+		// TODO: it'd be nice to not have to add this manually (what happens when user awarded credit is removed?)
+		// But the only way we could do that is, after successful add/edit/removal, query the server for the unfiltered
+		// list of credits for this entity and gather up all of the aggregate the available types
+		if(this._availableTypes && !this._availableTypes.includes(creditDefinition.type)) {
+			this._availableTypes.push(creditDefinition.type);
+		}
+	}
+
+	async addUserAwardedCredit (data, creditDefinition) {
 		const transcriptLink = this.entity.getLink('transcript');
 		const service = await getService();
 
 		await service.put(transcriptLink, data);
 
+		this.maybeAddToAvailableTypes(creditDefinition);
+
 		await this.loadTranscript();
 	}
 
-	async editUserAwardedCredit (credit, data) {
+	async editUserAwardedCredit (credit, data, creditDefinition) {
 		const itemLink = credit.getLink('edit');
 		const service = await getService();
 
 		await service.put(itemLink, data);
+
+		this.maybeAddToAvailableTypes(creditDefinition);
 
 		await this.loadTranscript();
 	}

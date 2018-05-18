@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Input, Flyout, DateTime, DayPicker, Prompt, DialogButtons} from '@nti/web-commons';
+import {Input, Flyout, DateTime, DayPicker, Prompt, DialogButtons, Panels} from '@nti/web-commons';
 import {scoped} from '@nti/lib-locale';
 import {getService} from '@nti/web-client';
 
@@ -21,7 +21,7 @@ const t = scoped('nti-web-profile.transcripts.userawarded.View', {
 	title: 'Title',
 	description: 'Description',
 	awardedDate: 'Awarded Date',
-	save: 'Save',
+	save: 'Add',
 	cancel: 'Cancel'
 });
 
@@ -69,6 +69,9 @@ export default class UserAwardedCreditView extends React.Component {
 
 		let initState = {};
 
+		const defsCollection = service.getCollection('CreditDefinitions', 'Global');
+		const allDefs = await service.getBatch(defsCollection.href);
+
 		if(credit) {
 			const def = typeof credit === 'string' ? await service.getObject(credit) : credit;
 
@@ -80,9 +83,10 @@ export default class UserAwardedCreditView extends React.Component {
 			initState.amount = def.amount;
 			initState.selectedType = def.creditDefinition;
 		}
-
-		const defsCollection = service.getCollection('CreditDefinitions', 'Global');
-		const allDefs = await service.getBatch(defsCollection.href);
+		else {
+			initState.date = new Date();
+			initState.selectedType = allDefs.Items && allDefs.Items[0];
+		}
 
 		this.setState({...initState, types: allDefs.Items});
 	}
@@ -92,7 +96,7 @@ export default class UserAwardedCreditView extends React.Component {
 	}
 
 	renderIssuerInput () {
-		return <Input.Text value={this.state.issuer} onChange={this.updateIssuer}/>;
+		return <Input.Text value={this.state.issuer} onChange={this.updateIssuer} placeholder="Name or organization"/>;
 	}
 
 	updateAmount = (val) => {
@@ -100,7 +104,17 @@ export default class UserAwardedCreditView extends React.Component {
 	}
 
 	renderAmountInput () {
-		return <Input.Text value={this.state.amount} maxLength="6" onChange={this.updateAmount} pattern="[0-9]+([.,][0-9]+)?" ref={this.attachInputRef}/>;
+		return <Input.Text value={this.state.amount} maxLength="6" onChange={this.updateAmount} pattern="[0-9]+([.,][0-9]+)?" ref={this.attachInputRef} placeholder="1.00"/>;
+	}
+
+	renderDateIcon () {
+		return (
+			<div className="calendar-icon">
+				<div className="calendar-hanger"/>
+				<div className="calendar-top"/>
+				<div className="calendar-bottom"/>
+			</div>
+		);
 	}
 
 	renderDateTrigger () {
@@ -108,7 +122,8 @@ export default class UserAwardedCreditView extends React.Component {
 
 		return (
 			<div className="award-credit-date-value">
-				{date && DateTime.format(date, 'LL')}
+				{this.renderDateIcon()}
+				<div className="date-value">{date && DateTime.format(date, 'LL')}</div>
 				<i className="icon-chevron-down"/>
 			</div>
 		);
@@ -171,7 +186,7 @@ export default class UserAwardedCreditView extends React.Component {
 	}
 
 	renderTitleInput () {
-		return <Input.Text value={this.state.title} onChange={this.updateTitle}/>;
+		return <Input.Text value={this.state.title} onChange={this.updateTitle} placeholder="Course or event name"/>;
 	}
 
 	updateDescription = (val) => {
@@ -179,7 +194,7 @@ export default class UserAwardedCreditView extends React.Component {
 	}
 
 	renderDescriptionInput () {
-		return <Input.Text value={this.state.description} onChange={this.updateDescription}/>;
+		return <Input.TextArea value={this.state.description} onChange={this.updateDescription} placeholder="Write Something..."/>;
 	}
 
 	onSave = async () => {
@@ -189,7 +204,7 @@ export default class UserAwardedCreditView extends React.Component {
 		let payload = {
 			description: this.state.description,
 			title: this.state.title,
-			amount: this.state.amount,
+			amount: this.state.amount || 1,
 			'credit_definition': this.state.selectedType && this.state.selectedType.NTIID,
 			issuer: this.state.issuer,
 			'awarded_date': this.state.date && this.state.date.getTime() / 1000
@@ -198,13 +213,13 @@ export default class UserAwardedCreditView extends React.Component {
 		try {
 			if(item) {
 				// saving an existing object
-				await this.store.editUserAwardedCredit(item, payload);
+				await this.store.editUserAwardedCredit(item, payload, this.state.selectedType);
 			}
 			else {
 			// adding a new object
 				payload.MimeType = 'application/vnd.nextthought.credit.userawardedcredit';
 
-				await this.store.addUserAwardedCredit(payload);
+				await this.store.addUserAwardedCredit(payload, this.state.selectedType);
 			}
 
 			if(onDismiss) {
@@ -236,30 +251,32 @@ export default class UserAwardedCreditView extends React.Component {
 		return (
 			<div className="user-awarded-credits">
 				<div className="content">
-					<div className="header">{t('awardCredit')}</div>
+					<Panels.TitleBar title={(t('awardCredit'))} iconAction={this.onCancel} />
 					<div className="error">{error}</div>
-					<div className="values-container">
-						<div className="label">{t('title')}</div>
-						{this.renderTitleInput()}
-					</div>
-					<div className="values-container">
-						<div className="label">{t('description')}</div>
-						{this.renderDescriptionInput()}
-					</div>
-					<div className="values-container awards">
-						<div className="label">{t('amount')}</div>
-						<div className="inputs">
-							{this.renderAmountInput()}
-							{this.renderCreditTypeInput()}
+					<div className="credit-fields">
+						<div className="values-container title">
+							<div className="label">{t('title')}</div>
+							{this.renderTitleInput()}
 						</div>
-					</div>
-					<div className="values-container">
-						<div className="label">{t('awardedDate')}</div>
-						{this.renderAwardedDateInput()}
-					</div>
-					<div className="values-container">
-						<div className="label">{t('issuer')}</div>
-						{this.renderIssuerInput()}
+						<div className="values-container issuer">
+							<div className="label">{t('issuer')}</div>
+							{this.renderIssuerInput()}
+						</div>
+						<div className="values-container description">
+							<div className="label">{t('description')}</div>
+							{this.renderDescriptionInput()}
+						</div>
+						<div className="values-container date">
+							<div className="label">{t('awardedDate')}</div>
+							{this.renderAwardedDateInput()}
+						</div>
+						<div className="values-container awards">
+							<div className="label">{t('amount')}</div>
+							<div className="inputs">
+								{this.renderAmountInput()}
+								{this.renderCreditTypeInput()}
+							</div>
+						</div>
 					</div>
 				</div>
 				<DialogButtons

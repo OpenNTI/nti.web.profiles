@@ -6,12 +6,11 @@
 	.error {
 		color: $primary-red;
 		text-align: center;
-		max-width: 16rem;
+		max-width: 600px;
+		padding: 25px 25px 0;
 	}
 
 	.content {
-		padding: 1rem;
-
 		.header {
 			font-size: 26px;
 			font-weight: 300;
@@ -20,86 +19,153 @@
 		}
 	}
 
-	.nti-text-input {
-		background-color: white;
+	.panel-title-bar {
+		background-color: #fbfbfb;
+		box-shadow: 0 1px 0 0 #e2e2e2;
+		padding-left: 25px;
+		padding-right: 10px;
+
+		i {
+			font-size: 30px;
+		}
 	}
 
-	.values-container {
-		padding: 0.5rem;
+	.credit-fields {
+		display: flex;
+		flex-wrap: wrap;
+		width: 600px;
+		padding: 20px 20px 60px;
 
-		.label {
-			width: 10rem;
-			font-size: 10px;
-			padding-top: 0.3rem;
-			text-transform: uppercase;
-			font-weight: 600;
-			color: $tertiary-grey;
-			text-align: left;
-		}
+		.values-container {
+			padding: 5px;
 
-		.nti-text-input {
-			width: 15rem;
-		}
+			.label {
+				width: 10rem;
+				font-size: 10px;
+				padding-top: 0.3rem;
+				text-transform: uppercase;
+				font-weight: 600;
+				color: $tertiary-grey;
+				text-align: left;
+			}
 
-		&.awards {
-			.inputs {
-				display: flex;
+			.nti-text-input {
+				width: 270px;
+				height: 40px;
+				background-color: white;
+				font-weight: 300;
+			}
 
-				.nti-text-input {
-					width: 4rem;
-					margin-right: 1rem;
+			.textarea-container {
+				box-shadow: none;
+				background-color: white;
+				width: 550px;
 
-					&:invalid {
-						background-color: rgba($primary-red, 0.1);
-					}
+				textarea {
+					font-weight: 300;
 				}
+			}
 
-				.selected-credit-type {
-					width: 10rem;
-					text-align: left;
-					padding-left: 1rem;
-					font-size: 14px;
-					padding-top: 0.4rem;
-					border: solid 1px #ddd;
-					border-radius: 5px;
-					cursor: pointer;
+			&.description {
+				.nti-text-input {
+					width: 550px;
+				}
+			}
+
+			&.awards {
+				.inputs {
 					display: flex;
-					position: relative;
-					color: $secondary-grey;
-					max-height: 2.3rem;
 
-					.type-value {
-						overflow: hidden;
-						text-overflow: ellipsis;
-						white-space: nowrap;
-						width: 80%;
+					.nti-text-input {
+						width: 90px;
+
+						&:invalid {
+							background-color: rgba($primary-red, 0.1);
+						}
 					}
 
-					i {
-						position: absolute;
-						right: 0.6rem;
-						top: 0.6rem;
+					.selected-credit-type {
+						width: 180px;
+						text-align: left;
+						padding-left: 1rem;
+						font-size: 14px;
+						line-height: 40px;
+						font-weight: 300;
+						border: solid 1px #ddd;
+						border-left: none;
+						height: 40px;
+						cursor: pointer;
+						display: flex;
+						position: relative;
+						color: $secondary-grey;
+
+						.type-value {
+							overflow: hidden;
+							text-overflow: ellipsis;
+							white-space: nowrap;
+							width: 80%;
+						}
+
+						i {
+							position: absolute;
+							right: 0.6rem;
+							top: 1rem;
+							font-size: 10px;
+						}
 					}
 				}
 			}
-		}
 
-		.award-credit-date-value {
-			width: 15rem;
-			text-align: left;
-			padding-left: 1rem;
-			font-size: 14px;
-			padding-top: 0.4rem;
-			border: solid 1px #ddd;
-			border-radius: 5px;
-			height: 2.1rem;
-			cursor: pointer;
-			color: $secondary-grey;
+			.award-credit-date-value {
+				width: 270px;
+				text-align: left;
+				font-size: 14px;
+				line-height: 40px;
+				border: solid 1px #ddd;
+				height: 40px;
+				cursor: pointer;
+				color: $secondary-grey;
+				font-weight: 300;
+				display: flex;
 
-			i {
-				float: right;
-				margin-right: 0.6rem;
-				padding-top: 0.2rem;
+				.date-value {
+					width: 216px;
+					padding-left: 10px;
+				}
+
+				.calendar-icon {
+					padding: 13px 13px 0;
+					border-right: solid 1px #ddd;
+					background-color: #fbfbfb;
+
+					.calendar-hanger {
+						border-left: solid 2px #b8b8b8;
+						border-right: solid 2px #b8b8b8;
+						margin-left: 3px;
+						height: 1px;
+						width: 8px;
+					}
+
+					.calendar-top {
+						background-color: #b8b8b8;
+						width: 14px;
+						height: 2px;
+						border-radius: 2px 2px 0 0;
+					}
+
+					.calendar-bottom {
+						border: solid 2px #b8b8b8;
+						width: 14px;
+						height: 10px;
+					}
+				}
+
+				i {
+					float: right;
+					margin-right: 0.6rem;
+					padding-top: 1rem;
+					font-size: 10px;
+				}
 			}
 		}
 	}
@@ -107,7 +173,7 @@
 
 .flyout.award-credit-type {
 	.flyout-inner {
-		width: 10rem;
+		width: 180px;
 
 		> div {
 			max-height: 11rem;
