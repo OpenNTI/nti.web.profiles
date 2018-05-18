@@ -17,7 +17,7 @@ const FIELD_MAP = {
 const t = scoped('nti-web-profile.transcripts.userawarded.View', {
 	awardCredit: 'Award Credit',
 	issuer: 'Issuer',
-	amount: 'Amount',
+	amount: 'Credit Amount',
 	title: 'Title',
 	description: 'Description',
 	awardedDate: 'Awarded Date',
