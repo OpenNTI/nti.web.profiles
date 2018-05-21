@@ -21,19 +21,20 @@ export default class Type extends React.Component {
 		<Header field="type" store={store}><span>{t('headerTitle')}</span></Header>
 	);
 
-	static FooterComponent = ({store}) => {
-		const renderFn = v => <Type key={v.creditDefinition.type + '-' + v.creditDefinition.unit} item={v} nonViewable/>;
-
-		return (
-			<div className="type-footer">
-				<div className="title"/>
-				<div className="values">{store.getAggregateValues().map(renderFn)}</div>
-			</div>
-		);
-	};
+	// static FooterComponent = ({store}) => {
+	// 	const renderFn = v => { return v.creditDefinition && <Type key={v.creditDefinition.type + '-' + v.creditDefinition.unit} item={v} nonViewable/>; };
+	//
+	// 	return (
+	// 		<div className="type-footer">
+	// 			<div className="title"/>
+	// 			<div className="values">{store.getAggregateValues().map(renderFn)}</div>
+	// 		</div>
+	// 	);
+	// };
 
 	renderContent () {
-		return <div>{this.props.item.creditDefinition.type}</div>;
+		const {creditDefinition} = this.props.item;
+		return <div>{creditDefinition && creditDefinition.type}</div>;
 	}
 
 	render () {

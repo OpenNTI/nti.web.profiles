@@ -14,15 +14,9 @@
 }
 
 .nti-profile-transcripts-table {
-	max-width: 40rem;
-	margin: 2rem auto;
 	border-collapse: collapse;
 	overflow-x: auto;
 	overflow-y: visible;
-
-	&.aggregate {
-		max-width: 16rem;
-	}
 
 	.detail-viewable {
 		cursor: pointer;
@@ -41,8 +35,38 @@
 		}
 	}
 
+	.transcript-add-row {
+		color: $primary-blue;
+		cursor: pointer;
+		display: flex;
+
+		.add-icon {
+			margin-right: 10px;
+			border-radius: 30px;
+			width: 22px;
+			height: 22px;
+			line-height: 18px;
+			border: solid 2px;
+			padding-top: 1px;
+			text-align: center;
+
+			i {
+				line-height: 16px;
+			}
+		}
+
+		.add-label {
+			font-size: 14px;
+			padding-top: 3px;
+		}
+	}
+
 	table {
 		table-layout: auto;
+	}
+
+	td.title-col {
+		width: 360px;
 	}
 
 	thead {
@@ -50,6 +74,10 @@
 
 		tr {
 			height: 2rem;
+
+			th.title-col {
+				min-width: 8rem;
+			}
 
 			th.value-col {
 				width: 9rem;
@@ -72,7 +100,7 @@
 				color: $tertiary-grey;
 				font-weight: 600;
 				text-transform: uppercase;
-				text-align: right;
+				text-align: left;
 
 				&.sortable {
 					cursor: pointer;
@@ -85,8 +113,18 @@
 		}
 	}
 
+	tbody {
+		tr {
+			border-top: solid 1px #f2f2f2;
+			height: 60px;
+
+			td {
+				padding-right: 30px;
+			}
+		}
+	}
+
 	td {
-		text-align: center;
 		padding-top: 0.5rem;
 		padding-bottom: 0.5rem;
 		max-width: 10rem;
@@ -94,7 +132,7 @@
 		div {
 			font-size: 14px;
 			font-weight: 300;
-			text-align: right;
+			text-align: left;
 			line-height: 16px;
 		}
 	}

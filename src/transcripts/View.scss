@@ -12,9 +12,13 @@ $header-ranges: (
 	.nti-profile-transcripts {
 		background: white;
 		color: $primary-grey;
-		// margin: 0 auto;
-		padding: 1rem;
+		margin-right: 6px;
 		min-height: 20rem;
+		width: 100%;
+
+		.credit-details {
+			padding: 10px 30px;
+		}
 
 		.table-container {
 			.table-title {
@@ -61,7 +65,6 @@ $header-ranges: (
 			@include responsive-range(two-column, $header-ranges) {
 				.transcript-filters, .transcript-actions {
 					max-width: 460px;
-					margin: 0 auto;
 				}
 
 				.transcript-filters {
@@ -88,7 +91,8 @@ $header-ranges: (
 			@include responsive-range(one-column, $header-ranges) {
 				.transcript-filters, .transcript-actions {
 					width: 224px;
-					margin: 0 auto;
+					display: flex;
+					flex-wrap: wrap;
 
 					.nti-button, .profile-transcript-filter-button {
 						margin-bottom: 0.5rem;
@@ -97,18 +101,39 @@ $header-ranges: (
 					.nti-button {
 						width: 100%;
 					}
+
+					.controls > div {
+						margin-bottom: 10px;
+					}
 				}
 			}
 		}
 
 		.transcript-actions {
-			.download {
-				color: $primary-blue;
+			width: 100%;
+
+			.controls {
+				float: right;
+			}
+
+			.section-title {
+				line-height: 36px;
+				font-size: 24px;
+				font-weight: 300;
+				display: inline-block;
+			}
+
+			.download, .filter-trigger {
 				cursor: pointer;
 				font-size: 14px;
 				display: inline-block;
-				margin-left: 1rem;
 				margin-right: 0.5rem;
+				height: 40px;
+				line-height: 40px;
+				border: 1px solid #e2e2e2;
+				border-radius: 3px;
+				padding: 0 1.5rem;
+				color: $secondary-grey;
 
 				i {
 					margin-right: 5px;
@@ -123,34 +148,40 @@ $header-ranges: (
 			margin-top: 2rem;
 		}
 	}
+}
 
-	.flyout.transcript-download {
-		.flyout-inner {
-			width: 7rem;
+.flyout.transcript-download {
+	.flyout-inner {
+		width: 7rem;
 
-			.download-option {
-				color: $primary-grey;
-				padding: 0.5rem;
-				cursor: pointer;
-				font-size: 14px;
-				font-weight: 300;
-				text-align: center;
+		.download-option {
+			color: $primary-grey;
+			padding: 0.5rem;
+			cursor: pointer;
+			font-size: 14px;
+			font-weight: 300;
+			text-align: center;
+
+			a {
+				text-decoration: none;
+				color: $primary-blue;
+				font-weight: 500;
+			}
+
+			&.disabled {
+				pointer-events: none;
 
 				a {
-					text-decoration: none;
-					color: $primary-blue;
-					font-weight: 500;
-				}
-
-				&.disabled {
-					pointer-events: none;
-
-					a {
-						color: $tertiary-grey;
-						font-weight: 300;
-					}
+					color: $tertiary-grey;
+					font-weight: 300;
 				}
 			}
 		}
+	}
+}
+
+.flyout.transcript-filter {
+	.flyout-inner {
+		width: 255px;
 	}
 }

@@ -32,7 +32,7 @@ export default
 	static propTypes = {
 		store: PropTypes.object.isRequired,
 		dateFilter: PropTypes.object,
-		typeFilter: PropTypes.object,
+		typeFilter: PropTypes.string,
 		availableTypes: PropTypes.arrayOf(PropTypes.string)
 	}
 

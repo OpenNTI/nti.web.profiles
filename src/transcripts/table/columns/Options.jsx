@@ -43,7 +43,9 @@ export default class Options extends React.Component {
 	}
 
 	render () {
-		if(this.props.item.hasLink('edit')) {
+		const {item} = this.props;
+
+		if(!item.isAddRow && item.hasLink('edit')) {
 			return (
 				<Flyout.Triggered
 					className="award-credit-type"

@@ -22,19 +22,23 @@ export default class Value extends React.Component {
 		<Header field="value" store={store}><span>{t('headerTitle')}</span></Header>
 	);
 
-	static FooterComponent = ({store}) => {
-		const renderFn = v => <Value key={v.creditDefinition.type + '-' + v.creditDefinition.unit} item={v} nonViewable/>;
-
-		return (
-			<div className="value-footer">
-				<div className="title">{t('total')}</div>
-				<div className="values">{store.getAggregateValues().map(renderFn)}</div>
-			</div>
-		);
-	};
+	// static FooterComponent = ({store}) => {
+	// 	const renderFn = v => { return v.creditDefinition && <Value key={v.creditDefinition.type + '-' + v.creditDefinition.unit} item={v} nonViewable/>; };
+	//
+	// 	return (
+	// 		<div className="value-footer">
+	// 			<div className="title">{t('total')}</div>
+	// 			<div className="values">{store.getAggregateValues().map(renderFn)}</div>
+	// 		</div>
+	// 	);
+	// };
 
 	renderContent () {
 		const {item} = this.props;
+
+		if(item.isAddRow) {
+			return null;
+		}
 
 		return <div>{parseFloat(Math.round(item.amount * 100) / 100).toFixed(2) + ' ' + item.creditDefinition.unit}</div>;
 	}

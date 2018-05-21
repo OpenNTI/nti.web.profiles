@@ -1,0 +1,37 @@
+@import '~@nti/style-common';
+
+.nti-profile-transcripts-table.aggregate {
+	padding: 30px;
+	background-color: #fbfbfb;
+	box-shadow: 0 1px 0 0 rgba(226, 226, 226, 0.5), 0 -1px 0 0 rgba(226, 226, 226, 0.5);
+
+	.section-title {
+		line-height: 36px;
+		font-size: 24px;
+		font-weight: 300;
+		display: inline-block;
+	}
+
+	.aggregate-row {
+		display: flex;
+		height: 30px;
+		line-height: 30px;
+
+		.aggregate-cell {
+			width: 5rem;
+			font-weight: 300;
+			font-size: 14px;
+
+			&.type {
+				width: 14rem;
+			}
+		}
+	}
+
+	.view-more, .show-less {
+		cursor: pointer;
+		color: $primary-blue;
+		font-size: 14px;
+		margin-top: 10px;
+	}
+}

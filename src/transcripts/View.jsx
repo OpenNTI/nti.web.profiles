@@ -1,149 +1,41 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import cx from 'classnames';
-import {Flyout, Button} from '@nti/web-commons';
-import {scoped} from '@nti/lib-locale';
-import {getService} from '@nti/web-client';
+import {Layouts} from '@nti/web-commons';
 
-import Store from './Store';
-import Table from './table/View';
-import UserAwardedCredit from './userawarded/View';
-import FilterMenu from './table/filters/FilterMenu';
+import Container from './Container';
+const {Responsive} = Layouts;
 
-const t = scoped('nti-web-profile.transcripts.View', {
-	aggregate: 'Summary',
-	detailed: 'Detailed',
-	csv: 'CSV',
-	pdf: 'PDF',
-	download: 'Download',
-	addCredit: 'Add Credit'
-});
-
-export default
-@Store.connect({
-	loading: 'loading',
-	dateFilter: 'dateFilter',
-	typeFilter: 'typeFilter',
-	items: 'items',
-	aggregateItems: 'aggregateItems',
-	availableTypes: 'availableTypes',
-	csvLink: 'csvLink',
-	pdfLink: 'pdfLink'
-})
-class TranscriptsView extends React.Component {
+export default class TranscriptsView extends React.Component {
 	static propTypes = {
-		entity: PropTypes.object,
-		store: PropTypes.object,
-		items: PropTypes.arrayOf(PropTypes.object),
-		dateFilter: PropTypes.object,
-		typeFilter: PropTypes.string,
-		availableTypes: PropTypes.arrayOf(PropTypes.string),
-		csvLink: PropTypes.string,
-		pdfLink: PropTypes.string
+		entity: PropTypes.object
 	}
 
 	state = {}
 
-	attachFlyoutRef = x => this.flyout = x
-
-	componentDidMount () {
-		const {entity, store} = this.props;
-
-		store.loadTranscript(entity);
-
-		getService().then(service => {
-			if (entity.hasLink('add_credit')) {
-				this.setState({canAddCredit: true});
-			}
-		});
+	renderWithSidePanel = () => {
+		return <Container showSidePanel {...this.props}/>;
 	}
 
-	renderDownloadTrigger () {
-		return <div className="download"><i className="icon-download"/><span>{t('download')}</span></div>;
+	renderWithoutSidePanel = () => {
+		return <Container {...this.props}/>;
 	}
 
-	onDateFilterChange = (dateFilterValue) => {
-		const {store} = this.props;
-
-		store.setDateFilter(dateFilterValue);
+	isLargeView = ({containerWidth}) => {
+		return containerWidth >= 1024;
 	}
 
-	onTypeFilterChange = (typeFilterValue) => {
-		const {store} = this.props;
-
-		store.setTypeFilter(typeFilterValue);
+	isSmallView = ({containerWidth}) => {
+		return containerWidth < 1024;
 	}
 
-	launchUserAwardedEditor = () => {
-		UserAwardedCredit.show(this.state.entity);
-	}
-
-	renderContent () {
-		const {items, dateFilter, typeFilter, store} = this.props;
-
-		const aggregateItems = store.getAggregateValues();
-
-		const containerStyle = {
-			paddingBottom: (aggregateItems.length * 2) + 'rem'
-		};
-
-		if(items && items.length > 0) {
-			return (
-				<div className="table-container" style={containerStyle}>
-					<Table {...this.props}/>
-				</div>
-			);
-		}
-
-		if(dateFilter || typeFilter) {
-			return <div className="empty-message">No credits match your filter</div>;
-		}
-
-		return <div className="empty-message">No credits received yet</div>;
-	}
-
-	dismissDownloadFlyout = () => {
-		this.flyout.dismiss();
-	}
-
-	renderDownloadButton () {
-		const {csvLink, pdfLink} = this.props;
-
-		return (
-			<Flyout.Triggered
-				className="transcript-download"
-				trigger={this.renderDownloadTrigger()}
-				horizontalAlign={Flyout.ALIGNMENTS.LEFT}
-				sizing={Flyout.SIZES.MATCH_SIDE}
-				ref={this.attachFlyoutRef}
-			>
-				<div>
-					<div className={cx('download-option', {disabled: !csvLink})} onClick={this.dismissDownloadFlyout}><a target="_blank" download href={csvLink}>{t('csv')}</a></div>
-					<div className={cx('download-option', {disabled: !pdfLink})} onClick={this.dismissDownloadFlyout}><a target="_blank" download href={pdfLink}>{t('pdf')}</a></div>
-				</div>
-			</Flyout.Triggered>
-		);
-	}
 
 	render () {
-		const {canAddCredit} = this.state;
-
-		const {items, dateFilter, typeFilter} = this.props;
-
-		const noData = (!items || items.length === 0) && !dateFilter && !typeFilter;
-
 		return (
-			<div className="nti-profile-transcripts-container">
-				<div className="nti-profile-transcripts">
-					<div className={cx('top-controls', {'can-add-credit': canAddCredit})}>
-						<div className="transcript-actions">
-							{this.state.canAddCredit && <Button className="award-credit" onClick={this.launchUserAwardedEditor} rounded>{t('addCredit')}</Button>}
-							{!noData && this.renderDownloadButton()}
-						</div>
-					</div>
-					{this.renderContent()}
-				</div>
-				<FilterMenu/>
+			<div className="nti-profile-transcripts-view">
+				<Responsive.Container>
+					<Responsive.Item query={this.isLargeView} render={this.renderWithSidePanel}/>
+					<Responsive.Item query={this.isSmallView} render={this.renderWithoutSidePanel}/>
+				</Responsive.Container>
 			</div>
 		);
 	}

@@ -23,6 +23,11 @@ export default class Date extends React.Component {
 
 	render () {
 		const {item} = this.props;
+
+		if(!item.getAwardedDate) {
+			return null;
+		}
+
 		const date = item.getAwardedDate();
 
 		return <DetailViewable item={this.props.item}><div>{date && DateTime.format(date, 'LL')}</div></DetailViewable>;

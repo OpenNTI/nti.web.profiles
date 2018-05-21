@@ -131,6 +131,10 @@ export default class TranscriptTableStore extends Stores.SimpleStore {
 		let defMap = {};
 
 		items.forEach(item => {
+			if(!item.creditDefinition) {
+				return;
+			}
+
 			let key = item.creditDefinition.type + ' ' + item.creditDefinition.unit;
 			if(aggMap[key]) {
 				aggMap[key] += item.amount;
@@ -251,8 +255,10 @@ export default class TranscriptTableStore extends Stores.SimpleStore {
 		this.set('csvLink', this.getCSVReport());
 		this.set('pdfLink', this.getPDFReport());
 		this.set('loading', false);
-		this.set('items', items);
+		this.set('items', [{isAddRow: true}, ...items]);
 		this.set('availableTypes', this._availableTypes);
-		this.emitChange('loading', 'items', 'dateFilter', 'typeFilter', 'availableTypes', 'csvLink', 'pdfLink');
+		this.set('aggregateItems', this.getAggregateValues());
+
+		this.emitChange('loading', 'items', 'aggregateItems', 'dateFilter', 'typeFilter', 'availableTypes', 'csvLink', 'pdfLink');
 	}
 }
