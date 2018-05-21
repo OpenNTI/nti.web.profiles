@@ -54,7 +54,16 @@ export default class TranscriptTableStore extends Stores.SimpleStore {
 	}
 
 	setTypeFilter (newTypeFilter) {
-		this.set('typeFilter', newTypeFilter);
+		let newTypes = this.get('typeFilter') || [];
+		newTypes.push(newTypeFilter);
+		this.set('typeFilter', newTypes);
+
+		this.loadTranscript();
+	}
+
+	removeTypeFilter (type) {
+		let newTypes = (this.get('typeFilter') || []).filter(x => x !== type);
+		this.set('typeFilter', newTypes);
 
 		this.loadTranscript();
 	}
@@ -76,7 +85,9 @@ export default class TranscriptTableStore extends Stores.SimpleStore {
 		let params = '';
 
 		if(typeFilter) {
-			params += '&definitionType=' + typeFilter;
+			typeFilter.forEach(type => {
+				params += '&definitionType=' + type;
+			});
 		}
 
 		if(dateFilter) {
@@ -255,7 +266,7 @@ export default class TranscriptTableStore extends Stores.SimpleStore {
 		this.set('csvLink', this.getCSVReport());
 		this.set('pdfLink', this.getPDFReport());
 		this.set('loading', false);
-		this.set('items', [{isAddRow: true}, ...items]);
+		this.set('items', this.entity.hasLink('add_credit') ? [{isAddRow: true}, ...items] : items);
 		this.set('availableTypes', this._availableTypes);
 		this.set('aggregateItems', this.getAggregateValues());
 

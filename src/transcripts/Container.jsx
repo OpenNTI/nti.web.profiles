@@ -71,8 +71,18 @@ class TranscriptsView extends React.Component {
 		UserAwardedCredit.show(this.state.entity);
 	}
 
+	renderEmptyMessage () {
+		const {dateFilter, typeFilter} = this.props;
+
+		if(dateFilter || typeFilter) {
+			return <div className="empty-message">No credits match your filter</div>;
+		}
+
+		return <div className="empty-message">No credits received yet</div>;
+	}
+
 	renderContent () {
-		const {items, dateFilter, typeFilter, store} = this.props;
+		const {items, store} = this.props;
 
 		const aggregateItems = store.getAggregateValues();
 
@@ -84,15 +94,12 @@ class TranscriptsView extends React.Component {
 			return (
 				<div className="table-container" style={containerStyle}>
 					<Table {...this.props}/>
+					{this.getRealData().length === 0 && this.renderEmptyMessage()}
 				</div>
 			);
 		}
 
-		if(dateFilter || typeFilter) {
-			return <div className="empty-message">No credits match your filter</div>;
-		}
-
-		return <div className="empty-message">No credits received yet</div>;
+		return this.renderEmptyMessage();
 	}
 
 	dismissDownloadFlyout = () => {
@@ -138,12 +145,17 @@ class TranscriptsView extends React.Component {
 		);
 	}
 
+	getRealData () {
+		const {items} = this.props;
+
+		return (items || []).filter(x => !x.isAddRow);
+	}
+
 	render () {
 		const {canAddCredit} = this.state;
-
-		const {items, dateFilter, typeFilter, showSidePanel} = this.props;
-
-		const noData = (!items || items.length === 0) && !dateFilter && !typeFilter;
+		const {dateFilter, typeFilter, showSidePanel} = this.props;
+		const realData = this.getRealData();
+		const noData = realData.length === 0 && !dateFilter && !typeFilter;
 
 		return (
 			<div className="nti-profile-transcripts-container">
@@ -155,15 +167,15 @@ class TranscriptsView extends React.Component {
 								{/* {this.state.canAddCredit && <Button className="award-credit" onClick={this.launchUserAwardedEditor} rounded>{t('addCredit')}</Button>} */}
 								<div className="section-title">{t('credits')}</div>
 								<div className="controls">
-									{!showSidePanel && this.renderFilterFlyout()}
-									{!noData && this.renderDownloadButton()}
+									{!noData && !showSidePanel && this.renderFilterFlyout()}
+									{realData.length > 0 && this.renderDownloadButton()}
 								</div>
 							</div>
 						</div>
 						{this.renderContent()}
 					</div>
 				</div>
-				{showSidePanel && <FilterMenu/>}
+				{showSidePanel && !noData && <FilterMenu/>}
 			</div>
 		);
 	}

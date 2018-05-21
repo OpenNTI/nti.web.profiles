@@ -54,7 +54,7 @@ class AggregateTranscriptTable extends React.Component {
 			<div className="nti-profile-transcripts-table aggregate">
 				<div className="section-title">Summary</div>
 				{(viewingMore ? aggregateItems : [...aggregateItems].splice(0, 3)).map(this.renderRow)}
-				{!viewingMore && <div className="view-more" onClick={this.viewMore}>View More</div>}
+				{!viewingMore && aggregateItems.length > 3 && <div className="view-more" onClick={this.viewMore}>View More</div>}
 				{viewingMore && <div className="show-less" onClick={this.showLess}>Show Less</div>}
 			</div>
 		);

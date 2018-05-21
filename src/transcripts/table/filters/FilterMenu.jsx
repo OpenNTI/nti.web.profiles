@@ -32,7 +32,7 @@ export default
 	static propTypes = {
 		store: PropTypes.object.isRequired,
 		dateFilter: PropTypes.object,
-		typeFilter: PropTypes.string,
+		typeFilter: PropTypes.arrayOf(PropTypes.string),
 		availableTypes: PropTypes.arrayOf(PropTypes.string)
 	}
 
@@ -79,12 +79,12 @@ export default
 
 	renderTypeOption = (option) => {
 		const {store, typeFilter} = this.props;
-		const selected = typeFilter === option;
+		const selected = (typeFilter || []).includes(option);
 		const cls = cx('option', 'type-filter', { selected });
 
 		return (
 			<div key={option} className={cls}>
-				<Checkbox checked={selected} onChange={() => { selected ? store.setTypeFilter(null) : store.setTypeFilter(option); }}/>
+				<Checkbox checked={selected} onChange={() => { selected ? store.removeTypeFilter(option) : store.setTypeFilter(option); }}/>
 				<span>{option}</span>
 			</div>
 		);

@@ -32,10 +32,10 @@ export default class TranscriptsView extends React.Component {
 	render () {
 		return (
 			<div className="nti-profile-transcripts-view">
-				<Responsive.Container>
+				{<Responsive.Container>
 					<Responsive.Item query={this.isLargeView} render={this.renderWithSidePanel}/>
 					<Responsive.Item query={this.isSmallView} render={this.renderWithoutSidePanel}/>
-				</Responsive.Container>
+				</Responsive.Container>}
 			</div>
 		);
 	}
