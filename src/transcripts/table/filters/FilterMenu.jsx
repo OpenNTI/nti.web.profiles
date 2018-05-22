@@ -13,7 +13,8 @@ const t = scoped('nti-web-profile.transcripts.table.filters.FilterMenu', {
 	pastMonth: 'Past Month',
 	past6Months: 'Past 6 Months',
 	customDate: 'Custom Date',
-	creditTypes: 'Credit Types'
+	creditTypes: 'Credit Types',
+	dateRange: 'Date Range'
 });
 
 const DATE_FILTERS = {
@@ -33,7 +34,8 @@ export default
 		store: PropTypes.object.isRequired,
 		dateFilter: PropTypes.object,
 		typeFilter: PropTypes.arrayOf(PropTypes.string),
-		availableTypes: PropTypes.arrayOf(PropTypes.string)
+		availableTypes: PropTypes.arrayOf(PropTypes.string),
+		fullScreenDatePicker: PropTypes.bool
 	}
 
 	resetDateFilter = () => {
@@ -55,12 +57,15 @@ export default
 	}
 
 	filterCustomDate = () => {
-		const {dateFilter, store} = this.props;
+		const {dateFilter, fullScreenDatePicker, store} = this.props;
 
 		// open up date range dialog
 		new Promise((fulfill, reject) => {
 			Prompt.modal(
-				<DateRange dateRange={dateFilter} onSave={fulfill} onDismiss={reject}/>
+				<DateRange dateRange={dateFilter} onSave={fulfill} onDismiss={reject}/>,
+				{
+					className: fullScreenDatePicker ? 'date-picker-full-screen' : ''
+				}
 			);
 		}).then((value) => {
 			store.setDateFilter({
@@ -84,17 +89,19 @@ export default
 
 		return (
 			<div key={option} className={cls}>
-				<Checkbox checked={selected} onChange={() => { selected ? store.removeTypeFilter(option) : store.setTypeFilter(option); }}/>
+				<Checkbox checked={selected} onChange={() => { selected ? store.removeTypeFilter(option) : store.addTypeFilter(option); }}/>
 				<span>{option}</span>
 			</div>
 		);
 	}
 
 	render () {
-		const {dateFilter, availableTypes} = this.props;
+		const {dateFilter, availableTypes, fullScreenDatePicker} = this.props;
+		const cls = cx('transcript-filter-menu', {'full-screen': fullScreenDatePicker});
 
 		return (
-			<div className="transcript-filter-menu">
+			<div className={cls}>
+				<div className="option-title">{t('dateRange')}</div>
 				{this.renderDateOption(this.resetDateFilter, t('anytime'), dateFilter === null)}
 				{this.renderDateOption(this.filterPastMonth, t('pastMonth'), dateFilter && dateFilter.name === DATE_FILTERS.PAST_MONTH)}
 				{this.renderDateOption(this.filterPast6Months, t('past6Months'), dateFilter && dateFilter.name === DATE_FILTERS.PAST_6_MONTHS)}

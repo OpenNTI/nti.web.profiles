@@ -53,7 +53,13 @@ export default class TranscriptTableStore extends Stores.SimpleStore {
 		this.loadTranscript();
 	}
 
-	setTypeFilter (newTypeFilter) {
+	resetTypeFilters () {
+		this.set('typeFilter', []);
+
+		this.loadTranscript();
+	}
+
+	addTypeFilter (newTypeFilter) {
 		let newTypes = this.get('typeFilter') || [];
 		newTypes.push(newTypeFilter);
 		this.set('typeFilter', newTypes);

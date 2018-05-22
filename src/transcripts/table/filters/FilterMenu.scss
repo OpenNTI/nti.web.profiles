@@ -1,5 +1,18 @@
 @import "~@nti/style-common";
 
+.date-picker-full-screen {
+	dialog {
+		height: 100%;
+		width: 100%;
+
+		.transcript-date-range {
+			height: 100%;
+			width: 100%;
+			margin: 0;
+		}
+	}
+}
+
 .transcript-filter-menu {
 	width: 255px;
 	background-color: white;
@@ -25,6 +38,12 @@
 			height: 44px;
 			line-height: 44px;
 			border-top: solid 1px rgba(226, 226, 226, 0.5);
+		}
+	}
+
+	&.full-screen {
+		.option.type-filter {
+			border: none;
 		}
 	}
 

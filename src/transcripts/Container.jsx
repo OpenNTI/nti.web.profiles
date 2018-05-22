@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import {Flyout} from '@nti/web-commons';
+import {Flyout, Prompt} from '@nti/web-commons';
 import {scoped} from '@nti/lib-locale';
 import {getService} from '@nti/web-client';
 
@@ -18,7 +18,10 @@ const t = scoped('nti-web-profile.transcripts.View', {
 	pdf: 'PDF',
 	download: 'Download Transcript',
 	addCredit: 'Add Credit',
-	credits: 'Credits'
+	credits: 'Credits',
+	confirm: 'Done',
+	reset: 'Reset',
+	filterHeader: 'Filters'
 });
 
 export default
@@ -32,17 +35,18 @@ export default
 	csvLink: 'csvLink',
 	pdfLink: 'pdfLink'
 })
-class TranscriptsView extends React.Component {
+class TranscriptsContentsContainer extends React.Component {
 	static propTypes = {
 		entity: PropTypes.object,
 		store: PropTypes.object,
 		items: PropTypes.arrayOf(PropTypes.object),
 		dateFilter: PropTypes.object,
-		typeFilter: PropTypes.string,
+		typeFilter: PropTypes.arrayOf(PropTypes.string),
 		availableTypes: PropTypes.arrayOf(PropTypes.string),
 		csvLink: PropTypes.string,
 		pdfLink: PropTypes.string,
-		showSidePanel: PropTypes.bool
+		showSidePanel: PropTypes.bool,
+		showFiltersAsModal: PropTypes.bool
 	}
 
 	state = {}
@@ -129,6 +133,34 @@ class TranscriptsView extends React.Component {
 		return <div className="filter-trigger">Filters</div>;
 	}
 
+	launchFilterMenu = () => {
+		let dialog = null;
+
+		return new Promise((fulfill, reject) => {
+			const doReset = () => {
+				this.props.store.setDateFilter(null);
+				this.props.store.resetTypeFilters();
+			};
+
+			dialog = Prompt.modal(
+				<div className="filter-menu-container">
+					<div className="controls">
+						<div className="reset" onClick={doReset}>{t('reset')}</div>
+						<div className="header">{t('filterHeader')}</div>
+						<div className="confirm" onClick={fulfill}>{t('confirm')}</div>
+					</div>
+					<FilterMenu fullScreenDatePicker/>
+				</div>,
+				{className: 'transcript-filter-modal'});
+		}).then((savedEntry) => {
+			dialog && dialog.dismiss();
+		});
+	}
+
+	renderFilterDialog () {
+		return <div className="filter-trigger" onClick={this.launchFilterMenu}>Filters</div>;
+	}
+
 	renderFilterFlyout () {
 		return (
 			<Flyout.Triggered
@@ -153,7 +185,7 @@ class TranscriptsView extends React.Component {
 
 	render () {
 		const {canAddCredit} = this.state;
-		const {dateFilter, typeFilter, showSidePanel} = this.props;
+		const {dateFilter, typeFilter, showSidePanel, showFiltersAsModal} = this.props;
 		const realData = this.getRealData();
 		const noData = realData.length === 0 && !dateFilter && !typeFilter;
 
@@ -167,7 +199,8 @@ class TranscriptsView extends React.Component {
 								{/* {this.state.canAddCredit && <Button className="award-credit" onClick={this.launchUserAwardedEditor} rounded>{t('addCredit')}</Button>} */}
 								<div className="section-title">{t('credits')}</div>
 								<div className="controls">
-									{!noData && !showSidePanel && this.renderFilterFlyout()}
+									{!noData && !showSidePanel && showFiltersAsModal && this.renderFilterDialog()}
+									{!noData && !showSidePanel && !showFiltersAsModal && this.renderFilterFlyout()}
 									{realData.length > 0 && this.renderDownloadButton()}
 								</div>
 							</div>

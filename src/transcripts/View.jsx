@@ -20,12 +20,20 @@ export default class TranscriptsView extends React.Component {
 		return <Container {...this.props}/>;
 	}
 
+	renderFilterAsModal = () => {
+		return <Container showFiltersAsModal {...this.props}/>;
+	}
+
 	isLargeView = ({containerWidth}) => {
 		return containerWidth >= 1024;
 	}
 
+	isMediumView = ({containerWidth}) => {
+		return containerWidth < 1024 && containerWidth >= 400;
+	}
+
 	isSmallView = ({containerWidth}) => {
-		return containerWidth < 1024;
+		return containerWidth < 400;
 	}
 
 
@@ -34,7 +42,8 @@ export default class TranscriptsView extends React.Component {
 			<div className="nti-profile-transcripts-view">
 				{<Responsive.Container>
 					<Responsive.Item query={this.isLargeView} render={this.renderWithSidePanel}/>
-					<Responsive.Item query={this.isSmallView} render={this.renderWithoutSidePanel}/>
+					<Responsive.Item query={this.isMediumView} render={this.renderWithoutSidePanel}/>
+					<Responsive.Item query={this.isSmallView} render={this.renderFilterAsModal}/>
 				</Responsive.Container>}
 			</div>
 		);
