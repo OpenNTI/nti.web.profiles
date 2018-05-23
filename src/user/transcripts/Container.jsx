@@ -188,9 +188,10 @@ class TranscriptsContentsContainer extends React.Component {
 		const {dateFilter, typeFilter, showSidePanel, showFiltersAsModal} = this.props;
 		const realData = this.getRealData();
 		const noData = realData.length === 0 && !dateFilter && !typeFilter;
+		const cls = cx('nti-profile-transcripts-container', {'has-side-panel': showSidePanel});
 
 		return (
-			<div className="nti-profile-transcripts-container">
+			<div className={cls}>
 				<div className="nti-profile-transcripts">
 					<AggreggateTable {...this.props}/>
 					<div className="credit-details">
