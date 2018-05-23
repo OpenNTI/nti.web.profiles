@@ -24,7 +24,12 @@ class ProfileCertificatesView extends React.Component {
 		store: PropTypes.object,
 		loading: PropTypes.bool,
 		inProgressCourses: PropTypes.arrayOf(PropTypes.object),
-		completedCourses: PropTypes.arrayOf(PropTypes.object)
+		completedCourses: PropTypes.arrayOf(PropTypes.object),
+		showPreviewFrame: PropTypes.bool
+	}
+
+	static defaultProps = {
+		showPreviewFrame: true
 	}
 
 	componentDidMount () {
@@ -34,7 +39,7 @@ class ProfileCertificatesView extends React.Component {
 	}
 
 	renderCertificatePreview = (course) => {
-		return <CertificatePreview key={course.CatalogEntry.ProviderUniqueID} course={course}/>;
+		return <CertificatePreview key={course.CatalogEntry.ProviderUniqueID} course={course} showPreviewFrame={this.props.showPreviewFrame}/>;
 	}
 
 	renderCertificates (courses, emptyMessage) {

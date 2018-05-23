@@ -12,7 +12,8 @@ const t = scoped('nti-web-profile.certificates.View', {
 
 export default class CertificatePreview extends React.Component {
 	static propTypes = {
-		course: PropTypes.object.isRequired
+		course: PropTypes.object.isRequired,
+		showPreviewFrame: PropTypes.bool
 	}
 
 	state = {}
@@ -25,6 +26,23 @@ export default class CertificatePreview extends React.Component {
 		this.setState({
 			showCertificate: false
 		});
+	}
+
+	renderPreviewImage () {
+		const {course, showPreviewFrame} = this.props;
+
+		const certLink = course.getLink('Certificate');
+
+		if(showPreviewFrame) {
+			return <div className="preview-image" onClick={this.onImgClick}/>;
+		}
+
+		return (
+			<a href={certLink} target="_blank">
+				<div className="preview-image">
+				</div>
+			</a>
+		);
 	}
 
 	render () {
@@ -40,8 +58,7 @@ export default class CertificatePreview extends React.Component {
 						<Iframe downloadable src={certLink} title={t('certificateTitle', {title: CatalogEntry.title})} />
 					</Prompt.Dialog>
 				)}
-				<div className="preview-image" onClick={this.onImgClick}>
-				</div>
+				{this.renderPreviewImage()}
 				<div className="course-title">
 					{CatalogEntry.Title}
 				</div>
