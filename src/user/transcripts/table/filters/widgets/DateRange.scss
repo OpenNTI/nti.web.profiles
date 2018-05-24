@@ -1,8 +1,13 @@
 @import '~@nti/style-common';
 
+$header-ranges: (
+	narrow: (null, 340px),
+	wide: (340px, null)
+);
+
 .transcript-date-range {
 	background-color: white;
-	width: 300px;
+	width: 350px;
 	padding: 0.75rem 0.75rem 0.5rem;
 
 	.date-picker-range .selected-dates {
@@ -10,6 +15,15 @@
 
 		.date .value {
 			font-size: 24px;
+			line-height: 36px;
+		}
+
+		.date .remove-date {
+			@include responsive-range(narrow, $header-ranges) {
+				right: 2px;
+			}
+
+			right: 10px;
 		}
 	}
 
