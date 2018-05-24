@@ -97,10 +97,19 @@ export default
 		const selected = (typeFilter || []).includes(option);
 		const cls = cx('option', 'type-filter', { selected });
 
+		const clickHandler = () => {
+			if(selected) {
+				store.removeTypeFilter(option);
+			}
+			else {
+				store.addTypeFilter(option);
+			}
+		};
+
 		return (
-			<div key={option} className={cls} onClick={() => { selected ? store.removeTypeFilter(option) : store.addTypeFilter(option); }}>
-				<Checkbox checked={selected}/>
-				<span>{option}</span>
+			<div key={option} className={cls}>
+				<Checkbox onChange={clickHandler} checked={selected}/>
+				<span onClick={clickHandler}>{option}</span>
 			</div>
 		);
 	}
