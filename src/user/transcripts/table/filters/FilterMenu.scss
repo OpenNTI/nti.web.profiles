@@ -20,6 +20,20 @@
 	background-color: white;
 	display: inline-table;
 
+	.reset {
+		border: solid 1px #ddd;
+		display: inline-block;
+		padding: 0 1rem;
+		border-radius: 3px;
+		font-size: 14px;
+		height: 28px;
+		line-height: 28px;
+		margin-left: 10px;
+		margin-top: 10px;
+		color: $secondary-grey;
+		cursor: pointer;
+	}
+
 	.option {
 		height: 40px;
 		padding-left: 20px;
@@ -50,6 +64,13 @@
 	&.full-screen {
 		.option.type-filter {
 			border: none;
+		}
+	}
+
+	&.disabled {
+		> * {
+			opacity: 0.5;
+			pointer-events: none;
 		}
 	}
 

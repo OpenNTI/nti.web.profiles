@@ -171,7 +171,7 @@ class TranscriptsContentsContainer extends React.Component {
 				ref={this.attachFilterRef}
 			>
 				<div>
-					<FilterMenu/>
+					<FilterMenu canReset/>
 				</div>
 			</Flyout.Triggered>
 		);
@@ -209,7 +209,7 @@ class TranscriptsContentsContainer extends React.Component {
 						{this.renderContent()}
 					</div>
 				</div>
-				{showSidePanel && !noData && <FilterMenu/>}
+				{showSidePanel && !noData && <FilterMenu canReset/>}
 			</div>
 		);
 	}

@@ -14,7 +14,8 @@ const t = scoped('nti-web-profile.transcripts.table.filters.FilterMenu', {
 	past6Months: 'Past 6 Months',
 	customDate: 'Custom Date',
 	creditTypes: 'Credit Types',
-	dateRange: 'Date Range'
+	dateRange: 'Date Range',
+	reset: 'Reset'
 });
 
 const DATE_FILTERS = {
@@ -35,7 +36,9 @@ export default
 		dateFilter: PropTypes.object,
 		typeFilter: PropTypes.arrayOf(PropTypes.string),
 		availableTypes: PropTypes.arrayOf(PropTypes.string),
-		fullScreenDatePicker: PropTypes.bool
+		fullScreenDatePicker: PropTypes.bool,
+		canReset: PropTypes.bool,
+		loading: PropTypes.bool
 	}
 
 	resetDateFilter = () => {
@@ -76,6 +79,13 @@ export default
 		});
 	}
 
+	resetAll = () => {
+		const {store} = this.props;
+
+		store.setDateFilter(null);
+		store.resetTypeFilters();
+	}
+
 	renderDateOption (clickHandler, label, selected) {
 		const cls = cx('option', 'date-filter', { selected });
 
@@ -96,11 +106,12 @@ export default
 	}
 
 	render () {
-		const {dateFilter, availableTypes, fullScreenDatePicker} = this.props;
-		const cls = cx('transcript-filter-menu', {'full-screen': fullScreenDatePicker});
+		const {dateFilter, availableTypes, fullScreenDatePicker, loading, canReset} = this.props;
+		const cls = cx('transcript-filter-menu', {'full-screen': fullScreenDatePicker, 'disabled': loading});
 
 		return (
 			<div className={cls}>
+				{canReset && <div className="reset" onClick={this.resetAll}>{t('reset')}</div>}
 				<div className="option-title">{t('dateRange')}</div>
 				{this.renderDateOption(this.resetDateFilter, t('anytime'), dateFilter === null)}
 				{this.renderDateOption(this.filterPastMonth, t('pastMonth'), dateFilter && dateFilter.name === DATE_FILTERS.PAST_MONTH)}
