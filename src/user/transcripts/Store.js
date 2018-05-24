@@ -168,6 +168,23 @@ export default class TranscriptTableStore extends Stores.SimpleStore {
 			agg.push({creditDefinition: def, amount: aggMap[k]});
 		});
 
+		agg.sort(function (a, b) {
+			let {type:aType} = a.creditDefinition;
+			let {type:bType} = b.creditDefinition;
+
+			let normalizedAType = (aType || '').toLowerCase();
+			let normalizedBType = (bType || '').toLowerCase();
+
+			if(normalizedAType < normalizedBType) {
+				return false;
+			}
+			else if(normalizedAType > normalizedBType) {
+				return true;
+			}
+
+			return aType > bType;
+		});
+
 		return agg;
 	}
 
