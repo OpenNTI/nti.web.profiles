@@ -3,7 +3,7 @@
 .certificate-progress-container {
 	display: flex;
 
-	.progress {
+	.certificate-progress {
 		height: 6px;
 		width: 200px;
 		position: relative;
@@ -19,7 +19,7 @@
 		}
 	}
 
-	.progress-label {
+	.certificate-progress-label {
 		font-size: 10px;
 		color: $tertiary-grey;
 		margin-left: 10px;

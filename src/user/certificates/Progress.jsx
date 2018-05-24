@@ -7,10 +7,10 @@ Progress.propTypes = {
 export default function Progress ({pct}) {
 	return (
 		<div className="certificate-progress-container">
-			<div className="progress">
+			<div className="certificate-progress">
 				<div className="bar" style={{width: pct + '%'}}/>
 			</div>
-			<div className="progress-label">
+			<div className="certificate-progress-label">
 				{pct + '%'}
 			</div>
 		</div>
