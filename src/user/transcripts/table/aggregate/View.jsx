@@ -25,7 +25,7 @@ class AggregateTranscriptTable extends React.Component {
 		return (
 			<div key={item.creditDefinition.type} className="aggregate-row">
 				<div className="type aggregate-cell">{item.creditDefinition.type}</div>
-				<div className="amount aggregate-cell">{item.amount}</div>
+				<div className="amount aggregate-cell">{(item.amount || 0).toFixed(2)}</div>
 			</div>
 		);
 	}
