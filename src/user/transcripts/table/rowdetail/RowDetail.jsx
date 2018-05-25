@@ -9,6 +9,12 @@ const t = scoped('nti-web-profile.transcripts.table.rowdetail.RowDetail', {
 	issuedBy: 'Issued By'
 });
 
+/**
+ * Class RowDetail
+ * @prop {object} item Transcript credit
+ * @prop {function} onDismiss Close the detail
+ * @returns {RowDetail} Transcript credit detail
+ */
 export default class RowDetail extends React.Component {
 	static show (item) {
 		return new Promise((fulfill, reject) => {
@@ -23,9 +29,19 @@ export default class RowDetail extends React.Component {
 		});
 	}
 
-	propTypes = {
-		item: PropTypes.object.isRequired,
-		onDismiss: PropTypes.func
+	static propTypes = {
+		item: PropTypes.shape({
+			title: PropTypes.string.isRequired,
+			description: PropTypes.string,
+			amount: PropTypes.number.isRequired,
+			creditDefinition: PropTypes.shape({
+				type: PropTypes.string,
+				unit: PropTypes.string
+			}).isRequired,
+			issuer: PropTypes.string.isRequired,
+			getAwardedDate: PropTypes.func
+		}).isRequired,
+		onDismiss: PropTypes.func.isRequired
 	}
 
 	renderDetailInfo (label, value) {
@@ -47,6 +63,7 @@ export default class RowDetail extends React.Component {
 
 	render () {
 		const {item} = this.props;
+		const amount = (item.amount.toFixed && item.amount.toFixed(2)) || item.amount;
 
 		return (
 			<div className="transcript-row-detail">
@@ -54,7 +71,7 @@ export default class RowDetail extends React.Component {
 					<div className="detail-title">{item.title}</div>
 					{item.description && (<div className="detail-description">{item.description}</div>)}
 					<div className="details">
-						{this.renderDetailInfo(t('earned'), item.amount + ' ' + item.creditDefinition.type + ' ' + item.creditDefinition.unit)}
+						{this.renderDetailInfo(t('earned'), amount + ' ' + item.creditDefinition.type + ' ' + item.creditDefinition.unit)}
 						{this.renderDetailInfo(t('earnedOn'), DateTime.format(item.getAwardedDate(), 'LL'))}
 						{this.renderDetailInfo(t('issuedBy'), item.issuer)}
 					</div>
