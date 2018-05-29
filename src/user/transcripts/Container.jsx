@@ -67,6 +67,15 @@ class TranscriptsContentsContainer extends React.Component {
 		});
 	}
 
+	componentDidUpdate (oldProps) {
+		const {entity:oldEntity} = oldProps;
+		const {entity:newEntity} = this.props;
+
+		if(oldEntity === null || oldEntity.Username !== newEntity.Username) {
+			this.props.store.loadTranscript(newEntity);
+		}
+	}
+
 	renderDownloadTrigger () {
 		return <div className="download"><i className="icon-download"/><span>{t('download')}</span></div>;
 	}

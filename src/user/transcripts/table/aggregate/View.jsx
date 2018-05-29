@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import cx from 'classnames';
 
 import Store from '../../Store';
 
@@ -39,7 +40,7 @@ class AggregateTranscriptTable extends React.Component {
 
 	render () {
 		const {viewingMore} = this.state;
-		const {aggregateItems} = this.props;
+		const {aggregateItems, loading} = this.props;
 
 		const hasItems = aggregateItems && aggregateItems.length > 0;
 
@@ -47,8 +48,10 @@ class AggregateTranscriptTable extends React.Component {
 			return null;
 		}
 
+		const clsName = cx('nti-profile-transcripts-table aggregate', {loading});
+
 		return (
-			<div className="nti-profile-transcripts-table aggregate">
+			<div className={clsName}>
 				{<div className="section-title">Summary</div>}
 				{(viewingMore ? aggregateItems : [...aggregateItems].splice(0, 3)).map(this.renderRow)}
 				{!viewingMore && (aggregateItems || []).length > 3 && <div className="view-more" onClick={this.viewMore}>View More</div>}
