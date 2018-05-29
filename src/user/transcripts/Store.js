@@ -169,20 +169,10 @@ export default class TranscriptTableStore extends Stores.SimpleStore {
 		});
 
 		agg.sort(function (a, b) {
-			let {type:aType} = a.creditDefinition;
-			let {type:bType} = b.creditDefinition;
+			const lowerAType = a.creditDefinition.type.toLowerCase();
+			const lowerBType = b.creditDefinition.type.toLowerCase();
 
-			let normalizedAType = (aType || '').toLowerCase();
-			let normalizedBType = (bType || '').toLowerCase();
-
-			if(normalizedAType < normalizedBType) {
-				return false;
-			}
-			else if(normalizedAType > normalizedBType) {
-				return true;
-			}
-
-			return aType > bType;
+			return (lowerAType > lowerBType) - (lowerAType < lowerBType);
 		});
 
 		return agg;
