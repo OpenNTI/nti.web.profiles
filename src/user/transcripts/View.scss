@@ -208,6 +208,7 @@ $header-ranges: (
 	&.has-side-panel {
 		.nti-profile-transcripts {
 			margin-right: 6px;
+			width: calc(100% - 261px);
 		}
 	}
 }
