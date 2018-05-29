@@ -232,6 +232,9 @@ export default class UserAwardedCreditView extends React.Component {
 			if(e.code === 'RequiredMissing') {
 				error = 'Missing value: ' + (FIELD_MAP[e.message] || e.message);
 			}
+			else if(e.code === 'TooSmall') {
+				error = (FIELD_MAP[e.field] || e.field) + ' must be greater than 0';
+			}
 
 			this.setState({error});
 		}
