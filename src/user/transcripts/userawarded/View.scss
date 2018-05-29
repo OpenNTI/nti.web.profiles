@@ -5,6 +5,72 @@ $header-ranges: (
 	two-column: (600px, null)
 );
 
+.user-awarded-view-container {
+	z-index: 5000;
+
+	dialog {
+		.short-header {
+			display: none;
+		}
+
+		@include responsive-range(one-column, $header-ranges) {
+			width: 100%;
+			height: 100%;
+
+			.short-header {
+				display: block;
+
+				.controls {
+					height: 50px;
+					line-height: 50px;
+					font-weight: 300;
+					position: relative;
+					text-align: center;
+					background-color: white;
+					border-bottom: solid 1px #ddd;
+
+					.header {
+						display: block;
+						overflow: hidden;
+						position: relative;
+						text-overflow: ellipsis;
+						white-space: nowrap;
+						color: $primary-grey;
+						font-size: 1.125rem;
+						font-weight: bold;
+						line-height: 2.8125rem;
+						margin: 0 auto;
+						width: 50%;
+						font-family: "Open Sans Condensed";
+						border: none;
+					}
+
+					.cancel {
+						position: absolute;
+						left: 10px;
+						top: 0;
+					}
+
+					.save {
+						color: $primary-blue;
+						position: absolute;
+						right: 10px;
+						top: 0;
+					}
+				}
+			}
+
+			.panel-title-bar, .dialog-buttons {
+				display: none;
+			}
+
+			.credit-fields {
+				margin: 0 auto;
+			}
+		}
+	}
+}
+
 .user-awarded-credits {
 	background-color: white;
 

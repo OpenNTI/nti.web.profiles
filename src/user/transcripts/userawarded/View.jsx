@@ -244,6 +244,17 @@ export default class UserAwardedCreditView extends React.Component {
 			onDismiss();
 		}
 	}
+	renderShortHeader () {
+		return (
+			<div className="short-header">
+				<div className="controls">
+					<div className="cancel" onClick={this.onCancel}>{t('cancel')}</div>
+					<div className="header">{t('awardCredit')}</div>
+					<div className="save" onClick={this.onSave}>{t('save')}</div>
+				</div>
+			</div>
+		);
+	}
 
 	render () {
 		const {error} = this.state;
@@ -252,6 +263,7 @@ export default class UserAwardedCreditView extends React.Component {
 			<div className="user-awarded-credits">
 				<div className="content">
 					<Panels.TitleBar title={(t('awardCredit'))} iconAction={this.onCancel} />
+					{this.renderShortHeader()}
 					<div className="error">{error}</div>
 					<div className="credit-fields">
 						<div className="values-container title">
