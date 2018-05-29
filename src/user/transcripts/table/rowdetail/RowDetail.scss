@@ -1,9 +1,17 @@
 @import '~@nti/style-common';
 
+$header-ranges: (
+	short: (null, 500px),
+	wide: (500px, null)
+);
+
 .transcript-row-detail {
 	background-color: white;
 	min-height: 5rem;
-	min-width: 30rem;
+
+	@include responsive-range(wide, $header-ranges) {
+		min-width: 400px;
+	}
 
 	.content {
 		padding: 2rem;
