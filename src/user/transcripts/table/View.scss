@@ -1,14 +1,18 @@
 @import '~@nti/style-common';
 
-.flyout.award-credit-type {
-	.credit-row-option {
-		font-size: 14px;
-		padding: 0.5rem;
-		cursor: pointer;
+.flyout.credit-row-options {
+	.flyout-inner {
+		width: 5rem;
 
-		&.delete {
-			color: red;
-			font-weight: 600;
+		.credit-row-option {
+			font-size: 14px;
+			padding: 0.5rem;
+			cursor: pointer;
+
+			&.delete {
+				color: red;
+				font-weight: 600;
+			}
 		}
 	}
 }

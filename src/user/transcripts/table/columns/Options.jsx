@@ -48,10 +48,10 @@ export default class Options extends React.Component {
 		if(!item.isAddRow && item.hasLink('edit')) {
 			return (
 				<Flyout.Triggered
-					className="award-credit-type"
+					className="credit-row-options"
 					trigger={this.renderTrigger()}
 					ref={this.attachFlyoutRef}
-					horizontalAlign={Flyout.ALIGNMENTS.LEFT}
+					horizontalAlign={Flyout.ALIGNMENTS.RIGHT}
 				>
 					<div>
 						<div className="credit-row-option" onClick={this.launchUserAwardedEditor}>{t('edit')}</div>
