@@ -5,12 +5,31 @@ $header-ranges: (
 	wide: (500px, null)
 );
 
+.row-detail-container {
+	dialog {
+		max-width: 100%;
+
+		@include responsive-range(short, $header-ranges) {
+			width: 100%;
+		}
+	}
+}
+
 .transcript-row-detail {
 	background-color: white;
 	min-height: 5rem;
 
 	@include responsive-range(wide, $header-ranges) {
 		min-width: 400px;
+	}
+
+	.panel-title-bar {
+		h1 {
+			overflow: hidden;
+			max-width: 96%;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
 	}
 
 	.content {

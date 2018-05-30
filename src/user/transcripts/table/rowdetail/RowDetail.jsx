@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Prompt, DateTime, DialogButtons} from '@nti/web-commons';
+import {Prompt, DateTime, DialogButtons, Panels} from '@nti/web-commons';
 import {scoped} from '@nti/lib-locale';
 
 const t = scoped('nti-web-profile.transcripts.table.rowdetail.RowDetail', {
@@ -67,8 +67,8 @@ export default class RowDetail extends React.Component {
 
 		return (
 			<div className="transcript-row-detail">
+				<Panels.TitleBar title={item.title} iconAction={this.onConfirm} />
 				<div className="content">
-					<div className="detail-title">{item.title}</div>
 					{item.description && (<div className="detail-description">{item.description}</div>)}
 					<div className="details">
 						{this.renderDetailInfo(t('earned'), amount + ' ' + item.creditDefinition.type + ' ' + item.creditDefinition.unit)}
