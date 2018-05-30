@@ -82,8 +82,7 @@ export default
 	resetAll = () => {
 		const {store} = this.props;
 
-		store.setDateFilter(null);
-		store.resetTypeFilters();
+		store.resetAllFilters();
 	}
 
 	renderDateOption (clickHandler, label, selected) {
