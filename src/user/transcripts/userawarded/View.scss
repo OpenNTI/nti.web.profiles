@@ -7,7 +7,10 @@ $header-ranges: (
 
 .user-awarded-view-container {
 	z-index: 5000;
-	background-color: white;
+
+	@include responsive-range(one-column, $header-ranges) {
+		background-color: white;
+	}
 
 	dialog {
 		.short-header {
