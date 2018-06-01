@@ -203,7 +203,7 @@ export default class UserAwardedCreditView extends React.Component {
 
 		let payload = {
 			description: this.state.description,
-			title: this.state.title,
+			title: this.state.title && this.state.title.trim(),
 			amount: this.state.amount || 1,
 			'credit_definition': this.state.selectedType && this.state.selectedType.NTIID,
 			issuer: this.state.issuer,
