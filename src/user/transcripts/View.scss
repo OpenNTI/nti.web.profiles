@@ -6,6 +6,10 @@ $header-ranges: (
 	four-column: (801px, null)
 );
 
+.user-awarded-view-container > .icon-close, .row-detail-container > .icon-close {
+	display: none;
+}
+
 .transcript-filter-modal {
 	z-index: 5000;
 
