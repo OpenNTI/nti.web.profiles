@@ -7,6 +7,7 @@ $header-ranges: (
 
 .user-awarded-view-container {
 	z-index: 5000;
+	height: 100%;
 
 	@include responsive-range(one-column, $header-ranges) {
 		background-color: white;
