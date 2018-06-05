@@ -131,8 +131,8 @@ class TranscriptsContentsContainer extends React.Component {
 				ref={this.attachFlyoutRef}
 			>
 				<div>
-					<div className={cx('download-option', {disabled: !csvLink})} onClick={this.dismissDownloadFlyout}><a target="_blank" download href={csvLink}>{t('csv')}</a></div>
-					<div className={cx('download-option', {disabled: !pdfLink})} onClick={this.dismissDownloadFlyout}><a target="_blank" download href={pdfLink}>{t('pdf')}</a></div>
+					<div className={cx('download-option', {disabled: !csvLink})} onClick={this.dismissDownloadFlyout}><a target="_blank" rel="noopener noreferrer" download href={csvLink}>{t('csv')}</a></div>
+					<div className={cx('download-option', {disabled: !pdfLink})} onClick={this.dismissDownloadFlyout}><a target="_blank" rel="noopener noreferrer" download href={pdfLink}>{t('pdf')}</a></div>
 				</div>
 			</Flyout.Triggered>
 		);

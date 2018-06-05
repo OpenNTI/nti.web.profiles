@@ -38,7 +38,7 @@ export default class CertificatePreview extends React.Component {
 		}
 
 		return (
-			<a href={certLink} target="_blank">
+			<a href={certLink} target="_blank" rel="noopener noreferrer">
 				<div className="preview-image">
 				</div>
 			</a>
