@@ -6,6 +6,12 @@ $header-ranges: (
 );
 
 .row-detail-container {
+	z-index: 5000;
+
+	.icon-close {
+		display: none;
+	}
+
 	dialog {
 		max-width: 100%;
 
