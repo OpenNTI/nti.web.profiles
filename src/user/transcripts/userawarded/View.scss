@@ -7,7 +7,11 @@ $header-ranges: (
 
 .user-awarded-view-container {
 	z-index: 5000;
-	height: 100%;
+	height: 100vh;
+
+	&.modal-mask.safari-fix {
+		position: fixed !important;
+	}
 
 	@include responsive-range(one-column, $header-ranges) {
 		background-color: white;
