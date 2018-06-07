@@ -77,7 +77,14 @@ class TranscriptsContentsContainer extends React.Component {
 	}
 
 	renderDownloadTrigger () {
-		return <div className="download"><i className="icon-download"/><span>{t('download')}</span></div>;
+		let cls = 'download';
+		const realData = this.getRealData();
+
+		if(realData == null || realData.length === 0) {
+			cls += ' disabled';
+		}
+
+		return <div className={cls}><i className="icon-download"/><span>{t('download')}</span></div>;
 	}
 
 	launchUserAwardedEditor = () => {
@@ -175,7 +182,8 @@ class TranscriptsContentsContainer extends React.Component {
 			<Flyout.Triggered
 				className="transcript-filter"
 				trigger={this.renderFilterTrigger()}
-				horizontalAlign={Flyout.ALIGNMENTS.LEFT}
+				horizontalAlign={Flyout.ALIGNMENTS.RIGHT}
+				verticalAlign={Flyout.ALIGNMENTS.BOTTOM}
 				sizing={Flyout.SIZES.MATCH_SIDE}
 				ref={this.attachFilterRef}
 			>
@@ -211,7 +219,7 @@ class TranscriptsContentsContainer extends React.Component {
 								<div className="controls">
 									{!noData && !showSidePanel && showFiltersAsModal && this.renderFilterDialog()}
 									{!noData && !showSidePanel && !showFiltersAsModal && this.renderFilterFlyout()}
-									{realData.length > 0 && this.renderDownloadButton()}
+									{this.renderDownloadButton()}
 								</div>
 							</div>
 						</div>

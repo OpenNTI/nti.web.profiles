@@ -195,6 +195,11 @@ $header-ranges: (
 				padding: 0 1.5rem;
 				color: $secondary-grey;
 
+				&.disabled {
+					opacity: 0.5;
+					pointer-events: none;
+				}
+
 				i {
 					margin-right: 5px;
 				}
