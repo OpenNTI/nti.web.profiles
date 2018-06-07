@@ -226,7 +226,7 @@ class TranscriptsContentsContainer extends React.Component {
 						{this.renderContent()}
 					</div>
 				</div>
-				{showSidePanel && !noData && <FilterMenu canReset/>}
+				{showSidePanel && <FilterMenu canReset/>}
 			</div>
 		);
 	}
