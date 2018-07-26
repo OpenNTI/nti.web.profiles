@@ -102,17 +102,11 @@ class TranscriptsContentsContainer extends React.Component {
 	}
 
 	renderContent () {
-		const {items, store} = this.props;
-
-		const aggregateItems = store.getAggregateValues();
-
-		const containerStyle = {
-			paddingBottom: (aggregateItems.length * 2) + 'rem'
-		};
+		const {items} = this.props;
 
 		if(items && items.length > 0) {
 			return (
-				<div className="table-container" style={containerStyle}>
+				<div className="table-container">
 					<Table {...this.props}/>
 					{this.getRealData().length === 0 && this.renderEmptyMessage()}
 				</div>
