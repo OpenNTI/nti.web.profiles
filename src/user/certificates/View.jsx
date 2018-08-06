@@ -9,7 +9,9 @@ import Store from './Store';
 const t = scoped('nti-web-profile.certificates.View', {
 	title: 'Certificates',
 	inProgress: 'In Progress',
-	completed: 'Completed'
+	completed: 'Completed',
+	noneInProgress: 'No courses in progress',
+	noneCompleted: 'No completed courses'
 });
 
 export default
@@ -77,13 +79,13 @@ class ProfileCertificatesView extends React.Component {
 						<div className="subtitle">
 							{t('inProgress')}
 						</div>
-						{loading ? <Loading.Ellipsis/> : this.renderCertificates(inProgressCourses, 'No courses in progress')}
+						{loading ? <Loading.Ellipsis/> : this.renderCertificates(inProgressCourses, t('noneInProgress'))}
 					</div>
 					<div className="certificates-container completed">
 						<div className="subtitle">
 							{t('completed')}
 						</div>
-						{loading ? <Loading.Ellipsis/> : this.renderCertificates(completedCourses, 'No completed courses')}
+						{loading ? <Loading.Ellipsis/> : this.renderCertificates(completedCourses, t('noneCompleted'))}
 					</div>
 				</div>
 			</div>
