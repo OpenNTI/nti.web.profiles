@@ -2,5 +2,10 @@
 @import "~@nti/web-commons/lib/index.css";
 
 body {
-	background-color: white;
+	background-color: cornflowerblue;
+}
+
+#content {
+	max-width: 1024px;
+	margin: 2rem auto;
 }

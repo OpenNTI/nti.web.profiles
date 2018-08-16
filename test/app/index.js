@@ -1,9 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {getAppUser} from '@nti/web-client';
-import {Prompt} from '@nti/web-commons';
 
-import {ProfileUpdate} from '../../src';
+import {User} from '../../src';
 
 window.$AppConfig = window.$AppConfig || {server: '/dataserver2/'};
 
@@ -22,9 +21,7 @@ class Test extends React.Component {
 		if (!this.state.entity) { return null; }
 
 		return (
-			<Prompt.Dialog>
-				<ProfileUpdate entity={this.state.entity} />
-			</Prompt.Dialog>
+			<User.View entity={this.state.entity} />
 		);
 	}
 }
