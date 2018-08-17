@@ -15,6 +15,11 @@
 		overflow: hidden;
 		white-space: nowrap;
 		background-size: contain;
+		transition: opacity 0.2s;
+
+		&:hover {
+			opacity: 1;
+		}
 
 		&.twitter {
 			background-image: url('../assets/social-twitter.png');
