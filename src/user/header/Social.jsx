@@ -4,17 +4,17 @@ import {scoped} from '@nti/lib-locale';
 import cx from 'classnames';
 
 const t = scoped('profile.about.social', {
+	'facebook': 'Facebook',
+	'linkedIn': 'LinkedIn',
 	'twitter': 'Twitter',
 	'googlePlus': 'Google+',
-	'linkedIn': 'LinkedIn',
-	'facebook': 'Facebook'
 });
 
 const socialPropNames = [
+	'facebook',
+	'linkedIn',
 	'twitter',
 	'googlePlus',
-	'linkedIn',
-	'facebook'
 ];
 
 export default class Social extends React.Component {

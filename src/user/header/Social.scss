@@ -1,12 +1,35 @@
 .social-links {
-	width: 42px;
-	height: 42px;
-	display: inline-block;
-	margin: 0 5px;
-	opacity: 0.5;
-	text-indent: 100%;
-	overflow: hidden;
-	white-space: nowrap;
-	background: transparent;
-	background-size: contain;
+	display: flex;
+
+	> * {
+		flex: 1 1 auto;
+	}
+
+	.social {
+		width: 42px;
+		height: 42px;
+		display: inline-block;
+		margin: 0 5px;
+		opacity: 0.5;
+		text-indent: 100%;
+		overflow: hidden;
+		white-space: nowrap;
+		background-size: contain;
+
+		&.twitter {
+			background-image: url('../assets/social-twitter.png');
+		}
+
+		&.facebook {
+			background-image: url('../assets/social-facebook.png');
+		}
+
+		&.googleplus {
+			background-image: url('../assets/social-google.png');
+		}
+
+		&.linkedin {
+			background-image: url('../assets/social-linkedin.png');
+		}
+	}
 }
