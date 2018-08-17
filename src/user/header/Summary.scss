@@ -4,14 +4,24 @@
 		text-decoration: none;
 	}
 
-	.username {
-		font-size: 1.5em;
-		padding-right: 15px;
+	.username-wrapper {
 		position: relative;
-		font-weight: 400;
-		display: inline-block;
-		line-height: 1;
 		margin-bottom: 0.625rem;
+		display: flex;
+		align-items: center;
+
+		> * {
+			flex: 0 0 auto;
+		}
+
+		.username {
+			font-size: 1.5em;
+			margin-right: 8px;
+			position: relative;
+			font-weight: 400;
+			display: inline-block;
+			line-height: 1;
+		}
 	}
 
 	.profile-head-summary-attrs {

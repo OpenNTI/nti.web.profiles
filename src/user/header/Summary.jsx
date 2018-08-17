@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Array as ArrayUtils} from '@nti/lib-commons';
-import {DisplayName} from '@nti/web-commons';
+import {DisplayName, User} from '@nti/web-commons';
 
 export default class Summary extends React.Component {
 	static propTypes = {
@@ -15,14 +15,17 @@ export default class Summary extends React.Component {
 			return null;
 		}
 
-		let {positions, education, location} = entity;
-		let homePage = entity.home_page;
-		let position = ArrayUtils.ensure(positions)[0];
-		education = ArrayUtils.ensure(education)[0];
+		const {positions, education: ed, location} = entity;
+		const homePage = entity.home_page;
+		const position = ArrayUtils.ensure(positions)[0];
+		const education = ArrayUtils.ensure(ed)[0];
 
 		return (
 			<div className="profile-head-summary">
-				<DisplayName entity={entity} />
+				<div className="username-wrapper">
+					<DisplayName entity={entity} />
+					<User.Presence user={entity} />
+				</div>
 				<ul className="profile-head-summary-attrs">
 					{education && (
 						<li className="education">
