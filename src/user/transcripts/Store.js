@@ -11,6 +11,8 @@ const FIELD_MAP = {
 };
 
 export default class TranscriptTableStore extends Stores.SimpleStore {
+	static Singleton = true
+
 	constructor () {
 		super();
 
