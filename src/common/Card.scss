@@ -1,0 +1,16 @@
+@import "~@nti/style-common";
+
+.user-profile-card {
+	margin-top: 5px;
+	padding: 20px 40px;
+	background-color: white;
+
+	h2 {
+		color: $primary-grey;
+		margin: 0;
+		font-weight: 300;
+		padding-bottom: 5px;
+		margin-bottom: 0.5em;
+		border-bottom: 1px solid #e8e8e8;
+	}
+}

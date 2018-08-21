@@ -2,10 +2,10 @@ import React from 'react';
 import {scoped} from '@nti/lib-locale';
 import {LinkTo} from '@nti/web-routing';
 
-import {LOCALE_PATH} from '../constants';
+import {LOCALE_PATHS} from '../constants';
 import {ROUTES} from '../Router';
 
-const t = scoped(LOCALE_PATH, {
+const t = scoped(LOCALE_PATHS.NAV, {
 	about: 'About',
 	activity: 'Activity',
 	achievements: 'Achievements',

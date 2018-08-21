@@ -14,7 +14,7 @@ export default class Header extends React.Component {
 		const {entity} = this.props;
 
 		return (
-			<header className="profile-header">
+			<header className="nti-profile-header">
 				<UserInfo entity={entity} />
 				<Nav entity={entity} />
 			</header>

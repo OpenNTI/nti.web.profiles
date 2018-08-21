@@ -1,6 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import {
+	About as AboutCard,
+	Empty
+} from './parts';
+
 export default class About extends React.Component {
 
 	static propTypes = {
@@ -11,7 +16,10 @@ export default class About extends React.Component {
 		const {user} = this.props;
 
 		return (
-			<div>(About {user.Username})</div>
+			<div>
+				<Empty />
+				<AboutCard user={user} />
+			</div>
 		);
 	}
 }
