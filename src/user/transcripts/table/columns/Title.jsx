@@ -23,7 +23,7 @@ export default class Title extends React.Component {
 	);
 
 	launchUserAwardedEditor = () => {
-		UserAwardedCredit.show(this.props.store.getEntity());
+		UserAwardedCredit.show(this.props.store.getEntity(), null, this.props.store);
 	}
 
 	render () {

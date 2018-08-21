@@ -29,15 +29,17 @@ export default class UserAwardedCreditView extends React.Component {
 	static propTypes = {
 		entity: PropTypes.object.isRequired,
 		credit: PropTypes.object,
+		store: PropTypes.object.isRequired,
 		onDismiss: PropTypes.func
 	}
 
-	static show (entity, credit) {
+	static show (entity, credit, store) {
 		return new Promise((fulfill, reject) => {
 			Prompt.modal(
 				<UserAwardedCreditView
 					entity={entity}
 					credit={credit}
+					store={store}
 					onSave={fulfill}
 					onCancel={reject}
 				/>,
@@ -57,8 +59,6 @@ export default class UserAwardedCreditView extends React.Component {
 	attachDateFlyoutRef = x => this.dateFlyout = x
 
 	componentDidMount () {
-		this.store = Store.getInstance();
-
 		this.init();
 	}
 
@@ -198,7 +198,7 @@ export default class UserAwardedCreditView extends React.Component {
 	}
 
 	onSave = async () => {
-		const {onDismiss} = this.props;
+		const {onDismiss, store} = this.props;
 		const {item} = this.state;
 
 		let payload = {
@@ -213,13 +213,13 @@ export default class UserAwardedCreditView extends React.Component {
 		try {
 			if(item) {
 				// saving an existing object
-				await this.store.editUserAwardedCredit(item, payload, this.state.selectedType);
+				await store.editUserAwardedCredit(item, payload, this.state.selectedType);
 			}
 			else {
 			// adding a new object
 				payload.MimeType = 'application/vnd.nextthought.credit.userawardedcredit';
 
-				await this.store.addUserAwardedCredit(payload, this.state.selectedType);
+				await store.addUserAwardedCredit(payload, this.state.selectedType);
 			}
 
 			if(onDismiss) {
