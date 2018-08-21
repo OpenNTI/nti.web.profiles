@@ -88,7 +88,7 @@ class TranscriptsContentsContainer extends React.Component {
 	}
 
 	launchUserAwardedEditor = () => {
-		UserAwardedCredit.show(this.state.entity);
+		UserAwardedCredit.show(this.state.entity, null, this.props.store);
 	}
 
 	renderEmptyMessage () {

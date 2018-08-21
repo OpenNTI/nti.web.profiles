@@ -25,7 +25,7 @@ export default class Options extends React.Component {
 
 		this.flyout.dismiss();
 
-		UserAwardedCreditView.show(store.getEntity(), item);
+		UserAwardedCreditView.show(store.getEntity(), item, store);
 	}
 
 	deleteUserAwardedCredit = () => {
