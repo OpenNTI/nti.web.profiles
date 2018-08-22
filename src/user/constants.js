@@ -1,5 +1,11 @@
 const LOCALE_ROOT = 'nti-web-profile.user-profile';
-const LOCALE_KEYS = ['NAV', 'ABOUT'];
+const LOCALE_KEYS = [
+	'NAV',
+	'ABOUT',
+	'PROFESSIONAL',
+	'EDUCATION',
+	'INTERESTS'
+];
 
 export const LOCALE_PATHS = {
 	ROOT: LOCALE_ROOT,

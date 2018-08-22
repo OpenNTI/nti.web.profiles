@@ -1,25 +1,17 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import {Router, Route} from '@nti/web-routing';
 
-import {
-	About as AboutCard,
-	Empty
-} from './parts';
+import Read from './Read';
+import Edit from './Edit';
 
-export default class About extends React.Component {
-
-	static propTypes = {
-		user: PropTypes.object.isRequired
+const ROUTES = [
+	{
+		path: '/edit',
+		component: Edit
+	},
+	{
+		path: '/',
+		component: Read
 	}
+];
 
-	render () {
-		const {user} = this.props;
-
-		return (
-			<div>
-				<Empty />
-				<AboutCard user={user} />
-			</div>
-		);
-	}
-}
+export default Router.for(ROUTES.map(r => Route(r)));
