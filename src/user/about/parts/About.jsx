@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {scoped} from '@nti/lib-locale';
 
-import {Card} from '../../../common';
+import {Card, EditorContent} from '../../../common';
 import {LOCALE_PATHS} from '../../constants';
 
 
@@ -18,14 +18,14 @@ export default class About extends React.Component {
 	}
 
 	render () {
-		const {user: {description}} = this.props;
+		const {user: {about = []}} = this.props;
 
 		return (
 			<Card className="about">
 				<h2 className="title">{t('title')}</h2>
-				{description && (
-					<div className="description">
-						{description}
+				{about && (
+					<div className="about">
+						<EditorContent content={about} />
 					</div>
 				)}
 			</Card>
