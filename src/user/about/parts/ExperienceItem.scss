@@ -1,6 +1,23 @@
 .profile-experience-item {
+	&:not(:last-child) {
+		margin-bottom: 3em;
+	}
+
 	.organization {
 		font-weight: 700;
+	}
+
+	.details {
+		.position,
+		.years {
+			display: inline-block;
+		}
+
+		.position + .years {
+			&::before {
+				content: ', ';
+			}
+		}
 	}
 
 	.description {
