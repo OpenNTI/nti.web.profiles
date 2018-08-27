@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {Stream} from '@nti/web-content';
 
 export default class View extends React.Component {
 
@@ -8,8 +9,10 @@ export default class View extends React.Component {
 	}
 
 	render () {
-		return (
-			<div>Activity</div>
+		const {user} = this.props;
+		const context = !user ? null : {getStreamDataSource: () => user.activityStreamDataSource};
+		return !context ? null : (
+			<Stream context={context}/>
 		);
 	}
 }
