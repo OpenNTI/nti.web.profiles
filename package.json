@@ -45,6 +45,7 @@
   "devDependencies": {
     "@nti/cmp-scripts": "^1.17.16",
     "@nti/lib-locale": "^1.5.0",
+    "@nti/lib-ntiids": "^1.3.0",
     "@nti/style-common": "^1.4.6",
     "@nti/web-content": "^1.26.0",
     "@nti/web-editor": "^0.9.0",
