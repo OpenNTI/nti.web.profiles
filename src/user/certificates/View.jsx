@@ -57,15 +57,6 @@ class ProfileCertificatesView extends React.Component {
 		);
 	}
 
-	renderInProgressCourses () {
-		const {inProgressCourses} = this.props;
-
-		if(!inProgressCourses || inProgressCourses.length === 0) {
-			// empty state;
-		}
-
-	}
-
 	render () {
 		const {loading, inProgressCourses, completedCourses} = this.props;
 

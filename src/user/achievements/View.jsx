@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import Badges from '../badges';
+import Certificates from '../certificates';
+
 export default class View extends React.Component {
 
 	static propTypes = {
@@ -8,8 +11,13 @@ export default class View extends React.Component {
 	}
 
 	render () {
-		return (
-			<div>Achievements</div>
+		const {user} = this.props;
+
+		return !user ? null : (
+			<div className="nti-profiles-achievements">
+				<Badges entity={user} />
+				<Certificates entity={user} />
+			</div>
 		);
 	}
 }
