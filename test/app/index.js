@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import {getAppUser} from '@nti/web-client';
 import {encodeForURI} from '@nti/lib-ntiids';
-import {Router, Route as R, getHistory, LinkTo} from '@nti/web-routing';
+import {Router, Route as R} from '@nti/web-routing';
 
 import {User} from '../../src';
 
@@ -55,7 +55,7 @@ class Test extends React.Component {
 }
 
 // Using a router just to provide context/childContext to
-// the component so it can simulate links to detail views
+// <Test /> so it can simulate links to detail views
 const Rtr = Router.for([
 	R({path: '/', component: Test, name: 'nti-web-profiles-test'}),
 ]);
