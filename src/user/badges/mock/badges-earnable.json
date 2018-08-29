@@ -1,0 +1,68 @@
+{
+	"Class": "Collection",
+	"Collection": {
+		"Class": "Collection",
+		"Title": "EarnableBadges",
+		"accepts": [],
+		"href": "/dataserver2/users/alpha.credit.student/Badges/EarnableBadges"
+	},
+	"ItemCount": 2,
+	"Items": [
+		{
+			"Class": "Badge",
+			"MimeType": "application/vnd.nextthought.openbadges.badge",
+			"Type": "Course",
+			"alignment": null,
+			"criteria": "https://ou-alpha.nextthought.com/course.cs1300.html",
+			"description": "Completed all of the quizzes with a 70% or more.",
+			"href": "/dataserver2/OpenBadges/Power%20and%20Elegance%20of%20Computational%20Thinking",
+			"image": "/mock/course_badge.png",
+			"issuer": {
+				"Class": "Issuer",
+				"MimeType": "application/vnd.nextthought.openbadges.issuer",
+				"description": "https://ou-alpha.nextthought.com",
+				"email": "support@nextthought.com",
+				"image": null,
+				"name": "OU Alpha",
+				"revocationList": null,
+				"url": "https://ou-alpha.nextthought.com"
+			},
+			"name": "Power and Elegance of Computational Thinking",
+			"tags": [
+				"computer",
+				"power"
+			]
+		},
+		{
+			"Class": "Badge",
+			"MimeType": "application/vnd.nextthought.openbadges.badge",
+			"Type": "Course",
+			"alignment": null,
+			"criteria": "https://ou-alpha.nextthought.com/course.cs1300.html",
+			"description": "Completed all of the quizzes with a 70% or more.",
+			"href": "/dataserver2/OpenBadges/Power%20and%20Elegance%20of%20Computational%20Thinking",
+			"image": "/mock/course_badge.png",
+			"issuer": {
+				"Class": "Issuer",
+				"MimeType": "application/vnd.nextthought.openbadges.issuer",
+				"description": "https://ou-alpha.nextthought.com",
+				"email": "support@nextthought.com",
+				"image": null,
+				"name": "OU Alpha",
+				"revocationList": null,
+				"url": "https://ou-alpha.nextthought.com"
+			},
+			"name": "Power and Elegance of Computational Thinking",
+			"tags": [
+				"computer",
+				"power"
+			]
+		}
+	],
+	"Last Modified": 0,
+	"MimeType": "application/vnd.nextthought.collection",
+	"Title": "EarnableBadges",
+	"Total": 2,
+	"accepts": [],
+	"href": "/dataserver2/users/alpha.credit.student/Badges/EarnableBadges"
+}

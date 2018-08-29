@@ -1,19 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {scoped} from '@nti/lib-locale';
-import {Loading} from '@nti/web-commons';
 
+import Group from '../achievements/Group';
+
+import BadgeList from './BadgeList';
 import {
 	default as Store,
 	LOADING,
-	AVAILABLE,
+	EARNABLE,
 	EARNED
 } from './Store';
 
 const t = scoped('nti-web-profile.badges.View', {
 	title: 'Badges',
-	available: 'Current Courses',
-	completed: 'Completed',
+	earnable: 'Current Courses',
+	earned: 'Completed',
 	noneAvailable: 'No badges in progress',
 	noneCompleted: 'You haven’t met course requirements to earn a badge.'
 });
@@ -22,44 +24,37 @@ const t = scoped('nti-web-profile.badges.View', {
 export default
 @Store.connect({
 	[LOADING]: 'loading',
-	[AVAILABLE]: 'available',
+	[EARNABLE]: 'earnable',
 	[EARNED]: 'earned'
 })
 class View extends React.Component {
 
 	static propTypes = {
+		store: PropTypes.object,
+		entity: PropTypes.object,
 		loading: PropTypes.bool,
-		available: PropTypes.array,
+		earnable: PropTypes.array,
 		earned: PropTypes.array
 	}
 
-	renderBadges (badges) {
-
+	componentDidMount () {
+		const {store, entity} = this.props;
+		store.load(entity);
 	}
 
 	render () {
-		const {loading, available, earned} = this.props;
+		const {loading, earnable, earned} = this.props;
 
 		return (
-			<div className="nti-profile-badges">
+			<Group className="nti-profile-badges">
 				<div className="header">
 					{t('title')}
 				</div>
 				<div className="content">
-					<div className="badges-container available">
-						<div className="subtitle">
-							{t('available')}
-						</div>
-						{loading ? <Loading.Ellipsis/> : this.renderBadges(available, t('noneAvailable'))}
-					</div>
-					<div className="badges-container completed">
-						<div className="subtitle">
-							{t('completed')}
-						</div>
-						{loading ? <Loading.Ellipsis/> : this.renderBadges(earned, t('noneCompleted'))}
-					</div>
+					<BadgeList title={t('earnable')} items={earnable} loading={loading} empty={t('noneAvailable')} className="earnable" />
+					<BadgeList title={t('earned')} items={earned} loading={loading} empty={t('noneCompleted')} className="completed" />
 				</div>
-			</div>
+			</Group>
 		);
 	}
 }

@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import {scoped} from '@nti/lib-locale';
 import {Loading} from '@nti/web-commons';
 
+import Group from '../achievements/Group';
+
 import CertificatePreview from './CertificatePreview';
 import Store from './Store';
 
@@ -61,25 +63,25 @@ class ProfileCertificatesView extends React.Component {
 		const {loading, inProgressCourses, completedCourses} = this.props;
 
 		return (
-			<div className="nti-profile-certificates">
+			<Group className="nti-profile-certificates">
 				<div className="header">
 					{t('title')}
 				</div>
 				<div className="content">
-					<div className="certificates-container in-progress">
+					<div className="items-container in-progress">
 						<div className="subtitle">
 							{t('inProgress')}
 						</div>
 						{loading ? <Loading.Ellipsis/> : this.renderCertificates(inProgressCourses, t('noneInProgress'))}
 					</div>
-					<div className="certificates-container completed">
+					<div className="items-container completed">
 						<div className="subtitle">
 							{t('completed')}
 						</div>
 						{loading ? <Loading.Ellipsis/> : this.renderCertificates(completedCourses, t('noneCompleted'))}
 					</div>
 				</div>
-			</div>
+			</Group>
 		);
 	}
 }
