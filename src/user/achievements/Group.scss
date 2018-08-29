@@ -74,21 +74,6 @@ $header-ranges: (
 					padding-top: 10px;
 				}
 			}
-
-			&.in-progress {
-				.certificate-list {
-					.certificate-preview {
-						.preview-image {
-							opacity: 0.5;
-							pointer-events: none;
-						}
-
-						.course-title {
-							color: $tertiary-grey;
-						}
-					}
-				}
-			}
 		}
 	}
 }
