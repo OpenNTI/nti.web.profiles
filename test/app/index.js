@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
-import {getAppUser} from '@nti/web-client';
+import qs from 'query-string';
+import {User, getAppUser} from '@nti/web-client';
 import {encodeForURI} from '@nti/lib-ntiids';
 import {Router, Route as R} from '@nti/web-routing';
 
-import {User} from '../../src';
+import {User as U} from '../../src';
 
 window.$AppConfig = window.$AppConfig || {server: '/dataserver2/'};
 
@@ -38,7 +39,8 @@ class Test extends React.Component {
 	}
 
 	async componentDidMount () {
-		const entity = await getAppUser();
+		const {user} = qs.parse(global.location.search);
+		const entity = await user ? User.resolve({entityId: user}) : getAppUser();
 
 		this.setState({
 			entity
@@ -49,7 +51,7 @@ class Test extends React.Component {
 		if (!this.state.entity) { return null; }
 
 		return (
-			<User.View entity={this.state.entity} />
+			<U.View entity={this.state.entity} />
 		);
 	}
 }
