@@ -21,16 +21,16 @@ export default class ProfileCertificatesStore extends Stores.SimpleStore {
 	async loadCertificates (entity) {
 		if(!entity.hasLink('UserEnrollments')) {
 			// if a user doesn't have the link, treat it as the empty state
-			this.set('loading', false);
-			this.set('completedCourses', []);
-			this.set('inProgressCourses', []);
-			this.emitChange('loading', 'completedCourses', 'inProgressCourses');
+			this.set({
+				'loading': false,
+				'completedCourses': [],
+				'inProgressCourses': [],
+			});
 
 			return;
 		}
 
 		this.set('loading', true);
-		this.emitChange('loading');
 
 		const service = await getService();
 
@@ -41,9 +41,10 @@ export default class ProfileCertificatesStore extends Stores.SimpleStore {
 		const completedCourses = allCourses.filter(c => c.CourseProgress.CompletedDate);
 		const inProgressCourses = allCourses.filter(c => !c.CourseProgress.CompletedDate);
 
-		this.set('loading', false);
-		this.set('completedCourses', completedCourses);
-		this.set('inProgressCourses', inProgressCourses);
-		this.emitChange('loading', 'completedCourses', 'inProgressCourses');
+		this.set({
+			'loading': false,
+			'completedCourses': completedCourses,
+			'inProgressCourses': inProgressCourses
+		});
 	}
 }
