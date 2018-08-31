@@ -8,6 +8,8 @@ import Group from '../achievements/Group';
 import CertificatePreview from './CertificatePreview';
 import Store from './Store';
 
+const empty = x => !x || !x.length;
+
 const t = scoped('nti-web-profile.certificates.View', {
 	title: 'Certificates',
 	inProgress: 'In Progress',
@@ -60,9 +62,12 @@ class ProfileCertificatesView extends React.Component {
 	}
 
 	render () {
-		const {loading, inProgressCourses, completedCourses} = this.props;
+		const {loading, entity, inProgressCourses, completedCourses} = this.props;
 
-		return (
+		const userContext = (entity || {}).isAppUser ? 'me' : 'them';
+		const isEmpty = !loading && userContext === 'them' && empty(inProgressCourses) && empty(completedCourses);
+
+		return isEmpty ? null : (
 			<Group className="nti-profile-certificates">
 				<div className="header">
 					{t('title')}

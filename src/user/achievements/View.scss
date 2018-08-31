@@ -1,5 +1,16 @@
+@import '~@nti/style-common';
+
 .nti-profiles-achievements {
 	> * {
 		margin-bottom: 5px;
+	}
+
+	+ .maybe-empty-message {
+		color: $tertiary-grey;
+		font-weight: 300;
+		font-size: 2em;
+		margin: 2em auto;
+		width: 500px;
+		text-align: center;
 	}
 }
