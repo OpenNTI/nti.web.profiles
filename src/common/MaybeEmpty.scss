@@ -1,0 +1,9 @@
+.maybe-empty {
+	+ .maybe-empty-message {
+		display: none;
+	}
+
+	&:empty + .maybe-empty-message {
+		display: block;
+	}
+}
