@@ -1,0 +1,27 @@
+.nti-profile-memberships {
+	.groups {
+		.entry {
+			background: #f7f7f7;
+			display: flex;
+
+			.avatar-container {
+				width: 72px;
+				flex: 0 0 auto;
+
+				.avatar {
+					width: 100%;
+				}
+			}
+
+			.username {
+				flex: 1 1 auto;
+				display: block;
+				padding: 0 9px;
+				line-height: 2.5;
+				overflow: hidden;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+			}
+		}
+	}
+}
