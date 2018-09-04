@@ -54,10 +54,7 @@ class View extends React.Component {
 		const isEmpty = !loading && userContext === 'them' && empty(earnable) && empty(earned);
 
 		return isEmpty ? null : (
-			<Group className="nti-profile-badges">
-				<div className="header">
-					{t('title')}
-				</div>
+			<Group className="nti-profile-badges" title={t('title')}>
 				<div className="content">
 					<BadgeList title={t('earnable')} items={earnable} loading={loading} empty={t(`noneAvailable.${userContext}`)} className="earnable" />
 					<BadgeList title={t('earned')} items={earned} loading={loading} empty={t(`noneCompleted.${userContext}`)} className="completed" />

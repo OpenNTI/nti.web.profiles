@@ -68,10 +68,7 @@ class ProfileCertificatesView extends React.Component {
 		const isEmpty = !loading && userContext === 'them' && empty(inProgressCourses) && empty(completedCourses);
 
 		return isEmpty ? null : (
-			<Group className="nti-profile-certificates">
-				<div className="header">
-					{t('title')}
-				</div>
+			<Group className="nti-profile-certificates" title={t('title')}>
 				<div className="content">
 					<div className="items-container in-progress">
 						<div className="subtitle">
