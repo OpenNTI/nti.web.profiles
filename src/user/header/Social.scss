@@ -21,20 +21,15 @@
 			opacity: 1;
 		}
 
-		&.twitter {
-			background-image: url('../assets/social-twitter.png');
-		}
-
-		&.facebook {
-			background-image: url('../assets/social-facebook.png');
-		}
-
-		&.googleplus {
-			background-image: url('../assets/social-google.png');
-		}
-
-		&.linkedin {
-			background-image: url('../assets/social-linkedin.png');
+		@each $class, $image in (
+			twitter: 'social-twitter.png',
+			facebook: 'social-facebook.png',
+			googleplus: 'social-google.png',
+			linkedin: 'social-linkedin.png',
+		) {
+			&.#{$class} {
+				background-image: url('../assets/#{$image}');
+			}
 		}
 	}
 }
