@@ -1,9 +1,15 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {scoped} from '@nti/lib-locale';
 import {LinkTo} from '@nti/web-routing';
+import {Layouts} from '@nti/web-commons';
+
+const {Responsive} = Layouts;
 
 import {LOCALE_PATHS} from '../constants';
-import {ROUTES} from '../Router';
+import {getRoutes} from '../Router';
+
+import MoreItemsMenu from './MoreItemsMenu';
 
 const t = scoped(LOCALE_PATHS.NAV, {
 	about: 'About',
@@ -14,23 +20,67 @@ const t = scoped(LOCALE_PATHS.NAV, {
 });
 
 const hasName = ({name}) => !!name;
-const localeKey = name => name.split('.').slice(-1);
+const localeKey = name => name.split('.').slice(-1)[0]; // e.g. 'nti-web-profile.user-profile.NAV.about' => 'about'
+
+const mobileTabs = ['about', 'activity', 'memberships']; // visible tabs on mobile
+
+function mobileSort ({name: aName}, {name: bName}) {
+	const a = localeKey(aName);
+	const b = localeKey(bName);
+
+	return mobileTabs.includes(a) && !mobileTabs.includes(b)
+		? -1
+		: mobileTabs.includes(b) && !mobileTabs.includes(a)
+			? 1
+			: mobileTabs.indexOf(localeKey(a)) - mobileTabs.indexOf(localeKey(b));
+}
 
 export default class Nav extends React.Component {
-	render () {
+
+	static propTypes = {
+		entity: PropTypes.object.isRequired
+	}
+
+	isMobile = x => Responsive.isMobile(x)
+	isDesktop = x => !this.isMobile(x)
+
+	getRoutes = () => this.routes = this.routes || getRoutes(this.props.entity).filter(hasName);
+
+	renderMobile = () => {
+		const mobileRoutes = this.getRoutes().sort(mobileSort);
+		const tabs = mobileRoutes.slice(0, mobileTabs.length);
+		const menuItems = mobileRoutes.slice(mobileTabs.length);
+		const getLabel = ({name}) => t(localeKey(name));
+
 		return (
-			<nav className="profile-tabs">
-				{
-					ROUTES
-						.filter(hasName)
-						.map(({name, path}) => {
-							const label = t(localeKey(name));
-							return (
-								<LinkTo.Name key={path} name={name} data-title={label} activeClassName="active">{label}</LinkTo.Name>
-							);
-						})
-				}
-			</nav>
+			[...this.renderRoutes(tabs), <MoreItemsMenu key="menu" items={menuItems} getLabel={getLabel} />]
+		);
+	}
+
+	renderDesktop = () => {
+		return this.renderRoutes(this.getRoutes());
+	}
+
+	renderRoutes = (routes) => {
+		return (
+			routes
+				.map(({name, path}) => {
+					const label = t(localeKey(name));
+					return (
+						<LinkTo.Name key={path} name={name} data-title={label} activeClassName="active">{label}</LinkTo.Name>
+					);
+				})
+		);
+	}
+
+	render () {
+		console.log(this.props);
+
+		return (
+			<Responsive.Container tag="nav" className="profile-tabs">
+				<Responsive.Item query={this.isMobile} render={this.renderMobile}/>
+				<Responsive.Item query={this.isDesktop} render={this.renderDesktop}/>
+			</Responsive.Container>
 		);
 	}
 }

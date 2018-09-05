@@ -8,7 +8,7 @@ import Transcripts from './transcripts';
 import Frame from './Frame';
 import {LOCALE_PATHS} from './constants';
 
-export const ROUTES = [
+const ROUTES = [
 	{
 		path: '/about',
 		component: About,
@@ -32,7 +32,8 @@ export const ROUTES = [
 	{
 		path: '/transcripts',
 		component: Transcripts,
-		name: `${LOCALE_PATHS.NAV}.transcripts`
+		name: `${LOCALE_PATHS.NAV}.transcripts`,
+		applicable: entity => entity && entity.hasLink('transcript')
 	}
 ];
 
@@ -42,4 +43,11 @@ const DEFAULT = {
 	name: `${LOCALE_PATHS}.root`
 };
 
-export default Router.for([...ROUTES, DEFAULT].map(r => Route(r)), {frame: Frame});
+export function getRoutes (entity) {
+	const applicable = r => !r.applicable || r.applicable(entity);
+	return ROUTES.filter(applicable);
+}
+
+export default function routerFor (entity) {
+	return Router.for([...getRoutes(entity), DEFAULT].map(r => Route(r)), {frame: Frame});
+}

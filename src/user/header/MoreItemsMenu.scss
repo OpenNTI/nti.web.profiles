@@ -1,0 +1,54 @@
+@import "~@nti/style-common";
+
+.profile-more-items-menu {
+	$bgcolor: rgba(0, 0, 0, 0.15);
+
+	&.dark.arrow .flyout-arrow {
+		&::after {
+			// overlay the menu background color (single-color gradient) on
+			// the arrow color to make the arrow match the menu bg
+			background: linear-gradient($bgcolor 0, $bgcolor 100%) $primary-grey;
+		}
+	}
+
+	.profile-nav-sub-items {
+		width: calc(100vw - 2.15rem);
+		max-width: 800px;
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		font-size: 0.75rem;
+		font-weight: 600;
+		background-color: $bgcolor;
+
+		& > li {
+			display: block;
+			text-align: initial;
+			color: $tertiary-grey;
+			text-transform: uppercase;
+			overflow: hidden;
+
+			a {
+				display: block;
+				padding: 0.5rem;
+				color: $tertiary-grey;
+				text-decoration: none;
+				box-shadow: 1px 0 0 0 $bgcolor;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				position: relative;
+				white-space: nowrap;
+
+				&.active {
+					color: white;
+					background: $primary-blue;
+					box-shadow: 1px 0 0 0 $primary-blue;
+				}
+
+				&.profile-nav-more-trigger {
+					font-size: 1rem;
+				}
+			}
+		}
+	}
+}
