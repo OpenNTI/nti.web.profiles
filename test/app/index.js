@@ -35,12 +35,12 @@ class Test extends React.Component {
 
 	getRouteFor = (obj = {}, context) => {
 		const {router: {route}} = this.context;
-		return `${route.location.pathname}/${encodeForURI(obj.NTIID)}/#detail-view`;
+		return `${route.location.pathname}/${obj.NTIID ? encodeForURI(obj.NTIID) : 'no-ntiid'}/#detail-view`;
 	}
 
 	async componentDidMount () {
 		const {user} = qs.parse(global.location.search);
-		const entity = await user ? User.resolve({entityId: user}) : getAppUser();
+		const entity = await (user ? User.resolve({entityId: user}) : getAppUser());
 
 		this.setState({
 			entity
