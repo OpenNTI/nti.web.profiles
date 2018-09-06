@@ -17,13 +17,13 @@ export default class About extends React.Component {
 	}
 
 	render () {
-		const {user: {interests = []}} = this.props;
+		const {user: {interests}} = this.props;
 
 		return (
 			<Card className="interests">
 				<h2 className="title">{t('title')}</h2>
 				<ul className="entries">
-					{interests.map(item => (
+					{(interests || []).map(item => (
 						<li className="interest" key={item}>
 							<span>{item}</span>
 						</li>
