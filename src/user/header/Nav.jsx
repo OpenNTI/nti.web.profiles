@@ -74,8 +74,6 @@ export default class Nav extends React.Component {
 	}
 
 	render () {
-		console.log(this.props);
-
 		return (
 			<Responsive.Container tag="nav" className="profile-tabs">
 				<Responsive.Item query={this.isMobile} render={this.renderMobile}/>
