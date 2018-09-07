@@ -2,18 +2,25 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {scoped} from '@nti/lib-locale';
 import {Loading} from '@nti/web-commons';
+import cx from 'classnames';
 
-import {Card} from '../../common';
-
-import getWidget from './widgets';
+import {EntityList} from '../../common';
 
 const t = scoped('nti-web-profile.memberships', {
-	empty: 'Not currently a member of any groups.'
+	empty: 'Not currently a member of any groups.',
+	community: 'Communities',
+	dynamicfriendslist: 'Groups'
 });
+
+const slugify = string => string.toLowerCase().replace(/\W/g, '-');
+const lastWord = mimeType => mimeType.split('.').slice(-1)[0];
+const groupTitle = mimeType => t(lastWord(mimeType));
+const cssClass = mimeType => slugify(lastWord(mimeType));
 
 export default class View extends React.Component {
 
 	static propTypes = {
+		className: PropTypes.string,
 		user: PropTypes.object.isRequired,
 	}
 
@@ -40,6 +47,7 @@ export default class View extends React.Component {
 	onStreamChange = e => this.forceUpdate();
 
 	render () {
+		const {className} = this.props;
 		const {stream} = this.state;
 
 		if (!stream) {
@@ -57,23 +65,16 @@ export default class View extends React.Component {
 		}, {});
 
 		return (
-			<div className="nti-profile-memberships">
-				<div className="content">
-					{ loading ? <Loading.Ellipsis /> : (
-						Object.keys(buckets).length === 0 ? (
-							<div className="empty-state">{t('empty')}</div>
-						) : (
-							Object.entries(buckets).map(([mimeType, items]) => {
-								const C = getWidget(mimeType);
-								return !C ? null : (
-									<Card key={mimeType} title={C.title} >
-										<C items={items} />
-									</Card>
-								);
-							})
-						)
-					) }
-				</div>
+			<div className={cx(className, 'nti-profile-memberships')}>
+				{ loading ? <Loading.Ellipsis /> : (
+					Object.keys(buckets).length === 0 ? (
+						<div className="empty-state">{t('empty')}</div>
+					) : (
+						Object.entries(buckets).map(([mimeType, items]) => (
+							<EntityList key={mimeType} className={cssClass(mimeType)} title={groupTitle(mimeType)} entities={items} />
+						))
+					)
+				) }
 			</div>
 		);
 	}

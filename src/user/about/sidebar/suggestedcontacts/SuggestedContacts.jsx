@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {scoped} from '@nti/lib-locale';
 
-import {Card} from '../../../../common';
+import {EntityList} from '../../../../common';
 import {LOCALE_PATHS} from '../../../constants';
 
 import {default as Store, LOADING, SUGGESTIONS} from './Store';
@@ -29,7 +29,7 @@ class SuggestedContacts extends React.Component {
 		const {suggestions} = this.props;
 
 		return (suggestions || []).length === 0 ? null : (
-			<Card className="suggested-contacts" title={t('title')} />
+			<EntityList className="suggested-contacts" entities={suggestions} title={t('title')} />
 		);
 	}
 }
