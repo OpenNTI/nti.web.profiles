@@ -23,8 +23,10 @@ export default class Store extends Stores.BoundStore {
 
 		this.set(LOADING, true);
 
-		const result = await entity.fetchLinkParsed(REL);
-		const suggestions = result.Items || [];
+		// const result = await entity.fetchLinkParsed(REL);
+		// const suggestions = result.Items || [];
+		console.warn('using fake suggested contacts data');
+		const suggestions = Array.from({length: 9}, i => entity);
 
 		this.set({
 			[LOADING]: false,
