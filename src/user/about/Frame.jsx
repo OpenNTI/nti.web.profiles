@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Sidebar from './Sidebar';
+import Sidebar from './sidebar';
 
 export default class Frame extends React.Component {
 

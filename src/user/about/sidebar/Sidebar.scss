@@ -1,0 +1,14 @@
+.profile-about-sidebar {
+	.nti-profile-memberships .content .user-profile-card { // additional classes to increase specificity;
+		.entry {
+			display: flex;
+			min-height: auto;
+			align-items: center;
+
+			.avatar-container {
+				flex: 0 0 48px;
+				height: 48px;
+			}
+		}
+	}
+}

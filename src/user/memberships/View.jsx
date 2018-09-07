@@ -6,36 +6,51 @@ import {Loading} from '@nti/web-commons';
 import {Card} from '../../common';
 
 import getWidget from './widgets';
-import {default as Store, LOADING, MEMBERSHIPS} from './Store';
 
 const t = scoped('nti-web-profile.memberships', {
 	empty: 'Not currently a member of any groups.'
 });
 
-export default
-@Store.connect({
-	[LOADING]: 'loading',
-	[MEMBERSHIPS]: 'memberships'
-})
-class View extends React.Component {
+export default class View extends React.Component {
 
 	static propTypes = {
 		user: PropTypes.object.isRequired,
-		store: PropTypes.object,
-		loading: PropTypes.bool,
-		memberships: PropTypes.array
 	}
 
-	static deriveBindingFromProps = ({user}) => user
+	state = {}
 
 	componentDidMount () {
-		const {store, user} = this.props;
-		store.load(user);
+		const {user} = this.props;
+		const stream = user && user.getMemberships();
+
+		if (stream) {
+			this.setState({stream});
+			stream.on('change', this.onStreamChange);
+		}
 	}
 
-	render () {
-		const {loading, memberships = []} = this.props;
+	componentWillUnmount () {
+		const {stream} = this.state;
 
+		if (stream) {
+			stream.removeListener('change', this.onStreamChange);
+		}
+	}
+
+	onStreamChange = e => this.forceUpdate();
+
+	render () {
+		const {stream} = this.state;
+
+		if (!stream) {
+			return null;
+		}
+
+		const {loading} = stream;
+		const memberships = Array.from(stream);
+
+		// group items by MimeType
+		// e.g. {'app/vnd.community': [comm1, comm2], 'app/vnd.group': [group1, group2]}
 		const buckets = memberships.reduce((result, item) => {
 			result[item.MimeType] = [...(result[item.MimeType] || []), item];
 			return result;

@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import Memberships from '../../memberships';
+
 import SuggestedContacts from './suggestedcontacts';
 
 export default class Sidebar extends React.Component {
@@ -15,6 +17,7 @@ export default class Sidebar extends React.Component {
 		return (
 			<aside className="profile-about-sidebar">
 				<SuggestedContacts user={user} />
+				<Memberships user={user} />
 			</aside>
 		);
 	}
