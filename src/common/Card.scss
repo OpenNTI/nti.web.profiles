@@ -15,4 +15,14 @@
 		margin-bottom: 0.5em;
 		border-bottom: 1px solid #e8e8e8;
 	}
+
+	&.empty-state {
+		h2 {
+			margin: 3rem 0;
+			padding: 0;
+			border-bottom: none;
+			color: $tertiary-grey;
+			text-align: center;
+		}
+	}
 }
