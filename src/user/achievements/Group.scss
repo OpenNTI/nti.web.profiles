@@ -49,10 +49,7 @@ $header-ranges: (
 
 				&.completed {
 					border-left: solid 1px #ddd;
-
-					.subtitle, .empty-state {
-						padding-left: 20px;
-					}
+					padding-left: 20px;
 				}
 			}
 
