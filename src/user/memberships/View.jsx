@@ -4,7 +4,7 @@ import {scoped} from '@nti/lib-locale';
 import {Loading} from '@nti/web-commons';
 import cx from 'classnames';
 
-import {EntityList} from '../../common';
+import {Card, EntityList} from '../../common';
 
 const t = scoped('nti-web-profile.memberships', {
 	empty: 'Not currently a member of any groups.',
@@ -68,7 +68,7 @@ export default class View extends React.Component {
 			<div className={cx(className, 'nti-profile-memberships')}>
 				{ loading ? <Loading.Ellipsis /> : (
 					Object.keys(buckets).length === 0 ? (
-						<div className="empty-state">{t('empty')}</div>
+						<Card className="empty-state" title={t('empty')} />
 					) : (
 						Object.entries(buckets).map(([mimeType, items]) => (
 							<EntityList key={mimeType} className={cssClass(mimeType)} title={groupTitle(mimeType)} entities={items} />
