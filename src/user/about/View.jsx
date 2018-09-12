@@ -1,10 +1,9 @@
 import React from 'react';
 
-import getRouter from './Router';
+import Read from './Read';
 
 export default function View (props) {
-	const Router = getRouter(props.entity);
 	return (
-		<Router {...props} />
+		<Read {...props} />
 	);
 }

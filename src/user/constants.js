@@ -2,6 +2,7 @@ const LOCALE_ROOT = 'nti-web-profile.user-profile';
 const LOCALE_KEYS = [
 	'NAV',
 	'ABOUT',
+	'EDIT',
 	'PROFESSIONAL',
 	'EDUCATION',
 	'INTERESTS'

@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import getParts from './parts';
+import Frame from './Frame';
 
 const safeId = user => user && user.getID ? user.getID() : undefined;
 
@@ -38,11 +39,13 @@ export default class About extends React.Component {
 		} = this;
 
 		return (
-			<div>
-				{parts.map((P, i) => (
-					<P key={i} user={user} />
-				))}
-			</div>
+			<Frame user={user}>
+				<div>
+					{parts.map((P, i) => (
+						<P key={i} user={user} />
+					))}
+				</div>
+			</Frame>
 		);
 	}
 }

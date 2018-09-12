@@ -19,7 +19,7 @@ const t = scoped(LOCALE_PATHS.NAV, {
 	transcripts: 'Transcripts',
 });
 
-const hasName = ({name}) => !!name;
+const visible = ({visible: v}) => v;
 const localeKey = name => name.split('.').slice(-1)[0]; // e.g. 'nti-web-profile.user-profile.NAV.about' => 'about'
 
 const mobileTabs = ['about', 'activity', 'memberships']; // visible tabs on mobile
@@ -44,7 +44,7 @@ export default class Nav extends React.Component {
 	isMobile = x => Responsive.isMobile(x)
 	isDesktop = x => !this.isMobile(x)
 
-	getRoutes = () => this.routes = this.routes || getRoutes(this.props.entity).filter(hasName);
+	getRoutes = () => this.routes = this.routes || getRoutes(this.props.entity).filter(visible);
 
 	renderMobile = () => {
 		const mobileRoutes = this.getRoutes().sort(mobileSort);

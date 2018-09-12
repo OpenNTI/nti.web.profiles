@@ -21,8 +21,7 @@ export default class About extends React.Component {
 		const {user: {about = []}} = this.props;
 
 		return (
-			<Card className="about">
-				<h2 className="title">{t('title')}</h2>
+			<Card className="about" title={t('title')}>
 				{about && (
 					<div className="about">
 						<EditorContent content={about} />
