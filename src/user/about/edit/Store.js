@@ -1,11 +1,17 @@
+import React from 'react';
 import {Stores} from '@nti/lib-store';
 
-export default class Store extends Stores.BoundStore {
+export default class Store extends Stores.SimpleStore {
 
-	static deriveBindingFromProps = ({entity, user}) => entity || user
+	static connect (...args) {
+		// handles deriveStoreKeyFromProps for connecting components
+		return (Component) => {
+			return super.connect(...args)(storeKey(Component));
+		};
+	}
 
-	set = (name, value) => {
-		super.setImmediate(name, value);
+	set (name, value) {
+		return super.setImmediate(name, value);
 	}
 
 	clear () {
@@ -15,4 +21,16 @@ export default class Store extends Stores.BoundStore {
 	load = async () => {
 		this.clear();
 	}
+}
+
+function storeKey (Component) {
+	return class StoreKeyed extends React.Component {
+		static deriveStoreKeyFromProps = ({user, entity}) => (user || entity).getID()
+
+		render () {
+			return (
+				<Component {...this.props} />
+			);
+		}
+	};
 }
