@@ -2,14 +2,22 @@ import React from 'react';
 
 import {Frame} from '../about';
 
-import {About, Education, Professional, Interests} from './parts';
+import About from './about';
+import Education from './education';
+import Professional from './professional';
+import Interests from './interests';
 
 export default class Edit extends React.Component {
 	render () {
-		const {user} = this.props;
+		const {user, ...props} = this.props;
+
+		delete props.match;
+		delete props.location;
+		delete props.history;
+		delete props.entity;
 
 		return (
-			<Frame {...this.props}>
+			<Frame user={user} {...props}>
 				<div>
 					<About user={user} />
 					<Education user={user} />
