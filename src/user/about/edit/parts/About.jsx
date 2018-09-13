@@ -1,7 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {scoped} from '@nti/lib-locale';
-import {Editor, Plugins} from '@nti/web-editor';
+import {
+	BoldButton,
+	ItalicButton,
+	UnderlineButton,
+	ContextProvider,
+	Editor,
+	generateID,
+	Parsers,
+	Plugins,
+	STYLES,
+} from '@nti/web-editor';
 
 import {LOCALE_PATHS} from '../../../constants';
 import {Card} from '../../../../common';
@@ -12,7 +22,7 @@ const t = scoped(`${LOCALE_PATHS.ABOUT}.edit`, {
 	editLabel: 'Tell us about yourself…',
 });
 
-const KEY = 'user-profile:about';
+const KEY = 'about';
 
 export default
 @Store.connect({
@@ -22,25 +32,41 @@ class EditAbout extends React.Component {
 
 	static propTypes = {
 		store: PropTypes.object.isRequired,
+		user: PropTypes.object,
 		value: PropTypes.object,
 	}
 
-	onChange = (value) => {
+	constructor (props) {
+		super(props);
+		this.editorID = generateID();
+	}
+
+	onContentChange = (value) => {
 		const {store} = this.props;
 		store.set(KEY, value);
 	}
 
 	render () {
-		const {value} = this.props;
+		const {
+			user: {about} = {},
+			value = Parsers.HTML.toDraftState(about)
+		} = this.props;
 
 		const plugins = [
-			Plugins.LimitStyles.create({allow: new Set()}),
+			Plugins.LimitStyles.create({allow: new Set([STYLES.BOLD, STYLES.ITALIC, STYLES.UNDERLINE])}),
 			Plugins.LimitBlockTypes.create({allow: new Set()}),
 		];
 
 		return (
 			<Card className="about" title={t('title')}>
-				<Editor onChange={this.onChange} value={value} plugins={plugins} />
+				<Editor id={this.editorID} onContentChange={this.onContentChange} editorState={value} plugins={plugins} />
+				<ContextProvider editorID={this.editorID}>
+					<div className="nti-profile-edit-toolbar">
+						<BoldButton />
+						<ItalicButton />
+						<UnderlineButton />
+					</div>
+				</ContextProvider>
 			</Card>
 		);
 	}

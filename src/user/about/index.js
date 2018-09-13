@@ -1,2 +1,2 @@
 export default from './View';
-export Edit from './edit';
+export {default as Edit, Controls as EditControls} from './edit';
