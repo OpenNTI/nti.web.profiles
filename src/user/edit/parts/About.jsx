@@ -13,13 +13,15 @@ import {
 	STYLES,
 } from '@nti/web-editor';
 
-import {LOCALE_PATHS} from '../../../constants';
-import {Card} from '../../../../common';
+import {LOCALE_PATHS} from '../../constants';
+import {Card} from '../../../common';
+import FieldLabel from '../FieldLabel';
 import Store from '../Store';
+
 
 const t = scoped(`${LOCALE_PATHS.ABOUT}.edit`, {
 	title: 'About',
-	editLabel: 'Tell us about yourself…',
+	editorLabel: 'Write something about yourself.',
 });
 
 const KEY = 'about';
@@ -58,8 +60,9 @@ class EditAbout extends React.Component {
 		];
 
 		return (
-			<Card className="about" title={t('title')}>
-				<Editor id={this.editorID} onContentChange={this.onContentChange} editorState={value} plugins={plugins} />
+			<Card className="about editor" title={t('title')}>
+				<FieldLabel>{t('editorLabel')}</FieldLabel>
+				<Editor className="editor" id={this.editorID} onContentChange={this.onContentChange} editorState={value} plugins={plugins} />
 				<ContextProvider editorID={this.editorID}>
 					<div className="nti-profile-edit-toolbar">
 						<BoldButton />

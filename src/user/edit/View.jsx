@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Frame from '../Frame';
+import {Frame} from '../about';
 
 import {About, Education, Professional, Interests} from './parts';
 

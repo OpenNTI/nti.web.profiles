@@ -5,7 +5,7 @@ import {User} from '@nti/web-client';
 import cx from 'classnames';
 
 import Header from './header/';
-import {EditControls} from './about';
+import {Controls} from './edit';
 
 export default class Frame extends React.Component {
 
@@ -64,7 +64,7 @@ export default class Frame extends React.Component {
 
 		return (busy || !user) ? <Loading.Spinner /> : (
 			<div className="user-profile-container">
-				<EditControls entity={user} />
+				<Controls entity={user} />
 				<Header entity={user} />
 				{React.cloneElement(React.Children.only(children), {
 					className: cx('profile-tab-container', className),

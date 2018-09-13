@@ -1,8 +1,9 @@
 import {Router, Route} from '@nti/web-routing';
 
-import {default as About, Edit} from './about/';
+import About from './about/';
 import Activity from './activity';
 import Achievements from './achievements';
+import Edit from './edit';
 import Memberships from './memberships';
 import Transcripts from './transcripts';
 import Frame from './Frame';

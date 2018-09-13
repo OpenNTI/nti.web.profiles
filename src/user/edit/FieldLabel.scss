@@ -1,0 +1,10 @@
+@import "~@nti/style-common";
+
+.nti-profile-field-label {
+	font-size: 0.625rem;
+	font-weight: 600;
+	text-transform: uppercase;
+	color: $tertiary-grey;
+	display: block;
+	margin-top: 1em;
+}

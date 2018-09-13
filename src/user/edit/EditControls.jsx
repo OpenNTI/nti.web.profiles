@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {LinkTo, Matches} from '@nti/web-routing';
-// import {Parsers} from '@nti/web-editor';
+import {Parsers} from '@nti/web-editor';
 
-import {LOCALE_PATHS} from '../../constants';
+import {LOCALE_PATHS} from '../constants';
 
 import Store from './Store';
 
@@ -39,9 +39,13 @@ class Editing extends React.Component {
 	}
 
 	onSave = (e) => {
-		// const {store, entity} = this.props;
-		// console.log(entity);
-		// console.log(Parsers.HTML.fromDraftState(store.get('about')));
+		const {store, entity} = this.props;
+		const about = Parsers.HTML.fromDraftState(store.get('about'));
+		console.log(entity);
+		console.log(Parsers.HTML.fromDraftState(store.get('about')));
+		entity.save({
+			about
+		});
 	}
 
 	render () {

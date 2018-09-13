@@ -2,15 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {scoped} from '@nti/lib-locale';
 
-import {LOCALE_PATHS} from '../../../constants';
-import {Card} from '../../../../common';
+import {LOCALE_PATHS} from '../../constants';
+import {Card} from '../../../common';
 import Store from '../Store';
 
-const t = scoped(`${LOCALE_PATHS.INTERESTS}.edit`, {
-	title: 'Interests'
+const t = scoped(`${LOCALE_PATHS.PROFESSIONAL}.edit`, {
+	title: 'Professional'
 });
 
-const KEY = 'user-profile:interests';
+const KEY = 'user-profile:professional';
 
 export default
 @Store.connect({
@@ -30,7 +30,7 @@ class EditAbout extends React.Component {
 
 	render () {
 		return (
-			<Card className="interests" title={t('title')} />
+			<Card className="professional" title={t('title')} />
 		);
 	}
 }
