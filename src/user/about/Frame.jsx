@@ -13,6 +13,8 @@ export default class Frame extends React.Component {
 	render () {
 		const {children, user, ...props} = this.props;
 
+		delete props.staticContext;
+
 		return (
 			<div className="profile-about-frame">
 				{React.cloneElement(React.Children.only(children), {...props})}
