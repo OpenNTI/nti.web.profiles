@@ -8,13 +8,9 @@ import Professional from './professional';
 import Interests from './interests';
 
 export default class Edit extends React.Component {
+
 	render () {
 		const {user, ...props} = this.props;
-
-		delete props.match;
-		delete props.location;
-		delete props.history;
-		delete props.entity;
 
 		return (
 			<Frame user={user} {...props}>

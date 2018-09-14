@@ -62,6 +62,12 @@ export default class Frame extends React.Component {
 			state: {busy, user}
 		} = this;
 
+		delete props.match;
+		delete props.location;
+		delete props.history;
+		delete props.entity;
+		delete props.staticContext;
+
 		return (busy || !user) ? <Loading.Spinner /> : (
 			<div className="user-profile-container">
 				<Controls entity={user} />
