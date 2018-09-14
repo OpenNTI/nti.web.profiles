@@ -30,7 +30,7 @@ export default class EditControls extends React.Component {
 	}
 }
 
-@Store.connect({})
+@Store.connect()
 class Editing extends React.Component {
 
 	static propTypes = {
