@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {scoped} from '@nti/lib-locale';
+import {Connectors} from '@nti/lib-store';
 
 import {LOCALE_PATHS} from '../../constants';
 import {Card} from '../../../common';
-import Store from '../Store';
+import {SET_FIELD_VALUE} from '../Store';
 
 const t = scoped(`${LOCALE_PATHS.EDUCATION}.edit`, {
 	title: 'Education'
@@ -13,19 +14,20 @@ const t = scoped(`${LOCALE_PATHS.EDUCATION}.edit`, {
 const KEY = 'user-profile:education';
 
 export default
-@Store.connect({
-	[KEY]: 'value'
+@Connectors.Any.connect({
+	[KEY]: 'value',
+	[SET_FIELD_VALUE]: 'setValue'
 })
-class EditAbout extends React.Component {
+class Education extends React.Component {
 
 	static propTypes = {
-		store: PropTypes.object.isRequired,
 		value: PropTypes.object,
+		setValue: PropTypes.func
 	}
 
 	onChange = (value) => {
-		const {store} = this.props;
-		store.set(KEY, value);
+		const {setValue} = this.props;
+		setValue(KEY, value);
 	}
 
 	render () {

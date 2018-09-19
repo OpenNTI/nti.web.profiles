@@ -1,82 +1,65 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Loading} from '@nti/web-commons';
-import {User} from '@nti/web-client';
 import cx from 'classnames';
 
 import Header from './header/';
-import {Controls} from './edit';
+import {Controls, Store as Edit} from './edit';
 
-export default class Frame extends React.Component {
+export default
+@Edit.Store.connect({
+	[Edit.LOADING]: 'loading',
+	[Edit.ERROR]: 'error',
+})
+class Frame extends React.Component {
 
 	static propTypes = {
 		entity: PropTypes.oneOfType([
 			PropTypes.string,
 			PropTypes.object
 		]).isRequired,
+		loading: PropTypes.bool,
+		error: PropTypes.any,
 		children: PropTypes.any,
 		className: PropTypes.string
 	}
 
-	state = {
-		busy: true
-	}
-
-	componentDidMount () {
-		this.setUp();
-	}
-
-	componentDidUpdate ({entity}, prevState) {
-		if (entity !== this.props.entity) {
-			this.setUp();
-		}
-	}
-
-	async setUp () {
-		const {entity} = this.props;
-		let error, user;
-
-		this.setState({
-			busy: true,
-			user,
-			error
-		});
-
-		try {
-			user = await User.resolve({entity});
-		}
-		catch (e) {
-			error = e;
-		}
-
-		this.setState({
-			busy: false,
-			user,
-			error
-		});
-	}
+	static deriveBindingFromProps = ({entity}) => entity
 
 	render () {
 		const {
-			props: {children, className, ...props},
-			state: {busy, user}
+			props: {
+				loading,
+				error,
+				children,
+				className,
+				entity: user,
+				...props},
 		} = this;
 
-		delete props.match;
-		delete props.location;
-		delete props.history;
-		delete props.entity;
-		delete props.staticContext;
+		for (const prop of ['match', 'location', 'history', 'entity', 'staticContext']) {
+			delete props[prop];
+		}
 
-		return (busy || !user) ? <Loading.Spinner /> : (
+		return (
 			<div className="user-profile-container">
-				<Controls entity={user} />
-				<Header entity={user} />
-				{React.cloneElement(React.Children.only(children), {
-					className: cx('profile-tab-container', className),
-					...props,
-					user
-				})}
+				{
+					error ? (
+						<div>Error</div>
+					) : loading ? (
+						<Loading.Spinner />
+					) : (
+						<>
+							<Controls entity={user} />
+							<Header entity={user} />
+							{React.cloneElement(React.Children.only(children), {
+								className: cx('profile-tab-container', className),
+								...props,
+								user
+							})}
+						</>
+					)
+				}
 			</div>
 		);
 	}

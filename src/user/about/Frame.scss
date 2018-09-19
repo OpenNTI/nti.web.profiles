@@ -13,7 +13,7 @@
 		@each $selector, $color in (
 			about: #fc9f77,
 			education: #fdcf61,
-			professional: #7ecfc8,
+			positions: #7ecfc8,
 			interests: #c671c1
 		) {
 			&.#{$selector} {

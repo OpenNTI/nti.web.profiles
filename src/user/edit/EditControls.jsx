@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {Connectors} from '@nti/lib-store';
 import {LinkTo, Matches} from '@nti/web-routing';
 import {Parsers} from '@nti/web-editor';
 
 import {LOCALE_PATHS} from '../constants';
 
-import Store from './Store';
+import {SAVE_PROFILE} from './Store';
 
 export default class EditControls extends React.Component {
 
@@ -30,22 +31,25 @@ export default class EditControls extends React.Component {
 	}
 }
 
-@Store.connect()
+@Connectors.Any.connect({
+	[SAVE_PROFILE]: 'saveProfile'
+})
 class Editing extends React.Component {
 
 	static propTypes = {
-		store: PropTypes.object,
+		saveProfile: PropTypes.func.isRequired,
 		entity: PropTypes.object.isRequired
 	}
 
 	onSave = (e) => {
-		const {store, entity} = this.props;
-		const about = Parsers.HTML.fromDraftState(store.get('about'));
-		console.log(entity);
-		console.log(Parsers.HTML.fromDraftState(store.get('about')));
-		entity.save({
-			about
-		});
+		const {saveProfile} = this.props;
+		return saveProfile();
+		// const about = Parsers.HTML.fromDraftState(store.get('about'));
+		// console.log(entity);
+		// console.log(Parsers.HTML.fromDraftState(store.get('about')));
+		// entity.save({
+		// 	about
+		// });
 	}
 
 	render () {

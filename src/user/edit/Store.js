@@ -1,34 +1,38 @@
-import React from 'react';
 import {Stores} from '@nti/lib-store';
 
-const Entity = Symbol('Entity');
-export const LOADING = 'loading';
-export const ERROR = 'error';
-export const SCHEMA = 'schema';
+export const LOADING = 'nti-profile-edit-store:loading';
+export const LOADED = 'nti-profile-edit-store:loaded';
+export const ERROR = 'nti-profile-edit-store:error';
+export const GET_SCHEMA_ENTRY = 'nti-profile-edit-store:get-schema-entry';
+export const SET_FIELD_VALUE = 'nti-profile-edit-store:set-field-value';
+export const SAVE_PROFILE = 'nti-profile-edit-store:save-profile';
 
-export default class Store extends Stores.SimpleStore {
+const SCHEMA = Symbol('nti-profile-edit-store:schema');
 
-	static connect (...args) {
-		// handle deriveStoreKeyFromProps for connecting components
-		return (Component) => {
-			return super.connect(...args)(storeKey(Component));
-		};
+export class Store extends Stores.BoundStore {
+
+	constructor () {
+		super();
+		this[LOADING] = true;
+		this.setMaxListeners(100);
 	}
 
-	constructor (props) {
-		super(props);
-		const {user, entity = user} = props || {};
-
-		if (!entity) {
-			throw new Error('Profile editor store requires a User.');
-		}
-
-		this[Entity] = entity;
-		this.load();
+	[GET_SCHEMA_ENTRY] = (key) => {
+		return (this[SCHEMA] || {})[key];
 	}
 
-	get entity () {
-		return this[Entity];
+	[SET_FIELD_VALUE] = (name, value) => {
+		this.set(name, value);
+	}
+
+	[SAVE_PROFILE] = async () => {
+		const entity = this.binding;
+		return entity.save({});
+	}
+
+	get (key) {
+		const {binding} = this;
+		return super.get(key) || (binding || {})[key];
 	}
 
 	set (name, value) {
@@ -58,6 +62,7 @@ export default class Store extends Stores.SimpleStore {
 			}
 
 			this.set({
+				[LOADED]: true,
 				[LOADING]: false,
 				[ERROR]: error
 			});
@@ -67,25 +72,16 @@ export default class Store extends Stores.SimpleStore {
 	}
 
 	load = async () => {
-		const {entity} = this;
+		const {binding: entity} = this;
 
 		this.clear();
 
 		if (entity && entity.getProfileSchema) {
-			this.set(SCHEMA, await this.busy(entity.getProfileSchema()));
+			// thenning because we want this[SCHEMA] set before this.busy resets 'loading'
+			this.busy(entity.getProfileSchema().then(schema => this[SCHEMA] = schema));
+		}
+		else {
+			this.set(ERROR, new Error('Profile Schema Unavailable'));
 		}
 	}
-}
-
-// handle deriveStoreKeyFromProps implementation for connecting components
-function storeKey (Component) {
-	return class StoreKeyed extends React.Component {
-		static deriveStoreKeyFromProps = ({user, entity}) => (user || entity).getID()
-
-		render () {
-			return (
-				<Component {...this.props} />
-			);
-		}
-	};
 }

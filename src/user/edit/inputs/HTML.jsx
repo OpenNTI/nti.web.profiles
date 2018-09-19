@@ -7,14 +7,22 @@ import {
 	ContextProvider,
 	Editor,
 	generateID,
+	Parsers,
 	Plugins,
 	STYLES,
 } from '@nti/web-editor';
 
+import FieldLabel from '../FieldLabel';
+
 export default class HTMLInput extends React.Component {
 
 	static propTypes = {
-		value: PropTypes.object,
+		label: PropTypes.string,
+		setValue: PropTypes.func,
+		value: PropTypes.oneOfType([
+			PropTypes.array,
+			PropTypes.object
+		]),
 	}
 
 	constructor (props) {
@@ -23,11 +31,13 @@ export default class HTMLInput extends React.Component {
 	}
 
 	onContentChange = (value) => {
-
+		const {setValue} = this.props;
+		setValue(value);
 	}
 
 	render () {
 		const {
+			label,
 			value
 		} = this.props;
 
@@ -36,9 +46,12 @@ export default class HTMLInput extends React.Component {
 			Plugins.LimitBlockTypes.create({allow: new Set()}),
 		];
 
+		const editorState = Parsers.HTML.toDraftState(value);
+
 		return (
-			<div className="nti-profile-hmtl-input">
-				<Editor className="editor" id={this.editorID} onContentChange={this.onContentChange} editorState={value} plugins={plugins} />
+			<div className="nti-profile-html-input">
+				{label && <FieldLabel>{label}</FieldLabel>}
+				<Editor className="editor" id={this.editorID} onContentChange={this.onContentChange} editorState={editorState} plugins={plugins} />
 				<ContextProvider editorID={this.editorID}>
 					<div className="nti-profile-edit-toolbar">
 						<BoldButton />

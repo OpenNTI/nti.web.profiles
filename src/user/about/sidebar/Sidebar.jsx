@@ -1,11 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {Connectors} from '@nti/lib-store';
 
 import Memberships from '../../memberships';
 
 import SuggestedContacts from './suggestedcontacts';
 
-export default class Sidebar extends React.Component {
+export default
+@Connectors.Any.connect({
+	user: 'user'
+})
+class Sidebar extends React.Component {
 
 	static propTypes = {
 		user: PropTypes.object

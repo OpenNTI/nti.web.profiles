@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {scoped} from '@nti/lib-locale';
+import {Connectors} from '@nti/lib-store';
 
 import {LOCALE_PATHS} from '../../constants';
 import {Card} from '../../../common';
-import Store from '../Store';
+import {SET_FIELD_VALUE} from '../Store';
 
 const t = scoped(`${LOCALE_PATHS.PROFESSIONAL}.edit`, {
 	title: 'Professional'
@@ -13,19 +14,20 @@ const t = scoped(`${LOCALE_PATHS.PROFESSIONAL}.edit`, {
 const KEY = 'user-profile:professional';
 
 export default
-@Store.connect({
-	[KEY]: 'value'
+@Connectors.Any.connect({
+	[KEY]: 'value',
+	[SET_FIELD_VALUE]: 'setValue'
 })
-class EditAbout extends React.Component {
+class Professional extends React.Component {
 
 	static propTypes = {
-		store: PropTypes.object.isRequired,
+		setValue: PropTypes.func.isRequired,
 		value: PropTypes.object,
 	}
 
 	onChange = (value) => {
-		const {store} = this.props;
-		store.set(KEY, value);
+		const {setValue} = this.props;
+		setValue(KEY, value);
 	}
 
 	render () {
