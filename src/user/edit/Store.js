@@ -1,13 +1,16 @@
 import {Stores} from '@nti/lib-store';
 
-export const LOADING = 'nti-profile-edit-store:loading';
-export const LOADED = 'nti-profile-edit-store:loaded';
-export const ERROR = 'nti-profile-edit-store:error';
-export const GET_SCHEMA_ENTRY = 'nti-profile-edit-store:get-schema-entry';
-export const SET_FIELD_VALUE = 'nti-profile-edit-store:set-field-value';
-export const SAVE_PROFILE = 'nti-profile-edit-store:save-profile';
+const PREFIX = 'nti-profile-edit-store';
+const px = x => `${PREFIX}:${x}`;
 
-const SCHEMA = Symbol('nti-profile-edit-store:schema');
+export const LOADING = px('loading');
+export const LOADED = px('loaded');
+export const ERROR = px('error');
+export const GET_SCHEMA_ENTRY = px('get-schema-entry');
+export const SET_FIELD_VALUE = px('set-field-value');
+export const SAVE_PROFILE = px('save-profile');
+
+const SCHEMA = Symbol(px('schema'));
 
 export class Store extends Stores.BoundStore {
 
@@ -26,12 +29,19 @@ export class Store extends Stores.BoundStore {
 	}
 
 	[SAVE_PROFILE] = async () => {
+		const inSchema = ([key]) => this[SCHEMA].hasOwnProperty(key);
+		const reassemble = (acc, [key, value]) => ({...acc, [key]: value});
+		const payload = Object.entries(this.getAll())
+			.filter(inSchema)
+			.reduce(reassemble, {});
 		const entity = this.binding;
-		return entity.save({});
+		return this.busy(entity.save(payload));
 	}
 
 	get (key) {
 		const {binding} = this;
+
+		// fall back to entity's value if we don't have it.
 		return super.get(key) || (binding || {})[key];
 	}
 
