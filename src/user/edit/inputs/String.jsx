@@ -13,7 +13,7 @@ export default class StringInput extends React.PureComponent {
 	onChange = ({target: {value}}) => this.props.setValue(value)
 
 	render () {
-		const {className, schema: {readonly}, ...props} = this.props;
+		const {className, schema: {readonly} = {}, ...props} = this.props;
 
 		delete props.setValue;
 
