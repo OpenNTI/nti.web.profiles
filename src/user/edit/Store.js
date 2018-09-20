@@ -11,6 +11,8 @@ export const SET_FIELD_VALUE = px('set-field-value');
 export const SAVE_PROFILE = px('save-profile');
 
 const SCHEMA = Symbol(px('schema'));
+const DATA_MARKER = Symbol('data marker');
+const DATA = Symbol('data');
 
 export class Store extends Stores.BoundStore {
 
@@ -18,6 +20,15 @@ export class Store extends Stores.BoundStore {
 		super();
 		this[LOADING] = true;
 		this.setMaxListeners(100);
+
+		// locate the data in the superclass
+		this.set(DATA_MARKER, true);
+		const dataKey = Object.getOwnPropertySymbols(this).find(symbol => (this[symbol] || {})[DATA_MARKER]);
+		delete this[dataKey][DATA_MARKER];
+
+		Object.defineProperty(this, DATA, {
+			get: () => this[dataKey]
+		});
 	}
 
 	[GET_SCHEMA_ENTRY] = (key) => {
@@ -31,7 +42,7 @@ export class Store extends Stores.BoundStore {
 	[SAVE_PROFILE] = async () => {
 		const inSchema = ([key]) => this[SCHEMA].hasOwnProperty(key);
 		const reassemble = (acc, [key, value]) => ({...acc, [key]: value});
-		const payload = Object.entries(this.getAll())
+		const payload = Object.entries(this[DATA])
 			.filter(inSchema)
 			.reduce(reassemble, {});
 		const entity = this.binding;
