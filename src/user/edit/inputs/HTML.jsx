@@ -12,7 +12,7 @@ import {
 	STYLES,
 } from '@nti/web-editor';
 
-import FieldLabel from '../FieldLabel';
+import FieldContainer from '../FieldContainer';
 
 export default class HTMLInput extends React.Component {
 
@@ -51,8 +51,7 @@ export default class HTMLInput extends React.Component {
 		const editorState = Parsers.HTML.toDraftState(value);
 
 		return (
-			<div className="nti-profile-html-input">
-				{label && <FieldLabel>{label}</FieldLabel>}
+			<FieldContainer className="nti-profile-html-input" label={label}>
 				<Editor className="editor" id={this.editorID} onContentChange={this.onContentChange} editorState={editorState} plugins={plugins} />
 				<ContextProvider editorID={this.editorID}>
 					<div className="nti-profile-edit-toolbar">
@@ -61,7 +60,7 @@ export default class HTMLInput extends React.Component {
 						<UnderlineButton />
 					</div>
 				</ContextProvider>
-			</div>
+			</FieldContainer>
 		);
 	}
 }
