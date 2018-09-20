@@ -32,7 +32,7 @@ export default class HTMLInput extends React.Component {
 
 	onContentChange = (value) => {
 		const {setValue} = this.props;
-		// user.save will invoke toJSON on this and we want the html, not the EditorState
+		// user.save will JSON.stringify() this value... and we want the html, not the EditorState
 		value.toJSON = () => Parsers.HTML.fromDraftState(value);
 		setValue(value);
 	}
