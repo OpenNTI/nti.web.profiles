@@ -20,6 +20,12 @@ export default class List extends React.Component {
 		onChange([...value, entry]);
 	}
 
+	removeEntry = (index) => {
+		const {value: values, onChange} = this.props;
+		values.splice(index, 1);
+		onChange(values);
+	}
+
 	onChange = (value, index) => {
 		const {value: values, onChange} = this.props;
 		values[index] = value;
@@ -38,7 +44,7 @@ export default class List extends React.Component {
 				<ul className="nti-profile-field-list-values">
 					{(value || []).map((v, i) => (
 						<li key={i}>
-							<Item component={component} index={i} {...props} value={v} onChange={this.onChange} />
+							<Item component={component} index={i} {...props} value={v} onChange={this.onChange} onRemove={this.removeEntry}/>
 						</li>
 					))}
 				</ul>
@@ -52,7 +58,8 @@ class Item extends React.Component {
 
 	static propTypes = {
 		index: PropTypes.number.isRequired,
-		onChange: PropTypes.func.isRequired
+		onChange: PropTypes.func.isRequired,
+		onRemove: PropTypes.func
 	}
 
 	onChange = value => {
@@ -60,8 +67,18 @@ class Item extends React.Component {
 		onChange(value, index);
 	}
 
+	onRemove = () => {
+		const {onRemove, index} = this.props;
+		onRemove(index);
+	}
+
 	render () {
-		const {component: Component, ...props} = this.props;
-		return <Component {...props} onChange={this.onChange} />;
+		const {component: Component, onRemove, ...props} = this.props;
+		return (
+			<>
+				{onRemove && <span className="remove icon-remove" onClick={this.onRemove} />}
+				<Component {...props} onChange={this.onChange} />
+			</>
+		);
 	}
 }

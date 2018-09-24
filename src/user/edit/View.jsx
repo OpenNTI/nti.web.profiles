@@ -49,15 +49,12 @@ const SECTIONS = [
 	},
 	{
 		key: 'education',
-
 	},
 	{
 		key: 'positions',
-
 	},
 	{
 		key: 'interests',
-
 	},
 ];
 
