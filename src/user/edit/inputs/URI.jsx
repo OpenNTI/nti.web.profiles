@@ -1,12 +1,21 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import {Input} from '@nti/web-commons';
+import cx from 'classnames';
 
-import String from './String';
+export default class StringInput extends React.PureComponent {
 
-export default class URIInput extends React.PureComponent {
+	static propTypes = {
+		className: PropTypes.string,
+		readonly: PropTypes.bool,
+		onChange: PropTypes.func
+	}
 
 	render () {
+		const {className, schema: {readonly} = {}, ...props} = this.props;
+
 		return (
-			<String className="nti-profile-uri-input" {...this.props} />
+			<Input.URL className={cx('nti-profile-uri-input', className)} {...props} disabled={readonly} />
 		);
 	}
 }

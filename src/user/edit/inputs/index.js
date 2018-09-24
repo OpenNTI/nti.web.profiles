@@ -18,7 +18,8 @@ const logger = Logger.get('nti-profiles:edit:inputs');
 
 const NAMES = {
 	about: HTML,
-	education: List.of(Experience)
+	education: List.of(Experience),
+	positions: List.of(Experience),
 };
 
 const TYPES = {
@@ -50,7 +51,7 @@ export default function getWidget (schema) {
 			setValue: PropTypes.func,
 		}
 
-		setValue = (value) => {
+		onChange = (value) => {
 			const {setValue} = this.props;
 			return setValue(name, value);
 		}
@@ -59,8 +60,10 @@ export default function getWidget (schema) {
 			const props = {
 				...this.props,
 				schema,
-				setValue: this.setValue
+				onChange: this.onChange
 			};
+
+			delete props.setValue;
 
 			return <Component {...props} />;
 		}

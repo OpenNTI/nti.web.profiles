@@ -5,7 +5,6 @@ import {
 	ItalicButton,
 	UnderlineButton,
 	ContextProvider,
-	Editor,
 	generateID,
 	Parsers,
 	Plugins,
@@ -14,11 +13,13 @@ import {
 
 import FieldContainer from '../FieldContainer';
 
+import Editor from './Editor';
+
 export default class HTMLInput extends React.Component {
 
 	static propTypes = {
 		label: PropTypes.string,
-		setValue: PropTypes.func,
+		onChange: PropTypes.func,
 		value: PropTypes.oneOfType([
 			PropTypes.array,
 			PropTypes.object
@@ -31,10 +32,10 @@ export default class HTMLInput extends React.Component {
 	}
 
 	onContentChange = (value) => {
-		const {setValue} = this.props;
+		const {onChange} = this.props;
 		// user.save will JSON.stringify() this value... and we want the html, not the EditorState
 		value.toJSON = () => Parsers.HTML.fromDraftState(value);
-		setValue(value);
+		onChange(value);
 	}
 
 	render () {

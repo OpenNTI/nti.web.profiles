@@ -1,10 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {PropTypes as PT} from '@nti/lib-commons';
-import {Parsers, Editor} from '@nti/web-editor';
+import {Parsers} from '@nti/web-editor';
 import {Input} from '@nti/web-commons';
 
 import FieldContainer from '../FieldContainer';
+
+import Editor from './Editor';
 
 export const ORGANIZATION = 'organization';
 export const DEGREE = 'degree';
@@ -19,34 +21,27 @@ export default class Experience extends React.Component {
 	static propTypes = {
 		localizer: PropTypes.func,
 		value: PropTypes.object,
-		setValue: PropTypes.func
+		onChange: PropTypes.func
 	}
 
 	static createEmpty = () => ({
 		MimeType: 'application/vnd.nextthought.profile.educationalexperience'
 	})
 
-	onChange = ({target: {name, value: fieldValue}}) => {
-		const {value, setValue} = this.props;
+	onChange = (name, value) => {
+		const {value: experience, onChange} = this.props;
 
 		const newValue = {
-			...(value || {}),
-			[name]: fieldValue
+			...(experience || {}),
+			[name]: value
 		};
 
-		setValue(newValue);
+		onChange(newValue);
 	}
 
 	onDescriptionChange = (value) => {
-
 		value.toJSON = () => Parsers.PlainText.fromDraftState(value)[0];
-
-		this.onChange({
-			target: {
-				name: 'description',
-				value
-			}
-		});
+		this.onChange('description', value);
 	}
 
 	render () {
@@ -85,7 +80,7 @@ export default class Experience extends React.Component {
 	}
 }
 
-// dumb wrapper on commons inputs to include target/name/value in change events
+// dumb wrapper on commons inputs to include name in change events
 class In extends React.Component {
 
 	static propTypes = {
@@ -96,12 +91,7 @@ class In extends React.Component {
 
 	onChange = (value) => {
 		const {name, onChange} = this.props;
-		onChange({
-			target: {
-				name,
-				value
-			}
-		});
+		onChange(name, value);
 	}
 
 	render () {
