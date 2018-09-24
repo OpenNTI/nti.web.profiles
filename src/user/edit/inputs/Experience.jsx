@@ -3,36 +3,39 @@ import PropTypes from 'prop-types';
 import {PropTypes as PT} from '@nti/lib-commons';
 import {Parsers} from '@nti/web-editor';
 import {Input} from '@nti/web-commons';
+import {scoped} from '@nti/lib-locale';
 
 import FieldContainer from '../FieldContainer';
 
 import Editor from './Editor';
 
-export const ORGANIZATION = 'organization';
-export const DEGREE = 'degree';
-export const START_YEAR = 'startYear';
-export const END_YEAR = 'endYear';
-export const DESCRIPTION = 'description';
-
-const passthrough = x => x;
+const t2 = scoped('nti-web-profile.user-profile.edit.experience.fields', {
+	startYear: 'Start Year',
+	endYear: 'End Year',
+	description: 'Description'
+});
 
 export default class Experience extends React.Component {
 
 	static propTypes = {
 		localizer: PropTypes.func,
+
+		/**
+		 * Education and professional experience items have the same structure but different
+		 * field names (e.g. school vs. companyName). This object is used to map education field
+		 * names to the professional field names.
+		 * @type {Object}
+		 */
+		fieldMap: PropTypes.object,
 		value: PropTypes.object,
 		onChange: PropTypes.func
 	}
 
-	static createEmpty = () => ({
-		MimeType: 'application/vnd.nextthought.profile.educationalexperience'
-	})
-
 	onChange = (name, value) => {
-		const {value: experience, onChange} = this.props;
+		const {value: previous, onChange} = this.props;
 
 		const newValue = {
-			...(experience || {}),
+			...(previous || {}),
 			[name]: value
 		};
 
@@ -46,33 +49,38 @@ export default class Experience extends React.Component {
 
 	render () {
 		const {
-			localizer: t = passthrough,
-			value: {
-				school,
-				degree,
-				startYear,
-				endYear,
-				description
-			} = {}
+			localizer,
+			fieldMap = {},
+			value = {}
 		} = this.props;
 
-		const editorState = Parsers.PlainText.toDraftState(description);
+		const t = x => localizer && (!localizer.isMissing(x) || t2.isMissing(x))
+			? localizer(x)
+			: t2(x);
+
+		// get mapped field name
+		const n = f => fieldMap[f] || f;
+
+		// get mapped field value
+		const v = f => value[n(f)];
+
+		const editorState = Parsers.PlainText.toDraftState(v('description'));
 
 		return (
 			<div className="nti-profile-experience-item">
-				<FieldContainer label={t(ORGANIZATION)}>
-					<In component={Input.Text} name="school" value={school} onChange={this.onChange} />
+				<FieldContainer label={t(n('organization'))}>
+					<In component={Input.Text} name={n('organization')} value={v('organization')} onChange={this.onChange} />
 				</FieldContainer>
-				<FieldContainer label={t(DEGREE)}>
-					<In component={Input.Text} name="degree" value={degree} onChange={this.onChange} />
+				<FieldContainer label={t(n('role'))}>
+					<In component={Input.Text} name={n('role')} value={v('role')} onChange={this.onChange} />
 				</FieldContainer>
-				<FieldContainer label={t(START_YEAR)}>
-					<In component={Input.Number} maxLength="4" name="startYear" value={startYear} onChange={this.onChange} />
+				<FieldContainer label={t(n('startYear'))}>
+					<In component={Input.Number} maxLength="4" name={n('startYear')} value={v('startYear')} onChange={this.onChange} />
 				</FieldContainer>
-				<FieldContainer label={t(END_YEAR)}>
-					<In component={Input.Number} maxLength="4" name="endYear" value={endYear} onChange={this.onChange} />
+				<FieldContainer label={t(n('endYear'))}>
+					<In component={Input.Number} maxLength="4" name={n('endYear')} value={v('endYear')} onChange={this.onChange} />
 				</FieldContainer>
-				<FieldContainer label={t(DESCRIPTION)}>
+				<FieldContainer label={t(n('description'))}>
 					<Editor editorState={editorState} onContentChange={this.onDescriptionChange} />
 				</FieldContainer>
 			</div>

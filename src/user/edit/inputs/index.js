@@ -8,9 +8,10 @@ import {
 	ERROR,
 } from '../Store';
 
-import Experience from './Experience';
+import Education from './Education';
 import List from './List';
 import HTML from './HTML';
+import Position from './Position';
 import String from './String';
 import URI from './URI';
 
@@ -18,8 +19,8 @@ const logger = Logger.get('nti-profiles:edit:inputs');
 
 const NAMES = {
 	about: HTML,
-	education: List.of(Experience),
-	positions: List.of(Experience),
+	education: List.of(Education),
+	positions: List.of(Position),
 };
 
 const TYPES = {
