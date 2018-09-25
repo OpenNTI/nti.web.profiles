@@ -3,6 +3,11 @@ import PropTypes from 'prop-types';
 import {PropTypes as PT} from '@nti/lib-commons';
 import {Button} from '@nti/web-commons';
 import cx from 'classnames';
+import {scoped} from '@nti/lib-locale';
+
+const t = scoped('nti-web-profile.user-profile.edit.list', {
+	add: 'Add Entry',
+});
 
 export default class List extends React.Component {
 
@@ -57,7 +62,7 @@ export default class List extends React.Component {
 						</li>
 					))}
 				</ul>
-				{!includeBlank && <Button onClick={this.addEntry}>Add Entry (TODO: Localize this)</Button>}
+				{!includeBlank && <Button onClick={this.addEntry}>{t('add')}</Button>}
 			</div>
 		);
 	}
