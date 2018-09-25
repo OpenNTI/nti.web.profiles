@@ -67,7 +67,9 @@ class View extends React.Component {
 
 	static propTypes = {
 		loaded: PropTypes.bool,
-		getSchemaEntry: PropTypes.func
+		getSchemaEntry: PropTypes.func,
+		className: PropTypes.string,
+		user: PropTypes.object
 	}
 
 	getSection = ({key, fields}) => {
@@ -94,9 +96,7 @@ class View extends React.Component {
 	}
 
 	render () {
-		const {loaded, ...others} = this.props;
-
-		delete others.getSchemaEntry;
+		const {loaded, className, user} = this.props;
 
 		if (!loaded) {
 			return null;
@@ -105,7 +105,7 @@ class View extends React.Component {
 		const widgets = SECTIONS.map(this.getSection);
 
 		return (
-			<Frame {...others}>
+			<Frame className={className} user={user}>
 				<div>
 					{widgets}
 				</div>

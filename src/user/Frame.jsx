@@ -33,13 +33,9 @@ class Frame extends React.Component {
 				error,
 				children,
 				className,
-				entity: user,
-				...props},
+				entity: user
+			},
 		} = this;
-
-		for (const prop of ['match', 'location', 'history', 'entity', 'staticContext']) {
-			delete props[prop];
-		}
 
 		return (
 			<div className="user-profile-container">
@@ -54,7 +50,6 @@ class Frame extends React.Component {
 							<Header entity={user} />
 							{React.cloneElement(React.Children.only(children), {
 								className: cx('profile-tab-container', className),
-								...props,
 								user
 							})}
 						</>
