@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {PropTypes as PT} from '@nti/lib-commons';
 import {Button} from '@nti/web-commons';
+import cx from 'classnames';
 
 export default class List extends React.Component {
 
@@ -11,6 +12,8 @@ export default class List extends React.Component {
 
 	static propTypes = {
 		onChange: PropTypes.func,
+		className: PropTypes.string,
+		includeBlank: PropTypes.bool,
 		component: PT.component
 	}
 
@@ -34,21 +37,27 @@ export default class List extends React.Component {
 
 	render () {
 		const {
+			className,
 			component,
+			includeBlank,
 			value,
 			...props
 		} = this.props;
 
+		const values = includeBlank
+			? [...value, component.createEmpty && component.createEmpty()]
+			: value;
+
 		return (
-			<div className="nti-profile-field-list">
+			<div className={cx('nti-profile-field-list', className)}>
 				<ul className="nti-profile-field-list-values">
-					{(value || []).map((v, i) => (
+					{(values || []).map((v, i) => (
 						<li key={i}>
 							<Item component={component} index={i} {...props} value={v} onChange={this.onChange} onRemove={this.removeEntry}/>
 						</li>
 					))}
 				</ul>
-				<Button onClick={this.addEntry}>Add Entry (TODO: Localize this)</Button>
+				{!includeBlank && <Button onClick={this.addEntry}>Add Entry (TODO: Localize this)</Button>}
 			</div>
 		);
 	}
