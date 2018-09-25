@@ -23,7 +23,7 @@ export default class About extends React.Component {
 		const {user: {positions = []}} = this.props;
 
 		return (
-			<Card className="professional">
+			<Card className="positions">
 				<h2 className="title">{t('title')}</h2>
 				<div className="entries">
 					{
