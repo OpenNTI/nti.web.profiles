@@ -6,6 +6,7 @@
 
 		> * {
 			position: relative;
+			margin-bottom: 0; // override declaration in List.scss
 
 			input {
 				overflow: hidden;

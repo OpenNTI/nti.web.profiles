@@ -1,5 +1,30 @@
 .nti-profile-experience-item {
+	display: grid;
+	grid-template-columns: 1fr 60px 60px;
+	grid-gap: 0.5rem 0.875rem;
+
 	&:not(:last-child) {
 		margin-bottom: 3rem;
+	}
+
+	.nti-profile-field-container {
+		grid-column: 1 / -1;
+		margin-bottom: 0;
+
+		&.role {
+			grid-column: 1 / 2;
+		}
+
+		&.year {
+			grid-column: auto;
+		}
+
+		.nti-profile-field-label {
+			margin-top: 0;
+		}
+
+		.nti-profile-editor {
+			margin-top: 2px;
+		}
 	}
 }

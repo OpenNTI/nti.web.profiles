@@ -68,19 +68,19 @@ export default class Experience extends React.Component {
 
 		return (
 			<div className="nti-profile-experience-item">
-				<FieldContainer label={t(n('organization'))}>
+				<FieldContainer className="organization" label={t(n('organization'))}>
 					<In component={Input.Text} name={n('organization')} value={v('organization')} onChange={this.onChange} />
 				</FieldContainer>
-				<FieldContainer label={t(n('role'))}>
+				<FieldContainer className="role" label={t(n('role'))}>
 					<In component={Input.Text} name={n('role')} value={v('role')} onChange={this.onChange} />
 				</FieldContainer>
-				<FieldContainer label={t(n('startYear'))}>
+				<FieldContainer className="year start-year" label={t(n('startYear'))}>
 					<In component={Input.Number} maxLength="4" name={n('startYear')} value={v('startYear')} onChange={this.onChange} />
 				</FieldContainer>
-				<FieldContainer label={t(n('endYear'))}>
+				<FieldContainer className="year end-year" label={t(n('endYear'))}>
 					<In component={Input.Number} maxLength="4" name={n('endYear')} value={v('endYear')} onChange={this.onChange} />
 				</FieldContainer>
-				<FieldContainer label={t(n('description'))}>
+				<FieldContainer className="description" label={t(n('description'))}>
 					<Editor editorState={editorState} onContentChange={this.onDescriptionChange} />
 				</FieldContainer>
 			</div>
