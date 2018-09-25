@@ -11,6 +11,7 @@ import {
 import Education from './Education';
 import List from './List';
 import HTML from './HTML';
+import Interests from './Interests';
 import Position from './Position';
 import String from './String';
 import URI from './URI';
@@ -21,7 +22,7 @@ const NAMES = {
 	about: HTML,
 	education: List.of(Education),
 	positions: List.of(Position),
-	interests: List.of(String),
+	interests: Interests,
 };
 
 const TYPES = {
