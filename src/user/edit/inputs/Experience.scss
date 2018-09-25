@@ -26,5 +26,15 @@
 		.nti-profile-editor {
 			margin-top: 2px;
 		}
+
+		&.organization {
+			input {
+				font-weight: 700;
+			}
+		}
+
+		.DraftEditor-root {
+			font-style: italic;
+		}
 	}
 }

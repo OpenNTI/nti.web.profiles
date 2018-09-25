@@ -8,9 +8,10 @@
 
 		> * {
 			position: relative;
+			margin-bottom: 3rem;
 
-			&:not(:last-child) {
-				margin-bottom: 3rem;
+			&:last-child {
+				margin-bottom: 1rem;
 			}
 
 			.remove {

@@ -1,9 +1,10 @@
 .nti-profile-editor {
-	min-height: 250px;
+	min-height: 112px;
 	box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.7);
 	margin-top: 10px;
 
-	.DraftEditor-root {
+	.DraftEditor-root.DraftEditor-root {
 		font-size: 0.875rem;
+		padding: 0.25em 0.25em 40px;
 	}
 }

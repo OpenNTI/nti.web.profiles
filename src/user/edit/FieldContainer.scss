@@ -1,19 +1,32 @@
 @import "~@nti/style-common";
 
 .nti-profile-field-container {
+	@mixin fieldborder {
+		border: 1px solid #e8e8e8;
+		box-shadow: none;
+		transition: border 0.375s;
+
+		&:focus, &:focus-within {
+			border-color: $tertiary-grey;
+		}
+	}
+
 	margin-bottom: 0.625rem;
 
 	input:not([type=radio]):not([type=checkbox]) {
+		background: white;
 		color: $primary-grey;
 		border: 1px solid #e8e8e8;
 		line-height: 1.5em;
 		padding: 0.25em;
 		min-height: 34px;
-		font-size: 1rem;
+		font-size: 0.875rem;
 		width: 100%;
 
-		&:focus {
-			border-color: $tertiary-grey;
-		}
+		@include fieldborder;
+	}
+
+	.nti-profile-editor {
+		@include fieldborder;
 	}
 }

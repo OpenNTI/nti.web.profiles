@@ -62,7 +62,7 @@ export default class List extends React.Component {
 						</li>
 					))}
 				</ul>
-				{!includeBlank && <Button onClick={this.addEntry}>{t('add')}</Button>}
+				{!includeBlank && <Button className="add-entry" onClick={this.addEntry}>{t('add')}</Button>}
 			</div>
 		);
 	}
