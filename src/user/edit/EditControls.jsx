@@ -1,12 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Connectors} from '@nti/lib-store';
 import {LinkTo, Matches} from '@nti/web-routing';
-import {Parsers} from '@nti/web-editor';
+import {Button} from '@nti/web-commons';
+import {Connectors} from '@nti/lib-store';
+import {scoped} from '@nti/lib-locale';
 
 import {LOCALE_PATHS} from '../constants';
 
 import {SAVE_PROFILE} from './Store';
+
+const t = scoped('nti-web-profile.user-profile.edit.controls', {
+	edit: 'Edit Profile',
+	save: 'Save',
+	cancel: 'Cancel'
+});
+
 
 export default class EditControls extends React.Component {
 
@@ -18,7 +26,7 @@ export default class EditControls extends React.Component {
 		return match ? (
 			<Editing {...this.props} />
 		) : (
-			<LinkTo.Name className="edit-link" name={LOCALE_PATHS.EDIT}>Edit - (TODO: Localize this)</LinkTo.Name>
+			<LinkTo.Name className="nti-button primary edit-link" name={LOCALE_PATHS.EDIT}>{t('edit')}</LinkTo.Name>
 		);
 	}
 
@@ -44,19 +52,13 @@ class Editing extends React.Component {
 	onSave = (e) => {
 		const {saveProfile} = this.props;
 		return saveProfile();
-		// const about = Parsers.HTML.fromDraftState(store.get('about'));
-		// console.log(entity);
-		// console.log(Parsers.HTML.fromDraftState(store.get('about')));
-		// entity.save({
-		// 	about
-		// });
 	}
 
 	render () {
 		return (
 			<div className="editing">
-				<LinkTo.Name name={`${LOCALE_PATHS.NAV}.about`}>Cancel - (TODO: Localize this)</LinkTo.Name>
-				<button onClick={this.onSave}>Save - (TODO: Localize this)</button>
+				<LinkTo.Name className="nti-button secondary cancel" name={`${LOCALE_PATHS.NAV}.about`}>{t('cancel')}</LinkTo.Name>
+				<Button className="save" onClick={this.onSave}>{t('save')}</Button>
 			</div>
 		);
 	}
