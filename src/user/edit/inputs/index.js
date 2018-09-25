@@ -21,6 +21,7 @@ const NAMES = {
 	about: HTML,
 	education: List.of(Education),
 	positions: List.of(Position),
+	interests: List.of(String),
 };
 
 const TYPES = {
