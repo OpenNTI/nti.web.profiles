@@ -8,14 +8,19 @@ const t = scoped('nti-web-profile.user-profile.edit.position.fields', {
 	title: 'Title'
 });
 
-const FIELDMAP = {
-	role: 'title',
-	organization: 'companyName'
+const FIELDMETA = {
+	organization: {
+		name: 'companyName'
+	},
+	role: {
+		name: 'title',
+		required: true
+	},
 };
 
 export default function Position (props) {
 	return (
-		<Experience {...props} fieldMap={FIELDMAP} localizer={t} />
+		<Experience {...props} fieldMeta={FIELDMETA} localizer={t} />
 	);
 }
 

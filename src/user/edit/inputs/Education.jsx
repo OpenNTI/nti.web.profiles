@@ -9,14 +9,18 @@ const t = scoped('nti-web-profile.user-profile.edit.education.fields', {
 });
 
 
-const FIELDMAP = {
-	role: 'degree',
-	organization: 'school'
+const FIELDMETA = {
+	organization: {
+		name: 'school'
+	},
+	role: {
+		name: 'degree'
+	}
 };
 
 export default function Education (props) {
 	return (
-		<Experience {...props} fieldMap={FIELDMAP} localizer={t} />
+		<Experience {...props} fieldMeta={FIELDMETA} localizer={t} />
 	);
 }
 
