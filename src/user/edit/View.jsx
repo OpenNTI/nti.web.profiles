@@ -3,15 +3,13 @@ import PropTypes from 'prop-types';
 import {Connectors} from '@nti/lib-store';
 import {scoped} from '@nti/lib-locale';
 
+import {slugify} from '../../util';
 import {Card} from '../../common';
 import {Frame} from '../about';
 
 import FieldContainer from './FieldContainer';
 import {LOADED, GET_SCHEMA_ENTRY} from './Store';
 import getWidget from './inputs';
-
-// format for css class name: 'fooBar_Baz boom' => foo-bar-baz-boom
-const slugify = x => x.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase().replace(/[\W_]/g, '-');
 
 const t = scoped('nti-profiles.user.edit', {
 	titles: {
