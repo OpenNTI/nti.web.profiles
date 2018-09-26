@@ -10,14 +10,15 @@ export default class FieldContainer extends React.Component {
 	static propTypes = {
 		label: PropTypes.string,
 		className: PropTypes.string,
-		children: PropTypes.any
+		children: PropTypes.any,
+		required: PropTypes.bool
 	}
 
 	render () {
-		const {label, className, children} = this.props;
+		const {label, className, children, required} = this.props;
 
 		return (
-			<div className={cx('nti-profile-field-container', className)}>
+			<div className={cx('nti-profile-field-container', className, {required})}>
 				{label && (
 					<FieldLabel>{label}</FieldLabel>
 				)}
