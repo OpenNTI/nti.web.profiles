@@ -45,15 +45,9 @@ const SECTIONS = [
 			'googlePlus'
 		]
 	},
-	{
-		key: 'education',
-	},
-	{
-		key: 'positions',
-	},
-	{
-		key: 'interests',
-	},
+	{ key: 'education' },
+	{ key: 'positions' },
+	{ key: 'interests' },
 ];
 
 export default
