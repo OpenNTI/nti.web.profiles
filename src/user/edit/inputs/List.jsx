@@ -16,6 +16,7 @@ export default class List extends React.Component {
 	)
 
 	static propTypes = {
+		value: PropTypes.array,
 		onChange: PropTypes.func,
 		className: PropTypes.string,
 		includeBlank: PropTypes.bool,
@@ -73,7 +74,8 @@ class Item extends React.Component {
 	static propTypes = {
 		index: PropTypes.number.isRequired,
 		onChange: PropTypes.func.isRequired,
-		onRemove: PropTypes.func
+		onRemove: PropTypes.func,
+		component: PT.component
 	}
 
 	onChange = value => {
