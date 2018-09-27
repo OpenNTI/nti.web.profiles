@@ -7,6 +7,7 @@ import {scoped} from '@nti/lib-locale';
 
 import {LOCALE_PATHS} from '../constants';
 
+import Context from './Context';
 import {SAVE_PROFILE} from './Store';
 
 const t = scoped('nti-web-profile.user-profile.edit.controls', {
@@ -58,7 +59,13 @@ class Editing extends React.Component {
 		return (
 			<div className="editing">
 				<LinkTo.Name className="nti-button secondary cancel" name={`${LOCALE_PATHS.NAV}.about`}>{t('cancel')}</LinkTo.Name>
-				<Button className="save" onClick={this.onSave}>{t('save')}</Button>
+				{
+					<Context.Consumer>
+						{
+							({formId}) => (<Button form={formId} className="save" onClick={this.onSave}>{t('save')}</Button>)
+						}
+					</Context.Consumer>
+				}
 			</div>
 		);
 	}

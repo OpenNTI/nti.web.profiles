@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 import FieldLabel from './FieldLabel';
+import ValidationError from './ValidationError';
 
 
 export default class FieldContainer extends React.Component {
@@ -11,17 +12,17 @@ export default class FieldContainer extends React.Component {
 		label: PropTypes.string,
 		className: PropTypes.string,
 		children: PropTypes.any,
-		required: PropTypes.bool
+		required: PropTypes.bool,
+		error: PropTypes.object
 	}
 
 	render () {
-		const {label, className, children, required} = this.props;
+		const {label, className, children, required, error} = this.props;
 
 		return (
 			<div className={cx('nti-profile-field-container', className, {required})}>
-				{label && (
-					<FieldLabel>{label}</FieldLabel>
-				)}
+				{label && <FieldLabel>{label}</FieldLabel>}
+				{error && <ValidationError error={error} />}
 				{children}
 			</div>
 		);

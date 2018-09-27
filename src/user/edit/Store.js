@@ -53,7 +53,10 @@ export class Store extends Stores.BoundStore {
 		const {binding} = this;
 
 		// fall back to entity's value if we don't have it.
-		return super.get(key) || (binding || {})[key];
+		const value = super.get(key);
+		return value != null // explicit check to allow empty strings (falsy) through
+			? value
+			: (binding || {})[key];
 	}
 
 	set (name, value) {

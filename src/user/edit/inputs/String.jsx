@@ -8,7 +8,9 @@ export default class StringInput extends React.PureComponent {
 	static propTypes = {
 		className: PropTypes.string,
 		readonly: PropTypes.bool,
-		onChange: PropTypes.func
+		schema: PropTypes.object,
+		onChange: PropTypes.func,
+		onInvalid: PropTypes.func
 	}
 
 	render () {

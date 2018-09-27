@@ -7,6 +7,7 @@ import {slugify} from '../../util';
 import {Card} from '../../common';
 import {Frame} from '../about';
 
+import Context from './Context';
 import FieldContainer from './FieldContainer';
 import {LOADED, GET_SCHEMA_ENTRY} from './Store';
 import getWidget from './inputs';
@@ -102,9 +103,15 @@ class View extends React.Component {
 
 		return (
 			<Frame className={className} user={user}>
-				<div>
-					{widgets}
-				</div>
+				<Context.Consumer>
+					{
+						({formId}) => (
+							<form id={formId}> {/* Frame takes a single child and renders it along with the sidebar */}
+								{widgets}
+							</form>
+						)
+					}
+				</Context.Consumer>
 			</Frame>
 		);
 	}

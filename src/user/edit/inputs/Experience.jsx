@@ -55,6 +55,8 @@ export default class Experience extends React.Component {
 		onChange: PropTypes.func
 	}
 
+	state = {}
+
 	onChange = (name, value) => {
 		const {value: previous, onChange} = this.props;
 
@@ -63,12 +65,35 @@ export default class Experience extends React.Component {
 			[name]: value
 		};
 
+		this.clearError(name);
 		onChange(newValue);
+	}
+
+	clearError (name) {
+		const {errors = {}} = this.state;
+		delete errors[name];
+		this.setState({errors});
 	}
 
 	onDescriptionChange = (value) => {
 		value.toJSON = () => Parsers.PlainText.fromDraftState(value)[0];
 		this.onChange('description', value);
+	}
+
+	onInvalid = e => {
+		const {target: {name, validity, validationMessage: message}} = e;
+		const {errors} = this.state;
+
+		this.setState({
+			errors: {
+				...errors,
+				[name]: {
+					name,
+					validity,
+					message
+				}
+			}
+		});
 	}
 
 	fieldMeta = f => {
@@ -87,6 +112,9 @@ export default class Experience extends React.Component {
 
 	render () {
 		const {
+			state: {
+				errors = {}
+			},
 			props: {
 				localizer,
 				value = {}
@@ -110,20 +138,30 @@ export default class Experience extends React.Component {
 
 		const editorState = Parsers.PlainText.toDraftState(v('description'));
 
+		const fields = {
+			organization: {
+				component: Input.Text
+			},
+			role: {
+				component: Input.Text
+			},
+			startYear: {
+				component: Input.Number,
+				maxLength: 4,
+			},
+			endYear: {
+				component: Input.Number,
+				maxLength: 4,
+			},
+		};
+
 		return (
 			<div className="nti-profile-experience-item">
-				<FieldContainer className={css('organization')} label={t(n('organization'))}>
-					<In component={Input.Text} name={n('organization')} value={v('organization')} onChange={this.onChange} required={r('organization')} />
-				</FieldContainer>
-				<FieldContainer className={css('role')} label={t(n('role'))}>
-					<In component={Input.Text} name={n('role')} value={v('role')} onChange={this.onChange} required={r('role')} />
-				</FieldContainer>
-				<FieldContainer className={css('startYear', 'year')} label={t(n('startYear'))}>
-					<In component={Input.Number} maxLength="4" name={n('startYear')} value={v('startYear')} onChange={this.onChange} required={r('startYear')} />
-				</FieldContainer>
-				<FieldContainer className={css('endYear', 'year')} label={t(n('endYear'))}>
-					<In component={Input.Number} maxLength="4" name={n('endYear')} value={v('endYear')} onChange={this.onChange} required={r('endYear')} />
-				</FieldContainer>
+				{Object.entries(fields).map(([key, {className, ...props}]) => (
+					<FieldContainer key={key} className={css(key)} label={t(n(key))} error={errors[n(key)]}>
+						<In {...props} onInvalid={this.onInvalid} name={n(key)} value={v(key)} onChange={this.onChange} required={r(key)} />
+					</FieldContainer>
+				))}
 				<FieldContainer className={css('description')} label={t(n('description'))}>
 					<Editor editorState={editorState} onContentChange={this.onDescriptionChange} />
 				</FieldContainer>

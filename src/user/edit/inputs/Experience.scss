@@ -2,6 +2,7 @@
 	display: grid;
 	grid-template-columns: 1fr 70px 70px;
 	grid-gap: 0.5rem 0.875rem;
+	align-items: flex-end;
 
 	&:not(:last-child) {
 		margin-bottom: 3rem;

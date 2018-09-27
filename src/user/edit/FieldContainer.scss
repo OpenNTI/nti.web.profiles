@@ -9,6 +9,10 @@
 		&:focus, &:focus-within {
 			border-color: $tertiary-grey;
 		}
+
+		&:invalid {
+			border-color: $error-text-color;
+		}
 	}
 
 	margin-bottom: 0.625rem;

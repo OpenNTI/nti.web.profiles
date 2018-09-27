@@ -31,7 +31,7 @@ const TYPES = {
 };
 
 export default function getWidget (schema) {
-	const {name, type, base_type: baseType} = schema;
+	const {name, type, base_type: baseType, required} = schema;
 
 	if (!name) {
 		throw new Error('Must specify a name.');
@@ -63,6 +63,7 @@ export default function getWidget (schema) {
 			const props = {
 				...this.props,
 				schema,
+				required,
 				onChange: this.onChange
 			};
 
