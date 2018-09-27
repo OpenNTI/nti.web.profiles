@@ -11,9 +11,16 @@ const t = scoped('nti-web-profile.user-profile.edit.list', {
 
 export default class List extends React.Component {
 
-	static of = Component => (
-		(props) => <List {...props} component={Component} />
-	)
+	static of = component => {
+		return class extends List {
+			static displayName = `ListOf${component.displayName || component.name}`
+
+			Component = component
+		};
+	}
+
+	// suppress FieldContainer label
+	static fieldLabel = () => null
 
 	static propTypes = {
 		value: PropTypes.array,
@@ -41,14 +48,20 @@ export default class List extends React.Component {
 		onChange(values);
 	}
 
+
+	getComponent () {
+		return this.Component || this.props.component;
+	}
+
 	render () {
 		const {
 			className,
-			component,
 			includeBlank,
 			value,
 			...props
 		} = this.props;
+
+		const component = this.getComponent();
 
 		const values = includeBlank
 			? [...value, component.createEmpty && component.createEmpty()]

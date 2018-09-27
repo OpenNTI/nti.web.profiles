@@ -8,26 +8,13 @@ import {Card} from '../../common';
 import {Frame} from '../about';
 
 import Context from './Context';
-import FieldContainer from './FieldContainer';
 import {LOADED, GET_SCHEMA_ENTRY} from './Store';
 import getWidget from './inputs';
 
-const t = scoped('nti-profiles.user.edit', {
-	titles: {
-		about: 'About',
-		education: 'Education',
-		positions: 'Professional',
-	},
-	labels: {
-		about: 'Write something about yourself.',
-		realname: 'Name',
-		alias: 'Display Name',
-		'home_page': 'Home Page',
-		facebook: 'Facebook Profile',
-		linkedIn: 'LinkedIn Profile',
-		twitter: 'Twitter Profile',
-		googlePlus: 'Google+ Profile',
-	}
+const t = scoped('nti-profiles.user.edit.section-titles', {
+	about: 'About',
+	education: 'Education',
+	positions: 'Professional',
 });
 
 const SECTIONS = [
@@ -68,8 +55,7 @@ class View extends React.Component {
 	getSection = ({key, fields}) => {
 		const {getSchemaEntry} = this.props;
 
-		const title = t(['titles', key], {fallback: key});
-		const label = k => t(['labels', k], {fallback: k});
+		const title = t(key, {fallback: key});
 		const widgets = (fields || [key]).map(fieldName => getWidget(getSchemaEntry(fieldName)));
 
 		return (

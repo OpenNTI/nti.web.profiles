@@ -4,10 +4,7 @@ import Logger from '@nti/util-logger';
 import {Connectors} from '@nti/lib-store';
 import {scoped} from '@nti/lib-locale';
 
-import {
-	SET_FIELD_VALUE,
-	ERROR,
-} from '../Store';
+import {SET_FIELD_VALUE} from '../Store';
 import FieldContainer from '../FieldContainer';
 
 import Education from './Education';
@@ -60,7 +57,6 @@ export default function getWidget (schema) {
 	@Connectors.Any.connect({
 		[SET_FIELD_VALUE]: 'setValue',
 		[name]: 'value',
-		[ERROR]: 'error'
 	})
 	class Input extends React.Component {
 		static propTypes = {
@@ -101,7 +97,9 @@ export default function getWidget (schema) {
 
 			delete props.setValue;
 
-			const label = k => t(k, {fallback: k});
+			const label = k => Component.fieldLabel
+				? Component.fieldLabel()
+				: t(k, {fallback: k});
 
 			return (
 				<FieldContainer required={required} error={error} label={label(name)}>
