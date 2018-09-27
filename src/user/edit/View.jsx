@@ -68,26 +68,13 @@ class View extends React.Component {
 	getSection = ({key, fields}) => {
 		const {getSchemaEntry} = this.props;
 
-		const inputs = (fields || [key]).map(fieldName => {
-			const schema = getSchemaEntry(fieldName);
-			const required = schema && schema.required;
-			return {
-				required,
-				fieldName,
-				Widget: getWidget(schema)
-			};
-		}).filter(({Widget}) => Widget);
-
 		const title = t(['titles', key], {fallback: key});
 		const label = k => t(['labels', k], {fallback: k});
+		const widgets = (fields || [key]).map(fieldName => getWidget(getSchemaEntry(fieldName)));
 
 		return (
 			<Card key={key} className={slugify(key)} title={title}>
-				{inputs.map(({fieldName, Widget, required}) => (
-					<FieldContainer key={fieldName} className={slugify(fieldName)} label={label(fieldName)} required={required}>
-						<Widget />
-					</FieldContainer>
-				))}
+				{widgets.map((W, i) => <W key={i} />)}
 			</Card>
 		);
 	}
