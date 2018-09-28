@@ -2,31 +2,55 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
+import ErrorContext from '../ErrorContext';
+
 import FieldLabel from './FieldLabel';
 import ValidationError from './ValidationError';
 
+const noop = () => {};
 
 export default class FieldContainer extends React.Component {
+
+
+	render () {
+		return (
+			<ErrorContext.Consumer>
+				{
+					({onError}) => (
+						<ErrorReporter {...this.props} onError={onError} />
+					)
+				}
+			</ErrorContext.Consumer>
+		);
+	}
+}
+
+class ErrorReporter extends React.Component {
 
 	static propTypes = {
 		label: PropTypes.string,
 		className: PropTypes.string,
 		children: PropTypes.any,
-		required: PropTypes.bool
+		required: PropTypes.bool,
+		onError: PropTypes.func
 	}
 
 	state = {}
 
 	onInvalid = e => {
+		const {onError = noop} = this.props;
 		const {target: {name, validity, validationMessage: message}} = e;
+		const error = {
+			name,
+			validity,
+			message
+		};
 
 		this.setState({
-			error: {
-				name,
-				validity,
-				message
-			}
+			error
 		});
+
+		onError(error);
 	}
 
 	render () {

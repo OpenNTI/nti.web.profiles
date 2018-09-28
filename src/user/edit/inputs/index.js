@@ -5,9 +5,9 @@ import {Connectors} from '@nti/lib-store';
 import {scoped} from '@nti/lib-locale';
 
 import {SET_FIELD_VALUE} from '../Store';
-import FieldContainer from '../FieldContainer';
 
 import Education from './Education';
+import FieldContainer from './FieldContainer';
 import List from './List';
 import HTML from './HTML';
 import Interests from './Interests';
@@ -70,6 +70,7 @@ export default function getWidget (schema) {
 
 		render () {
 			const props = {
+				name,
 				...this.props,
 				schema,
 				required,

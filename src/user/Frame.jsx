@@ -6,7 +6,7 @@ import cx from 'classnames';
 import {slugify} from '../util';
 
 import Header from './header/';
-import {Context as EditContext, Controls, Store as Edit} from './edit';
+import {FormContext, Controls, Store as Edit} from './edit';
 
 export default
 @Edit.Store.connect({
@@ -47,7 +47,7 @@ class Frame extends React.Component {
 					) : loading ? (
 						<Loading.Spinner />
 					) : (
-						<EditContext.Provider value={{
+						<FormContext.Provider value={{
 							formId: slugify(user.getID())
 						}}>
 							<Controls entity={user} />
@@ -56,7 +56,7 @@ class Frame extends React.Component {
 								className: cx('profile-tab-container', className),
 								user
 							})}
-						</EditContext.Provider>
+						</FormContext.Provider>
 					)
 				}
 			</div>

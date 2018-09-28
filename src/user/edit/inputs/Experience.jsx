@@ -6,8 +6,7 @@ import {Input} from '@nti/web-commons';
 import {scoped} from '@nti/lib-locale';
 import cx from 'classnames';
 
-import FieldContainer from '../FieldContainer';
-
+import FieldContainer from './FieldContainer';
 import Editor from './Editor';
 
 const t2 = scoped('nti-web-profile.user-profile.edit.experience.fields', {

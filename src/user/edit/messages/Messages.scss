@@ -1,0 +1,18 @@
+@import "~@nti/style-common";
+
+.nti-profile-edit-frame {
+	.nti-profile-edit-messages {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+
+		> * {
+			padding: 2px;
+			margin: 0 0 5px;
+			background: $error-text-color;
+			color: white;
+			line-height: 40px;
+			text-align: center;
+		}
+	}
+}

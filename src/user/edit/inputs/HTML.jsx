@@ -11,8 +11,7 @@ import {
 	STYLES,
 } from '@nti/web-editor';
 
-import FieldContainer from '../FieldContainer';
-
+import FieldContainer from './FieldContainer';
 import Editor from './Editor';
 
 export default class HTMLInput extends React.Component {

@@ -5,10 +5,11 @@ import {scoped} from '@nti/lib-locale';
 
 import {slugify} from '../../util';
 import {Card} from '../../common';
-import {Frame} from '../about';
 
-import Context from './Context';
-import {LOADED, GET_SCHEMA_ENTRY} from './Store';
+import ErrorContext from './ErrorContext';
+import FormContext from './FormContext';
+import Frame from './Frame';
+import {LOADED, GET_SCHEMA_ENTRY, SET_ERROR} from './Store';
 import getWidget from './inputs';
 
 const t = scoped('nti-profiles.user.edit.section-titles', {
@@ -41,27 +42,33 @@ const SECTIONS = [
 export default
 @Connectors.Any.connect({
 	[LOADED]: 'loaded',
-	[GET_SCHEMA_ENTRY]: 'getSchemaEntry'
+	[GET_SCHEMA_ENTRY]: 'getSchemaEntry',
+	[SET_ERROR]: 'setError',
 })
 class View extends React.Component {
 
 	static propTypes = {
 		loaded: PropTypes.bool,
 		getSchemaEntry: PropTypes.func,
+		setError: PropTypes.func,
 		className: PropTypes.string,
 		user: PropTypes.object
 	}
 
 	getSection = ({key, fields}) => {
-		const {getSchemaEntry} = this.props;
+		const {getSchemaEntry, setError} = this.props;
 
 		const title = t(key, {fallback: key});
 		const widgets = (fields || [key]).map(fieldName => getWidget(getSchemaEntry(fieldName)));
-
+		const errorContext = {
+			onError: (e) => setError(e, key)
+		};
 		return (
-			<Card key={key} className={slugify(key)} title={title}>
-				{widgets.map((W, i) => <W key={i} />)}
-			</Card>
+			<ErrorContext.Provider key={key} value={errorContext}>
+				<Card className={slugify(key)} title={title}>
+					{widgets.map((W, i) => <W key={i} />)}
+				</Card>
+			</ErrorContext.Provider>
 		);
 	}
 
@@ -76,7 +83,7 @@ class View extends React.Component {
 
 		return (
 			<Frame className={className} user={user}>
-				<Context.Consumer>
+				<FormContext.Consumer>
 					{
 						({formId}) => (
 							<form id={formId}> {/* Frame takes a single child and renders it along with the sidebar */}
@@ -84,7 +91,7 @@ class View extends React.Component {
 							</form>
 						)
 					}
-				</Context.Consumer>
+				</FormContext.Consumer>
 			</Frame>
 		);
 	}
