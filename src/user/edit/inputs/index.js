@@ -63,36 +63,17 @@ export default function getWidget (schema) {
 			setValue: PropTypes.func,
 		}
 
-		state = {}
-
-		onInvalid = e => {
-			const {target: {validity, validationMessage: message}} = e;
-
-			this.setState({
-				error: {
-					name,
-					validity,
-					message
-				}
-			});
-		}
-
 		onChange = (value) => {
 			const {setValue} = this.props;
-			this.setState({
-				error: void 0
-			});
 			return setValue(name, value);
 		}
 
 		render () {
-			const {error} = this.state;
 			const props = {
 				...this.props,
 				schema,
 				required,
 				onChange: this.onChange,
-				onInvalid: this.onInvalid
 			};
 
 			delete props.setValue;
@@ -102,7 +83,7 @@ export default function getWidget (schema) {
 				: t(k, {fallback: k});
 
 			return (
-				<FieldContainer required={required} error={error} label={label(name)}>
+				<FieldContainer required={required} label={label(name)}>
 					<Component {...props} />
 				</FieldContainer>
 			);

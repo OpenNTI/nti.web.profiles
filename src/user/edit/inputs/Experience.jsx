@@ -55,8 +55,6 @@ export default class Experience extends React.Component {
 		onChange: PropTypes.func
 	}
 
-	state = {}
-
 	onChange = (name, value) => {
 		const {value: previous, onChange} = this.props;
 
@@ -65,35 +63,12 @@ export default class Experience extends React.Component {
 			[name]: value
 		};
 
-		this.clearError(name);
 		onChange(newValue);
-	}
-
-	clearError (name) {
-		const {errors = {}} = this.state;
-		delete errors[name];
-		this.setState({errors});
 	}
 
 	onDescriptionChange = (value) => {
 		value.toJSON = () => Parsers.PlainText.fromDraftState(value)[0];
 		this.onChange('description', value);
-	}
-
-	onInvalid = e => {
-		const {target: {name, validity, validationMessage: message}} = e;
-		const {errors} = this.state;
-
-		this.setState({
-			errors: {
-				...errors,
-				[name]: {
-					name,
-					validity,
-					message
-				}
-			}
-		});
 	}
 
 	fieldMeta = f => {
@@ -112,9 +87,6 @@ export default class Experience extends React.Component {
 
 	render () {
 		const {
-			state: {
-				errors = {}
-			},
 			props: {
 				localizer,
 				value = {}
@@ -157,9 +129,9 @@ export default class Experience extends React.Component {
 
 		return (
 			<div className="nti-profile-experience-item">
-				{Object.entries(fields).map(([key, {className, ...props}]) => (
-					<FieldContainer key={key} className={css(key)} label={t(n(key))} error={errors[n(key)]}>
-						<In {...props} onInvalid={this.onInvalid} name={n(key)} value={v(key)} onChange={this.onChange} required={r(key)} />
+				{Object.entries(fields).map(([key, props]) => (
+					<FieldContainer key={key} className={css(key)} label={t(n(key))}>
+						<In {...props} name={n(key)} value={v(key)} onChange={this.onChange} required={r(key)} />
 					</FieldContainer>
 				))}
 				<FieldContainer className={css('description')} label={t(n('description'))}>
@@ -170,7 +142,7 @@ export default class Experience extends React.Component {
 	}
 }
 
-// dumb wrapper on commons inputs to feed the name to onChange handler
+// dumb wrapper on commons inputs to feed the name back to the onChange handler
 class In extends React.Component {
 
 	static propTypes = {

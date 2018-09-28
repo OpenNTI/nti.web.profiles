@@ -12,18 +12,41 @@ export default class FieldContainer extends React.Component {
 		label: PropTypes.string,
 		className: PropTypes.string,
 		children: PropTypes.any,
-		required: PropTypes.bool,
-		error: PropTypes.object
+		required: PropTypes.bool
+	}
+
+	state = {}
+
+	onInvalid = e => {
+		const {target: {name, validity, validationMessage: message}} = e;
+
+		this.setState({
+			error: {
+				name,
+				validity,
+				message
+			}
+		});
 	}
 
 	render () {
-		const {label, className, children, required, error} = this.props;
+		const {
+			props: {
+				label,
+				className,
+				children,
+				required
+			},
+			state: {error}
+		} = this;
 
 		return (
 			<div className={cx('nti-profile-field-container', className, {required})}>
 				{label && <FieldLabel>{label}</FieldLabel>}
 				{error && <ValidationError error={error} />}
-				{children}
+				{React.cloneElement(React.Children.only(children), {
+					onInvalid: this.onInvalid
+				})}
 			</div>
 		);
 	}

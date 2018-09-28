@@ -53,14 +53,16 @@ export default class HTMLInput extends React.Component {
 
 		return (
 			<FieldContainer className="nti-profile-html-input" label={label}>
-				<Editor className="editor" id={this.editorID} onContentChange={this.onContentChange} editorState={editorState} plugins={plugins} />
-				<ContextProvider editorID={this.editorID}>
-					<div className="nti-profile-edit-toolbar">
-						<BoldButton />
-						<ItalicButton />
-						<UnderlineButton />
-					</div>
-				</ContextProvider>
+				<div>
+					<Editor className="editor" id={this.editorID} onContentChange={this.onContentChange} editorState={editorState} plugins={plugins} />
+					<ContextProvider editorID={this.editorID}>
+						<div className="nti-profile-edit-toolbar">
+							<BoldButton />
+							<ItalicButton />
+							<UnderlineButton />
+						</div>
+					</ContextProvider>
+				</div>
 			</FieldContainer>
 		);
 	}
