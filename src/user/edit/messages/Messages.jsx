@@ -1,8 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {scoped} from '@nti/lib-locale';
+import Logger from '@nti/util-logger';
 
 import {ensureArray as arr} from '../../../util';
+
+const logger = Logger.get('nti-profiles:edit:messages');
 
 const t = scoped('nti-profile-edit.validation-error-messages', {
 	required: {
@@ -35,15 +38,21 @@ export default class Messages extends React.Component {
 	 */
 	buckets () {
 		const {errors} = this.props;
-		return arr(errors).reduce((acc, e) => {
-			const {error, error: {name}, where} = e;
-			const key = `${name}:${where}`;
-			if (!acc.seen.has(key)) {
-				acc.seen.add(key);
-				acc.buckets[where] = [...arr(acc.buckets[where]), error];
-			}
-			return acc;
-		}, {seen: new Set(), buckets: {}}).buckets;
+		return arr(errors)
+			.filter(Boolean)
+			.reduce((acc, e) => {
+				const {error, error: {name} = {}, where} = e;
+				if (!name) {
+					logger.warn('Expected an error property with a name. Ignoring. %o', e);
+					return acc;
+				}
+				const key = `${name}:${where}`;
+				if (!acc.seen.has(key)) {
+					acc.seen.add(key);
+					acc.buckets[where] = [...arr(acc.buckets[where]), error];
+				}
+				return acc;
+			}, {seen: new Set(), buckets: {}}).buckets;
 	}
 
 	/**
@@ -79,7 +88,6 @@ export default class Messages extends React.Component {
 	}
 
 	render () {
-
 		const messages = this.messages(this.buckets());
 
 		return !messages || messages.length === 0
