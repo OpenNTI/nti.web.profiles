@@ -28,7 +28,7 @@ const fieldMetaDefaults = {
 	},
 };
 
-export default class Experience extends React.Component {
+export default class Experience extends React.PureComponent {
 
 	static propTypes = {
 		localizer: PropTypes.func,
