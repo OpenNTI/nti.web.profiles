@@ -1,16 +1,11 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import cx from 'classnames';
-
-import List from './List';
-import String from './String';
+import {TokenEditor} from '@nti/web-commons';
 
 export default function Interests ({className, ...props}) {
 	return (
-		<List {...props} className={cx(className, 'nti-profile-interest-list')} component={String} includeBlank />
+		<TokenEditor {...props} className={cx(className, 'nti-profile-interest-list')} />
 	);
 }
 
-Interests.propTypes = {
-	className: PropTypes.string
-};
+Interests.fieldLabel = () => null;

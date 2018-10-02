@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import Logger from '@nti/util-logger';
 import {Connectors} from '@nti/lib-store';
 import {scoped} from '@nti/lib-locale';
-import {TokenEditor} from '@nti/web-commons';
 
 import {SET_FIELD_VALUE} from '../Store';
 
@@ -11,6 +10,7 @@ import Education from './Education';
 import FieldContainer from './FieldContainer';
 import List from './List';
 import HTML from './HTML';
+import Interests from './Interests';
 import Position from './Position';
 import String from './String';
 import URI from './URI';
@@ -32,7 +32,7 @@ const NAMES = {
 	about: HTML,
 	education: List.of(Education),
 	positions: List.of(Position),
-	interests: TokenEditor
+	interests: Interests
 };
 
 const TYPES = {

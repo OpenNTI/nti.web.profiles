@@ -1,22 +1,36 @@
-.nti-profile-interest-list {
-	.nti-profile-field-list-values {
-		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-		grid-gap: 10px;
+@import "~@nti/style-common";
 
-		> * {
-			position: relative;
-			margin-bottom: 0; // override declaration in List.scss
+.token-editor.nti-profile-interest-list {
+	padding: 0;
+	border: none;
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+	grid-gap: 10px;
+	min-height: 0;
 
-			input {
-				overflow: hidden;
-				text-overflow: ellipsis;
-				white-space: nowrap;
-				padding: 0.75em 25px 0.75em 0.75em;
-				font-weight: 600;
-				background: #f4f4f4;
-				box-shadow: 0 0 0 1px #e8e8e8;
-			}
+	.token {
+		margin: 0;
+		padding: 0.75em 25px 0.75em 0.75em;
+		font-weight: 600;
+		background: #f4f4f4;
+		color: $primary-grey;
+		border: none;
+		box-shadow: 0 0 0 1px #e8e8e8;
+		position: relative;
+		text-overflow: ellipsis;
+		overflow: hidden;
+
+		[class^=icon] {
+			position: absolute;
+			right: 0.625em;
+			top: 50%;
+			transform: translateY(-50%);
 		}
+	}
+
+	input.token {
+		border: none;
+		box-shadow: 0 0 0 1px #e8e8e8;
+		padding: 0.75em;
 	}
 }
