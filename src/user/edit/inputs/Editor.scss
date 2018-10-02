@@ -1,7 +1,8 @@
-.nti-profile-editor {
+.nti-profile-editor.editor {
 	min-height: 112px;
 	box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.7);
 	margin-top: 10px;
+	display: inherit; // legacy webapp css sets display:none
 
 	.DraftEditor-root.DraftEditor-root {
 		font-size: 0.875rem;
