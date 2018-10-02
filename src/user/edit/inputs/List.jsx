@@ -31,7 +31,7 @@ export default class List extends React.Component {
 	}
 
 	addEntry = () => {
-		const {value, component, onChange} = this.props;
+		const {value, component = this.Component, onChange} = this.props;
 		const entry = component.createEmpty && component.createEmpty();
 		onChange([...value, entry]);
 	}
