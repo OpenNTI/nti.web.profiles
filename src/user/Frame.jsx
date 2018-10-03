@@ -6,9 +6,11 @@ import cx from 'classnames';
 import {slugify} from '../util';
 
 import Header from './header/';
-import {FormContext} from './edit';
+import {FormContext, Store as Edit} from './edit';
 
-export default class Frame extends React.Component {
+export default
+@Edit.Store.connect({}) // establishes store and binding for descendants using @Connectors.Any.connect
+class Frame extends React.Component {
 
 	static propTypes = {
 		entity: PropTypes.oneOfType([
