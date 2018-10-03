@@ -34,7 +34,7 @@ export default class List extends React.Component {
 	addEntry = () => {
 		const {value, component = this.Component, onChange} = this.props;
 		const entry = component.createEmpty && component.createEmpty();
-		onChange([...value, entry]);
+		onChange([...(value || []), entry]);
 	}
 
 	removeEntry = (index) => {
