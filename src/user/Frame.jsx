@@ -39,7 +39,6 @@ export default class Frame extends React.Component {
 						<FormContext.Provider value={{
 							formId: slugify(user.getID())
 						}}>
-							<Controls entity={user} />
 							<Header entity={user} />
 							{React.cloneElement(React.Children.only(children), {
 								className: cx('profile-tab-container', className),

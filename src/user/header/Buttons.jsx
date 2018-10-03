@@ -6,9 +6,8 @@ import {Connectors} from '@nti/lib-store';
 import {scoped} from '@nti/lib-locale';
 
 import {LOCALE_PATHS} from '../constants';
+import {FormContext, Store as EditStore} from '../edit';
 
-import FormContext from './FormContext';
-import {SAVE_PROFILE} from './Store';
 
 const t = scoped('nti-web-profile.user-profile.edit.controls', {
 	edit: 'Edit Profile',
@@ -41,7 +40,7 @@ export default class EditControls extends React.Component {
 }
 
 @Connectors.Any.connect({
-	[SAVE_PROFILE]: 'saveProfile'
+	[EditStore.SAVE_PROFILE]: 'saveProfile'
 })
 class Editing extends React.Component {
 

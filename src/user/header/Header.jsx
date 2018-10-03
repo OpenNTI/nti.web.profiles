@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import Buttons from './Buttons';
 import Nav from './Nav';
 import UserInfo from './UserInfo';
 
@@ -14,10 +15,13 @@ export default class Header extends React.Component {
 		const {entity} = this.props;
 
 		return (
-			<header className="nti-profile-header">
-				<UserInfo entity={entity} />
-				<Nav entity={entity} />
-			</header>
+			<>
+				<Buttons entity={entity} />
+				<header className="nti-profile-header">
+					<UserInfo entity={entity} />
+					<Nav entity={entity} />
+				</header>
+			</>
 		);
 	}
 }
