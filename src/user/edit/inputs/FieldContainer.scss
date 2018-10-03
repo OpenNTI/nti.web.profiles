@@ -40,4 +40,13 @@
 	.nti-profile-editor {
 		@include fieldborder;
 	}
+
+	.nti-profile-html-input {
+		@include fieldborder;
+
+		.nti-profile-editor {
+			border: none;
+			margin-top: 2px;
+		}
+	}
 }
