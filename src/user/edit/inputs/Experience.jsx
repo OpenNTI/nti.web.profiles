@@ -15,6 +15,23 @@ const t2 = scoped('nti-web-profile.user-profile.edit.experience.fields', {
 	description: 'Description'
 });
 
+const fields = {
+	organization: {
+		component: Input.Text
+	},
+	role: {
+		component: Input.Text
+	},
+	startYear: {
+		component: Input.Number,
+		maxLength: 4,
+	},
+	endYear: {
+		component: Input.Number,
+		maxLength: 4,
+	},
+};
+
 const fieldMetaDefaults = {
 	organization: {
 		required: true
@@ -88,7 +105,8 @@ export default class Experience extends React.PureComponent {
 		const {
 			props: {
 				localizer,
-				value = {}
+				value = {},
+				schema: {readonly} = {}
 			},
 			css
 		} = this;
@@ -109,32 +127,15 @@ export default class Experience extends React.PureComponent {
 
 		const editorState = Parsers.PlainText.toDraftState(v('description'));
 
-		const fields = {
-			organization: {
-				component: Input.Text
-			},
-			role: {
-				component: Input.Text
-			},
-			startYear: {
-				component: Input.Number,
-				maxLength: 4,
-			},
-			endYear: {
-				component: Input.Number,
-				maxLength: 4,
-			},
-		};
-
 		return (
 			<div className="nti-profile-experience-item">
 				{Object.entries(fields).map(([key, props]) => (
 					<FieldContainer key={key} className={css(key)} label={t(n(key))}>
-						<In {...props} name={n(key)} value={v(key)} onChange={this.onChange} required={r(key)} />
+						<In {...props} name={n(key)} value={v(key)} onChange={this.onChange} required={r(key)} disabled={readonly} />
 					</FieldContainer>
 				))}
 				<FieldContainer className={css('description')} label={t(n('description'))}>
-					<Editor editorState={editorState} onContentChange={this.onDescriptionChange} />
+					<Editor editorState={editorState} onContentChange={this.onDescriptionChange} readOnly={readonly}/>
 				</FieldContainer>
 			</div>
 		);

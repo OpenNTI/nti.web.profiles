@@ -27,6 +27,7 @@ export default class List extends React.Component {
 		onChange: PropTypes.func,
 		className: PropTypes.string,
 		includeBlank: PropTypes.bool,
+		schema: PropTypes.object,
 		component: PT.component
 	}
 
@@ -58,6 +59,8 @@ export default class List extends React.Component {
 			className,
 			includeBlank,
 			value,
+			schema,
+			schema: {readonly} = {},
 			...props
 		} = this.props;
 
@@ -72,11 +75,11 @@ export default class List extends React.Component {
 				<ul className="nti-profile-field-list-values">
 					{(values || []).map((v, i) => (
 						<li key={i}>
-							<Item component={component} index={i} {...props} value={v} onChange={this.onChange} onRemove={this.removeEntry}/>
+							<Item component={component} index={i} {...props} schema={schema} value={v} onChange={this.onChange} onRemove={this.removeEntry}/>
 						</li>
 					))}
 				</ul>
-				{!includeBlank && <Button className="add-entry" onClick={this.addEntry}>{t('add')}</Button>}
+				{!readonly && !includeBlank && <Button className="add-entry" onClick={this.addEntry}>{t('add')}</Button>}
 			</div>
 		);
 	}
@@ -88,6 +91,7 @@ class Item extends React.Component {
 		index: PropTypes.number.isRequired,
 		onChange: PropTypes.func.isRequired,
 		onRemove: PropTypes.func,
+		schema: PropTypes.object,
 		component: PT.component
 	}
 
@@ -102,11 +106,18 @@ class Item extends React.Component {
 	}
 
 	render () {
-		const {component: Component, onRemove, ...props} = this.props;
+		const {
+			component: Component,
+			onRemove,
+			schema,
+			schema: {readonly} = {},
+			...props
+		} = this.props;
+
 		return (
 			<>
-				{onRemove && <span className="remove icon-remove" onClick={this.onRemove} />}
-				<Component {...props} onChange={this.onChange} />
+				{!readonly && onRemove && <span className="remove icon-remove" onClick={this.onRemove} />}
+				<Component {...props} schema={schema} onChange={this.onChange} />
 			</>
 		);
 	}

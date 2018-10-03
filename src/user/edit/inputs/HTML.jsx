@@ -19,6 +19,7 @@ export default class HTMLInput extends React.Component {
 	static propTypes = {
 		label: PropTypes.string,
 		onChange: PropTypes.func,
+		schema: PropTypes.object,
 		value: PropTypes.oneOfType([
 			PropTypes.array,
 			PropTypes.object
@@ -40,7 +41,8 @@ export default class HTMLInput extends React.Component {
 	render () {
 		const {
 			label,
-			value
+			value,
+			schema: {readonly} = {}
 		} = this.props;
 
 		const plugins = [
@@ -53,7 +55,7 @@ export default class HTMLInput extends React.Component {
 		return (
 			<FieldContainer className="nti-profile-html-input" label={label}>
 				<div>
-					<Editor className="editor" id={this.editorID} onContentChange={this.onContentChange} editorState={editorState} plugins={plugins} />
+					<Editor className="editor" id={this.editorID} onContentChange={this.onContentChange} editorState={editorState} plugins={plugins} readOnly={readonly} />
 					<ContextProvider editorID={this.editorID}>
 						<div className="nti-profile-edit-toolbar">
 							<BoldButton />

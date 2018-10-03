@@ -33,5 +33,9 @@
 		border: none;
 		box-shadow: 0 0 0 1px #e8e8e8;
 		padding: 0.75em;
+
+		&:disabled {
+			display: none;
+		}
 	}
 }
