@@ -6,22 +6,15 @@ import cx from 'classnames';
 import {slugify} from '../util';
 
 import Header from './header/';
-import {FormContext, Controls, Store as Edit} from './edit';
+import {FormContext} from './edit';
 
-export default
-@Edit.Store.connect({
-	[Edit.LOADING]: 'loading',
-	[Edit.ERROR]: 'error',
-})
-class Frame extends React.Component {
+export default class Frame extends React.Component {
 
 	static propTypes = {
 		entity: PropTypes.oneOfType([
 			PropTypes.string,
 			PropTypes.object
 		]).isRequired,
-		loading: PropTypes.bool,
-		error: PropTypes.any,
 		children: PropTypes.any,
 		className: PropTypes.string
 	}
