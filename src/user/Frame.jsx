@@ -31,8 +31,6 @@ class Frame extends React.Component {
 	render () {
 		const {
 			props: {
-				loading,
-				error,
 				children,
 				className,
 				entity: user
@@ -42,9 +40,7 @@ class Frame extends React.Component {
 		return (
 			<div className="user-profile-container">
 				{
-					error ? (
-						<div>Error</div>
-					) : loading ? (
+					!user ? (
 						<Loading.Spinner />
 					) : (
 						<FormContext.Provider value={{
