@@ -5,11 +5,11 @@ import {Connectors} from '@nti/lib-store';
 import {Frame as AboutFrame} from '../about';
 
 import Messages from './messages';
-import {ERRORS} from './Store';
+import {FIELD_ERRORS} from './Store';
 
 export default
 @Connectors.Any.connect({
-	[ERRORS]: 'errors'
+	[FIELD_ERRORS]: 'errors'
 })
 class Frame extends React.Component {
 

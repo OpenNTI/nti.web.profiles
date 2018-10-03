@@ -8,8 +8,8 @@ const px = x => `${PREFIX}:${x}`;
 export const LOADING = px('loading');
 export const LOADED = px('loaded');
 export const ERROR = px('error');
-export const ERRORS = px('errors');
-export const SET_ERROR = px('set-error');
+export const FIELD_ERRORS = px('field-errors');
+export const SET_FIELD_ERROR = px('set-error');
 export const GET_SCHEMA_ENTRY = px('get-schema-entry');
 export const SET_FIELD_VALUE = px('set-field-value');
 export const SAVE_PROFILE = px('save-profile');
@@ -43,14 +43,14 @@ export class Store extends Stores.BoundStore {
 		this.set(name, value);
 	}
 
-	[SET_ERROR] = (error, where) => {
-		const existing = arr(this.get(ERRORS) || []);
+	[SET_FIELD_ERROR] = (error, where) => {
+		const existing = arr(this.get(FIELD_ERRORS) || []);
 		const {name} = (error || {});
 		const isDuplicate = name && existing.some(({name: n, where: w}) => (n === name && w === where));
 
 		if (!isDuplicate) {
 			const errors = [...existing, {error, where}];
-			super.set(ERRORS, errors); // we don't need immediate updates for validation errors; could be multiple
+			super.set(FIELD_ERRORS, errors); // we don't need immediate updates for validation errors; could be multiple
 		}
 	}
 

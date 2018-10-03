@@ -9,7 +9,7 @@ import {Card} from '../../common';
 import ErrorContext from './ErrorContext';
 import FormContext from './FormContext';
 import Frame from './Frame';
-import {LOADED, GET_SCHEMA_ENTRY, SET_ERROR} from './Store';
+import {LOADED, GET_SCHEMA_ENTRY, SET_FIELD_ERROR} from './Store';
 import getWidget from './inputs';
 
 const t = scoped('nti-profiles.user.edit.section-titles', {
@@ -43,7 +43,7 @@ export default
 @Connectors.Any.connect({
 	[LOADED]: 'loaded',
 	[GET_SCHEMA_ENTRY]: 'getSchemaEntry',
-	[SET_ERROR]: 'setError',
+	[SET_FIELD_ERROR]: 'setError',
 })
 class View extends React.Component {
 
