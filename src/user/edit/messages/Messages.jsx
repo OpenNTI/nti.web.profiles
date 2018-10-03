@@ -10,11 +10,11 @@ const logger = Logger.get('nti-profiles:edit:messages');
 const t = scoped('nti-profile-edit.validation-error-messages', {
 	required: {
 		one: 'Missing a required value in %(where)s',
-		other: 'Missing %(count)s required values in %(where)s'
+		other: 'Missing required values in %(where)s'
 	},
 	invalid: {
 		one: 'Invalid value in %(where)s',
-		other: '%(count)s invalid values in %(where)s'
+		other: 'Invalid values in %(where)s'
 	},
 	both: 'Invalid and missing values in %(where)s',
 
