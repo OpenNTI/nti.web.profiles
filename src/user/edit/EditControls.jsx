@@ -52,7 +52,13 @@ class Editing extends React.Component {
 
 	onSave = (e) => {
 		const {saveProfile} = this.props;
-		return saveProfile();
+		const {target} = e;
+		const formId = target.getAttribute('form');
+		const form = document.querySelector(`form#${formId}`);
+
+		if (form.checkValidity()) {
+			return saveProfile();
+		}
 	}
 
 	render () {
