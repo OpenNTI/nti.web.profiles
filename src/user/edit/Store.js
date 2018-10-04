@@ -7,6 +7,7 @@ const px = x => `${PREFIX}:${x}`;
 
 export const LOADING = px('loading');
 export const LOADED = px('loaded');
+export const CLEAR_ERRORS = px('clear-errors');
 export const ERROR = px('error');
 export const FIELD_ERRORS = px('field-errors');
 export const SET_FIELD_ERROR = px('set-error');
@@ -62,6 +63,13 @@ export class Store extends Stores.BoundStore {
 			.reduce(reassemble, {});
 		const entity = this.binding;
 		return this.busy(entity.save(payload));
+	}
+
+	[CLEAR_ERRORS] = () => {
+		this.set({
+			[ERROR]: undefined,
+			[FIELD_ERRORS]: undefined
+		});
 	}
 
 	get (key) {
