@@ -31,7 +31,7 @@ describe('Messages', () => {
 		expect(instance.toJSON()).toBeNull();
 	});
 
-	test('renders a message for each error context (each "where" value)', () => {
+	test('renders a message for each validation error context (each "where" value)', () => {
 		const wheres = ['about', 'education', 'professional'];
 		const errors = wheres.map(where => ({
 			where,
@@ -42,7 +42,7 @@ describe('Messages', () => {
 		expect(instance.root.findAllByType('li')).toHaveLength(wheres.length);
 	});
 
-	test('groups errors of the same type and context', () => {
+	test('groups validation errors of the same type and context', () => {
 		const wheres = ['about', 'about', 'about', 'education'];
 		const errors = wheres.map(where => ({
 			where,
