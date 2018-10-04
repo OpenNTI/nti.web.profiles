@@ -40,23 +40,45 @@ export default class EditControls extends React.Component {
 }
 
 @Connectors.Any.connect({
+	[EditStore.CLEAR_ERRORS]: 'clearErrors',
 	[EditStore.SAVE_PROFILE]: 'saveProfile'
 })
 class Editing extends React.Component {
 
 	static propTypes = {
+		clearErrors: PropTypes.func.isRequired,
 		saveProfile: PropTypes.func.isRequired,
 		entity: PropTypes.object.isRequired
 	}
 
-	onSave = (e) => {
-		const {saveProfile} = this.props;
+	static contextTypes = {
+		router: PropTypes.object
+	}
+
+	onSave = async (e) => {
+		const {
+			props: {
+				clearErrors,
+				saveProfile
+			},
+			context: {
+				router
+			}
+		} = this;
 		const {target} = e;
 		const formId = target.getAttribute('form');
 		const form = document.querySelector(`form#${formId}`);
 
+		clearErrors();
+
 		if (form.checkValidity()) {
-			return saveProfile();
+			try {
+				await saveProfile();
+				router.routeTo.name(`${LOCALE_PATHS.NAV}.about`);
+			}
+			catch (err) {
+				//
+			}
 		}
 	}
 
