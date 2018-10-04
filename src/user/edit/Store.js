@@ -117,10 +117,12 @@ export class Store extends Stores.BoundStore {
 
 		if (entity && entity.getProfileSchema) {
 			// thenning because we want this[SCHEMA] set before this.busy resets 'loading'
-			this.busy(entity.getProfileSchema().then(schema => this[SCHEMA] = schema));
+			this.busy(entity.getProfileSchema()
+				.then(schema => this[SCHEMA] = schema)
+				.catch(() => this[SCHEMA] = null));
 		}
 		else {
-			this.set(ERROR, new Error('Profile Schema Unavailable'));
+			this.set([SCHEMA]: null);
 		}
 	}
 }

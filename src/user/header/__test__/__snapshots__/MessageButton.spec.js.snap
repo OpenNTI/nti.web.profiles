@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`User profile message button test Test not present 1`] = `
+<div
+  className="nti-button message"
+>
+  <span
+    className="flyout-closed"
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+  >
+    Message
+  </span>
+</div>
+`;
+
+exports[`User profile message button test Test present 1`] = `
+<div
+  className="nti-link-to-path"
+  to="#"
+>
+  <div
+    className="nti-button message available"
+  >
+    Message
+  </div>
+</div>
+`;

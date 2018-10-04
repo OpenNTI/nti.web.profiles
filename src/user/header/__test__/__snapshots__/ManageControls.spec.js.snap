@@ -1,0 +1,44 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`User profile manage controls test (is a contact) Basic render test 1`] = `
+<div
+  className="contact profile-manage-controls"
+>
+  <div
+    className="nti-button message"
+  >
+    <span
+      className="flyout-closed"
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+    >
+      Message
+    </span>
+  </div>
+  <div
+    className="nti-button unfollow"
+    onClick={[Function]}
+  >
+    <i
+      className="icon-friend"
+    />
+    Unfollow
+  </div>
+</div>
+`;
+
+exports[`User profile manage controls test (is not a contact) Basic render test 1`] = `
+<div
+  className="non-contact profile-manage-controls"
+>
+  <div
+    className="nti-button follow"
+    onClick={[Function]}
+  >
+    <i
+      className="icon-addfriend"
+    />
+    Follow
+  </div>
+</div>
+`;
