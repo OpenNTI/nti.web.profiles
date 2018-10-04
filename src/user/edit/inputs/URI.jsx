@@ -3,19 +3,24 @@ import PropTypes from 'prop-types';
 import {Input} from '@nti/web-commons';
 import cx from 'classnames';
 
-export default class StringInput extends React.PureComponent {
+export default class UriInput extends React.PureComponent {
 
 	static propTypes = {
 		className: PropTypes.string,
-		readonly: PropTypes.bool,
+		schema: PropTypes.object,
 		onChange: PropTypes.func
 	}
+
+	// replace empty string value with null. the server will throw an error
+	// on empty strings for fields checked against a pattern (e.g. email, url)
+	// onChange = value => this.props.onChange(value || null);
+	onChange = value => this.props.onChange(value);
 
 	render () {
 		const {className, schema: {readonly} = {}, ...props} = this.props;
 
 		return (
-			<Input.URL className={cx('nti-profile-uri-input', className)} {...props} disabled={readonly} />
+			<Input.URL className={cx('nti-profile-uri-input', className)} {...props} onChange={this.onChange} disabled={readonly} />
 		);
 	}
 }
