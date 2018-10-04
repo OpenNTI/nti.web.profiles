@@ -93,7 +93,7 @@ export class Store extends Stores.BoundStore {
 	}
 
 	async busy (work) {
-		return new Promise(async resolve => {
+		return new Promise(async (resolve, reject) => {
 			let error, result;
 
 			this.set({
@@ -114,7 +114,7 @@ export class Store extends Stores.BoundStore {
 				[ERROR]: error
 			});
 
-			resolve(result);
+			error ? reject(error) : resolve(result);
 		});
 	}
 
