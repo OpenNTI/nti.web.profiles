@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`User profile header buttons test Is not acting user 1`] = `
+<div
+  className="contact profile-manage-controls"
+>
+  <div
+    className="nti-button message"
+  >
+    <span
+      className="flyout-closed"
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+    >
+      Message
+    </span>
+  </div>
+  <div
+    className="nti-button unfollow"
+    onClick={[Function]}
+  >
+    <i
+      className="icon-friend"
+    />
+    Unfollow
+  </div>
+</div>
+`;
