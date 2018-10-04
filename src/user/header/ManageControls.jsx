@@ -1,10 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {getService, User as UserResolver} from '@nti/web-client';
-import {User} from '@nti/web-commons';
+import {User, Layouts} from '@nti/web-commons';
 import {scoped} from '@nti/lib-locale';
 
 import MessageButton from './MessageButton';
+
+const {Responsive} = Layouts;
 
 const t = scoped('nti-web-profiles.user.header.ManageControls', {
 	message: 'Message',
@@ -48,6 +50,7 @@ export default class ManageControls extends React.Component {
 
 		this.ds = ds;
 		this.ds.addListener('change', this.onDataSourceChanged);
+		this.isDesktop = !Responsive.isMobileContext();
 
 		this.setState({loading: false, displayName: resolved.displayName, isContact: ds.contains(entity)});
 	}
@@ -100,9 +103,11 @@ export default class ManageControls extends React.Component {
 
 		return (
 			<div className="contact profile-manage-controls">
-				<User.Presence user={entity}>
-					<MessageButton entity={entity} displayName={displayName || t('user')}/>
-				</User.Presence>
+				{this.isDesktop && (
+					<User.Presence user={entity}>
+						<MessageButton entity={entity} displayName={displayName || t('user')}/>
+					</User.Presence>
+				)}
 				<div className="nti-button unfollow" onClick={this.unfollow}><i className="icon-friend"/>{t('unfollow')}</div>
 			</div>
 		);
