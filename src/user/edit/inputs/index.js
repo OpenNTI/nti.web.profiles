@@ -7,6 +7,7 @@ import {scoped} from '@nti/lib-locale';
 import {SET_FIELD_VALUE} from '../Store';
 
 import Education from './Education';
+import Email from './Email';
 import FieldContainer from './FieldContainer';
 import List from './List';
 import HTML from './HTML';
@@ -31,12 +32,15 @@ const t = scoped('nti-profiles.user.edit.field-labels', {
 const NAMES = {
 	about: HTML,
 	education: List.of(Education),
+	email: Email,
 	positions: List.of(Position),
 	interests: Interests
 };
 
 const TYPES = {
 	string: String,
+	email: Email,
+	'nti.dataserver.users.interfaces.EmailAddress': Email,
 	URI,
 };
 
