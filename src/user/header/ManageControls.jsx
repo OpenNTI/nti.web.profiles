@@ -108,7 +108,7 @@ export default class ManageControls extends React.Component {
 						<MessageButton entity={entity} displayName={displayName || t('user')}/>
 					</User.Presence>
 				)}
-				<div className="nti-button unfollow" onClick={this.unfollow}><i className="icon-friend"/>{t('unfollow')}</div>
+				<div className="nti-button unfollow" onClick={this.unfollow}><i className="icon-unfollow"/>{t('unfollow')}</div>
 			</div>
 		);
 	}

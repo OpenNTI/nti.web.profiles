@@ -25,27 +25,25 @@ export default class ManageControls extends React.Component {
 		if(presence && presence.status !== null) {
 			return (
 				<LinkTo.Object context="open-chat" object={entity}>
-					<div className="nti-button message available">{t('message')}</div>
+					<div className="nti-button message available"><div className="icon"/><span className="text">{t('message')}</span></div>
 				</LinkTo.Object>
 			);
 		}
 		else {
 			return (
-				<div className="nti-button message">
-					<Flyout.Triggered
-						className="message-button-flyout"
-						trigger={<span>{t('message')}</span>}
-						verticalAlign={Flyout.ALIGNMENTS.TOP}
-						horizontalAlign={Flyout.ALIGNMENTS.CENTER}
-						ref={this.attachFlyoutRef}
-						hover
-						arrow
-					>
-						<div className="tooltip-text">
-							<span>{t('isOffline', {name: displayName})}</span>
-						</div>
-					</Flyout.Triggered>
-				</div>
+				<Flyout.Triggered
+					className="message-button-flyout"
+					trigger={<div className="nti-button message"><span><div className="icon"/><span className="text">{t('message')}</span></span></div>}
+					verticalAlign={Flyout.ALIGNMENTS.TOP}
+					horizontalAlign={Flyout.ALIGNMENTS.CENTER}
+					ref={this.attachFlyoutRef}
+					hover
+					arrow
+				>
+					<div className="tooltip-text">
+						<span>{t('isOffline', {name: displayName})}</span>
+					</div>
+				</Flyout.Triggered>
 			);
 		}
 	}

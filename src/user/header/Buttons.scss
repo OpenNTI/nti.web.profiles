@@ -14,12 +14,30 @@
 		}
 
 		&.message {
-			background-color: $tertiary-grey;
-			color: $secondary-grey;
+			background-color: #ddd;
+			color: $tertiary-grey;
+			position: relative;
+
+			.icon {
+				background-image: url(./assets/message.svg);
+				width: 30px;
+				height: 30px;
+				position: absolute;
+				left: 14px;
+				top: 4px;
+			}
+
+			.text {
+				margin-left: 2rem;
+			}
 
 			&.available {
 				background-color: $primary-blue;
 				color: white;
+
+				.icon {
+					background-image: url(./assets/message-w.svg);
+				}
 			}
 		}
 
