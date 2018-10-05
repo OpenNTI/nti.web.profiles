@@ -2,14 +2,19 @@
 
 exports[`User profile message button test Test not present 1`] = `
 <div
-  className="nti-button message"
+  className="nti-button message flyout-closed"
+  onMouseEnter={[Function]}
+  onMouseLeave={[Function]}
 >
-  <span
-    className="flyout-closed"
-    onMouseEnter={[Function]}
-    onMouseLeave={[Function]}
-  >
-    Message
+  <span>
+    <div
+      className="icon"
+    />
+    <span
+      className="text"
+    >
+      Message
+    </span>
   </span>
 </div>
 `;
@@ -22,7 +27,14 @@ exports[`User profile message button test Test present 1`] = `
   <div
     className="nti-button message available"
   >
-    Message
+    <div
+      className="icon"
+    />
+    <span
+      className="text"
+    >
+      Message
+    </span>
   </div>
 </div>
 `;

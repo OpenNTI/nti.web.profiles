@@ -5,14 +5,19 @@ exports[`User profile header buttons test Is not acting user 1`] = `
   className="contact profile-manage-controls"
 >
   <div
-    className="nti-button message"
+    className="nti-button message flyout-closed"
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
   >
-    <span
-      className="flyout-closed"
-      onMouseEnter={[Function]}
-      onMouseLeave={[Function]}
-    >
-      Message
+    <span>
+      <div
+        className="icon"
+      />
+      <span
+        className="text"
+      >
+        Message
+      </span>
     </span>
   </div>
   <div
@@ -20,7 +25,7 @@ exports[`User profile header buttons test Is not acting user 1`] = `
     onClick={[Function]}
   >
     <i
-      className="icon-friend"
+      className="icon-unfollow"
     />
     Unfollow
   </div>
