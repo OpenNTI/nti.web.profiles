@@ -1,6 +1,6 @@
 import {Stores} from '@nti/lib-store';
 
-import {ensureArray as arr} from '../../util';
+import {ensureArray as arr, slugify} from '../../util';
 
 const PREFIX = 'nti-profile-edit-store';
 const px = x => `${PREFIX}:${x}`;
@@ -10,6 +10,7 @@ export const LOADED = px('loaded');
 export const CLEAR_ERRORS = px('clear-errors');
 export const ERROR = px('error');
 export const FIELD_ERRORS = px('field-errors');
+export const FORM_ID = px('form-id');
 export const SET_FIELD_ERROR = px('set-error');
 export const GET_SCHEMA_ENTRY = px('get-schema-entry');
 export const SET_FIELD_VALUE = px('set-field-value');
@@ -123,6 +124,9 @@ export class Store extends Stores.BoundStore {
 
 		this.clear();
 
+		const formId = entity && entity.getID ? slugify(entity.getID()) : 'unknown-id';
+		this.set(FORM_ID, formId);
+
 		if (entity && entity.getProfileSchema) {
 			// thenning because we want this[SCHEMA] set before this.busy resets 'loading'
 			this.busy(entity.getProfileSchema()
@@ -130,7 +134,7 @@ export class Store extends Stores.BoundStore {
 				.catch(() => this[SCHEMA] = null));
 		}
 		else {
-			this.set([SCHEMA]: null);
+			this[SCHEMA] = null;
 		}
 	}
 }

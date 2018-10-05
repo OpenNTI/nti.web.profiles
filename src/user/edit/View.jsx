@@ -7,9 +7,8 @@ import {slugify} from '../../util';
 import {Card} from '../../common';
 
 import ErrorContext from './ErrorContext';
-import FormContext from './FormContext';
 import Frame from './Frame';
-import {LOADED, GET_SCHEMA_ENTRY, SET_FIELD_ERROR} from './Store';
+import {LOADED, FORM_ID, GET_SCHEMA_ENTRY, SET_FIELD_ERROR} from './Store';
 import getWidget from './inputs';
 
 const t = scoped('nti-profiles.user.edit.section-titles', {
@@ -42,6 +41,7 @@ const SECTIONS = [
 export default
 @Connectors.Any.connect({
 	[LOADED]: 'loaded',
+	[FORM_ID]: 'formId',
 	[GET_SCHEMA_ENTRY]: 'getSchemaEntry',
 	[SET_FIELD_ERROR]: 'setError',
 })
@@ -49,6 +49,7 @@ class View extends React.Component {
 
 	static propTypes = {
 		loaded: PropTypes.bool,
+		formId: PropTypes.string,
 		getSchemaEntry: PropTypes.func,
 		setError: PropTypes.func,
 		className: PropTypes.string,
@@ -73,7 +74,7 @@ class View extends React.Component {
 	}
 
 	render () {
-		const {loaded, className, user} = this.props;
+		const {loaded, className, user, formId} = this.props;
 
 		if (!loaded) {
 			return null;
@@ -83,15 +84,9 @@ class View extends React.Component {
 
 		return (
 			<Frame className={className} user={user}>
-				<FormContext.Consumer>
-					{
-						({formId}) => (
-							<form id={formId}> {/* Frame takes a single child and renders it along with the sidebar */}
-								{widgets}
-							</form>
-						)
-					}
-				</FormContext.Consumer>
+				<form id={formId}> {/* Frame takes a single child and renders it along with the sidebar */}
+					{widgets}
+				</form>
 			</Frame>
 		);
 	}
