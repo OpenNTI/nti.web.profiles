@@ -13,8 +13,7 @@ export default class UriInput extends React.PureComponent {
 
 	// replace empty string value with null. the server will throw an error
 	// on empty strings for fields checked against a pattern (e.g. email, url)
-	// onChange = value => this.props.onChange(value || null);
-	onChange = value => this.props.onChange(value);
+	onChange = value => this.props.onChange(value || null);
 
 	render () {
 		const {className, schema: {readonly} = {}, ...props} = this.props;
