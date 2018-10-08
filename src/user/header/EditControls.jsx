@@ -2,11 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {LinkTo, Matches} from '@nti/web-routing';
 import {Button} from '@nti/web-commons';
-import {Connectors} from '@nti/lib-store';
 import {scoped} from '@nti/lib-locale';
 
-import {LOCALE_PATHS} from '../constants';
-import {Store as EditStore} from '../edit';
+import {Store as EditStoreConstants} from '../edit/';
+import {Store} from '../edit/Store';
 
 
 const t = scoped('nti-web-profile.user-profile.edit.controls', {
@@ -17,6 +16,9 @@ const t = scoped('nti-web-profile.user-profile.edit.controls', {
 
 
 export default class EditControls extends React.Component {
+	static propTypes = {
+		entity: PropTypes.object.isRequired
+	}
 
 	static contextTypes = {
 		router: PropTypes.object.isRequired
@@ -26,23 +28,23 @@ export default class EditControls extends React.Component {
 		return match ? (
 			<Editing {...this.props} />
 		) : (
-			<LinkTo.Name className="nti-button primary edit-link" name={LOCALE_PATHS.EDIT}>{t('edit')}</LinkTo.Name>
+			<LinkTo.Object className="nti-button primary edit-link" context="edit" object={this.props.entity}>{t('edit')}</LinkTo.Object>
 		);
 	}
 
 	render () {
 		return (
 			<div className="profile-edit-controls">
-				<Matches.Name name={LOCALE_PATHS.EDIT} render={this.renderControls} />
+				<Matches.Object object={this.props.entity} context="edit" render={this.renderControls} />
 			</div>
 		);
 	}
 }
 
-@Connectors.Any.connect({
-	[EditStore.CLEAR_ERRORS]: 'clearErrors',
-	[EditStore.FORM_ID]: 'formId',
-	[EditStore.SAVE_PROFILE]: 'saveProfile'
+@Store.connect({
+	[EditStoreConstants.CLEAR_ERRORS]: 'clearErrors',
+	[EditStoreConstants.FORM_ID]: 'formId',
+	[EditStoreConstants.SAVE_PROFILE]: 'saveProfile'
 })
 class Editing extends React.Component {
 
@@ -50,18 +52,24 @@ class Editing extends React.Component {
 		clearErrors: PropTypes.func.isRequired,
 		formId: PropTypes.string,
 		saveProfile: PropTypes.func.isRequired,
-		entity: PropTypes.object.isRequired
+		entity: PropTypes.object.isRequired,
+		store: PropTypes.object.isRequired
 	}
 
 	static contextTypes = {
 		router: PropTypes.object
 	}
 
+	componentDidMount () {
+		this.props.store.load(this.props.entity);
+	}
+
 	onSave = async (e) => {
 		const {
 			props: {
 				clearErrors,
-				saveProfile
+				saveProfile,
+				entity
 			},
 			context: {
 				router
@@ -76,7 +84,7 @@ class Editing extends React.Component {
 		if (!form || form.checkValidity()) {
 			try {
 				await saveProfile();
-				router.routeTo.name(`${LOCALE_PATHS.NAV}.about`);
+				router.routeTo.object(entity, 'about');
 			}
 			catch (err) {
 				//
@@ -85,11 +93,11 @@ class Editing extends React.Component {
 	}
 
 	render () {
-		const {formId} = this.props;
+		const {formId, entity} = this.props;
 
 		return (
 			<div className="editing">
-				<LinkTo.Name className="nti-button secondary cancel" name={`${LOCALE_PATHS.NAV}.about`}>{t('cancel')}</LinkTo.Name>
+				<LinkTo.Object className="nti-button secondary cancel" object={entity} context="about">{t('cancel')}</LinkTo.Object>
 				<Button form={formId} className="save" onClick={this.onSave}>{t('save')}</Button>
 			</div>
 		);

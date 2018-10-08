@@ -20,7 +20,8 @@ const SCHEMA = Symbol(px('schema'));
 const DATA_MARKER = Symbol('data marker');
 const DATA = Symbol('data');
 
-export class Store extends Stores.BoundStore {
+export class Store extends Stores.SimpleStore {
+	static Singleton = true
 
 	constructor () {
 		super();
@@ -62,8 +63,8 @@ export class Store extends Stores.BoundStore {
 		const payload = Object.entries(this[DATA])
 			.filter(inSchema)
 			.reduce(reassemble, {});
-		const entity = this.binding;
-		return this.busy(entity.save(payload));
+
+		return this.busy(this.entity.save(payload));
 	}
 
 	[CLEAR_ERRORS] = () => {
@@ -74,13 +75,13 @@ export class Store extends Stores.BoundStore {
 	}
 
 	get (key) {
-		const {binding} = this;
+		const {entity} = this;
 
 		// fall back to entity's value if we don't have it.
 		const value = super.get(key);
 		return value !== undefined // explicit check to allow empty strings (falsy) through
 			? value
-			: (binding || {})[key];
+			: (entity || {})[key];
 	}
 
 	set (name, value) {
@@ -119,8 +120,10 @@ export class Store extends Stores.BoundStore {
 		});
 	}
 
-	load = async () => {
-		const {binding: entity} = this;
+	load = async (entity) => {
+		if(entity && (!this.entity || this.entity.getID() !== entity.getID())) {
+			this.entity = entity;
+		}
 
 		this.clear();
 

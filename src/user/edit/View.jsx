@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Connectors} from '@nti/lib-store';
 import {scoped} from '@nti/lib-locale';
 
 import {slugify} from '../../util';
@@ -8,7 +7,7 @@ import {Card} from '../../common';
 
 import ErrorContext from './ErrorContext';
 import Frame from './Frame';
-import {LOADED, FORM_ID, GET_SCHEMA_ENTRY, SET_FIELD_ERROR} from './Store';
+import {Store, LOADED, FORM_ID, GET_SCHEMA_ENTRY, SET_FIELD_ERROR} from './Store';
 import getWidget from './inputs';
 
 const t = scoped('nti-profiles.user.edit.section-titles', {
@@ -39,7 +38,7 @@ const SECTIONS = [
 ];
 
 export default
-@Connectors.Any.connect({
+@Store.connect({
 	[LOADED]: 'loaded',
 	[FORM_ID]: 'formId',
 	[GET_SCHEMA_ENTRY]: 'getSchemaEntry',
@@ -53,7 +52,12 @@ class View extends React.Component {
 		getSchemaEntry: PropTypes.func,
 		setError: PropTypes.func,
 		className: PropTypes.string,
-		user: PropTypes.object
+		user: PropTypes.object,
+		store: PropTypes.object.isRequired
+	}
+
+	componentDidMount () {
+		this.props.store.load(this.props.user);
 	}
 
 	getSection = ({key, fields}) => {
