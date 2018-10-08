@@ -9,8 +9,7 @@ import ValidationError from './ValidationError';
 
 const noop = () => {};
 
-export default class FieldContainer extends React.Component {
-
+export default class FieldContainer extends React.PureComponent {
 
 	render () {
 		return (
@@ -25,7 +24,7 @@ export default class FieldContainer extends React.Component {
 	}
 }
 
-class ErrorReporter extends React.Component {
+class ErrorReporter extends React.PureComponent {
 
 	static propTypes = {
 		label: PropTypes.string,
