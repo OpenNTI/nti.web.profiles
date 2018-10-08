@@ -44,8 +44,11 @@ const TYPES = {
 	URI,
 };
 
+const CACHE = {};
+
 export default function getWidget (schema) {
 	const {name, type, base_type: baseType, required} = schema;
+	const key = JSON.stringify(schema);
 
 	if (!name) {
 		throw new Error('Must specify a name.');
@@ -56,6 +59,10 @@ export default function getWidget (schema) {
 	if (!Component) {
 		logger.warn(`Unable to find a widget for '${name}' (name), '${type}' (type). Skipping it.`);
 		return null;
+	}
+
+	if (CACHE[key]) {
+		return CACHE[key];
 	}
 
 	@Connectors.Any.connect({
@@ -82,6 +89,7 @@ export default function getWidget (schema) {
 			};
 
 			delete props.setValue;
+			delete props.loaded;
 
 			const label = k => Component.fieldLabel
 				? Component.fieldLabel()
@@ -95,5 +103,5 @@ export default function getWidget (schema) {
 		}
 	}
 
-	return Input;
+	return CACHE[key] = Input;
 }
