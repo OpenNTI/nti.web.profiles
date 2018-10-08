@@ -13,36 +13,66 @@ const ROUTES = [
 	{
 		path: '/about/edit',
 		component: Edit,
-		name: `${LOCALE_PATHS.EDIT}`
+		getRouteFor: (obj, context) => {
+			if (obj && obj.isUser && context === 'edit') {
+				return '/about/edit';
+			}
+			return null;
+		}
 	},
 	{
 		path: '/about',
 		component: About,
-		name: `${LOCALE_PATHS.NAV}.about`,
+		getRouteFor: (obj, context) => {
+			if (obj && obj.isUser && context === 'about') {
+				return '/about';
+			}
+			return null;
+		},
 		visible: true // renders in the nav
 	},
 	{
 		path: '/activity',
 		component: Activity,
-		name: `${LOCALE_PATHS.NAV}.activity`,
+		getRouteFor: (obj, context) => {
+			if (obj && obj.isUser && context === 'activity') {
+				return '/activity';
+			}
+			return null;
+		},
 		visible: true
 	},
 	{
 		path: '/achievements',
 		component: Achievements,
-		name: `${LOCALE_PATHS.NAV}.achievements`,
+		getRouteFor: (obj, context) => {
+			if (obj && obj.isUser && context === 'achievements') {
+				return '/achievements';
+			}
+			return null;
+		},
 		visible: true
 	},
 	{
 		path: '/memberships',
 		component: Memberships,
-		name: `${LOCALE_PATHS.NAV}.memberships`,
+		getRouteFor: (obj, context) => {
+			if (obj && obj.isUser && context === 'memberships') {
+				return '/memberships';
+			}
+			return null;
+		},
 		visible: true
 	},
 	{
 		path: '/transcripts',
 		component: Transcripts,
-		name: `${LOCALE_PATHS.NAV}.transcripts`,
+		getRouteFor: (obj, context) => {
+			if (obj && obj.isUser && context === 'transcripts') {
+				return '/transcripts';
+			}
+			return null;
+		},
 		visible: true,
 		applicable: entity => entity && entity.hasLink('transcript')
 	},
