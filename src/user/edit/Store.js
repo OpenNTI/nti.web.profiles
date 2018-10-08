@@ -64,7 +64,10 @@ export class Store extends Stores.SimpleStore {
 			.filter(inSchema)
 			.reduce(reassemble, {});
 
-		return this.busy(this.entity.save(payload));
+		return this.busy(this.entity.save(payload).then(r => {
+			this.clear();
+			return r;
+		}));
 	}
 
 	[CLEAR_ERRORS] = () => {
