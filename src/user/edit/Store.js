@@ -5,6 +5,7 @@ import {ensureArray as arr, slugify} from '../../util';
 const PREFIX = 'nti-profile-edit-store';
 const px = x => `${PREFIX}:${x}`;
 
+const PREPROCESS_SCHEMA = Symbol('preprocess-schema');
 export const LOADING = px('loading');
 export const LOADED = px('loaded');
 export const CLEAR_ERRORS = px('clear-errors');
@@ -123,6 +124,10 @@ export class Store extends Stores.SimpleStore {
 		});
 	}
 
+	[PREPROCESS_SCHEMA] = schema => {
+		return schema;
+	}
+
 	load = async (entity) => {
 		if(entity && (!this.entity || this.entity.getID() !== entity.getID())) {
 			this.entity = entity;
@@ -136,7 +141,7 @@ export class Store extends Stores.SimpleStore {
 		if (entity && entity.getProfileSchema) {
 			// thenning because we want this[SCHEMA] set before this.busy resets 'loading'
 			this.busy(entity.getProfileSchema()
-				.then(schema => this[SCHEMA] = schema)
+				.then(schema => this[SCHEMA] = this[PREPROCESS_SCHEMA](schema))
 				.catch(() => this[SCHEMA] = null));
 		}
 		else {
