@@ -1,3 +1,5 @@
+@import "~@nti/style-common";
+
 a.entity-card {
 	text-decoration: none;
 	color: inherit;
@@ -23,5 +25,7 @@ a.entity-card {
 
 	.username {
 		padding: 0 9px;
+
+		@include limit-lines($lines: 2, $line-height: 1.4);
 	}
 }
