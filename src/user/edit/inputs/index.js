@@ -6,6 +6,7 @@ import {scoped} from '@nti/lib-locale';
 
 import {SET_FIELD_VALUE} from '../Store';
 
+import Choice from './Choice';
 import Education from './Education';
 import Email from './Email';
 import FieldContainer from './FieldContainer';
@@ -38,6 +39,7 @@ const NAMES = {
 };
 
 const TYPES = {
+	Choice,
 	string: String,
 	email: Email,
 	'nti.dataserver.users.interfaces.EmailAddress': Email,
