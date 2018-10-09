@@ -1,14 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Connectors} from '@nti/lib-store';
 
 import {ensureArray as a} from '../../../util';
-import {ERROR, FIELD_ERRORS} from '../Store';
+import {Store, ERROR, FIELD_ERRORS} from '../Store';
 
 import getMessages from './factories';
 
 export default
-@Connectors.Any.connect({
+@Store.connect({
 	[ERROR]: 'error',
 	[FIELD_ERRORS]: 'fieldErrors'
 })
