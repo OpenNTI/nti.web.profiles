@@ -14,6 +14,11 @@ import {
 import FieldContainer from './FieldContainer';
 import Editor from './Editor';
 
+const plugins = [
+	Plugins.LimitStyles.create({allow: new Set([STYLES.BOLD, STYLES.ITALIC, STYLES.UNDERLINE])}),
+	Plugins.LimitBlockTypes.create({allow: new Set()}),
+];
+
 export default class HTMLInput extends React.Component {
 
 	static propTypes = {
@@ -44,11 +49,6 @@ export default class HTMLInput extends React.Component {
 			value,
 			schema: {readonly} = {}
 		} = this.props;
-
-		const plugins = [
-			Plugins.LimitStyles.create({allow: new Set([STYLES.BOLD, STYLES.ITALIC, STYLES.UNDERLINE])}),
-			Plugins.LimitBlockTypes.create({allow: new Set()}),
-		];
 
 		const editorState = Parsers.HTML.toDraftState(value);
 
