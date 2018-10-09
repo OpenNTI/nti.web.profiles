@@ -3,21 +3,27 @@
 	grid-template-columns: 1fr minmax(250px, 25%);
 	grid-gap: 5px;
 
-	.user-profile-card {
-		@mixin cardBorder ($color: transparent) {
-			box-shadow: inset 5px 0 0 0 $color;
-		}
+	.profile-about-frame-content {
+		.user-profile-card {
+			@mixin cardBorder ($color: transparent) {
+				box-shadow: inset 5px 0 0 0 $color;
+			}
 
-		@include cardBorder();
+			$colors: (
+				#fc9f77,
+				#fdcf61,
+				#7ecfc8,
+				#c671c1
+			);
 
-		@each $selector, $color in (
-			about: #fc9f77,
-			education: #fdcf61,
-			positions: #7ecfc8,
-			interests: #c671c1
-		) {
-			&.#{$selector} {
-				@include cardBorder($color);
+			$length: length($colors);
+
+			@for $i from 1 through $length {
+				$color: nth($colors, $i);
+
+				&:nth-child(#{$length}n + #{$i}) {
+					@include cardBorder($color);
+				}
 			}
 		}
 	}
