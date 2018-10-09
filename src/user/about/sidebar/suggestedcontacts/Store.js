@@ -1,4 +1,5 @@
 import {Stores} from '@nti/lib-store';
+import {getService} from '@nti/web-client';
 
 export const LOADING = 'loading';
 export const SUGGESTIONS = 'suggestions';
@@ -23,7 +24,8 @@ export default class Store extends Stores.BoundStore {
 
 		this.set(LOADING, true);
 
-		const result = await entity.fetchLinkParsed(REL);
+		const service = await getService();
+		const result = await service.getBatch(entity.getLink(REL));
 		const suggestions = result.Items || [];
 		// console.warn('using fake suggested contacts data');
 		// const suggestions = Array.from({length: 10}, i => entity);
