@@ -59,7 +59,7 @@ export default class HTMLInput extends React.Component {
 
 		// user.save will JSON.stringify() this value... and we want the html, not the EditorState
 		value.toJSON = () => isEmptyState(value) ? null : Parsers.HTML.fromDraftState(value);
-		onChange(isEmptyState(value) ? null : value);
+		onChange(value);
 	}
 
 	render () {
