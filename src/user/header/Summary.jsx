@@ -15,13 +15,14 @@ export default class Summary extends React.Component {
 			return null;
 		}
 
-		const {positions, education: ed, location} = entity;
+		const {positions, role, education: ed, location} = entity;
 		const homePage = entity.home_page;
 		const position = ArrayUtils.ensure(positions)[0];
 		const education = ArrayUtils.ensure(ed)[0];
 
 		return (
 			<div className="profile-head-summary">
+				{role && <div className="entity-role">{role}</div>}
 				<div className="username-wrapper">
 					<DisplayName entity={entity} />
 					<User.Presence user={entity} />

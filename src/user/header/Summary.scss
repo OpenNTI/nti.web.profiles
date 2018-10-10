@@ -6,6 +6,20 @@
 		text-decoration: none;
 	}
 
+	.entity-role {
+		font-size: 0.625rem;
+		font-weight: bold;
+		text-transform: uppercase;
+		color: $tertiary-grey;
+		display: block;
+		margin-top: -1em; // when role is present this reduces the profile-head-summary top margin declared in Header.scss
+
+		@include respond-to(handhelds) {
+			margin-top: 0;
+			margin-bottom: -1em;
+		}
+	}
+
 	.username-wrapper {
 		position: relative;
 		margin-bottom: 0.625rem;
