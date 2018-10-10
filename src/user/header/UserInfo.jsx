@@ -30,16 +30,17 @@ export default class UserInfo extends React.Component {
 		const {entity} = this.props;
 
 		return (
-		    <div className="user-info">
+			<div className="user-info">
 				<span className="avatar-container">
 					<Avatar entity={entity} />
 					<Matches.Object object={entity} context="edit" render={this.renderAvatar} />
 				</span>
+
 				<div className="user-info-col">
-				    <Summary entity={entity} />
-				    <Social entity={entity} />
-				    
-				    <Nav entity={entity} />
+					<Summary entity={entity} />
+					<Social entity={entity} />
+
+					<Nav entity={entity} />
 				</div>
 			</div>
 		);
