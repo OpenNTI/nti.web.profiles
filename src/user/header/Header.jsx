@@ -9,7 +9,7 @@ export default class Header extends React.Component {
 
 	static propTypes = {
 		entity: PropTypes.object,
-		launchEditor: PropTypes.func.isRequired
+		launchEditor: PropTypes.func
 	}
 
 	render () {

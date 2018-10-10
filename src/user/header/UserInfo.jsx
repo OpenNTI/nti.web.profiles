@@ -9,14 +9,14 @@ import Summary from './Summary';
 export default class UserInfo extends React.Component {
 	static propTypes = {
 		entity: PropTypes.object.isRequired,
-		launchEditor: PropTypes.func.isRequired
+		launchEditor: PropTypes.func
 	}
 
 	launchEditor = () => {
 		this.props.launchEditor();
 	}
 
-	renderAvatar = ({match}) => {
+	renderAvatarEdit = ({match}) => {
 		if(match) {
 			return <div className="edit-avatar" onClick={this.launchEditor}><i className="icon-edit"/></div>;
 		}
@@ -26,13 +26,13 @@ export default class UserInfo extends React.Component {
 	}
 
 	render () {
-		const {entity} = this.props;
+		const {entity, launchEditor} = this.props;
 
 		return (
 			<React.Fragment>
 				<span className="avatar-container">
 					<Avatar entity={entity} />
-					<Matches.Object object={entity} context="edit" render={this.renderAvatar} />
+					{launchEditor && <Matches.Object object={entity} context="edit" render={this.renderAvatarEdit} />}
 				</span>
 				<Summary entity={entity} />
 				<Social entity={entity} />
