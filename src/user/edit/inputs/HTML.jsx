@@ -11,6 +11,8 @@ import {
 	STYLES,
 } from '@nti/web-editor';
 
+import {ensureArray as arr} from '../../../util';
+
 import FieldContainer from './FieldContainer';
 import Editor from './Editor';
 
@@ -18,6 +20,8 @@ const plugins = [
 	Plugins.LimitStyles.create({allow: new Set([STYLES.BOLD, STYLES.ITALIC, STYLES.UNDERLINE])}),
 	Plugins.LimitBlockTypes.create({allow: new Set()}),
 ];
+
+const isEmptyState = draftState => !draftState || !draftState.getCurrentContent().getPlainText().trim();
 
 export default class HTMLInput extends React.Component {
 
@@ -37,10 +41,25 @@ export default class HTMLInput extends React.Component {
 	}
 
 	onContentChange = (value) => {
-		const {onChange} = this.props;
+		const {onChange, value: propValue} = this.props;
+
+		// the underlying editor fires content change events during initialization and we only care
+		// about actual content changes, so until we've detected the first real content change we'll
+		// parse and compare values
+		if (!this.hasChanged) {
+			const newValue = arr(Parsers.HTML.fromDraftState(value));
+			const oldValue = arr(Parsers.HTML.fromDraftState(Parsers.HTML.toDraftState(propValue)));
+
+			if (newValue.length === oldValue.length && newValue.every((v, i) => v === oldValue[i])) {
+				return;
+			}
+
+			this.hasChanged = true;
+		}
+
 		// user.save will JSON.stringify() this value... and we want the html, not the EditorState
-		value.toJSON = () => Parsers.HTML.fromDraftState(value);
-		onChange(value);
+		value.toJSON = () => isEmptyState(value) ? null : Parsers.HTML.fromDraftState(value);
+		onChange(isEmptyState(value) ? null : value);
 	}
 
 	render () {
