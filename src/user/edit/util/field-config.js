@@ -1,7 +1,7 @@
 import {ensureArray as arr} from '../../../util';
 
 // group name => fields
-const fieldGroups = {
+export const fieldGroups = {
 	role: 'role',
 	about: [
 		'about',
@@ -19,8 +19,6 @@ const fieldGroups = {
 	positions: 'positions',
 	interests: 'interests'
 };
-
-export default fieldGroups;
 
 // flat array of all fields in fieldGroups
 export const fields = Object.values(fieldGroups).reduce((acc, value) => [...acc, ...arr(value)], []);

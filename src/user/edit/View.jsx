@@ -1,13 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {scoped} from '@nti/lib-locale';
+import {Prompt} from '@nti/web-routing';
 
 import {slugify} from '../../util';
 import {Card} from '../../common';
 
 import ErrorContext from './ErrorContext';
+import {FieldConfig} from './util';
 import Frame from './Frame';
-import {Store, LOADED, FORM_ID, GET_SCHEMA_ENTRY, SET_FIELD_ERROR} from './Store';
+import {
+	Store,
+	LOADED,
+	FORM_ID,
+	HAS_UNSAVED_CHANGES,
+	GET_GROUPS,
+	SET_FIELD_ERROR
+} from './Store';
 import getWidget from './inputs';
 
 const t = scoped('nti-profiles.user.edit.section-titles', {
@@ -16,40 +25,19 @@ const t = scoped('nti-profiles.user.edit.section-titles', {
 	positions: 'Professional',
 });
 
-const SECTIONS = [
-	{
-		key: 'about',
-		fields: [
-			'about',
-			'realname',
-			'alias',
-			'email',
-			'location',
-			'home_page',
-			'facebook',
-			'linkedIn',
-			'twitter',
-			'googlePlus'
-		]
-	},
-	{ key: 'education' },
-	{ key: 'positions' },
-	{ key: 'interests' },
-];
-
 export default
 @Store.connect({
 	[LOADED]: 'loaded',
 	[FORM_ID]: 'formId',
-	[GET_SCHEMA_ENTRY]: 'getSchemaEntry',
+	[GET_GROUPS]: 'getGroups',
 	[SET_FIELD_ERROR]: 'setError',
 })
-class View extends React.Component {
+class View extends React.PureComponent {
 
 	static propTypes = {
 		loaded: PropTypes.bool,
 		formId: PropTypes.string,
-		getSchemaEntry: PropTypes.func,
+		getGroups: PropTypes.func,
 		setError: PropTypes.func,
 		className: PropTypes.string,
 		user: PropTypes.object,
@@ -60,11 +48,11 @@ class View extends React.Component {
 		this.props.store.load(this.props.user);
 	}
 
-	getSection = ({key, fields}) => {
-		const {getSchemaEntry, setError} = this.props;
+	getSection = ([key, fragment]) => {
+		const {setError} = this.props;
 
 		const title = t(key, {fallback: key});
-		const widgets = (fields || [key]).map(fieldName => getWidget(getSchemaEntry(fieldName)));
+		const widgets = Object.values(fragment).map(entry => getWidget(entry));
 		const errorContext = {
 			onError: (e) => setError(e, key)
 		};
@@ -78,20 +66,41 @@ class View extends React.Component {
 	}
 
 	render () {
-		const {loaded, className, user, formId} = this.props;
+		const {loaded, getGroups, className, user, formId} = this.props;
 
 		if (!loaded) {
 			return null;
 		}
 
-		const widgets = SECTIONS.map(this.getSection);
+		const sections = getGroups(FieldConfig.fields);
+		const widgets = Object.entries(sections).map(this.getSection);
 
 		return (
 			<Frame className={className} user={user}>
 				<form id={formId}> {/* Frame takes a single child and renders it along with the sidebar */}
 					{widgets}
+					<ConfirmExit />
 				</form>
 			</Frame>
+		);
+	}
+}
+
+
+@Store.connect({
+	[HAS_UNSAVED_CHANGES]: 'hasUnsavedChanges',
+})
+class ConfirmExit extends React.PureComponent {
+
+	static propTypes = {
+		hasUnsavedChanges: PropTypes.bool
+	}
+
+	render () {
+		const {hasUnsavedChanges = false} = this.props;
+
+		return (
+			<Prompt message="You have unsaved changes." when={hasUnsavedChanges} />
 		);
 	}
 }

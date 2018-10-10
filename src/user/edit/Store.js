@@ -2,6 +2,8 @@ import {Stores} from '@nti/lib-store';
 
 import {ensureArray as arr, slugify} from '../../util';
 
+import {FieldConfig, addGroupsToSchema, getGroupedSchemaFields} from './util';
+
 const PREFIX = 'nti-profile-edit-store';
 const px = x => `${PREFIX}:${x}`;
 
@@ -12,10 +14,12 @@ export const CLEAR_ERRORS = px('clear-errors');
 export const ERROR = px('error');
 export const FIELD_ERRORS = px('field-errors');
 export const FORM_ID = px('form-id');
+export const HAS_UNSAVED_CHANGES = px('has-unsaved');
 export const SET_FIELD_ERROR = px('set-error');
-export const GET_SCHEMA_ENTRY = px('get-schema-entry');
+export const GET_GROUPS = px('get-groups');
 export const SET_FIELD_VALUE = px('set-field-value');
 export const SAVE_PROFILE = px('save-profile');
+
 
 const SCHEMA = Symbol(px('schema'));
 const DATA_MARKER = Symbol('data marker');
@@ -39,12 +43,11 @@ export class Store extends Stores.SimpleStore {
 		});
 	}
 
-	[GET_SCHEMA_ENTRY] = (key) => {
-		return (this[SCHEMA] || {})[key];
-	}
-
 	[SET_FIELD_VALUE] = (name, value) => {
-		this.set(name, value);
+		this.set({
+			[name]: value,
+			[HAS_UNSAVED_CHANGES]: true
+		});
 	}
 
 	[SET_FIELD_ERROR] = (error, where) => {
@@ -77,6 +80,8 @@ export class Store extends Stores.SimpleStore {
 			[FIELD_ERRORS]: undefined
 		});
 	}
+
+	[GET_GROUPS] = fields => getGroupedSchemaFields(this[SCHEMA], fields);
 
 	get (key) {
 		const {entity} = this;
@@ -125,7 +130,7 @@ export class Store extends Stores.SimpleStore {
 	}
 
 	[PREPROCESS_SCHEMA] = schema => {
-		return schema;
+		return addGroupsToSchema(schema, FieldConfig.fieldGroups);
 	}
 
 	load = async (entity) => {

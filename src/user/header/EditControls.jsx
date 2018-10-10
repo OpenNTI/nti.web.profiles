@@ -44,6 +44,7 @@ export default class EditControls extends React.Component {
 @Store.connect({
 	[EditStoreConstants.CLEAR_ERRORS]: 'clearErrors',
 	[EditStoreConstants.FORM_ID]: 'formId',
+	[EditStoreConstants.HAS_UNSAVED_CHANGES]: 'unsaved',
 	[EditStoreConstants.SAVE_PROFILE]: 'saveProfile'
 })
 class Editing extends React.Component {
@@ -52,6 +53,7 @@ class Editing extends React.Component {
 		clearErrors: PropTypes.func.isRequired,
 		formId: PropTypes.string,
 		saveProfile: PropTypes.func.isRequired,
+		unsaved: PropTypes.bool,
 		entity: PropTypes.object.isRequired,
 		store: PropTypes.object.isRequired
 	}
