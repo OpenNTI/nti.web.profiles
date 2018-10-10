@@ -12,6 +12,10 @@ const OTHER = 'other';
  * @return {Object} a mapping of group name => schema fragments
  */
 export default function getGroupedSchemaFields (schema, fields) {
+	if (!schema || arr(fields).length === 0) {
+		return {};
+	}
+
 	return arr(fields).reduce((acc, field) => {
 		const entry = schema[field];
 		if (entry) {
