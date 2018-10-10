@@ -56,6 +56,7 @@ export default class Experience extends React.PureComponent {
 		 * object is used to map names and other metadata to the appropriate fields.
 		 *
 		 * example:
+		 * ```js
 		 * {
 		 * 	 organization: {
 		 * 		name: 'school',
@@ -63,7 +64,7 @@ export default class Experience extends React.PureComponent {
 		 * 		className: 'some-other-class'
 		 * 	}
 		 * }
-		 *
+		 * ```
 		 * @type {Object}
 		 */
 		fieldMeta: PropTypes.object,
