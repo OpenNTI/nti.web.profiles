@@ -1,0 +1,19 @@
+@import "~@nti/style-common";
+
+.nti-profile-header {
+	.avatar-container {
+		position: relative;
+
+		.edit-avatar {
+			position: absolute;
+			top: 5px;
+			right: 5px;
+			color: white;
+			background-color: $primary-grey;
+			opacity: 0.8;
+			padding: 0.3rem 0.45rem;
+			border-radius: 2px;
+			cursor: pointer;
+		}
+	}
+}

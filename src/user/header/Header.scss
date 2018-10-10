@@ -18,8 +18,7 @@
 		padding: 0.5rem 0.5rem 0;
 	}
 
-	.avatar {
-		width: 100%;
+	.avatar-container {
 		max-width: 180px;
 		grid-row: span 2;
 
@@ -27,6 +26,10 @@
 			float: left;
 			margin-right: 1rem;
 			max-width: $smallAvatar;
+		}
+
+		.avatar {
+			width: 100%;
 		}
 	}
 

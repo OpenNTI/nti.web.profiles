@@ -8,17 +8,18 @@ import UserInfo from './UserInfo';
 export default class Header extends React.Component {
 
 	static propTypes = {
-		entity: PropTypes.object.isRequired
+		entity: PropTypes.object,
+		launchEditor: PropTypes.func.isRequired
 	}
 
 	render () {
-		const {entity} = this.props;
+		const {entity, launchEditor} = this.props;
 
 		return (
 			<>
 				<Buttons entity={entity} />
 				<header className="nti-profile-header">
-					<UserInfo entity={entity} />
+					<UserInfo entity={entity} launchEditor={launchEditor}/>
 					<Nav entity={entity} />
 				</header>
 			</>
