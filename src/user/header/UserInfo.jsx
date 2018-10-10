@@ -5,6 +5,7 @@ import {Matches} from '@nti/web-routing';
 
 import Social from './Social';
 import Summary from './Summary';
+import Nav from './Nav';
 
 export default class UserInfo extends React.Component {
 	static propTypes = {
@@ -29,14 +30,18 @@ export default class UserInfo extends React.Component {
 		const {entity} = this.props;
 
 		return (
-			<React.Fragment>
+		    <div className="user-info">
 				<span className="avatar-container">
 					<Avatar entity={entity} />
 					<Matches.Object object={entity} context="edit" render={this.renderAvatar} />
 				</span>
-				<Summary entity={entity} />
-				<Social entity={entity} />
-			</React.Fragment>
+				<div className="user-info-col">
+				    <Summary entity={entity} />
+				    <Social entity={entity} />
+				    
+				    <Nav entity={entity} />
+				</div>
+			</div>
 		);
 	}
 }
