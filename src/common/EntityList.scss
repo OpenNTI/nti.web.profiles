@@ -9,3 +9,20 @@
 		font-size: 1rem;
 	}
 }
+
+.is-ie {
+	.profiles-entity-list {
+		.entity-list-items {
+			display: flex;
+			flex-wrap: wrap;
+
+			li {
+				margin-bottom: 5px;
+
+				a {
+					width: 200px;
+				}
+			}
+		}
+	}
+}

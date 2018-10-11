@@ -8,3 +8,8 @@
 		padding: 1.25rem;
 	}
 }
+
+.is-ie .profile-about-sidebar {
+	grid-column: 2; // IE
+	margin-left: 5px; // IE
+}
