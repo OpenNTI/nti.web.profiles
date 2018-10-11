@@ -7,7 +7,7 @@ import {slugify} from '../../util';
 import {Card} from '../../common';
 
 import ErrorContext from './ErrorContext';
-import {FieldConfig} from './util';
+import {FieldConfig} from './config';
 import Frame from './Frame';
 import {
 	Store,

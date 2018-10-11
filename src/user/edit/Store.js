@@ -2,7 +2,8 @@ import {Stores} from '@nti/lib-store';
 
 import {ensureArray as arr, slugify} from '../../util';
 
-import {FieldConfig, addGroupsToSchema, getGroupedSchemaFields} from './util';
+import {FieldConfig} from './config';
+import {addGroupsToSchema, getGroupedSchemaFields} from './util';
 
 const PREFIX = 'nti-profile-edit-store';
 const px = x => `${PREFIX}:${x}`;
