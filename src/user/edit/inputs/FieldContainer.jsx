@@ -38,11 +38,12 @@ class ErrorReporter extends React.PureComponent {
 
 	onInvalid = e => {
 		const {onError = noop} = this.props;
-		const {target: {name, validity, validationMessage: message}} = e;
+		const {target, target: {name, validity, validationMessage: message}} = e;
 		const error = {
 			name,
 			validity,
-			message
+			message,
+			target
 		};
 
 		this.setState({

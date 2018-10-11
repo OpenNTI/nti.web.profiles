@@ -1,7 +1,10 @@
+import React from 'react';
 import Logger from '@nti/util-logger';
 import {scoped} from '@nti/lib-locale';
 
-import {ensureArray as arr} from '../../../../util';
+import {ensureArray as arr} from '../../../../../util';
+
+import Message from './Message';
 
 const logger = Logger.get('nti-profiles:edit:messages:field-validation');
 
@@ -74,10 +77,13 @@ function messages (buckets) {
 				? 'required'
 				: 'invalid';
 
-		return t(type, {
+		const message = t(type, {
 			count: required + invalid,
 			where: t(['sections', where], {fallback: where})
 		});
+		return (
+			<Message key={where} errors={errors} message={message} />
+		);
 	});
 }
 
