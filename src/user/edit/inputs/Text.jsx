@@ -55,7 +55,9 @@ export default class StringInput extends React.PureComponent {
 		const {
 			className,
 			schema: {
-				readonly,
+				readonly: disabled,
+				max_length: maxLength,
+				min_length: minLength,
 				title: placeholder
 			} = {},
 			...props
@@ -63,8 +65,20 @@ export default class StringInput extends React.PureComponent {
 
 		const Cmp = this.getComponent();
 
+		const schemaProps = {
+			disabled,
+			maxLength,
+			minLength,
+			placeholder
+		};
+
 		return (
-			<Cmp className={cx('nti-profile-string-input', className)} placeholder={placeholder} {...props} onChange={this.onChange} disabled={readonly} />
+			<Cmp className={cx('nti-profile-string-input', className)}
+				placeholder={placeholder}
+				{...schemaProps}
+				{...props}
+				onChange={this.onChange}
+			/>
 		);
 	}
 }
