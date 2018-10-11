@@ -95,7 +95,7 @@ export default function getWidget (schema) {
 
 			const label = k => Component.fieldLabel
 				? Component.fieldLabel()
-				: t(k, {fallback: k});
+				: (schema || {}).description || t(k, {fallback: k});
 
 			return (
 				<FieldContainer required={required} label={label(name)}>
