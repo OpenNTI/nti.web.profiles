@@ -1,6 +1,6 @@
 import {scoped} from '@nti/lib-locale';
 
-import {ensureArray as arr} from '../../../../util';
+import {ensureArray as arr} from '../../../../../util';
 
 const t = scoped('nti-profile-edit.server-error-messages', {
 	EmailAddressInvalid: 'The email address you have entered is not valid.',
