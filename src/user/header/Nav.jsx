@@ -32,9 +32,10 @@ export default class ProfileHeaderNav extends React.Component {
 					<NavLink object={entity} context="activity" title={t('activity')} />
 					<NavLink object={entity} context="achievements" title={t('achievements')} />
 					<NavLink object={entity} context="memberships" title={t('memberships')} />
-					{entity.hasLink('transcript') && (
-						<NavLink object={entity} context="transcripts" title={t('transcripts')} />
-					)}
+					{entity.hasLink('transcript')
+						? (<NavLink object={entity} context="transcripts" title={t('transcripts')} />)
+						: null
+					}
 				</List.ResponsiveInline>
 			</nav>
 		);
