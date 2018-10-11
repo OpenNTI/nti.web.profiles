@@ -7,6 +7,8 @@ const {Select, Select: {Option}} = Input;
 
 export default class ChoiceInput extends React.PureComponent {
 
+	static handles = ({type}) => type === 'Choice';
+
 	static propTypes = {
 		className: PropTypes.string,
 		readonly: PropTypes.bool,

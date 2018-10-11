@@ -8,14 +8,12 @@ import {SET_FIELD_VALUE} from '../Store';
 
 import Choice from './Choice';
 import Education from './Education';
-import Email from './Email';
 import FieldContainer from './FieldContainer';
 import List from './List';
 import HTML from './HTML';
 import Interests from './Interests';
 import Position from './Position';
-import String from './String';
-import URI from './URI';
+import Text from './Text';
 
 const logger = Logger.get('nti-profiles:edit:inputs');
 
@@ -33,30 +31,26 @@ const t = scoped('nti-profiles.user.edit.field-labels', {
 const NAMES = {
 	about: HTML,
 	education: List.of(Education),
-	email: Email,
 	positions: List.of(Position),
 	interests: Interests
 };
 
-const TYPES = {
+const COMPONENTS = [
 	Choice,
-	string: String,
-	email: Email,
-	'nti.dataserver.users.interfaces.EmailAddress': Email,
-	URI,
-};
+	Text
+];
 
 const CACHE = {};
 
 export default function getWidget (schema) {
-	const {name, type, base_type: baseType, required} = schema;
+	const {name, type, required} = schema;
 	const key = JSON.stringify(schema);
 
 	if (!name) {
 		throw new Error('Must specify a name.');
 	}
 
-	const Component = NAMES[name] || TYPES[type] || (baseType && TYPES[baseType]);
+	const Component = NAMES[name] || COMPONENTS.find(cmp => cmp.handles && cmp.handles(schema));
 
 	if (!Component) {
 		logger.warn(`Unable to find a widget for '${name}' (name), '${type}' (type). Skipping it.`);
