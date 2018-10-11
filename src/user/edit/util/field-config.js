@@ -2,11 +2,11 @@ import {ensureArray as arr} from '../../../util';
 
 // group name => fields
 export const fieldGroups = {
-	role: 'role',
 	about: [
 		'about',
 		'realname',
 		'alias',
+		'role',
 		'email',
 		'location',
 		'home_page',
