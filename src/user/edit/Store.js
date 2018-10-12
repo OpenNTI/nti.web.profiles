@@ -1,4 +1,5 @@
 import {Stores} from '@nti/lib-store';
+import {Promises} from '@nti/lib-commons';
 
 import {ensureArray as arr, slugify} from '../../util';
 
@@ -8,7 +9,6 @@ import {addGroupsToSchema, getGroupedSchemaFields} from './util';
 const PREFIX = 'nti-profile-edit-store';
 const px = x => `${PREFIX}:${x}`;
 
-const PREPROCESS_SCHEMA = Symbol('preprocess-schema');
 export const LOADING = px('loading');
 export const LOADED = px('loaded');
 export const CLEAR_ERRORS = px('clear-errors');
@@ -17,12 +17,18 @@ export const FIELD_ERRORS = px('field-errors');
 export const FORM_ID = px('form-id');
 export const HAS_UNSAVED_CHANGES = px('has-unsaved');
 export const SET_FIELD_ERROR = px('set-error');
-export const GET_GROUPS = px('get-groups');
+export const FIELD_GROUPS = px('field-groups');
 export const SET_FIELD_VALUE = px('set-field-value');
 export const SAVE_PROFILE = px('save-profile');
 
-
 const SCHEMA = Symbol(px('schema'));
+const GET_GROUPS = Symbol(px('get field groups'));
+const GET_PAYLOAD = Symbol(px('get payload'));
+const PREFLIGHT = Symbol(px('preflight'));
+const QUEUED_PREFLIGHT = Symbol(px('queued-preflight'));
+const PREFLIGHT_AND_SAVE = Symbol(px('preflight and save'));
+const PREPROCESS_SCHEMA = Symbol('preprocess-schema');
+const SET_SCHEMA = Symbol(px('set schema'));
 const DATA_MARKER = Symbol('data marker');
 const DATA = Symbol('data');
 
@@ -44,10 +50,54 @@ export class Store extends Stores.SimpleStore {
 		});
 	}
 
+	async busy (work) {
+		return new Promise(async (resolve, reject) => {
+			let error, result;
+
+			this.set({
+				[LOADING]: true,
+				[ERROR]: error
+			});
+
+			try {
+				result = await (typeof work === 'function' ? work() : work);
+			}
+			catch (e) {
+				error = e;
+			}
+
+			this.set({
+				[LOADED]: true,
+				[LOADING]: false,
+				[ERROR]: error
+			});
+
+			error ? reject(error) : resolve(result);
+		});
+	}
+
 	[SET_FIELD_VALUE] = (name, value) => {
 		this.set({
 			[name]: value,
 			[HAS_UNSAVED_CHANGES]: true
+		});
+
+		const queued = this[QUEUED_PREFLIGHT];
+		if(queued && queued.abort) {
+			queued.abort();
+		}
+
+		this[QUEUED_PREFLIGHT] = Promises.buffer(300, async () => {
+			try {
+				const result = await this[PREFLIGHT]();
+				return result;
+			}
+			catch (e) {
+				//
+			}
+			finally {
+				delete this[QUEUED_PREFLIGHT];
+			}
 		});
 	}
 
@@ -62,17 +112,44 @@ export class Store extends Stores.SimpleStore {
 		}
 	}
 
-	[SAVE_PROFILE] = async () => {
+	[GET_PAYLOAD] () {
 		const inSchema = ([key]) => this[SCHEMA].hasOwnProperty(key);
 		const reassemble = (acc, [key, value]) => ({...acc, [key]: value});
-		const payload = Object.entries(this[DATA])
+		return Object.entries(this[DATA])
 			.filter(inSchema)
 			.reduce(reassemble, {});
+	}
 
-		return this.busy(this.entity.save(payload).then(r => {
-			this.clear();
-			return r;
-		}));
+	[PREFLIGHT] = async (payload = this[GET_PAYLOAD]()) => {
+		try {
+			return await this.entity.preflightProfile(payload);
+		}
+		catch (e) {
+			if (e.ProfileSchema) {
+				this[SET_SCHEMA](arr(e.ProfileSchema)[0]);
+			}
+			throw e;
+		}
+	}
+
+	[SAVE_PROFILE] = async () => {
+		return this.busy(this[PREFLIGHT_AND_SAVE]);
+	}
+
+	[PREFLIGHT_AND_SAVE] = async () => {
+		const {entity} = this;
+		const payload = this[GET_PAYLOAD]();
+
+		if (Object.keys(payload || {}).length === 0) {
+			return;
+		}
+
+		await this[PREFLIGHT](payload);
+
+		const result = await entity.save(payload);
+		this.clear();
+
+		return result;
 	}
 
 	[CLEAR_ERRORS] = () => {
@@ -82,7 +159,7 @@ export class Store extends Stores.SimpleStore {
 		});
 	}
 
-	[GET_GROUPS] = fields => getGroupedSchemaFields(this[SCHEMA], fields);
+	[GET_GROUPS] = () => getGroupedSchemaFields(this[SCHEMA], FieldConfig.fields);
 
 	get (key) {
 		const {entity} = this;
@@ -104,35 +181,14 @@ export class Store extends Stores.SimpleStore {
 		super.clear(true);
 	}
 
-	async busy (work) {
-		return new Promise(async (resolve, reject) => {
-			let error, result;
-
-			this.set({
-				[LOADING]: true,
-				[ERROR]: error
-			});
-
-			try {
-				result = await work;
-			}
-			catch (e) {
-				error = e;
-			}
-
-			this.set({
-				[LOADED]: true,
-				[LOADING]: false,
-				[ERROR]: error
-			});
-
-			error ? reject(error) : resolve(result);
-		});
-	}
-
 	[PREPROCESS_SCHEMA] = schema => {
 		return addGroupsToSchema(schema, FieldConfig.fieldGroups);
 	}
+
+	[SET_SCHEMA] = schema => {
+		this[SCHEMA] = this[PREPROCESS_SCHEMA](schema);
+		this.set(FIELD_GROUPS, this[GET_GROUPS]());
+	};
 
 	load = async (entity) => {
 		if(entity && (!this.entity || this.entity.getID() !== entity.getID())) {
@@ -147,7 +203,7 @@ export class Store extends Stores.SimpleStore {
 		if (entity && entity.getProfileSchema) {
 			// thenning because we want this[SCHEMA] set before this.busy resets 'loading'
 			this.busy(entity.getProfileSchema()
-				.then(schema => this[SCHEMA] = this[PREPROCESS_SCHEMA](schema))
+				.then(this[SET_SCHEMA])
 				.catch(() => this[SCHEMA] = null));
 		}
 		else {

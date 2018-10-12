@@ -7,14 +7,13 @@ import {slugify} from '../../util';
 import {Card} from '../../common';
 
 import ErrorContext from './ErrorContext';
-import {FieldConfig} from './config';
 import Frame from './Frame';
 import {
 	Store,
 	LOADED,
 	FORM_ID,
 	HAS_UNSAVED_CHANGES,
-	GET_GROUPS,
+	FIELD_GROUPS,
 	SET_FIELD_ERROR
 } from './Store';
 import getWidget from './inputs';
@@ -29,7 +28,7 @@ export default
 @Store.connect({
 	[LOADED]: 'loaded',
 	[FORM_ID]: 'formId',
-	[GET_GROUPS]: 'getGroups',
+	[FIELD_GROUPS]: 'fieldGroups',
 	[SET_FIELD_ERROR]: 'setError',
 })
 class View extends React.PureComponent {
@@ -37,7 +36,7 @@ class View extends React.PureComponent {
 	static propTypes = {
 		loaded: PropTypes.bool,
 		formId: PropTypes.string,
-		getGroups: PropTypes.func,
+		fieldGroups: PropTypes.object,
 		setError: PropTypes.func,
 		className: PropTypes.string,
 		user: PropTypes.object,
@@ -66,14 +65,13 @@ class View extends React.PureComponent {
 	}
 
 	render () {
-		const {loaded, getGroups, className, user, formId} = this.props;
+		const {loaded, fieldGroups, className, user, formId} = this.props;
 
 		if (!loaded) {
 			return null;
 		}
 
-		const sections = getGroups(FieldConfig.fields);
-		const widgets = Object.entries(sections).map(this.getSection);
+		const widgets = Object.entries(fieldGroups || {}).map(this.getSection);
 
 		return (
 			<Frame className={className} user={user}>
