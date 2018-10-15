@@ -21,6 +21,11 @@
 	.avatar-container {
 		max-width: 180px;
 		grid-row: span 2;
+		display: block; // IE needs this
+
+		.is-ie & {
+			margin-right: $gap;
+		}
 
 		@include respond-to(handhelds) {
 			float: left;
@@ -38,6 +43,10 @@
 		align-self: start;
 		margin-top: 1.5rem;
 
+		.is-ie & {
+			grid-column: 2; // IE doesn't auto-flow grid content, requires explicit placement
+		}
+
 		@include respond-to(handhelds) {
 			margin-top: 0;
 
@@ -49,12 +58,23 @@
 
 	.social-links {
 		justify-self: end;
+
+		.is-ie & {
+			grid-column: 3; // IE doesn't auto-flow grid content, requires explicit placement
+			-ms-grid-row-align: center;
+			margin-right: $gap;
+		}
 	}
 
 	nav {
 		grid-column: 2/end;
 		align-self: end;
 		margin-left: -$gap;
+
+		.is-ie & {
+			grid-column: 2; // IE doesn't auto-flow grid content, requires explicit placement
+			-ms-grid-column-span: 2;
+		}
 
 		@include respond-to(handhelds) {
 			margin: 0.5rem -0.5rem 0;
