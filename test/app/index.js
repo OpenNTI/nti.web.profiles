@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import qs from 'query-string';
 import {User, getAppUser} from '@nti/web-client';
+import {addFeatureCheckClasses} from '@nti/lib-dom';
 import {encodeForURI} from '@nti/lib-ntiids';
 import {Router, Route as R} from '@nti/web-routing';
 
@@ -55,6 +56,8 @@ class Test extends React.Component {
 		);
 	}
 }
+
+addFeatureCheckClasses();
 
 // Using a router just to provide context/childContext to
 // <Test /> so it can simulate links to detail views
