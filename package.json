@@ -48,6 +48,7 @@
     "@nti/web-editor": "0.x.x",
     "@nti/web-routing": "0.x.x",
     "classnames": "^2.2.5",
+    "deep-object-diff": "^1.1.0",
     "prop-types": "^15.6.1",
     "query-string": "^6.1.0"
   },
