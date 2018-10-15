@@ -25,6 +25,7 @@ a.entity-card {
 
 	.username {
 		padding: 0 9px;
+		font-size: 14px;
 
 		@include limit-lines($lines: 2, $line-height: 1.4);
 	}
