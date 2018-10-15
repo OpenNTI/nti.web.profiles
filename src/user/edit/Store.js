@@ -1,3 +1,4 @@
+import {diff} from 'deep-object-diff';
 import {Stores} from '@nti/lib-store';
 import {Promises} from '@nti/lib-commons';
 
@@ -18,16 +19,18 @@ export const FORM_ID = px('form-id');
 export const HAS_UNSAVED_CHANGES = px('has-unsaved');
 export const SET_FIELD_ERROR = px('set-error');
 export const FIELD_GROUPS = px('field-groups');
+export const SCHEMA_CHANGES = px('schema-changes');
 export const SET_FIELD_VALUE = px('set-field-value');
 export const SAVE_PROFILE = px('save-profile');
 
-const SCHEMA = Symbol(px('schema'));
 const GET_GROUPS = Symbol(px('get field groups'));
 const GET_PAYLOAD = Symbol(px('get payload'));
 const PREFLIGHT = Symbol(px('preflight'));
 const QUEUED_PREFLIGHT = Symbol(px('queued-preflight'));
+const INITIAL_SCHEMA = Symbol('initial-schema');
 const PREFLIGHT_AND_SAVE = Symbol(px('preflight and save'));
 const PREPROCESS_SCHEMA = Symbol('preprocess-schema');
+const SCHEMA = Symbol(px('schema'));
 const SET_SCHEMA = Symbol(px('set schema'));
 const DATA_MARKER = Symbol('data marker');
 const DATA = Symbol('data');
@@ -186,11 +189,26 @@ export class Store extends Stores.SimpleStore {
 	}
 
 	[SET_SCHEMA] = schema => {
-		this[SCHEMA] = this[PREPROCESS_SCHEMA](schema);
+		const initial = this[INITIAL_SCHEMA];
+		const processed = this[PREPROCESS_SCHEMA](schema);
+
+		this[INITIAL_SCHEMA] = initial || processed;
+		this[SCHEMA] = processed;
+
 		this.set(FIELD_GROUPS, this[GET_GROUPS]());
 	};
 
-	load = async (entity) => {
+	[SCHEMA_CHANGES] = () => {
+		const {[INITIAL_SCHEMA]: initial, [SCHEMA]: current} = this;
+
+		return diff(initial, current);
+	}
+
+	load = async (entity, force) => {
+		if (this.entity === entity && !force) {
+			return;
+		}
+
 		if(entity && (!this.entity || this.entity.getID() !== entity.getID())) {
 			this.entity = entity;
 		}
