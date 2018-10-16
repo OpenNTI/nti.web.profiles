@@ -177,7 +177,10 @@ export class Store extends Stores.SimpleStore {
 		await this[PREFLIGHT](payload);
 
 		const result = await entity.save(payload);
+
+		const groups = this.get(FIELD_GROUPS); // restore field groups after clear
 		this.clear();
+		this.set(FIELD_GROUPS, groups);
 
 		return result;
 	}
