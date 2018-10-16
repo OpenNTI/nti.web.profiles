@@ -24,6 +24,7 @@ export const SET_FIELD_VALUE = px('set-field-value');
 export const SAVE_PROFILE = px('save-profile');
 
 const GET_GROUPS = Symbol(px('get field groups'));
+const GET_ENTITY_VALUE = Symbol(px('get entity value'));
 const GET_PAYLOAD = Symbol(px('get payload'));
 const PREFLIGHT = Symbol(px('preflight'));
 const QUEUED_PREFLIGHT = Symbol(px('queued-preflight'));
@@ -51,6 +52,32 @@ export class Store extends Stores.SimpleStore {
 		Object.defineProperty(this, DATA, {
 			get: () => this[dataKey]
 		});
+	}
+
+	get (key) {
+		// fall back to entity's value if we don't have it.
+		const value = super.get(key);
+		return value !== undefined // explicit check to allow empty strings (falsy) through
+			? value
+			: this[GET_ENTITY_VALUE](key);
+	}
+
+	[GET_ENTITY_VALUE] = key => {
+		const {entity} = this;
+		const value = (entity || {})[key];
+		return Array.isArray(value)
+			? [...value] // don't modify the array on the user
+			: value;
+	}
+
+	set (name, value) {
+		// we need immediate feedback during editing
+		// because input values are controlled by the store.
+		return super.setImmediate(name, value);
+	}
+
+	clear () {
+		super.clear(true);
 	}
 
 	async busy (work) {
@@ -164,25 +191,6 @@ export class Store extends Stores.SimpleStore {
 
 	[GET_GROUPS] = () => getGroupedSchemaFields(this[SCHEMA], FieldConfig.fields);
 
-	get (key) {
-		const {entity} = this;
-
-		// fall back to entity's value if we don't have it.
-		const value = super.get(key);
-		return value !== undefined // explicit check to allow empty strings (falsy) through
-			? value
-			: (entity || {})[key];
-	}
-
-	set (name, value) {
-		// we need immediate feedback during editing
-		// because input values are controlled by the store.
-		return super.setImmediate(name, value);
-	}
-
-	clear () {
-		super.clear(true);
-	}
 
 	[PREPROCESS_SCHEMA] = schema => {
 		return addGroupsToSchema(schema, FieldConfig.fieldGroups);
