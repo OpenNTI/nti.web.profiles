@@ -41,7 +41,6 @@ export class Store extends Stores.SimpleStore {
 
 	constructor () {
 		super();
-		this[LOADING] = true;
 		this.setMaxListeners(100);
 
 		// locate the data in the superclass
@@ -216,7 +215,7 @@ export class Store extends Stores.SimpleStore {
 	}
 
 	load = async (entity, force) => {
-		if (this.entity === entity && !force) {
+		if (this.entity === entity && (this.get(LOADED) || this.get(LOADING)) && !force) {
 			return;
 		}
 
