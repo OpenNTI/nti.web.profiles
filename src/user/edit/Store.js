@@ -16,6 +16,7 @@ export const CLEAR_ERRORS = px('clear-errors');
 export const ERROR = px('error');
 export const FIELD_ERRORS = px('field-errors');
 export const FORM_ID = px('form-id');
+export const GROUP_SCHEMA_FIELDS = px('group schema fields');
 export const HAS_UNSAVED_CHANGES = px('has-unsaved');
 export const SET_FIELD_ERROR = px('set-error');
 export const FIELD_GROUPS = px('field-groups');
@@ -23,7 +24,6 @@ export const SCHEMA_CHANGES = px('schema-changes');
 export const SET_FIELD_VALUE = px('set-field-value');
 export const SAVE_PROFILE = px('save-profile');
 
-const GET_GROUPS = Symbol(px('get field groups'));
 const GET_ENTITY_VALUE = Symbol(px('get entity value'));
 const GET_PAYLOAD = Symbol(px('get payload'));
 const PREFLIGHT = Symbol(px('preflight'));
@@ -150,15 +150,25 @@ export class Store extends Stores.SimpleStore {
 	}
 
 	[PREFLIGHT] = async (payload = this[GET_PAYLOAD]()) => {
-		try {
-			return await this.entity.preflightProfile(payload);
+		const result = await this.entity.preflightProfile(payload).then(r => r, r => r);
+
+		const {
+			ProfileType: newType,
+			OriginalProfileType: oldType,
+			ProfileSchema: schema,
+			// ValidationErrors: errors,
+			statusCode
+		} = result;
+
+		if (newType !== oldType) {
+			this[SET_SCHEMA](schema);
 		}
-		catch (e) {
-			if (e.ProfileSchema) {
-				this[SET_SCHEMA](arr(e.ProfileSchema)[0]);
-			}
-			throw e;
+
+		if (statusCode > 399) {
+			throw result;
 		}
+
+		return result;
 	}
 
 	[SAVE_PROFILE] = async () => {
@@ -191,7 +201,7 @@ export class Store extends Stores.SimpleStore {
 		});
 	}
 
-	[GET_GROUPS] = () => getGroupedSchemaFields(this[SCHEMA], FieldConfig.fields);
+	[GROUP_SCHEMA_FIELDS] = (schema = this[SCHEMA]) => getGroupedSchemaFields(schema, FieldConfig.fields);
 
 
 	[PREPROCESS_SCHEMA] = schema => {
@@ -205,7 +215,7 @@ export class Store extends Stores.SimpleStore {
 		this[INITIAL_SCHEMA] = initial || processed;
 		this[SCHEMA] = processed;
 
-		this.set(FIELD_GROUPS, this[GET_GROUPS]());
+		this.set(FIELD_GROUPS, this[GROUP_SCHEMA_FIELDS]());
 	};
 
 	[SCHEMA_CHANGES] = () => {

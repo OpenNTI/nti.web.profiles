@@ -4,7 +4,7 @@ import {LinkTo, Matches} from '@nti/web-routing';
 import {Button} from '@nti/web-commons';
 import {scoped} from '@nti/lib-locale';
 
-import {Store as EditStoreConstants} from '../edit/';
+import {Store as EditStoreConstants, confirmSchemaChanges} from '../edit/';
 import {Store} from '../edit/Store';
 
 
@@ -45,13 +45,15 @@ export default class EditControls extends React.Component {
 	[EditStoreConstants.CLEAR_ERRORS]: 'clearErrors',
 	[EditStoreConstants.FORM_ID]: 'formId',
 	[EditStoreConstants.HAS_UNSAVED_CHANGES]: 'unsaved',
-	[EditStoreConstants.SAVE_PROFILE]: 'saveProfile'
+	[EditStoreConstants.SAVE_PROFILE]: 'saveProfile',
+	[EditStoreConstants.SCHEMA_CHANGES]: 'getSchemaChanges'
 })
 class Editing extends React.Component {
 
 	static propTypes = {
 		clearErrors: PropTypes.func.isRequired,
 		formId: PropTypes.string,
+		getSchemaChanges: PropTypes.func.isRequired,
 		saveProfile: PropTypes.func.isRequired,
 		unsaved: PropTypes.bool,
 		entity: PropTypes.object.isRequired,
@@ -70,6 +72,7 @@ class Editing extends React.Component {
 		const {
 			props: {
 				clearErrors,
+				getSchemaChanges,
 				saveProfile,
 				entity
 			},
@@ -84,7 +87,9 @@ class Editing extends React.Component {
 		clearErrors();
 
 		if (!form || form.checkValidity()) {
+
 			try {
+				await confirmSchemaChanges(getSchemaChanges());
 				await saveProfile();
 				router.routeTo.object(entity, 'about');
 			}
@@ -95,12 +100,12 @@ class Editing extends React.Component {
 	}
 
 	render () {
-		const {formId, entity} = this.props;
+		const {formId, entity, unsaved} = this.props;
 
 		return (
 			<div className="editing">
 				<LinkTo.Object className="nti-button secondary cancel" object={entity} context="about">{t('cancel')}</LinkTo.Object>
-				<Button form={formId} className="save" onClick={this.onSave}>{t('save')}</Button>
+				<Button form={formId} className="save" disabled={!unsaved} onClick={this.onSave}>{t('save')}</Button>
 			</div>
 		);
 	}
