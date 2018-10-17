@@ -16,7 +16,6 @@ export const CLEAR_ERRORS = px('clear-errors');
 export const ERROR = px('error');
 export const FIELD_ERRORS = px('field-errors');
 export const FORM_ID = px('form-id');
-export const GROUP_SCHEMA_FIELDS = px('group schema fields');
 export const HAS_UNSAVED_CHANGES = px('has-unsaved');
 export const SET_FIELD_ERROR = px('set-error');
 export const FIELD_GROUPS = px('field-groups');
@@ -201,9 +200,6 @@ export class Store extends Stores.SimpleStore {
 		});
 	}
 
-	[GROUP_SCHEMA_FIELDS] = (schema = this[SCHEMA]) => getGroupedSchemaFields(schema, FieldConfig.fields);
-
-
 	[PREPROCESS_SCHEMA] = schema => {
 		return addGroupsToSchema(schema, FieldConfig.fieldGroups);
 	}
@@ -215,13 +211,33 @@ export class Store extends Stores.SimpleStore {
 		this[INITIAL_SCHEMA] = initial || processed;
 		this[SCHEMA] = processed;
 
-		this.set(FIELD_GROUPS, this[GROUP_SCHEMA_FIELDS]());
+		this.set(FIELD_GROUPS, getGroupedSchemaFields(processed, FieldConfig.fields));
 	};
 
-	[SCHEMA_CHANGES] = () => {
-		const {[INITIAL_SCHEMA]: initial, [SCHEMA]: current} = this;
+	/**
+	 * Computes the difference between the initial and current schema, optionally filtering for specific property changes
+	 * @param {string[]} properties - The property changes of interest (array or vararg)
+	 * @returns {Object} - The portion of the schema that changed, grouped according to field.group
+	 */
+	[SCHEMA_CHANGES] = (...properties) => {
+		const props = properties.flat();
 
-		return diff(initial, current);
+		// filter function for the changes
+		const interested = props.length === 0
+			? x => true // passthrough if no specific properties were specified
+			: ([field, changed]) => ( // filter out items whose changes don't include the specified properties
+				Object.keys(changed || {})
+					.some(prop => props.includes(prop))
+			);
+
+		const {[INITIAL_SCHEMA]: initial, [SCHEMA]: current} = this;
+		const delta = diff(initial, current);
+
+		const fields = Object.entries(delta)
+			.filter(interested)
+			.map(([field]) => field);
+
+		return getGroupedSchemaFields(current, fields);
 	}
 
 	load = async (entity, force) => {

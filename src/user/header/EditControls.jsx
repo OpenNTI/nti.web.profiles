@@ -45,15 +45,13 @@ export default class EditControls extends React.Component {
 	[EditStoreConstants.CLEAR_ERRORS]: 'clearErrors',
 	[EditStoreConstants.FORM_ID]: 'formId',
 	[EditStoreConstants.HAS_UNSAVED_CHANGES]: 'unsaved',
-	[EditStoreConstants.SAVE_PROFILE]: 'saveProfile',
-	[EditStoreConstants.SCHEMA_CHANGES]: 'getSchemaChanges'
+	[EditStoreConstants.SAVE_PROFILE]: 'saveProfile'
 })
 class Editing extends React.Component {
 
 	static propTypes = {
 		clearErrors: PropTypes.func.isRequired,
 		formId: PropTypes.string,
-		getSchemaChanges: PropTypes.func.isRequired,
 		saveProfile: PropTypes.func.isRequired,
 		unsaved: PropTypes.bool,
 		entity: PropTypes.object.isRequired,
@@ -72,8 +70,8 @@ class Editing extends React.Component {
 		const {
 			props: {
 				clearErrors,
-				getSchemaChanges,
 				saveProfile,
+				store,
 				entity
 			},
 			context: {
@@ -89,7 +87,7 @@ class Editing extends React.Component {
 		if (!form || form.checkValidity()) {
 
 			try {
-				await confirmSchemaChanges(getSchemaChanges());
+				await confirmSchemaChanges(store);
 				await saveProfile();
 				router.routeTo.object(entity, 'about');
 			}
