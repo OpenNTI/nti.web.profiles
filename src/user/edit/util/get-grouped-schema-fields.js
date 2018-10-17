@@ -25,7 +25,7 @@ export default function getGroupedSchemaFields (schema, fields) {
 			}
 			acc[group] = acc[group] || {};
 			acc[group][field] = entry;
-			return acc;
 		}
+		return acc;
 	}, {});
 }

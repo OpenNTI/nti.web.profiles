@@ -62,4 +62,13 @@ describe('get-grouped-schema-fields', () => {
 		expect(undefFields()).toEqual({});
 	});
 
+	test('handles entries not present in schema', () => {
+		const group = () => getGrouped(schema, ['missing-from-schema', 'about', 'also-missing']);
+		expect(group).not.toThrow();
+		const grouped = group();
+		expect(Object.keys(grouped)).toHaveLength(1);
+		expect(grouped[schema.about.group]).toBeDefined();
+		expect(grouped[schema.about.group]['about']).toBeDefined();
+	});
+
 });
