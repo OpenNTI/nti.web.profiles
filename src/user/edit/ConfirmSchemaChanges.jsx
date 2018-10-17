@@ -7,13 +7,6 @@ import {addGroupsToSchema} from './util';
 import Form from './Form';
 import {Store, FIELD_GROUPS, GROUP_SCHEMA_FIELDS} from './Store';
 
-const mockChanges = {
-	about: {
-		location: {
-			description: 'This is just for testing.'
-		}
-	}
-};
 
 export default function confirm (schemaChanges) {
 	return Object.keys(schemaChanges).length === 0
