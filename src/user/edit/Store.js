@@ -186,8 +186,12 @@ export class Store extends Stores.SimpleStore {
 
 		const result = await entity.save(payload);
 
-		const groups = this.get(FIELD_GROUPS); // restore field groups after clear
+		const groups = this.get(FIELD_GROUPS); // restore after clear
 		this.clear();
+
+		// flush schema differences after successful save
+		this[INITIAL_SCHEMA] = this[SCHEMA];
+
 		this.set(FIELD_GROUPS, groups);
 
 		return result;
