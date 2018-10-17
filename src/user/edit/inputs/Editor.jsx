@@ -14,7 +14,7 @@ export default class Editor extends React.Component {
 		const {className, schema: {title: placeholder} = {}, ...props} = this.props;
 
 		return (
-			<E className={cx('nti-profile-editor', className)} placeholder={placeholder} {...props} />
+			<E className={cx('nti-profile-editor', className)} placeholder={placeholder} contentChangeBuffer={100} {...props} />
 		);
 	}
 }
