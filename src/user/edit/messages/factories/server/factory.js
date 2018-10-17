@@ -30,29 +30,40 @@ const t = scoped('nti-profile-edit.server-error-messages', {
 
 const localizeFieldName = name => !name ? null : t(['fieldNames', name], {fallback: name});
 
-function getMessage ({Message, message = Message, code, ValidationErrors: validationErrors} = {}) {
+const reduceMessages = (acc, {Message, message = Message, code, ValidationErrors: validationErrors}) => {
 	const validation = arr(validationErrors);
+
+	let messages = [];
+
 	if (validation.length > 0) {
 		// extract an array of field names (localized)
 		const fields = validation.map(({field}) => localizeFieldName(field)).filter(Boolean);
 
 		// bail with a generic error message if we can't get the field names.
 		if (fields.length === 0) { // validation errors with unidentifiable fields?
+			const messagesFromValidationErrors = validation.map(e => e.message).filter(Boolean);
+
+			if(messagesFromValidationErrors.length > 0) {
+				return acc.concat(validation.map(e => e.message));
+			}
+
 			logger.warn('Unable to identify fields in ValidationErrors. Using generic validation message.');
-			return t(UNSPECIFIED_VALIDATION_ERROR, {count: validation.length});
+			return acc.concat([t(UNSPECIFIED_VALIDATION_ERROR, {count: validation.length})]);
 		}
 
 		const key = validation.every(e => e.code === CODE_REQUIRED) ? CODE_REQUIRED : CODE_INVALID;
 
-		return t(key, {
+		messages.push(t(key, {
 			count: fields.length,
 			fields: fields.join(t(LIST_DELIMITER, {fallback: ', '}))
-		});
+		}));
+
+		return acc.concat(messages);
 	}
 
-	return message || (code && !t.isMissing(code) && t(code)) || t('unknown');
-}
+	return acc.concat([message || (code && !t.isMissing(code) && t(code)) || t('unknown')]);
+};
 
 export default function getMessages (errors) {
-	return arr(errors).map(getMessage);
+	return arr(errors).reduce(reduceMessages, []);
 }
