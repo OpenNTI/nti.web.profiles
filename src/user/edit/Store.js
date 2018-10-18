@@ -5,7 +5,7 @@ import {Promises} from '@nti/lib-commons';
 import {ensureArray as arr, slugify} from '../../util';
 
 import {FieldConfig} from './config';
-import {addGroupsToSchema, getGroupedSchemaFields} from './util';
+import {addGroupsToSchema, getGroupedSchemaFields, trimValue} from './util';
 
 const PREFIX = 'nti-profile-edit-store';
 const px = x => `${PREFIX}:${x}`;
@@ -142,7 +142,7 @@ export class Store extends Stores.SimpleStore {
 
 	[GET_PAYLOAD] () {
 		const inSchema = ([key]) => this[SCHEMA].hasOwnProperty(key);
-		const reassemble = (acc, [key, value]) => ({...acc, [key]: value});
+		const reassemble = (acc, [key, value]) => ({...acc, [key]: trimValue(value)});
 		return Object.entries(this[DATA])
 			.filter(inSchema)
 			.reduce(reassemble, {});
