@@ -1,13 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {PropTypes as PT} from '@nti/lib-commons';
 import {Parsers} from '@nti/web-editor';
-import {Input} from '@nti/web-commons';
 import {scoped} from '@nti/lib-locale';
 import cx from 'classnames';
 
 import FieldContainer from './FieldContainer';
 import Editor from './Editor';
+import Text from './Text';
 
 const t2 = scoped('nti-web-profile.user-profile.edit.experience.fields', {
 	startYear: 'Start Year',
@@ -15,30 +14,16 @@ const t2 = scoped('nti-web-profile.user-profile.edit.experience.fields', {
 	description: 'Description'
 });
 
-const fields = {
-	organization: {
-		component: Input.Text
-	},
-	role: {
-		component: Input.Text
-	},
-	startYear: {
-		component: Input.Number,
-		maxLength: 4,
-	},
-	endYear: {
-		component: Input.Number,
-		maxLength: 4,
-	},
-};
+const fields = [
+	'organization',
+	'role',
+	'startYear',
+	'endYear'
+];
 
 const fieldMetaDefaults = {
-	organization: {
-		required: true
-	},
 	startYear: {
 		className: 'year',
-		required: true
 	},
 	endYear: {
 		className: 'year'
@@ -69,7 +54,8 @@ export default class Experience extends React.PureComponent {
 		 */
 		fieldMeta: PropTypes.object,
 		value: PropTypes.object,
-		onChange: PropTypes.func
+		onChange: PropTypes.func,
+		schema: PropTypes.object
 	}
 
 	onChange = (name, value) => {
@@ -107,7 +93,7 @@ export default class Experience extends React.PureComponent {
 			props: {
 				localizer,
 				value = {},
-				schema: {readonly} = {}
+				schema
 			},
 			css
 		} = this;
@@ -123,20 +109,20 @@ export default class Experience extends React.PureComponent {
 		// get mapped field value
 		const v = f => value[n(f)];
 
-		// required?
-		const r = f => this.fieldMeta(f).required;
-
 		const editorState = Parsers.PlainText.toDraftState(v('description'));
 
 		return (
 			<div className="nti-profile-experience-item">
-				{Object.entries(fields).map(([key, props]) => (
-					<FieldContainer key={key} className={css(key)} label={t(n(key))}>
-						<In {...props} name={n(key)} value={v(key)} onChange={this.onChange} required={r(key)} disabled={readonly} />
+				{fields.map(field => (
+					<FieldContainer key={field} className={css(field)} label={t(n(field))}>
+						<In schema={schema[n(field)]} name={n(field)} value={v(field)} onChange={this.onChange} />
 					</FieldContainer>
 				))}
 				<FieldContainer className={css('description')} label={t(n('description'))}>
-					<Editor editorState={editorState} onContentChange={this.onDescriptionChange} readOnly={readonly}/>
+					<Editor editorState={editorState}
+						onContentChange={this.onDescriptionChange}
+						readOnly={(schema[n('description')] || {}).readonly}
+					/>
 				</FieldContainer>
 			</div>
 		);
@@ -147,8 +133,7 @@ export default class Experience extends React.PureComponent {
 class In extends React.Component {
 
 	static propTypes = {
-		component: PT.component,
-		name: PropTypes.string,
+		schema: PropTypes.object,
 		onChange: PropTypes.func
 	}
 
@@ -158,7 +143,6 @@ class In extends React.Component {
 	}
 
 	render () {
-		const {component: Cmp, ...props} = this.props;
-		return <Cmp {...props} onChange={this.onChange} />;
+		return <Text {...this.props} onChange={this.onChange} />;
 	}
 }
