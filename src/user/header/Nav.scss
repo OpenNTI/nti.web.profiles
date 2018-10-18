@@ -2,4 +2,16 @@
 
 .profile-header-nav {
 	background-color: rgba(0, 0, 0, 0.2);
+
+	.show-remaining-items {
+		&::before {
+			color: $tertiary-grey;
+			font-weight: 400;
+		}
+
+		&.active::before {
+			color: white;
+			font-weight: 600;
+		}
+	}
 }
