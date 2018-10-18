@@ -29,8 +29,26 @@ const DATA = Symbol('data');
 export class Store extends Stores.SimpleStore {
 	static Singleton = true
 
-	#schema = null;
-	#initialSchema = null;
+	/**
+	 * The schema we're currently operating with; used to render the form, validate, etc.
+	 * Preflight may change this value
+	 * @type {Object}
+	 */
+	#schema
+
+	/**
+	 * The user's original profile schema. We diff this against the 'current' schema to identify changes
+	 * @type {Object}
+	 */
+	#initialSchema
+
+	/**
+	 * Preflight returns a profile type with the schema. We keep track of the most recent
+	 * value and use it when deciding whether we need to update the schema, which may trigger
+	 * a UI refresh
+	 * @type {string}
+	 */
+	#profileType
 
 	constructor () {
 		super();
@@ -142,7 +160,10 @@ export class Store extends Stores.SimpleStore {
 			statusCode
 		} = result;
 
-		if (newType !== oldType) {
+		const profileType = this.#profileType;
+
+		if ((newType !== oldType) || (profileType && newType !== profileType)) {
+			this.#profileType = newType;
 			this.#setSchema(schema);
 		}
 
