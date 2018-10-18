@@ -206,8 +206,9 @@ export class Store extends Stores.SimpleStore {
 	 * @param {string[]} properties - The property changes of interest (array or vararg)
 	 * @returns {Object} - The portion of the schema that changed, grouped according to field.group
 	 */
-	[SCHEMA_CHANGES] = (...properties) => {
-		const props = properties.flat();
+	// [SCHEMA_CHANGES] = (...properties) => {
+	[SCHEMA_CHANGES] = (props) => {
+		// const props = properties.flat();
 
 		// filter function for the changes
 		const interested = props.length === 0
