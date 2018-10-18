@@ -4,6 +4,10 @@
 	grid-gap: 0.5rem 0.875rem;
 	align-items: flex-end;
 
+	.is-ie & {
+		display: block;
+	}
+
 	&:not(:last-child) {
 		margin-bottom: 3rem;
 	}
@@ -11,6 +15,10 @@
 	.nti-profile-field-container {
 		grid-column: 1 / -1;
 		margin-bottom: 0;
+
+		.is-ie & {
+			margin-bottom: 0.5rem;
+		}
 
 		&.role {
 			grid-column: 1 / 2;
