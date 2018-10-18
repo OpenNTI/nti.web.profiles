@@ -23,19 +23,14 @@ export const SCHEMA_CHANGES = px('schema-changes');
 export const SET_FIELD_VALUE = px('set-field-value');
 export const SAVE_PROFILE = px('save-profile');
 
-const GET_ENTITY_VALUE = Symbol(px('get entity value'));
-const GET_PAYLOAD = Symbol(px('get payload'));
-const PREFLIGHT = Symbol(px('preflight'));
-const INITIAL_SCHEMA = Symbol('initial-schema');
-const PREFLIGHT_AND_SAVE = Symbol(px('preflight and save'));
-const PREPROCESS_SCHEMA = Symbol('preprocess-schema');
-const SCHEMA = Symbol(px('schema'));
-const SET_SCHEMA = Symbol(px('set schema'));
 const DATA_MARKER = Symbol('data marker');
 const DATA = Symbol('data');
 
 export class Store extends Stores.SimpleStore {
 	static Singleton = true
+
+	#schema = null;
+	#initialSchema = null;
 
 	constructor () {
 		super();
@@ -56,10 +51,10 @@ export class Store extends Stores.SimpleStore {
 		const value = super.get(key);
 		return value !== undefined // explicit check to allow empty strings (falsy) through
 			? value
-			: this[GET_ENTITY_VALUE](key);
+			: this.#getEntityValue(key);
 	}
 
-	[GET_ENTITY_VALUE] = key => {
+	#getEntityValue = key => {
 		const {entity} = this;
 		const value = (entity || {})[key];
 		return Array.isArray(value)
@@ -110,7 +105,7 @@ export class Store extends Stores.SimpleStore {
 		});
 
 		try {
-			return this[PREFLIGHT]();
+			return this.#preflight();
 		}
 		catch (e) {
 			//
@@ -128,15 +123,15 @@ export class Store extends Stores.SimpleStore {
 		}
 	}
 
-	[GET_PAYLOAD] () {
-		const inSchema = ([key]) => this[SCHEMA].hasOwnProperty(key);
+	#getPayload = () => {
+		const inSchema = ([key]) => this.#schema.hasOwnProperty(key);
 		const reassemble = (acc, [key, value]) => ({...acc, [key]: trimValue(value)});
 		return Object.entries(this[DATA])
 			.filter(inSchema)
 			.reduce(reassemble, {});
 	}
 
-	[PREFLIGHT] = buffer(500, async (payload = this[GET_PAYLOAD]()) => {
+	#preflight = buffer(500, async (payload = this.#getPayload()) => {
 		const result = await this.entity.preflightProfile(payload).then(r => r, r => r);
 
 		const {
@@ -148,7 +143,7 @@ export class Store extends Stores.SimpleStore {
 		} = result;
 
 		if (newType !== oldType) {
-			this[SET_SCHEMA](schema);
+			this.#setSchema(schema);
 		}
 
 		if (statusCode > 399) {
@@ -159,18 +154,18 @@ export class Store extends Stores.SimpleStore {
 	});
 
 	[SAVE_PROFILE] = async () => {
-		return this.busy(this[PREFLIGHT_AND_SAVE]);
+		return this.busy(this.#preflightAndSave);
 	}
 
-	[PREFLIGHT_AND_SAVE] = async () => {
+	#preflightAndSave = async () => {
 		const {entity} = this;
-		const payload = this[GET_PAYLOAD]();
+		const payload = this.#getPayload();
 
 		if (Object.keys(payload || {}).length === 0) {
 			return;
 		}
 
-		await this[PREFLIGHT](payload);
+		await this.#preflight(payload);
 
 		const result = await entity.save(payload);
 
@@ -178,7 +173,7 @@ export class Store extends Stores.SimpleStore {
 		this.clear();
 
 		// flush schema differences after successful save
-		this[INITIAL_SCHEMA] = this[SCHEMA];
+		this.#initialSchema = this.#schema;
 
 		this.set(FIELD_GROUPS, groups);
 
@@ -192,16 +187,16 @@ export class Store extends Stores.SimpleStore {
 		});
 	}
 
-	[PREPROCESS_SCHEMA] = schema => {
+	#preprocessSchema = schema => {
 		return addGroupsToSchema(schema, FieldConfig.fieldGroups);
 	}
 
-	[SET_SCHEMA] = schema => {
-		const initial = this[INITIAL_SCHEMA];
-		const processed = this[PREPROCESS_SCHEMA](schema);
+	#setSchema = schema => {
+		const initial = this.#initialSchema;
+		const processed = this.#preprocessSchema(schema);
 
-		this[INITIAL_SCHEMA] = initial || processed;
-		this[SCHEMA] = processed;
+		this.#initialSchema = initial || processed;
+		this.#schema = processed;
 
 		this.set(FIELD_GROUPS, getGroupedSchemaFields(processed, FieldConfig.fields));
 	};
@@ -222,14 +217,14 @@ export class Store extends Stores.SimpleStore {
 					.some(prop => props.includes(prop))
 			);
 
-		const {[INITIAL_SCHEMA]: initial, [SCHEMA]: current} = this;
-		const delta = diff(initial, current);
+		// const {#initialSchema: initial, #schema: current} = this;
+		const delta = diff(this.#initialSchema, this.#schema);
 
 		const fields = Object.entries(delta)
 			.filter(interested)
 			.map(([field]) => field);
 
-		return getGroupedSchemaFields(current, fields);
+		return getGroupedSchemaFields(this.#schema, fields);
 	}
 
 	load = async (entity, force) => {
@@ -247,13 +242,13 @@ export class Store extends Stores.SimpleStore {
 		this.set(FORM_ID, formId);
 
 		if (entity && entity.getProfileSchema) {
-			// thenning because we want this[SCHEMA] set before this.busy resets 'loading'
+			// thenning because we want this.#schema set before this.busy resets 'loading'
 			this.busy(entity.getProfileSchema()
-				.then(this[SET_SCHEMA])
-				.catch(() => this[SCHEMA] = null));
+				.then(this.#setSchema)
+				.catch(() => this.#schema = null));
 		}
 		else {
-			this[SCHEMA] = null;
+			this.#schema = null;
 		}
 	}
 }
