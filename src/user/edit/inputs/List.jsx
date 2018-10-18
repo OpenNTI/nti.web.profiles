@@ -27,7 +27,12 @@ export default class List extends React.Component {
 		onChange: PropTypes.func,
 		className: PropTypes.string,
 		includeBlank: PropTypes.bool,
-		schema: PropTypes.object,
+		schema: PropTypes.shape({
+			readonly: PropTypes.bool,
+			'value_type': PropTypes.shape({
+				schema: PropTypes.object
+			})
+		}),
 		component: PT.component
 	}
 
@@ -59,8 +64,10 @@ export default class List extends React.Component {
 			className,
 			includeBlank,
 			value,
-			schema,
-			schema: {readonly} = {},
+			schema: {
+				readonly,
+				value_type: {schema} = {}
+			} = {},
 			...props
 		} = this.props;
 
