@@ -19,13 +19,10 @@
 	}
 
 	.avatar-container {
-		max-width: 180px;
+		width: 180px;
+		height: 180px;
 		grid-row: span 2;
 		display: block; // IE needs this
-
-		.is-ie & {
-			margin-right: $gap;
-		}
 
 		@include respond-to(handhelds) {
 			float: left;
@@ -45,6 +42,7 @@
 
 		.is-ie & {
 			grid-column: 2; // IE doesn't auto-flow grid content, requires explicit placement
+			padding-left: $gap; // IE ignores grid-gap, so we're padding to push away from the avatar
 		}
 
 		@include respond-to(handhelds) {
@@ -74,6 +72,7 @@
 		.is-ie & {
 			grid-column: 2; // IE doesn't auto-flow grid content, requires explicit placement
 			-ms-grid-column-span: 2;
+			margin-left: 0; // IE ignores grid-gap, so we don't need to pull left
 		}
 
 		@include respond-to(handhelds) {
