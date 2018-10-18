@@ -2,12 +2,22 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {LinkTo} from '@nti/web-routing';
 
+const ACTIVE_CLASS = 'active';
+
 export default class ProfileHeaderNavLink extends React.Component {
 	static propTypes = {
 		title: PropTypes.string,
 		onDismiss: PropTypes.func,
 		addTriggerClass: PropTypes.func,
 		removeTriggerClass: PropTypes.func
+	}
+
+	componentWillUnmount () {
+		const {removeTriggerClass} = this.props;
+
+		if (removeTriggerClass && this.isActive) {
+			removeTriggerClass(ACTIVE_CLASS);
+		}
 	}
 
 	onClick = () => {
@@ -21,18 +31,24 @@ export default class ProfileHeaderNavLink extends React.Component {
 	onActivate = () => {
 		const {addTriggerClass} = this.props;
 
+		this.isActive = true;
+
 		if (addTriggerClass) {
-			addTriggerClass('active');
+			addTriggerClass(ACTIVE_CLASS);
 		}
 	}
 
 	onDeactivate = () => {
 		const {removeTriggerClass} = this.props;
 
-		if (removeTriggerClass) {
-			removeTriggerClass('active');
+		if (removeTriggerClass && this.isActive) {
+			removeTriggerClass(ACTIVE_CLASS);
 		}
+
+		this.isActive = false;
 	}
+
+
 
 	render () {
 		const {title} = this.props;
