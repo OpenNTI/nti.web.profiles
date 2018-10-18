@@ -1,6 +1,6 @@
 import {diff} from 'deep-object-diff';
 import {Stores} from '@nti/lib-store';
-import {Promises} from '@nti/lib-commons';
+import {buffer} from '@nti/lib-commons';
 
 import {ensureArray as arr, slugify} from '../../util';
 
@@ -26,7 +26,6 @@ export const SAVE_PROFILE = px('save-profile');
 const GET_ENTITY_VALUE = Symbol(px('get entity value'));
 const GET_PAYLOAD = Symbol(px('get payload'));
 const PREFLIGHT = Symbol(px('preflight'));
-const QUEUED_PREFLIGHT = Symbol(px('queued-preflight'));
 const INITIAL_SCHEMA = Symbol('initial-schema');
 const PREFLIGHT_AND_SAVE = Symbol(px('preflight and save'));
 const PREPROCESS_SCHEMA = Symbol('preprocess-schema');
@@ -110,23 +109,12 @@ export class Store extends Stores.SimpleStore {
 			[HAS_UNSAVED_CHANGES]: true
 		});
 
-		const queued = this[QUEUED_PREFLIGHT];
-		if(queued && queued.abort) {
-			queued.abort();
+		try {
+			return this[PREFLIGHT]();
 		}
-
-		this[QUEUED_PREFLIGHT] = Promises.buffer(300, async () => {
-			try {
-				const result = await this[PREFLIGHT]();
-				return result;
-			}
-			catch (e) {
-				//
-			}
-			finally {
-				delete this[QUEUED_PREFLIGHT];
-			}
-		});
+		catch (e) {
+			//
+		}
 	}
 
 	[SET_FIELD_ERROR] = (error, where) => {
@@ -148,7 +136,7 @@ export class Store extends Stores.SimpleStore {
 			.reduce(reassemble, {});
 	}
 
-	[PREFLIGHT] = async (payload = this[GET_PAYLOAD]()) => {
+	[PREFLIGHT] = buffer(500, async (payload = this[GET_PAYLOAD]()) => {
 		const result = await this.entity.preflightProfile(payload).then(r => r, r => r);
 
 		const {
@@ -168,7 +156,7 @@ export class Store extends Stores.SimpleStore {
 		}
 
 		return result;
-	}
+	});
 
 	[SAVE_PROFILE] = async () => {
 		return this.busy(this[PREFLIGHT_AND_SAVE]);
