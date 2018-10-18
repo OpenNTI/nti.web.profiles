@@ -14,6 +14,10 @@ const types = [
 		component: Input.Text
 	},
 	{
+		test: type => type === 'int',
+		component: Input.Number
+	},
+	{
 		test: expTest(/email/i),
 		component: Input.Email
 	},
