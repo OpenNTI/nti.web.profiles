@@ -30,12 +30,17 @@ const t = scoped('nti-profile-edit.server-error-messages', {
 
 const localizeFieldName = name => !name ? null : t(['fieldNames', name], {fallback: name});
 
-const reduceMessages = (acc, {Message, message = Message, code, ValidationErrors: validationErrors}) => {
-	const validation = arr(validationErrors);
+const extractValidationErrors = x => {
+	// has ValidationErrors or is a validation error or bail
+	return arr(x.ValidationErrors || (x.statusCode === 422 && x.field) ? x : null).filter(Boolean);
+};
 
-	let messages = [];
+const reduceMessages = (acc, error) => {
+	const validation = extractValidationErrors(error);
 
 	if (validation.length > 0) {
+		let messages = [];
+
 		// extract an array of field names (localized)
 		const fields = validation.map(({field}) => localizeFieldName(field)).filter(Boolean);
 
@@ -61,6 +66,7 @@ const reduceMessages = (acc, {Message, message = Message, code, ValidationErrors
 		return acc.concat(messages);
 	}
 
+	const {Message, message = Message, code} = error;
 	return acc.concat([message || (code && !t.isMissing(code) && t(code)) || t('unknown')]);
 };
 
