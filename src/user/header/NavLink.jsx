@@ -51,11 +51,15 @@ export default class ProfileHeaderNavLink extends React.Component {
 
 
 	render () {
-		const {title} = this.props;
+		const {title, ...otherProps} = this.props;
+
+		delete otherProps.onDismiss;
+		delete otherProps.addTriggerClass;
+		delete otherProps.removeTriggerClass;
 
 		return (
 			<LinkTo.Object
-				{...this.props}
+				{...otherProps}
 				className="profile-header-nav-link"
 				onClick={this.onClick}
 				data-title={title}
