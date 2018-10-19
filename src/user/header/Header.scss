@@ -44,6 +44,10 @@
 		.is-ie & {
 			grid-column: 2; // IE doesn't auto-flow grid content, requires explicit placement
 			padding-left: $gap; // IE ignores grid-gap, so we're padding to push away from the avatar
+
+			@include respond-to(handhelds) {
+				padding-left: 0;
+			}
 		}
 
 		@include respond-to(handhelds) {
