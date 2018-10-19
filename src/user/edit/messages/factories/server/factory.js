@@ -23,7 +23,7 @@ const t = scoped('nti-profile-edit.server-error-messages', {
 	},
 	[UNSPECIFIED_VALIDATION_ERROR]: {
 		one: 'Unable to save. Your submission included an invalid value.',
-		other: 'Unable to save. Your submission included an invalid values.'
+		other: 'Unable to save. Your submission included invalid values.'
 	},
 	[LIST_DELIMITER]: ', '
 });
