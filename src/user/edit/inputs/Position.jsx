@@ -8,13 +8,13 @@ const t = scoped('nti-web-profile.user-profile.edit.position.fields', {
 	title: 'Title'
 });
 
+
 const FIELDMETA = {
 	organization: {
 		name: 'companyName'
 	},
 	role: {
 		name: 'title',
-		required: true
 	},
 };
 
