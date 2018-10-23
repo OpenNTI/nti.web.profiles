@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {getService, User as UserResolver} from '@nti/web-client';
-import {User, Layouts} from '@nti/web-commons';
+import {User, Layouts, Loading, Button} from '@nti/web-commons';
 import {scoped} from '@nti/lib-locale';
+import {wait} from '@nti/lib-commons';
 
 import MessageButton from './MessageButton';
 
@@ -64,51 +65,81 @@ export default class ManageControls extends React.Component {
 	}
 
 	onDataSourceChanged = () => {
-		this.setState({isContact: this.ds.contains(this.props.entity)});
+		this.setState({isContact: this.ds.contains(this.props.entity), saving: false});
 	}
 
 	follow = async () => {
+		if (this.state.saving) { return; }
+
 		const {entity} = this.props;
+
+		this.setState({saving: true});
 
 		try {
 			await this.ds.addContact(entity);
 		}
 		catch (e) {
-			this.setState({error: e.message || 'Could not add contact'});
+			this.setState({error: e.message || 'Could not add contact', saving: false});
 		}
 	}
 
 	unfollow = async () => {
+		if (this.state.saving) { return; }
+
 		const {entity} = this.props;
+
+		this.setState({saving: true});
 
 		try {
 			await this.ds.removeContact(entity);
 		}
 		catch (e) {
-			this.setState({error: e.message || 'Could not remove contact'});
+			this.setState({error: e.message || 'Could not remove contact', saving: false});
 		}
 	}
 
 	renderNonContactButtons () {
+		const {saving} = this.state;
+
 		return (
 			<div className="non-contact profile-manage-controls">
-				<div className="nti-button follow" onClick={this.follow}><i className="icon-addfriend"/>{t('follow')}</div>
+				<Button className="follow" onClick={this.follow} disabled={saving}>
+					{saving && (
+						<div className="loading-container">
+							<Loading.Spinner white />
+						</div>
+					)}
+					<div className="content">
+						<i className="icon-addfriend"/>
+						<span>{t('follow')}</span>
+					</div>
+				</Button>
 			</div>
 		);
 	}
 
 	renderContactButtons () {
 		const {entity} = this.props;
-		const {displayName} = this.state;
+		const {displayName, saving} = this.state;
 
 		return (
 			<div className="contact profile-manage-controls">
-				{this.isDesktop && (
+				{this.isDesktop && !saving && (
 					<User.Presence user={entity}>
 						<MessageButton entity={entity} displayName={displayName || t('user')}/>
 					</User.Presence>
 				)}
-				<div className="nti-button unfollow" onClick={this.unfollow}><i className="icon-unfollow"/>{t('unfollow')}</div>
+				<Button className="unfollow" onClick={this.unfollow} disabled={saving}>
+					{saving && (
+						<div className="loading-container">
+							<Loading.Spinner white />
+						</div>
+					)}
+					<div className="content">
+						<i className="icon-unfollow"/>
+						<span>{t('unfollow')}</span>
+					</div>
+				</Button>
 			</div>
 		);
 	}
