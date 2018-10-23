@@ -20,15 +20,24 @@ exports[`User profile manage controls test (is a contact) Basic render test 1`] 
       </span>
     </span>
   </div>
-  <div
-    className="nti-button unfollow"
+  <a
+    className="nti-button unfollow primary"
     onClick={[Function]}
+    onKeyDown={[Function]}
+    role="button"
+    tabIndex="0"
   >
-    <i
-      className="icon-unfollow"
-    />
-    Unfollow
-  </div>
+    <div
+      className="content"
+    >
+      <i
+        className="icon-unfollow"
+      />
+      <span>
+        Unfollow
+      </span>
+    </div>
+  </a>
 </div>
 `;
 
@@ -36,14 +45,23 @@ exports[`User profile manage controls test (is not a contact) Basic render test 
 <div
   className="non-contact profile-manage-controls"
 >
-  <div
-    className="nti-button follow"
+  <a
+    className="nti-button follow primary"
     onClick={[Function]}
+    onKeyDown={[Function]}
+    role="button"
+    tabIndex="0"
   >
-    <i
-      className="icon-addfriend"
-    />
-    Follow
-  </div>
+    <div
+      className="content"
+    >
+      <i
+        className="icon-addfriend"
+      />
+      <span>
+        Follow
+      </span>
+    </div>
+  </a>
 </div>
 `;

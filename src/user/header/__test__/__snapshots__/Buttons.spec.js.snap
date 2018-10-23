@@ -20,14 +20,23 @@ exports[`User profile header buttons test Is not acting user 1`] = `
       </span>
     </span>
   </div>
-  <div
-    className="nti-button unfollow"
+  <a
+    className="nti-button unfollow primary"
     onClick={[Function]}
+    onKeyDown={[Function]}
+    role="button"
+    tabIndex="0"
   >
-    <i
-      className="icon-unfollow"
-    />
-    Unfollow
-  </div>
+    <div
+      className="content"
+    >
+      <i
+        className="icon-unfollow"
+      />
+      <span>
+        Unfollow
+      </span>
+    </div>
+  </a>
 </div>
 `;
