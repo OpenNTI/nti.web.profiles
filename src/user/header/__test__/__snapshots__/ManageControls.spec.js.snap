@@ -5,7 +5,7 @@ exports[`User profile manage controls test (is a contact) Basic render test 1`] 
   className="contact profile-manage-controls"
 >
   <div
-    className="nti-button message flyout-closed"
+    className="flyout-trigger nti-button message message-button-flyout flyout-closed"
     onMouseEnter={[Function]}
     onMouseLeave={[Function]}
   >
