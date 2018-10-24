@@ -7,6 +7,10 @@ const stringsOnly = x => typeof x === 'string';
 // renders content produced by nti-web-editor as read-only.
 // does not provide editing capability.
 export default function EditorContent ({content = []}) {
+	if (!Array.isArray(content)) {
+		content = [content];
+	}
+
 	return (
 		<React.Fragment>
 			{content
