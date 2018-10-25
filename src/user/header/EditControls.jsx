@@ -14,19 +14,30 @@ const t = scoped('nti-web-profile.user-profile.edit.controls', {
 });
 
 
-export default class EditControls extends React.Component {
+export default
+@Store.connect({
+	[Constants.LOADED]: 'loaded',
+	[Constants.CAN_EDIT]: 'canEdit'
+})
+class EditControls extends React.Component {
 	static propTypes = {
-		entity: PropTypes.object.isRequired
+		entity: PropTypes.object.isRequired,
+		canEdit: PropTypes.bool
 	}
 
 	static contextTypes = {
 		router: PropTypes.object.isRequired
 	}
 
+	componentDidMount () {
+		this.props.store.load(this.props.entity);
+	}
+
 	renderControls = ({match}) => {
+		const {loaded, canEdit} = this.props;
 		return match ? (
 			<Editing {...this.props} />
-		) : (
+		) : !loaded || !canEdit ? null : (
 			<LinkTo.Object className="nti-button primary edit-link" context="edit" object={this.props.entity}>{t('edit')}</LinkTo.Object>
 		);
 	}

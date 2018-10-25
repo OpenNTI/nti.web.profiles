@@ -12,6 +12,7 @@ const px = x => `${PREFIX}:${x}`;
 
 export const LOADING = px('loading');
 export const LOADED = px('loaded');
+export const CAN_EDIT = px('can-edit');
 export const CLEAR_ERRORS = px('clear-errors');
 export const ERROR = px('error');
 export const FIELD_ERRORS = px('field-errors');
@@ -219,7 +220,12 @@ export class Store extends Stores.SimpleStore {
 		this.#initialSchema = initial || processed;
 		this.#schema = processed;
 
-		this.set(FIELD_GROUPS, getGroupedSchemaFields(processed, FieldConfig.fields));
+		const canEdit = Object.values(this.#schema).some(v => (v || {}).readonly === false);
+
+		this.set({
+			[FIELD_GROUPS]: getGroupedSchemaFields(processed, FieldConfig.fields),
+			[CAN_EDIT]: canEdit
+		});
 	};
 
 	/**
