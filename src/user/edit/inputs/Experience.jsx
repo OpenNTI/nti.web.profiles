@@ -114,11 +114,11 @@ export default class Experience extends React.PureComponent {
 		return (
 			<div className="nti-profile-experience-item">
 				{fields.map(field => (
-					<FieldContainer key={field} className={css(field)} label={t(n(field))}>
+					<FieldContainer key={field} className={css(field)} required={(schema[n(field)] || {}).required} label={t(n(field))}>
 						<In schema={schema[n(field)]} name={n(field)} value={v(field)} onChange={this.onChange} />
 					</FieldContainer>
 				))}
-				<FieldContainer className={css('description')} label={t(n('description'))}>
+				<FieldContainer className={css('description')} required={(schema[n('description')] || {}).required} label={t(n('description'))}>
 					<Editor editorState={editorState}
 						onContentChange={this.onDescriptionChange}
 						readOnly={(schema[n('description')] || {}).readonly}
