@@ -4,8 +4,7 @@ import {LinkTo, Matches} from '@nti/web-routing';
 import {Button} from '@nti/web-commons';
 import {scoped} from '@nti/lib-locale';
 
-import {Store as EditStoreConstants, confirmSchemaChanges} from '../edit/';
-import {Store} from '../edit/Store';
+import {Store, Constants, confirmSchemaChanges} from '../edit/';
 
 
 const t = scoped('nti-web-profile.user-profile.edit.controls', {
@@ -42,10 +41,10 @@ export default class EditControls extends React.Component {
 }
 
 @Store.connect({
-	[EditStoreConstants.CLEAR_ERRORS]: 'clearErrors',
-	[EditStoreConstants.FORM_ID]: 'formId',
-	[EditStoreConstants.HAS_UNSAVED_CHANGES]: 'unsaved',
-	[EditStoreConstants.SAVE_PROFILE]: 'saveProfile'
+	[Constants.CLEAR_ERRORS]: 'clearErrors',
+	[Constants.FORM_ID]: 'formId',
+	[Constants.HAS_UNSAVED_CHANGES]: 'unsaved',
+	[Constants.SAVE_PROFILE]: 'saveProfile'
 })
 class Editing extends React.Component {
 

@@ -1,3 +1,7 @@
+import * as S from './Store';
+
+const {Store, ...Constants} = S;
+
 export default from './View';
 export confirmSchemaChanges from './ConfirmSchemaChanges';
-export * as Store from './Store';
+export {Store, Constants};
