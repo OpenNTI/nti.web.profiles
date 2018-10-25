@@ -4,11 +4,8 @@ import {Loading} from '@nti/web-commons';
 import cx from 'classnames';
 
 import Header from './header/';
-import {Store as Edit} from './edit';
 
-export default
-@Edit.Store.connect({}) // establishes store and binding for descendants using @Connectors.Any.connect
-class Frame extends React.Component {
+export default class Frame extends React.Component {
 
 	static propTypes = {
 		entity: PropTypes.oneOfType([
@@ -18,8 +15,6 @@ class Frame extends React.Component {
 		children: PropTypes.any,
 		className: PropTypes.string
 	}
-
-	static deriveBindingFromProps = ({entity}) => entity
 
 	render () {
 		const {
