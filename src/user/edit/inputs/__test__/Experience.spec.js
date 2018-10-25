@@ -46,8 +46,6 @@ describe('Profile experience editor tests', () => {
 
 		const fieldContainers = cmp.find('.nti-profile-field-container');
 
-		expect(fieldContainers.at(0).prop('className')).toMatch(/required/);
-
 		fieldContainers.forEach((container) => {
 			const className = container.prop('className');
 
