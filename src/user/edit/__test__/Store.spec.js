@@ -1,15 +1,14 @@
 /* eslint-env jest */
 import {Store, Constants} from '../';
 
-const fields = ['Username', 'about', 'alias'];
-
-const someEditable = fields.reduce((r, f, i) => ({...r, [f]: {readonly: !!(i % 2)}}), {id: 'some'});
-const noneEditable = fields.reduce((r, f, i) => ({...r, [f]: {readonly: true}}), {id: 'none'});
-const allEditable = fields.reduce((r, f, i) => ({...r, [f]: {readonly: false}}), {id: 'all'});
-
 
 describe('profile-edit store', () => {
 	test('correctly identifies read-only schema', async () => {
+		const fields = ['Username', 'about', 'alias'];
+
+		const someEditable = fields.reduce((r, f, i) => ({...r, [f]: {readonly: !!(i % 2)}}), {id: 'some'});
+		const noneEditable = fields.reduce((r, f, i) => ({...r, [f]: {readonly: true}}), {id: 'none'});
+		const allEditable = fields.reduce((r, f, i) => ({...r, [f]: {readonly: false}}), {id: 'all'});
 
 		const mockEntity = schema => ({
 			getProfileSchema: () => Promise.resolve(schema),
