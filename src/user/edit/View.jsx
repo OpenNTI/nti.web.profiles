@@ -32,7 +32,7 @@ class View extends React.PureComponent {
 
 	componentWillUnmount () {
 		this.unmounted = true;
-		this.props.store.clear();
+		this.props.store.clearEdits();
 	}
 
 	render () {
