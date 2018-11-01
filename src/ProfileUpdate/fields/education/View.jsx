@@ -20,7 +20,6 @@ const t = scoped('nti-web-profiles.profile-update.fields', {
 	}
 });
 
-const MIN_DATE = new Date('January 1, 2000');
 const MAX_DATE = new Date('December 31, 3000');
 
 
@@ -144,7 +143,6 @@ class EducationField extends React.Component {
 					value={graduationDate}
 					onChange={this.onGraduationDateChange}
 					precision={Input.Date.Precision.month}
-					min={MIN_DATE}
 					max={MAX_DATE}
 				/>
 			</Label>
