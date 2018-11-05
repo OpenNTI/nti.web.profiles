@@ -100,6 +100,8 @@ export class Store extends Stores.SimpleStore {
 		Object.keys(this[DATA])
 			.filter(inSchema)
 			.forEach(k => delete this[DATA][k]);
+
+		this.set(HAS_UNSAVED_CHANGES, false);
 	}
 
 	async busy (work) {
