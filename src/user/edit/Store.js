@@ -277,7 +277,7 @@ export class Store extends Stores.SimpleStore {
 
 		this.clear();
 
-		const formId = entity && entity.getID ? slugify(entity.getID()) : 'unknown-id';
+		const formId = entity && entity.getID ? slugify(`form-${entity.getID()}`) : 'unknown-id';
 		this.set(FORM_ID, formId);
 
 		if (entity && entity.getProfileSchema) {
