@@ -19,6 +19,7 @@ const t = scoped('nti-web-profile.transcripts.userawarded.View', {
 	issuer: 'Issuer',
 	amount: 'Credit Amount',
 	title: 'Title',
+	titlePlaceholder: 'Course or event name',
 	description: 'Description',
 	awardedDate: 'Awarded Date',
 	save: 'Add',
@@ -186,7 +187,7 @@ export default class UserAwardedCreditView extends React.Component {
 	}
 
 	renderTitleInput () {
-		return <Input.Text value={this.state.title} onChange={this.updateTitle} placeholder="Course or event name"/>;
+		return <Input.Text value={this.state.title} onChange={this.updateTitle} placeholder={t('titlePlaceholder')}/>;
 	}
 
 	updateDescription = (val) => {
