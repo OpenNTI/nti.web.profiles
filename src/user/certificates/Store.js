@@ -32,19 +32,32 @@ export default class ProfileCertificatesStore extends Stores.SimpleStore {
 
 		this.set('loading', true);
 
-		const service = await getService();
+		try {
+			const service = await getService();
 
-		const userEnrollments = await service.getBatch(entity.getLink('UserEnrollments'));
+			const userEnrollments = await service.getBatch(entity.getLink('UserEnrollments'));
 
-		const allCourses = this.getCompletableFrom(userEnrollments);
+			const allCourses = this.getCompletableFrom(userEnrollments);
 
-		const completedCourses = allCourses.filter(c => c.CourseProgress.CompletedDate);
-		const inProgressCourses = allCourses.filter(c => !c.CourseProgress.CompletedDate);
+			const completedCourses = allCourses.filter(c => c.CourseProgress.CompletedDate);
+			const inProgressCourses = allCourses.filter(c => !c.CourseProgress.CompletedDate);
 
-		this.set({
-			'loading': false,
-			'completedCourses': completedCourses,
-			'inProgressCourses': inProgressCourses
-		});
+			this.set({
+				'loading': false,
+				'completedCourses': completedCourses,
+				'inProgressCourses': inProgressCourses
+			});
+		}
+		catch (e) {
+			// CannotAccessUserEnrollmentsError likely means the user has no enrollments, it's ok to let that one go
+			const error = e.code === 'CannotAccessUserEnrollmentsError' ? null : (e.message || e);
+
+			this.set({
+				'loading': false,
+				error,
+				'completedCourses': [],
+				'inProgressCourses': []
+			});
+		}
 	}
 }
