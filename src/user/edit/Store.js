@@ -44,9 +44,8 @@ export class Store extends Stores.SimpleStore {
 	#initialSchema
 
 	/**
-	 * Preflight returns a profile type with the schema. We keep track of the most recent
-	 * value and use it when deciding whether we need to update the schema, which may trigger
-	 * a UI refresh
+	 * The type of profile we're currently operating with; used to determine groupings.
+	 * Preflight may change this value
 	 * @type {string}
 	 */
 	#profileType
@@ -221,7 +220,7 @@ export class Store extends Stores.SimpleStore {
 	}
 
 	#preprocessSchema = schema => {
-		return addGroupsToSchema(schema, FieldConfig.fieldGroups);
+		return addGroupsToSchema(schema, FieldConfig.getFieldGroups(schema, this.#profileType));
 	}
 
 	#setSchema = schema => {
@@ -234,10 +233,14 @@ export class Store extends Stores.SimpleStore {
 		const canEdit = Object.values(this.#schema).some(v => (v || {}).readonly === false);
 
 		this.set({
-			[FIELD_GROUPS]: getGroupedSchemaFields(processed, FieldConfig.fields),
+			[FIELD_GROUPS]: getGroupedSchemaFields(processed, FieldConfig.getFields(schema, this.#profileType)),
 			[CAN_EDIT]: canEdit
 		});
 	};
+
+	#setProfileType = type => {
+		this.#profileType = type;
+	}
 
 	/**
 	 * Computes the difference between the initial and current schema, optionally filtering for specific property changes
@@ -282,9 +285,17 @@ export class Store extends Stores.SimpleStore {
 
 		if (entity && entity.getProfileSchema) {
 			// thenning because we want this.#schema set before this.busy resets 'loading'
-			this.busy(entity.getProfileSchema()
-				.then(this.#setSchema)
-				.catch(() => this.#schema = null));
+			this.busy(
+				Promise.all([
+					entity.getProfileSchema(),
+					entity.getProfileType()
+				])
+					.then(([schema, type]) => {
+						this.#setProfileType(type);
+						this.#setSchema(schema);
+					})
+					.catch(() => this.#schema = null)
+			);
 		}
 		else {
 			this.#schema = null;

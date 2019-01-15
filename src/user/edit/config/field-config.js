@@ -1,24 +1,70 @@
 import {ensureArray as arr} from '../../../util';
 
-// group name => fields
-export const fieldGroups = {
-	about: [
-		'about',
-		'realname',
-		'alias',
-		'role',
-		'email',
-		'location',
-		'home_page',
-		'facebook',
-		'linkedIn',
-		'twitter',
-		'googlePlus'
-	],
-	education: 'education',
-	positions: 'positions',
-	interests: 'interests'
+const DEFAULT = Symbol('Default');
+const FIELD_GROUPS = {
+	[DEFAULT]: {
+		about: [
+			'about',
+			'realname',
+			'alias',
+			'role',
+			'email',
+			'location',
+			'home_page',
+			'facebook',
+			'instagram',
+			'linkedIn',
+			'twitter',
+			'googlePlus'
+		],
+		education: 'education',
+		positions: 'positions',
+		interests: 'interests'
+	},
+	'ISALLTUserProfile': {
+		about: [
+			'about',
+			'realname',
+			'role',
+			'location',
+			'home_page',
+			'facebook',
+			'instagram',
+			'linkedIn',
+			'twitter',
+			'googlePlus'
+		],
+		community: [
+			'cultures',
+			'initiatives',
+			'church_community'
+		],
+		'five voices': [
+			'giant_5_voices',
+			'giant_5_voices_response'
+		],
+		'5Q test': [
+			'five_q',
+			'five_q_response'
+		],
+		'Myers-Briggs': [
+			'myers_briggs',
+			'myers_briggs_response'
+		],
+		education: 'education',
+		positions: 'positions',
+		interests: 'interests'
+	}
 };
 
-// flat array of all fields in fieldGroups
-export const fields = Object.values(fieldGroups).reduce((acc, value) => [...acc, ...arr(value)], []);
+
+export function getFieldGroups (schema, type) {
+	return FIELD_GROUPS[type] || FIELD_GROUPS[DEFAULT];
+}
+
+//flat array of all fields in the groups for a schema
+export function getFields (schema, type) {
+	const groups = getFieldGroups(schema, type);
+
+	return Object.values(groups).reduce((acc, value) => [...acc, ...arr(value)], []);
+}

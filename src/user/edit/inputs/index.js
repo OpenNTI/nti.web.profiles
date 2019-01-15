@@ -6,6 +6,7 @@ import {scoped} from '@nti/lib-locale';
 
 import {SET_FIELD_VALUE} from '../Store';
 
+import Bool from './Boolean';
 import Choice from './Choice';
 import Education from './Education';
 import FieldContainer from './FieldContainer';
@@ -37,7 +38,8 @@ const NAMES = {
 
 const COMPONENTS = [
 	Choice,
-	Text
+	Text,
+	Bool
 ];
 
 const CACHE = {};
