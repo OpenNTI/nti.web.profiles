@@ -22,6 +22,8 @@ export default
 class EditControls extends React.Component {
 	static propTypes = {
 		entity: PropTypes.object.isRequired,
+		store: PropTypes.object.isRequired,
+		loaded: PropTypes.bool,
 		canEdit: PropTypes.bool
 	}
 

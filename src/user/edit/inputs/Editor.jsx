@@ -7,7 +7,8 @@ import cx from 'classnames';
 export default class Editor extends React.Component {
 
 	static propTypes = {
-		className: PropTypes.string
+		className: PropTypes.string,
+		schema: PropTypes.object
 	}
 
 	render () {

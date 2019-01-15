@@ -133,6 +133,7 @@ export default class Experience extends React.PureComponent {
 class In extends React.Component {
 
 	static propTypes = {
+		name: PropTypes.string,
 		schema: PropTypes.object,
 		onChange: PropTypes.func
 	}
