@@ -2,6 +2,7 @@
 import {Store, Constants} from '../';
 
 const mockEntity = schema => ({
+	getProfileType: () => Promise.resolve('TestProfile'),
 	getProfileSchema: () => Promise.resolve(schema),
 	getID: () => schema.id
 });

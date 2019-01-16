@@ -285,7 +285,7 @@ export class Store extends Stores.SimpleStore {
 
 		if (entity && entity.getProfileSchema) {
 			// thenning because we want this.#schema set before this.busy resets 'loading'
-			this.busy(
+			return this.busy(
 				Promise.all([
 					entity.getProfileSchema(),
 					entity.getProfileType()
