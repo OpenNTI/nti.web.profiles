@@ -39,17 +39,13 @@ const FIELD_GROUPS = {
 			'initiatives',
 			'church_community'
 		],
-		'five voices': [
+		'Personality and Gifting': [
+			'myers_briggs',
+			'myers_briggs_response',
 			'giant_5_voices',
-			'giant_5_voices_response'
-		],
-		'5Q test': [
+			'giant_5_voices_response',
 			'five_q',
 			'five_q_response'
-		],
-		'Myers-Briggs': [
-			'myers_briggs',
-			'myers_briggs_response'
 		],
 		education: 'education',
 		positions: 'positions',

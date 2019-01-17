@@ -8,6 +8,7 @@ export default class ProfileUpdateStore extends Stores.SimpleStore {
 
 		this.set('entity', null);
 		this.set('schema', null);
+		this.set('type', null);
 		this.set('errors', null);
 		this.set('fieldGroups', null);
 		this.set('error', null);
@@ -63,11 +64,12 @@ export default class ProfileUpdateStore extends Stores.SimpleStore {
 
 		try {
 			const profile = await entity.fetchLink('account.profile');
-			const {ProfileSchema:schema, ValidationErrors:errors} = profile;
+			const {ProfileSchema:schema, ProfileType: type, ValidationErrors:errors} = profile;
 
 			this.set('loading', false);
 			this.set('schema', schema);
 			this.set('errors', errors);
+			this.set('type', type);
 			this.setFieldGroups(getFieldGroup(schema, errors));
 			this.emitChange('fields', 'fieldGroups', 'schema', 'errors', 'loading');
 		} catch (e) {

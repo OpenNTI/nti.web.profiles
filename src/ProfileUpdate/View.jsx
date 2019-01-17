@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {Loading, DialogButtons} from '@nti/web-commons';
 import {scoped} from '@nti/lib-locale';
 
-import Fields from './fields';
+import {getCmpForType} from './types';
 import Store from './Store';
 
 const t = scoped('nti-web-profile.ProfileUpdate.View', {
@@ -19,6 +19,7 @@ export default
 	loading: 'loading',
 	saving: 'saving',
 	fields: 'fields',
+	type: 'type',
 	error: 'error',
 	onFieldChange: 'onFieldChange',
 	values: 'values',
@@ -40,6 +41,7 @@ class ProfileUpdate extends React.Component {
 		error: PropTypes.object,
 		isValid: PropTypes.bool,
 		fields: PropTypes.array,
+		type: PropTypes.string,
 		values: PropTypes.object,
 		onFieldChange: PropTypes.func
 	}
@@ -77,7 +79,8 @@ class ProfileUpdate extends React.Component {
 
 
 	render () {
-		const {entity, loading, saving, error, fields, values, isValid} = this.props;
+		const {entity, loading, saving, error, fields, type, values, isValid} = this.props;
+		const Cmp = getCmpForType(type);
 
 		return (
 			<div className="nti-profile-update">
@@ -88,7 +91,7 @@ class ProfileUpdate extends React.Component {
 					{loading && (<Loading.Mask />)}
 					{saving && (<Loading.Mask message={t('saving')}/>)}
 					{!loading && !saving && error && this.renderError(error)}
-					{!loading && !saving && (<Fields fields={fields} values={values} onChange={this.onFieldChange} entity={entity} />)}
+					{!loading && !saving && Cmp && (<Cmp fields={fields} values={values} onChange={this.onFieldChange} entity={entity} />)}
 				</div>
 				<DialogButtons
 					buttons={[

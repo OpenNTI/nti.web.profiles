@@ -1,11 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Registry from './Registry';
+import Registry from '../Registry';
 
-const registry = Registry.getInstance();
+import FieldRegistry from './Registry';
 
-export default class ProfileUpdateFields extends React.Component {
+const registry = FieldRegistry.getInstance();
+
+@Registry.register(Registry.Default)
+class ProfileUpdateFields extends React.Component {
 	static propTypes = {
 		fields: PropTypes.array,
 		values: PropTypes.object
@@ -35,3 +38,5 @@ export default class ProfileUpdateFields extends React.Component {
 		);
 	}
 }
+
+export default ProfileUpdateFields;

@@ -4,7 +4,7 @@ import {scoped} from '@nti/lib-locale';
 import {Input}  from '@nti/web-commons';
 
 import Registry from '../Registry';
-import Label from '../../common/Label';
+import Label from '../../../common/Label';
 
 import Value from './Value';
 
