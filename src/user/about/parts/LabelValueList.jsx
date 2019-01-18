@@ -22,7 +22,7 @@ export default class UserProfileLabelValueList extends React.Component {
 				{values.map((value, key) => {
 					return (
 						<li key={key}>
-							<span className="label">{value.label}</span>
+							<span className="value-label">{value.label}</span>
 							<span className="value">{value.value}</span>
 						</li>
 					);
