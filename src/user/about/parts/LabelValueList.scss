@@ -14,5 +14,9 @@
 			color: $tertiary-grey;
 			text-transform: uppercase;
 		}
+
+		.value {
+			word-break: break-word;
+		}
 	}
 }
