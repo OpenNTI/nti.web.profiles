@@ -36,6 +36,7 @@ const FIELD_GROUPS = {
 		],
 		community: [
 			'cultures',
+			'city_interest',
 			'initiatives',
 			'church_community'
 		],

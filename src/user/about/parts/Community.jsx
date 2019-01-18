@@ -10,6 +10,7 @@ import LabelValueList from './LabelValueList';
 const t = scoped(LOCALE_PATHS.COMMUNITY, {
 	title: 'Community',
 	culture: 'Sectors Of Culture',
+	cityInterest: 'Passionate About',
 	initiatives: 'Organizations/Initiatives',
 	churchCommunity: 'Church or Community'
 
@@ -24,6 +25,16 @@ const FIELDS = [
 		return {
 			label: t('culture'),
 			value: cultures
+		};
+	},
+	(user) => {
+		const interest = user['city_interest'];
+
+		if (!interest) { return null; }
+
+		return {
+			label: t('cityInterest'),
+			value: interest
 		};
 	},
 	(user) => {
@@ -51,7 +62,7 @@ const FIELDS = [
 
 export default class ProfileCommunityInfo extends React.Component {
 	static shouldShow (user) {
-		return user['cultures'] || user['initiatives'] || user['church_community'];
+		return user['cultures'] || user['city_interest'] || user['initiatives'] || user['church_community'];
 	}
 
 	static propTypes = {

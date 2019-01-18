@@ -9,6 +9,7 @@ const t = scoped('nti-profiles.ProfileUpdate.types.sallt.community.View', {
 
 const ORDER = [
 	'cultures',
+	'city_interest',
 	'initiatives',
 	'church_community'
 ];

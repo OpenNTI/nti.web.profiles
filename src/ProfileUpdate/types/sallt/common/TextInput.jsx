@@ -41,6 +41,8 @@ export default class SalltProfileTextInput extends React.Component {
 
 
 	onChange = (value) => {
+		value = value || null;
+
 		this.setState({
 			value
 		});

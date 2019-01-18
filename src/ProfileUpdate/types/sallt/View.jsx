@@ -10,6 +10,7 @@ const type = 'ISALLTUserProfile';
 
 const FIELD_TO_GROUP = {
 	'church_community': 'community',
+	'city_interest': 'community',
 	cultures: 'community',
 	initiatives: 'community',
 	'myers_briggs': 'personality',
