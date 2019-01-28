@@ -26,4 +26,14 @@
 			text-align: center;
 		}
 	}
+
+	.entries {
+		.profile-experience-item {
+			& > div {
+				hyphens: auto;
+				word-break: break-all;
+				word-break: break-word;
+			}
+		}
+	}
 }

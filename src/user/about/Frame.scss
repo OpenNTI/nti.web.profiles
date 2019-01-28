@@ -10,6 +10,8 @@
 	}
 
 	.profile-about-frame-content {
+		overflow: hidden;
+
 		.user-profile-card {
 			@mixin cardBorder ($color: transparent) {
 				box-shadow: inset 5px 0 0 0 $color;
@@ -17,6 +19,8 @@
 
 			p {
 				hyphens: auto;
+				word-break: break-all;
+				word-break: break-word;
 			}
 
 			$colors: (
