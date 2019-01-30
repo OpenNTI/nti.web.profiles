@@ -27,7 +27,7 @@ export default
 })
 class ProfileUpdate extends React.Component {
 	static profileNeedsUpdate (entity) {
-		return entity.hasLink('user-profile-update');
+		return entity.hasLink('user_profile_update');
 	}
 
 	static propTypes = {
