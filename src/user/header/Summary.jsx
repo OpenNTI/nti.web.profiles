@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {Array as ArrayUtils} from '@nti/lib-commons';
 import {DisplayName, User} from '@nti/web-commons';
+import cx from 'classnames';
 
 export default class Summary extends React.Component {
 	static propTypes = {
@@ -21,7 +22,7 @@ export default class Summary extends React.Component {
 		const education = ArrayUtils.ensure(ed)[0];
 
 		return (
-			<div className="profile-head-summary">
+			<div className={cx('profile-head-summary', {'has-role': role})}>
 				{role && <div className="entity-role">{role}</div>}
 				<div className="username-wrapper">
 					<DisplayName entity={entity} />

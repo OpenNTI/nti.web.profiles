@@ -1,6 +1,10 @@
 @import "~@nti/style-common";
 
 .profile-head-summary {
+	&.has-role {
+		margin-top: 0.875em;
+	}
+
 	a {
 		color: #3fb3f6;
 		text-decoration: none;
@@ -12,7 +16,6 @@
 		text-transform: uppercase;
 		color: $tertiary-grey;
 		display: block;
-		margin-top: -1em; // when role is present this reduces the profile-head-summary top margin declared in Header.scss
 
 		@include respond-to(handhelds) {
 			margin-top: 0;
