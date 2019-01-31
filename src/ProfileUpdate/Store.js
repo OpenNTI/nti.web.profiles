@@ -70,7 +70,7 @@ export default class ProfileUpdateStore extends Stores.SimpleStore {
 			this.set('schema', schema);
 			this.set('errors', errors);
 			this.set('type', type);
-			this.setFieldGroups(getFieldGroup(schema, errors));
+			this.setFieldGroups(getFieldGroup(schema, errors, type));
 			this.emitChange('fields', 'fieldGroups', 'schema', 'errors', 'loading');
 		} catch (e) {
 			this.set('error', e);
