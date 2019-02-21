@@ -34,6 +34,10 @@
 		font-size: 0.875rem;
 		width: 100%;
 
+		&::placeholder {
+			color: $tertiary-grey;
+		}
+
 		@include fieldborder;
 	}
 
