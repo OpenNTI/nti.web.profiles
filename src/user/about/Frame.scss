@@ -3,7 +3,7 @@
 .profile-about-frame {
 	display: grid;
 	grid-template-columns: 1fr minmax(250px, 25%);
-	grid-gap: 5px;
+	column-gap: 5px;
 
 	@include respond-to(handhelds) {
 		display: block;

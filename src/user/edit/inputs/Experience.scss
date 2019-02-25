@@ -1,11 +1,11 @@
 .nti-profile-experience-item {
-	display: grid;
-	grid-template-columns: 1fr 70px 70px;
-	grid-gap: 0.5rem 0.875rem;
-	align-items: flex-end;
+	display: block;
 
-	.is-ie & {
-		display: block;
+	@supports (display: grid) {
+		display: grid;
+		grid-template: auto / 1fr 70px 70px;
+		grid-gap: 0.5rem 0.875rem;
+		align-items: flex-end;
 	}
 
 	&:not(:last-child) {
@@ -16,7 +16,7 @@
 		grid-column: 1 / -1;
 		margin-bottom: 0;
 
-		.is-ie & {
+		@supports not (display: grid) {
 			margin-bottom: 0.5rem;
 		}
 
