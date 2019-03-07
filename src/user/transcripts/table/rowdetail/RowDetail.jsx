@@ -84,6 +84,7 @@ export default class RowDetail extends React.Component {
 						}
 					]}
 				/>
-			</div>);
+			</div>
+		);
 	}
 }

@@ -5,7 +5,7 @@
 	border: none;
 	display: grid;
 	grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-	grid-gap: 10px;
+	column-gap: 10px;
 	min-height: 0;
 
 	.token {

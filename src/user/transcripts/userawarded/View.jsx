@@ -4,8 +4,6 @@ import {Input, Flyout, DateTime, DayPicker, Prompt, DialogButtons, Panels} from 
 import {scoped} from '@nti/lib-locale';
 import {getService} from '@nti/web-client';
 
-import Store from '../Store';
-
 import TypeOption from './TypeOption';
 
 const FIELD_MAP = {
