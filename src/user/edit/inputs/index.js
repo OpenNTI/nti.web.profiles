@@ -11,6 +11,7 @@ import Choice from './Choice';
 import Education from './Education';
 import FieldContainer from './FieldContainer';
 import List from './List';
+import MultipleSelect from './MultipleSelect';
 import HTML from './HTML';
 import Interests from './Interests';
 import Position from './Position';
@@ -39,7 +40,8 @@ const NAMES = {
 const COMPONENTS = [
 	Choice,
 	Text,
-	Bool
+	Bool,
+	MultipleSelect
 ];
 
 const CACHE = {};

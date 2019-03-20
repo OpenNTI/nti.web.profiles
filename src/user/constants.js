@@ -7,7 +7,8 @@ const LOCALE_KEYS = [
 	'EDUCATION',
 	'INTERESTS',
 	'COMMUNITY',
-	'PERSONALITY'
+	'PERSONALITY',
+	'DISTRICT'
 ];
 
 export const LOCALE_PATHS = {

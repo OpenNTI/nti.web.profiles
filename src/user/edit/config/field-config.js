@@ -51,6 +51,30 @@ const FIELD_GROUPS = {
 		education: 'education',
 		positions: 'positions',
 		interests: 'interests'
+	},
+	'IOPSRCUserProfile': {
+		about: [
+			'about',
+			'realname',
+			'location',
+			'home_page',
+			'facebook',
+			'instagram',
+			'linkedIn',
+			'twitter',
+			'googlePlus'
+		],
+		district: [
+			'role',
+			'teacher_certification',
+			'teacher_certification_number',
+			'affiliation',
+			'is_district_admin',
+			'admin_district_names'
+		],
+		education: 'education',
+		positions: 'positions',
+		interests: 'interests'
 	}
 };
 
