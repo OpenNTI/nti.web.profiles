@@ -7,8 +7,10 @@ import {LOCALE_PATHS} from '../../constants';
 
 import LabelValueList from './LabelValueList';
 
+//For OPSRC
+
 const t = scoped(LOCALE_PATHS.DISTRICT, {
-	title: 'District',
+	title: 'Information',
 	district: 'District',
 	teacherCertNumber: 'Teacher Certification',
 	adminDistricts: 'Admin Districts'

@@ -1,6 +1,6 @@
 import About from './About';
 import Community from './Community';
-import District from './District';
+import Information from './Information';
 import Education from './Education';
 import Empty from './Empty';
 import Personality from './Personality';
@@ -10,7 +10,7 @@ import Interests from './Interests';
 const PARTS = [
 	About,
 	Community,
-	District,
+	Information,
 	Personality,
 	Education,
 	Professional,

@@ -64,7 +64,7 @@ const FIELD_GROUPS = {
 			'twitter',
 			'googlePlus'
 		],
-		district: [
+		information: [
 			'role',
 			'teacher_certification',
 			'teacher_certification_number',
