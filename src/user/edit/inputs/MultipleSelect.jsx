@@ -17,7 +17,12 @@ export default class MultipleSelect extends React.PureComponent {
 		const {schema: {value_type: {choices}}, value, onChange} = this.props;
 
 		return (
-			<Input.MultiSelect className="nti-profile-multiple-select" values={value} onChange={onChange}>
+			<Input.MultiSelect
+				className="nti-profile-multiple-select"
+				optionsClassName="nti-profile-multiple-select-option-list"
+				values={value}
+				onChange={onChange}
+			>
 				{(choices || []).map((choice, key) => {
 					return (
 						<Input.MultiSelect.Option value={choice} key={key}>{choice}</Input.MultiSelect.Option>
