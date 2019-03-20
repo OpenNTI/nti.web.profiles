@@ -2,41 +2,40 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Registry from '../Registry';
+import FieldGroup from '../../common/FieldGroup';
 
-import FieldRegistry from './Registry';
+import {getConfigForType} from './Config';
 
-const registry = FieldRegistry.getInstance();
-
+export default
 @Registry.register(Registry.Default)
-class ProfileUpdateFields extends React.Component {
+class ProfileUpdateDefault extends React.Component {
 	static propTypes = {
 		fields: PropTypes.array,
-		values: PropTypes.object
+		type: PropTypes.string
+	}
+
+	render () {
+		const {type} = this.props;
+		const config = getConfigForType(type);
+
+		if (!config) { return null; }
+
+		const {groups} = config;
+
+		return (
+			<div>
+				{groups.map((group, key) => this.renderGroup(group, key))}
+			</div>
+		);
 	}
 
 
-	render () {
-		const {fields, values, ...otherProps} = this.props;
-
-		if (!fields) { return null; }
-
-		const fieldInputs = fields.filter(field => !!registry.getItemFor(field, values));
+	renderGroup (group, key) {
+		const {fields:fieldOrder, label, getLabel} = group;
+		const title = getLabel ? getLabel() : label;
 
 		return (
-			<ul className="nti-profile-update-fields">
-				{fieldInputs.map((field, index) => {
-					const value = values[field.schema.name];
-					const Cmp = registry.getItemFor(field, values);
-
-					return (
-						<li key={index}>
-							<Cmp field={field} value={value} index={index} {...otherProps} />
-						</li>
-					);
-				})}
-			</ul>
+			<FieldGroup order={fieldOrder} title={title} {...this.props} />
 		);
 	}
 }
-
-export default ProfileUpdateFields;

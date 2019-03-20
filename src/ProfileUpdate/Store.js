@@ -64,13 +64,14 @@ export default class ProfileUpdateStore extends Stores.SimpleStore {
 
 		try {
 			const profile = await entity.fetchLink('account.profile');
-			const {ProfileSchema:schema, ProfileType: type, ValidationErrors:errors} = profile;
+			const {ProfileSchema:schema, ProfileType: type, OriginalProfileType: baseType, ValidationErrors:errors} = profile;
 
 			this.set('loading', false);
 			this.set('schema', schema);
 			this.set('errors', errors);
 			this.set('type', type);
-			this.setFieldGroups(getFieldGroup(schema, errors, type));
+			this.set('baseType', baseType);
+			this.setFieldGroups(getFieldGroup(schema, errors, type, baseType));
 			this.emitChange('fields', 'fieldGroups', 'schema', 'errors', 'loading');
 		} catch (e) {
 			this.set('error', e);
@@ -79,13 +80,14 @@ export default class ProfileUpdateStore extends Stores.SimpleStore {
 	}
 
 	onFieldChange (field, value) {
+		const baseType = this.get('baseType');
 		const {name} = field.schema;
 		let values = {...this.get('values'), [name]: value};
 
 		//TODO: figure out how not to need this.
 		//for OSDE the parent role and the employer/community member role both need to fill
 		//out location, but we don't want to leave it filled in when they switch...
-		if (name === 'role') {
+		if (name === 'role' && baseType === 'IOSDEUserProfile') {
 			values = {role: value};
 		}
 

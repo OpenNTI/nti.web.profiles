@@ -29,7 +29,7 @@ export default class SalltProfileChoiceInput extends React.Component {
 		const {field, onChange} = this.props;
 
 		if (onChange) {
-			onChange(field, value === 'true');
+			onChange(field, value === 'yes');
 		}
 	}
 
@@ -41,12 +41,12 @@ export default class SalltProfileChoiceInput extends React.Component {
 			<div className={cx('profile-update-sallt-profile-boolean-input', schema.name)}>
 				<Input.Label label={schema.description}>
 					<Select
-						value={value == null ? value : (value ? 'true' : 'false')}
+						value={value == null ? value : (value ? 'yes' : 'no')}
 						placeholder={schema.title}
 						onChange={this.onChange}
 					>
-						<Option value="true">{t('yes')}</Option>
-						<Option value="false">{t('no')}</Option>
+						<Option value="yes">{t('yes')}</Option>
+						<Option value="no">{t('no')}</Option>
 					</Select>
 				</Input.Label>
 			</div>

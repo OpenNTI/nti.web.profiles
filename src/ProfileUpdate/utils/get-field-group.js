@@ -22,11 +22,20 @@ const TYPE_HANDLERS = {
 				getField(schema['five_q_response'], null)
 			]
 		];
+	},
+	'IOPSRCUserProfile': (schema, validationErrors) => {
+		return [
+			[
+				...validationErrors.map(x => getField(schema[x.field], x)),
+				getField(schema['admin_district_names'], null),
+				getField(schema['teacher_certification_number'], null)
+			]
+		];
 	}
 };
 
-export default function getFieldGroup (schema, validationErrors, type) {
-	const handler = TYPE_HANDLERS[type] || TYPE_HANDLERS[DEFAULT];
+export default function getFieldGroup (schema, validationErrors, type, baseType) {
+	const handler = TYPE_HANDLERS[type] || TYPE_HANDLERS[baseType] || TYPE_HANDLERS[DEFAULT];
 
 	return handler(schema, validationErrors);
 }

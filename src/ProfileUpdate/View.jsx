@@ -20,6 +20,7 @@ export default
 	saving: 'saving',
 	fields: 'fields',
 	type: 'type',
+	baseType: 'baseType',
 	error: 'error',
 	onFieldChange: 'onFieldChange',
 	values: 'values',
@@ -42,6 +43,7 @@ class ProfileUpdate extends React.Component {
 		isValid: PropTypes.bool,
 		fields: PropTypes.array,
 		type: PropTypes.string,
+		baseType: PropTypes.string,
 		values: PropTypes.object,
 		onFieldChange: PropTypes.func
 	}
@@ -79,8 +81,8 @@ class ProfileUpdate extends React.Component {
 
 
 	render () {
-		const {entity, loading, saving, error, fields, type, values, isValid} = this.props;
-		const Cmp = getCmpForType(type);
+		const {entity, loading, saving, error, fields, type, baseType, values, isValid} = this.props;
+		const Cmp = getCmpForType(type, baseType);
 
 		return (
 			<div className="nti-profile-update">
@@ -91,7 +93,15 @@ class ProfileUpdate extends React.Component {
 					{loading && (<Loading.Mask />)}
 					{saving && (<Loading.Mask message={t('saving')}/>)}
 					{!loading && !saving && error && this.renderError(error)}
-					{!loading && !saving && Cmp && (<Cmp fields={fields} values={values} onChange={this.onFieldChange} entity={entity} />)}
+					{!loading && !saving && Cmp && (
+						<Cmp
+							fields={fields}
+							values={values}
+							onChange={this.onFieldChange}
+							entity={entity}
+							type={type}
+						/>
+					)}
 				</div>
 				<DialogButtons
 					buttons={[

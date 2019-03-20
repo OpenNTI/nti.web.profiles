@@ -4,12 +4,16 @@ import cx from 'classnames';
 
 import BooleanInput from './BooleanInput';
 import ChoiceInput from './ChoiceInput';
+import IntegerInput from './IntegerInput';
+import ListInput from './ListInput';
 import TextInput from './TextInput';
 
 const TYPE_TO_INPUT = {
 	Choice: ChoiceInput,
 	string: TextInput,
-	bool: BooleanInput
+	bool: BooleanInput,
+	int: IntegerInput,
+	list: ListInput
 };
 
 function getInputForField (field) {

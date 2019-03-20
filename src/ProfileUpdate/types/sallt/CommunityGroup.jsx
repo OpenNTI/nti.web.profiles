@@ -1,7 +1,7 @@
 import React from 'react';
 import {scoped} from '@nti/lib-locale';
 
-import FieldGroup from './common/FieldGroup';
+import FieldGroup from '../../common/FieldGroup';
 
 const t = scoped('nti-profiles.ProfileUpdate.types.sallt.community.View', {
 	title: 'Community'
