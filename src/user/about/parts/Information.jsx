@@ -28,9 +28,9 @@ const FIELDS = [
 		};
 	},
 	(user) => {
-		const {teacher_certification_number:cert} = user;
+		const {teacher_certification_number:cert, teacher_certification:hasCert} = user;
 
-		if (!cert) { return null; }
+		if (!cert || !hasCert) { return null; }
 
 		return {
 			label: t('teacherCertNumber'),
@@ -38,9 +38,9 @@ const FIELDS = [
 		};
 	},
 	(user) => {
-		const {admin_district_names:names} = user;
+		const {admin_district_names:names, is_district_admin:isAdmin} = user;
 
-		if (!names || !names.length) { return null; }
+		if (!isAdmin || !names || !names.length) { return null; }
 
 		return {
 			label: t('adminDistricts'),
