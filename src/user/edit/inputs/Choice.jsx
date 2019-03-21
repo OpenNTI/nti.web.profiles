@@ -21,7 +21,12 @@ export default class ChoiceInput extends React.PureComponent {
 		const {className, schema: {readonly, choices = []} = {}, ...props} = this.props;
 
 		return (
-			<Select className={cx('nti-profile-choice-input', className)} {...props} disabled={readonly}>
+			<Select
+				className={cx('nti-profile-choice-input', className)}
+				{...props}
+				optionsClassName="nti-profile-choice-input-option-list"
+				disabled={readonly}
+			>
 				{choices.map((v, i) => <Option key={i} value={v}>{v}</Option>)}
 			</Select>
 		);

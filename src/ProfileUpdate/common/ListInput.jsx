@@ -44,7 +44,12 @@ export default class ProfileUpdateListInput extends React.Component {
 
 	renderChoices (type, value) {
 		return (
-			<Input.MultiSelect values={value} placeholder={type.title} onChange={this.onChange}>
+			<Input.MultiSelect
+				values={value}
+				placeholder={type.title}
+				optionsClassName="profile-update-multi-select-list"
+				onChange={this.onChange}
+			>
 				{type.choices.map((choice, key) => {
 					return (
 						<Input.MultiSelect.Option value={choice} key={key}>{choice}</Input.MultiSelect.Option>

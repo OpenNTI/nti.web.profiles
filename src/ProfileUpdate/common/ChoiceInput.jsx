@@ -34,7 +34,12 @@ export default class SalltProfileChoiceInput extends React.Component {
 		return (
 			<div className={cx('profile-update-sallt-profile-choice-input', schema.name)}>
 				<Input.Label label={schema.description}>
-					<Select value={value} placeholder={schema.title} onChange={this.onChange}>
+					<Select
+						value={value}
+						placeholder={schema.title}
+						optionsClassName="profile-update-select-options-list"
+						onChange={this.onChange}
+					>
 						{schema.choices.map((choice, key) => {
 							return (
 								<Option value={choice} key={key}>{choice}</Option>
