@@ -29,7 +29,7 @@ export default class ProfileUpdateListInput extends React.Component {
 
 		return (
 			<div className={cx('profile-update-list-input', schema.name)}>
-				<Input.Label label={schema.desription}>
+				<Input.Label label={schema.description}>
 					{this.renderInput(schema['value_type'], value)}
 				</Input.Label>
 			</div>
