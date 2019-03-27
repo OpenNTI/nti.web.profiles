@@ -25,7 +25,9 @@ const FIELD_GROUPS = {
 		about: [
 			'about',
 			'realname',
+			'alias',
 			'role',
+			'email',
 			'location',
 			'home_page',
 			'facebook',
@@ -56,6 +58,8 @@ const FIELD_GROUPS = {
 		about: [
 			'about',
 			'realname',
+			'alias',
+			'email',
 			'location',
 			'home_page',
 			'facebook',
