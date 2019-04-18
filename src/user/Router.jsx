@@ -51,6 +51,7 @@ const ROUTES = [
 			}
 			return null;
 		},
+		applicable: entity => entity && (entity.hasLink('Badges') || entity.hasLink('Certificate')),
 		visible: true
 	},
 	{
