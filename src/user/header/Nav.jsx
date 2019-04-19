@@ -24,13 +24,16 @@ export default class ProfileHeaderNav extends React.Component {
 
 	render () {
 		const {entity} = this.props;
+		const achievementsAvailable = entity.hasLink('Badges') || entity.hasLink('Certificate');
 
 		return (
 			<nav>
 				<List.ResponsiveInline className="profile-header-nav" flyoutProps={{dark: true}}>
 					<NavLink object={entity} context="about" title={t('about')} exact/>
 					<NavLink object={entity} context="activity" title={t('activity')} />
-					<NavLink object={entity} context="achievements" title={t('achievements')} />
+					{achievementsAvailable && (
+						<NavLink object={entity} context="achievements" title={t('achievements')} />
+					)}
 					<NavLink object={entity} context="memberships" title={t('memberships')} />
 					{entity.hasLink('transcript')
 						? (<NavLink object={entity} context="transcripts" title={t('transcripts')} />)
