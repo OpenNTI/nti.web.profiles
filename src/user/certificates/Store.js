@@ -39,7 +39,7 @@ export default class ProfileCertificatesStore extends Stores.SimpleStore {
 
 			const allCourses = this.getCompletableFrom(userEnrollments);
 
-			const completedCourses = allCourses.filter(c => c.CourseProgress.CompletedDate);
+			const completedCourses = allCourses.filter(c => c.CourseProgress.CompletedDate && c.hasLink('Certificate'));
 			const inProgressCourses = allCourses.filter(c => !c.CourseProgress.CompletedDate);
 
 			this.set({
