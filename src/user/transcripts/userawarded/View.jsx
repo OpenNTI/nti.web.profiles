@@ -26,7 +26,7 @@ const t = scoped('nti-web-profile.transcripts.userawarded.View', {
 
 const ERROR_MESSAGES = {
 	RequiredMissing: e => 'Missing value: ' + (FIELD_MAP[e.message] || e.message),
-	TooSmall: e => (FIELD_MAP[e.field] || e.field) + ' must be greater than 0',
+	TooSmall: e => (FIELD_MAP[e.field] || e.field) + ' must be greater than 0.',
 	InvalidFloatLiteral: e => `${FIELD_MAP[e.field] || e.field} value is invalid.`
 };
 
