@@ -232,7 +232,7 @@ export default class UserAwardedCreditView extends React.Component {
 			}
 		}
 		catch (e) {
-			const error = (ERROR_MESSAGES[e.code] || (e => e.message || e))(e);
+			const error = (ERROR_MESSAGES[e.code] || (err => err.message || err))(e);
 			this.setState({error});
 		}
 	}
