@@ -24,6 +24,12 @@ const t = scoped('nti-web-profile.transcripts.userawarded.View', {
 	cancel: 'Cancel'
 });
 
+const ERROR_MESSAGES = {
+	RequiredMissing: e => 'Missing value: ' + (FIELD_MAP[e.message] || e.message),
+	TooSmall: e => (FIELD_MAP[e.field] || e.field) + ' must be greater than 0',
+	InvalidFloatLiteral: e => `${FIELD_MAP[e.field] || e.field} value is invalid.`
+};
+
 export default class UserAwardedCreditView extends React.Component {
 	static propTypes = {
 		entity: PropTypes.object.isRequired,
@@ -226,15 +232,7 @@ export default class UserAwardedCreditView extends React.Component {
 			}
 		}
 		catch (e) {
-			let error = e.message || e;
-
-			if(e.code === 'RequiredMissing') {
-				error = 'Missing value: ' + (FIELD_MAP[e.message] || e.message);
-			}
-			else if(e.code === 'TooSmall') {
-				error = (FIELD_MAP[e.field] || e.field) + ' must be greater than 0';
-			}
-
+			const error = (ERROR_MESSAGES[e.code] || (e => e.message || e))(e);
 			this.setState({error});
 		}
 	}
