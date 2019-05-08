@@ -37,7 +37,7 @@ export default class Summary extends React.Component {
 
 					{position && (
 						<li className="affiliation">
-							{[position.title, position.companyName].join(' at ')}
+							{[position.title, position.companyName].filter(Boolean).join(' at ')}
 						</li>
 					)}
 
