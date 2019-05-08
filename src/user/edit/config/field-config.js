@@ -14,8 +14,7 @@ const FIELD_GROUPS = {
 			'facebook',
 			'instagram',
 			'linkedIn',
-			'twitter',
-			'googlePlus'
+			'twitter'
 		],
 		education: 'education',
 		positions: 'positions',
