@@ -21,7 +21,7 @@ export default class ProfileBadgesStore extends Stores.BoundStore {
 	async load () {
 		const entity = this.binding;
 
-		if(!entity || !entity.hasLink(WORKSPACE_REL) || entity) {
+		if(!entity || !entity.hasLink(WORKSPACE_REL)) {
 			// if a user doesn't have the link, treat it as the empty state
 			this.set({
 				[DISABLED]: true,
