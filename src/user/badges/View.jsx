@@ -9,7 +9,8 @@ import {
 	default as Store,
 	LOADING,
 	EARNABLE,
-	EARNED
+	EARNED,
+	DISABLED
 } from './Store';
 
 const empty = x => !x || !x.length;
@@ -33,7 +34,8 @@ export default
 @Store.connect({
 	[LOADING]: 'loading',
 	[EARNABLE]: 'earnable',
-	[EARNED]: 'earned'
+	[EARNED]: 'earned',
+	[DISABLED]: 'disabled'
 })
 class View extends React.Component {
 
@@ -42,13 +44,18 @@ class View extends React.Component {
 		entity: PropTypes.object,
 		loading: PropTypes.bool,
 		earnable: PropTypes.array,
-		earned: PropTypes.array
+		earned: PropTypes.array,
+		disabled: PropTypes.bool
 	}
 
 	static deriveBindingFromProps = ({entity}) => entity
 
 	render () {
-		const {loading, earnable = [], earned = [], entity} = this.props;
+		const {loading, earnable = [], earned = [], entity, disabled} = this.props;
+
+		if (disabled) {
+			return null;
+		}
 
 		const userContext = (entity || {}).isAppUser ? 'me' : 'them';
 		const isEmpty = !loading && userContext === 'them' && empty(earnable) && empty(earned);

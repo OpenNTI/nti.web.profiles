@@ -8,6 +8,7 @@ export const EARNED = 'EarnedBadges'; // this is the collection title in the bad
 export const EARNABLE = 'EarnableBadges'; // this is the collection title in the badges workspace. don't change.
 export const LOADING = 'loading';
 export const ERROR = 'error';
+export const DISABLED = 'NotEnabled';
 
 const WORKSPACE_REL = 'Badges';
 
@@ -19,9 +20,11 @@ const WORKSPACE_REL = 'Badges';
 export default class ProfileBadgesStore extends Stores.BoundStore {
 	async load () {
 		const entity = this.binding;
-		if(!entity || !entity.hasLink(WORKSPACE_REL)) {
+
+		if(!entity || !entity.hasLink(WORKSPACE_REL) || entity) {
 			// if a user doesn't have the link, treat it as the empty state
 			this.set({
+				[DISABLED]: true,
 				[LOADING]: false,
 				[EARNED]: [],
 				[EARNABLE]: []
@@ -29,7 +32,10 @@ export default class ProfileBadgesStore extends Stores.BoundStore {
 			return;
 		}
 
-		this.set(LOADING, true);
+		this.set({
+			[DISABLED]: false,
+			[LOADING]: true
+		});
 
 		try {
 			// using Promise.all just for concurrency, so one isn't waiting on the other
