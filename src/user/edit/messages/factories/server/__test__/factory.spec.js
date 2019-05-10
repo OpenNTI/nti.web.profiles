@@ -41,7 +41,7 @@ describe('server message factory test', () => {
 		const results = getMessages(error);
 
 		expect(results.length).toEqual(1);
-		expect(results[0]).toEqual(GENERIC_INVALID_VALUE_SINGULAR);
+		expect(results[0]).toEqual(INVALID_START_YEAR);
 	});
 
 	test('Test multiple validation errors', () => {

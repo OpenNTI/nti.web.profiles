@@ -55,6 +55,10 @@ const categorize = errors => arr(errors).reduce((acc, error) => {
 
 const handlers = {
 	[VALIDATION_ERROR]: errors => {
+		if (errors.length === 1 && errors[0].message) {
+			return errors[0].message;
+		}
+
 		// extract an array of field names (localized)
 		const fields = errors.map(({field}) => localizeFieldName(field)).filter(Boolean);
 
