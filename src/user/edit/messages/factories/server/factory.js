@@ -32,7 +32,10 @@ const t = scoped('nti-profile-edit.server-error-messages', {
 		other: 'Unable to save. Your submission included invalid values.'
 	},
 	[UNKNOWN_ERROR]: 'Unable to save. An unknown error occurred.',
-	[LIST_DELIMITER]: ', '
+	[LIST_DELIMITER]: ', ',
+	fieldNames: {
+		'myers_briggs_response': 'Myers-Briggs Response'
+	},
 });
 
 const localizeFieldName = name => !name ? null : t(['fieldNames', name], {fallback: name});
