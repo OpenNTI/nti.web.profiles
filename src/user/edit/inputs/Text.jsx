@@ -48,6 +48,8 @@ export default class StringInput extends React.PureComponent {
 			logger.warn(`Unrecognized type (${type}). Using text input.`);
 		}
 
+		console.log("COMPONENT TYPE: " + cmp);
+
 		return cmp || Input.Text;
 	}
 
