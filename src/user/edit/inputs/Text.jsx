@@ -48,8 +48,6 @@ export default class StringInput extends React.PureComponent {
 			logger.warn(`Unrecognized type (${type}). Using text input.`);
 		}
 
-		console.log("COMPONENT TYPE: " + cmp);
-
 		return cmp || Input.Text;
 	}
 
@@ -77,6 +75,11 @@ export default class StringInput extends React.PureComponent {
 			minLength,
 			placeholder
 		};
+
+		//if the placeholder contains "year" only allow 4 numbers
+		if(schemaProps.placeholder.includes("year")){
+			schemaProps.maxLength = 4;
+		}
 
 		return (
 			<Cmp className={cx('nti-profile-string-input', className)}
