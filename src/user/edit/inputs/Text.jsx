@@ -76,9 +76,10 @@ export default class StringInput extends React.PureComponent {
 			placeholder
 		};
 
-		//if the placeholder contains "year" only allow 4 numbers
-		if(schemaProps.placeholder.includes("year")){
-			schemaProps.maxLength = 4;
+		//if the field name contains "year" only allow 4 numbers
+		if(props.name.includes('Year'))
+		{
+			props.maxLength = 4;
 		}
 
 		return (
