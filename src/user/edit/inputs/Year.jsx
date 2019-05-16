@@ -48,6 +48,8 @@ export default class StringInput extends React.PureComponent {
 			logger.warn(`Unrecognized type (${type}). Using text input.`);
 		}
 
+		//console.log(format);
+
 		return cmp || Input.Text;
 	}
 
@@ -76,13 +78,19 @@ export default class StringInput extends React.PureComponent {
 			placeholder
 		};
 
+		//limit the length of the input to 4 because its a year
+		const cmpProps = Cmp === Input.Number ? {maxLength: 4, constrain: true} : {};
+
 		return (
 			<Cmp className={cx('nti-profile-string-input', className)}
 				placeholder={placeholder}
 				{...schemaProps}
 				{...props}
+				{...cmpProps}
 				onChange={this.onChange}
 			/>
 		);
 	}
 }
+
+

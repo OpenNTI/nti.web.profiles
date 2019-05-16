@@ -7,6 +7,7 @@ import cx from 'classnames';
 import FieldContainer from './FieldContainer';
 import Editor from './Editor';
 import Text from './Text';
+import Year from './Year';
 
 const t2 = scoped('nti-web-profile.user-profile.edit.experience.fields', {
 	startYear: 'Start Year',
@@ -23,7 +24,7 @@ const fields = [
 
 const fieldMetaDefaults = {
 	startYear: {
-		className: 'year',
+		className: 'year'
 	},
 	endYear: {
 		className: 'year'
@@ -115,7 +116,7 @@ export default class Experience extends React.PureComponent {
 			<div className="nti-profile-experience-item">
 				{fields.map(field => (
 					<FieldContainer key={field} className={css(field)} required={(schema[n(field)] || {}).required} label={t(n(field))}>
-						<In schema={schema[n(field)]} name={n(field)} value={v(field)} onChange={this.onChange} />
+						<In schema={schema[n(field)]} name={n(field)} value={v(field)} onChange={this.onChange}/>
 					</FieldContainer>
 				))}
 				<FieldContainer className={css('description')} required={(schema[n('description')] || {}).required} label={t(n('description'))}>
@@ -135,7 +136,7 @@ class In extends React.Component {
 	static propTypes = {
 		name: PropTypes.string,
 		schema: PropTypes.object,
-		onChange: PropTypes.func
+		onChange: PropTypes.func,
 	}
 
 	onChange = (value) => {
@@ -144,6 +145,7 @@ class In extends React.Component {
 	}
 
 	render () {
-		return <Text {...this.props} onChange={this.onChange} />;
+		//if the word year is in the schema's title, render year component (caps length to 4) else render Text component (max input is 16 char)
+		return this.props.schema.title.includes('year') ? <Year {...this.props} onChange={this.onChange} /> : <Text {...this.props} onChange={this.onChange} />;
 	}
 }
