@@ -92,5 +92,3 @@ export default class StringInput extends React.PureComponent {
 		);
 	}
 }
-
-

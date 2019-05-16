@@ -146,6 +146,7 @@ class In extends React.Component {
 
 	render () {
 		//if the word year is in the schema's title, render year component (caps length to 4) else render Text component (max input is 16 char)
-		return this.props.schema.title.includes('year') ? <Year {...this.props} onChange={this.onChange} /> : <Text {...this.props} onChange={this.onChange} />;
+		//return this.props.schema.title.includes('year') ? <Year {...this.props} onChange={this.onChange} /> : <Text {...this.props} onChange={this.onChange} />;
+		return <Text {...this.props} onChange={this.onChange} />;
 	}
 }
