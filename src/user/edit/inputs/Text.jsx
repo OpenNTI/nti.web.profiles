@@ -40,9 +40,9 @@ export default class StringInput extends React.PureComponent {
 	}
 
 	getComponent = () => {
-		const {schema: {type = 'string', format} = {}} = this.props;
+		const {schema: {type = 'string'} = {}} = this.props;
 
-		const cmp = (types.find(({test}) => test(type, format)) || {}).component;
+		const cmp = (types.find(({test}) => test(type)) || {}).component;
 
 		if (!cmp) {
 			logger.warn(`Unrecognized type (${type}). Using text input.`);

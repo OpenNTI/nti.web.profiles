@@ -116,7 +116,7 @@ export default class Experience extends React.PureComponent {
 			<div className="nti-profile-experience-item">
 				{fields.map(field => (
 					<FieldContainer key={field} className={css(field)} required={(schema[n(field)] || {}).required} label={t(n(field))}>
-						<In schema={schema[n(field)]} name={n(field)} value={v(field)} onChange={this.onChange}/>
+						<In schema={schema[n(field)]} name={n(field)} value={v(field)} onChange={this.onChange} />
 					</FieldContainer>
 				))}
 				<FieldContainer className={css('description')} required={(schema[n('description')] || {}).required} label={t(n('description'))}>
@@ -136,7 +136,7 @@ class In extends React.Component {
 	static propTypes = {
 		name: PropTypes.string,
 		schema: PropTypes.object,
-		onChange: PropTypes.func,
+		onChange: PropTypes.func
 	}
 
 	onChange = (value) => {
