@@ -8,6 +8,7 @@ const t = scoped('profile.about.social', {
 	'linkedIn': 'LinkedIn',
 	'twitter': 'Twitter',
 	'googlePlus': 'Google+',
+	'instagram': 'Instagram'
 });
 
 const socialPropNames = [
@@ -15,6 +16,7 @@ const socialPropNames = [
 	'linkedIn',
 	'twitter',
 	'googlePlus',
+	'instagram'
 ];
 
 export default class Social extends React.Component {

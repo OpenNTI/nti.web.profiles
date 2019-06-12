@@ -33,6 +33,7 @@
 			facebook: 'social-facebook.png',
 			googleplus: 'social-google.png',
 			linkedin: 'social-linkedin.png',
+			instagram: 'social-instagram.png'
 		) {
 			&.#{$class} {
 				background-image: url('./assets/#{$image}');
