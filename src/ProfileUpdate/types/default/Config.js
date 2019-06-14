@@ -13,7 +13,8 @@ const TYPE_TO_CONFIG = {
 			{
 				fields: [
 					'role',
-					'affiliation'
+					'affiliation',
+					'district_school'
 				]
 			},
 			{
