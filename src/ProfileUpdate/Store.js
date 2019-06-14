@@ -102,7 +102,6 @@ export default class ProfileUpdateStore extends Stores.SimpleStore {
 	async validateAfterFieldChange (field) {
 		const entity = this.get('entity');
 		const groups = this.get('fieldGroups');
-		const schema = this.get('schema');
 		const groupsToSend = [];
 		const dataToSend = {};
 
@@ -124,12 +123,14 @@ export default class ProfileUpdateStore extends Stores.SimpleStore {
 		}
 
 		try {
-			await entity.putToLink('account.profile.preflight', dataToSend);
+			const {ProfileSchema: newSchema} = await entity.putToLink('account.profile.preflight', dataToSend);
 
 			this.set('isValid', true);
+			this.set('schema', newSchema);
+			this.setFieldGroups(mergeFieldGroups(...groupsToSend, ...getFieldGroup(newSchema, [])));
 			this.emitChange('isValid');
 		} catch (e) {
-			const {ValidationErrors} = e;
+			const {ValidationErrors, ProfileSchema:newSchema} = e;
 
 			if (field.schema.name === 'role' && dataToSend.role === 'Employer/Community Member') {
 				ValidationErrors.push({
@@ -138,7 +139,8 @@ export default class ProfileUpdateStore extends Stores.SimpleStore {
 			}
 
 			this.set('isValid', false);
-			this.setFieldGroups(mergeFieldGroups(...groupsToSend, ...getFieldGroup(schema, ValidationErrors)));
+			this.set('schema', newSchema);
+			this.setFieldGroups(mergeFieldGroups(...groupsToSend, ...getFieldGroup(newSchema, ValidationErrors)));
 			this.emitChange('isValid', 'fields');
 		}
 	}
