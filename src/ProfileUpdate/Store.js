@@ -106,20 +106,13 @@ export default class ProfileUpdateStore extends Stores.SimpleStore {
 		const dataToSend = {};
 
 		for (let group of groups) {
-			let hasField = false;
-
 			for (let f of group) {
-				if (f === field) {
-					hasField = true;
-				}
-
 				const {name} = f.schema;
 
 				dataToSend[name] = this.getValueFor(name);
 			}
 
 			groupsToSend.push(group);
-			if (hasField) { break; }
 		}
 
 		try {
