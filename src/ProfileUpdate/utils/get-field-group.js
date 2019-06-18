@@ -1,7 +1,10 @@
+import shouldHideField from './should-hide-field';
+
 function getField (schema, error) {
 	return {
 		schema,
-		error
+		error,
+		hidden: shouldHideField(schema)
 	};
 }
 
