@@ -1,6 +1,6 @@
 import {Stores} from '@nti/lib-store';
 
-import {getFieldGroup, mergeFieldGroups, shouldKeepValue} from './utils';
+import {getFieldGroup, mergeFieldGroups, shouldKeepValue, updateFieldGroups} from './utils';
 
 export default class ProfileUpdateStore extends Stores.SimpleStore {
 	constructor () {
@@ -124,7 +124,7 @@ export default class ProfileUpdateStore extends Stores.SimpleStore {
 
 			this.set('isValid', true);
 			this.set('schema', newSchema);
-			this.setFieldGroups(mergeFieldGroups(...getFieldGroup(newSchema, []), ...groups));
+			this.setFieldGroups(mergeFieldGroups(...getFieldGroup(newSchema, []), ...updateFieldGroups(newSchema, groups)));
 			this.emitChange('isValid');
 		} catch (e) {
 			const {ValidationErrors, ProfileSchema:newSchema} = e;
@@ -137,7 +137,7 @@ export default class ProfileUpdateStore extends Stores.SimpleStore {
 
 			this.set('isValid', false);
 			this.set('schema', newSchema);
-			this.setFieldGroups(mergeFieldGroups(...getFieldGroup(newSchema, ValidationErrors), ...groups));
+			this.setFieldGroups(mergeFieldGroups(...getFieldGroup(newSchema, ValidationErrors), ...updateFieldGroups(newSchema, groups)));
 			this.emitChange('isValid', 'fields');
 		}
 	}
