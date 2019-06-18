@@ -1,6 +1,9 @@
+import fixSchema from './fix-schema';
 import shouldHideField from './should-hide-field';
 
 function getField (schema, error) {
+	schema = fixSchema(schema);
+
 	return {
 		schema,
 		error,
