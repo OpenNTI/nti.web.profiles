@@ -8,6 +8,9 @@ const {Select, Select: {Option}} = Input;
 export default class ChoiceInput extends React.PureComponent {
 
 	static handles = ({type}) => type === 'Choice';
+	static shouldHide ({schema}) {
+		return !schema.choices || schema.choices.length === 0;
+	}
 
 	static propTypes = {
 		className: PropTypes.string,

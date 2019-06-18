@@ -96,6 +96,10 @@ export default function getWidget (schema) {
 			delete props.setValue;
 			delete props.loaded;
 
+			if (Component.shouldHide && Component.shouldHide(props)) {
+				return null;
+			}
+
 			const label = k => Component.fieldLabel
 				? Component.fieldLabel()
 				: (schema || {}).description || t(k, {fallback: k});

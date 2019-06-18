@@ -6,6 +6,8 @@ import {Input} from '@nti/web-commons';
 const {Select, Select: {Option}} = Input;
 
 export default class SalltProfileChoiceInput extends React.Component {
+	static shouldHide (schema) { return !schema.choices || schema.choices.length === 0; }
+
 	static propTypes = {
 		field: PropTypes.shape({
 			schema: PropTypes.shape({

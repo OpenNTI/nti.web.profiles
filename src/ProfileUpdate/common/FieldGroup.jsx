@@ -48,6 +48,8 @@ export default class ProfileUpdateSalltProfileCommunity extends React.Component 
 
 					const Cmp = getInputForField(field);
 
+					if (Cmp.shouldHide && Cmp.shouldHide(field.schema)) { return null;}
+
 					return (
 						<div className={cx('field', field.schema.type, {'has-truthy-value': value})} key={type}>
 							<Cmp field={field} value={value} {...otherProps} />
