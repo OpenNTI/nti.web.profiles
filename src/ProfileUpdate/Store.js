@@ -120,7 +120,7 @@ export default class ProfileUpdateStore extends Stores.SimpleStore {
 
 			this.set('isValid', true);
 			this.set('schema', newSchema);
-			this.setFieldGroups(mergeFieldGroups(...groupsToSend, ...getFieldGroup(newSchema, [])));
+			this.setFieldGroups(mergeFieldGroups(...getFieldGroup(newSchema, []), ...groupsToSend));
 			this.emitChange('isValid');
 		} catch (e) {
 			const {ValidationErrors, ProfileSchema:newSchema} = e;
@@ -133,7 +133,7 @@ export default class ProfileUpdateStore extends Stores.SimpleStore {
 
 			this.set('isValid', false);
 			this.set('schema', newSchema);
-			this.setFieldGroups(mergeFieldGroups(...groupsToSend, ...getFieldGroup(newSchema, ValidationErrors)));
+			this.setFieldGroups(mergeFieldGroups(...getFieldGroup(newSchema, ValidationErrors), ...groupsToSend));
 			this.emitChange('isValid', 'fields');
 		}
 	}

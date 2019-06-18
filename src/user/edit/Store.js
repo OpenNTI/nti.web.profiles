@@ -163,28 +163,30 @@ export class Store extends Stores.SimpleStore {
 	}
 
 	#preflight = buffer(500, async (payload = this.#getPayload()) => {
-		const result = await this.entity.preflightProfile(payload).then(r => r, r => r);
+		try {
+			const result = await this.entity.preflightProfile(payload).then(r => r, r => r);
 
-		const {
-			ProfileType: newType,
-			OriginalProfileType: oldType,
-			ProfileSchema: schema,
-			// ValidationErrors: errors,
-			statusCode
-		} = result;
+			const {
+				ProfileType: newType,
+				ProfileSchema: schema,
+				// ValidationErrors: errors,
+				statusCode
+			} = result;
 
-		const profileType = this.#profileType;
+			this.#profileType = newType;
+			this.#setSchema(schema);
 
-		if ((newType !== oldType) || (profileType && newType !== profileType)) {
+			if (statusCode > 399) {
+				throw result;
+			}
+
+			return result;
+		} catch (e) {
+			const {ProfileSchema: schema, ProfileType: newType} = e;
+
 			this.#profileType = newType;
 			this.#setSchema(schema);
 		}
-
-		if (statusCode > 399) {
-			throw result;
-		}
-
-		return result;
 	});
 
 	[SAVE_PROFILE] = async () => {
