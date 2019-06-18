@@ -72,6 +72,7 @@ const FIELD_GROUPS = {
 			'teacher_certification',
 			'teacher_certification_number',
 			'affiliation',
+			'district_school',
 			'is_district_admin',
 			'admin_district_names'
 		],
