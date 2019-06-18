@@ -1,6 +1,6 @@
 import {Stores} from '@nti/lib-store';
 
-import {getFieldGroup, mergeFieldGroups} from './utils';
+import {getFieldGroup, mergeFieldGroups, shouldKeepValue} from './utils';
 
 export default class ProfileUpdateStore extends Stores.SimpleStore {
 	constructor () {
@@ -45,7 +45,7 @@ export default class ProfileUpdateStore extends Stores.SimpleStore {
 				const {name} = field.schema;
 				const value = values[name];
 
-				if (value != null) {
+				if (shouldKeepValue(value, field)) {
 					newValues[name] = value;
 				}
 			}
@@ -98,11 +98,8 @@ export default class ProfileUpdateStore extends Stores.SimpleStore {
 		this.validateAfterFieldChange(field);
 	}
 
-
-	async validateAfterFieldChange (field) {
-		const entity = this.get('entity');
+	getDataToSend () {
 		const groups = this.get('fieldGroups');
-		const groupsToSend = [];
 		const dataToSend = {};
 
 		for (let group of groups) {
@@ -111,16 +108,23 @@ export default class ProfileUpdateStore extends Stores.SimpleStore {
 
 				dataToSend[name] = this.getValueFor(name);
 			}
-
-			groupsToSend.push(group);
 		}
+
+		return dataToSend;
+	}
+
+
+	async validateAfterFieldChange (field) {
+		const entity = this.get('entity');
+		const groups = this.get('fieldGroups');
+		const dataToSend = this.getDataToSend();
 
 		try {
 			const {ProfileSchema: newSchema} = await entity.putToLink('account.profile.preflight', dataToSend);
 
 			this.set('isValid', true);
 			this.set('schema', newSchema);
-			this.setFieldGroups(mergeFieldGroups(...getFieldGroup(newSchema, []), ...groupsToSend));
+			this.setFieldGroups(mergeFieldGroups(...getFieldGroup(newSchema, []), ...groups));
 			this.emitChange('isValid');
 		} catch (e) {
 			const {ValidationErrors, ProfileSchema:newSchema} = e;
@@ -133,7 +137,7 @@ export default class ProfileUpdateStore extends Stores.SimpleStore {
 
 			this.set('isValid', false);
 			this.set('schema', newSchema);
-			this.setFieldGroups(mergeFieldGroups(...getFieldGroup(newSchema, ValidationErrors), ...groupsToSend));
+			this.setFieldGroups(mergeFieldGroups(...getFieldGroup(newSchema, ValidationErrors), ...groups));
 			this.emitChange('isValid', 'fields');
 		}
 	}
@@ -141,17 +145,7 @@ export default class ProfileUpdateStore extends Stores.SimpleStore {
 
 	async saveValues () {
 		const entity = this.get('entity');
-		const groups = this.get('fieldGroups');
-
-		const dataToSend = {};
-
-		for (let group of groups) {
-			for (let field of group) {
-				const {name} = field.schema;
-
-				dataToSend[name] = this.getValueFor(name);
-			}
-		}
+		const dataToSend = this.getDataToSend();
 
 		this.set('saving', true);
 		this.emitChange('saving');
