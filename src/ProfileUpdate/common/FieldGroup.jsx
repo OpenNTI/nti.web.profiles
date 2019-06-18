@@ -37,25 +37,31 @@ export default class ProfileUpdateSalltProfileCommunity extends React.Component 
 			return acc;
 		}, {});
 
+		const fieldCmps = order
+			.map((type) => {
+				const field = fieldMap[type];
+				const value = values[type];
+
+				if (!field) { return null; }
+
+				const Cmp = getInputForField(field);
+
+				if (field.hidden) { return null;}
+
+				return (
+					<div className={cx('field', field.schema.type, {'has-truthy-value': value})} key={type}>
+						<Cmp field={field} value={value} {...otherProps} />
+					</div>
+				);
+			})
+			.filter(Boolean);
+
+		if (!fieldCmps || fieldCmps.length === 0) { return null; }
+
 		return (
 			<div className="profile-update-sallt-profile-field-group">
 				{title && <div className="field-group-header">{title}</div>}
-				{order.map((type) => {
-					const field = fieldMap[type];
-					const value = values[type];
-
-					if (!field) { return null; }
-
-					const Cmp = getInputForField(field);
-
-					if (field.hidden) { return null;}
-
-					return (
-						<div className={cx('field', field.schema.type, {'has-truthy-value': value})} key={type}>
-							<Cmp field={field} value={value} {...otherProps} />
-						</div>
-					);
-				})}
+				{fieldCmps}
 			</div>
 		);
 	}
