@@ -2,6 +2,8 @@ import Logger from '@nti/util-logger';
 
 import {ensureArray as arr} from '../../../util';
 
+import fixSchemaEntry from './fix-schema-entry';
+
 const logger = Logger.get('nti-profiles:edit:util:get-grouped-schema-fields');
 const OTHER = 'other';
 
@@ -24,7 +26,7 @@ export default function getGroupedSchemaFields (schema, fields) {
 				logger.warn(`Schema entry ${field} doesn't specify a group. Using '${OTHER}'.`);
 			}
 			acc[group] = acc[group] || {};
-			acc[group][field] = entry;
+			acc[group][field] = fixSchemaEntry(entry);
 		}
 		return acc;
 	}, {});
