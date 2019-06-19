@@ -42,7 +42,7 @@ class Form extends React.Component {
 		};
 		return (
 			<ErrorContext.Provider key={key} value={errorContext}>
-				<Card className={slugify(key)} title={title}>
+				<Card className={slugify(key)} title={title} key={`${key}-card`}>
 					{widgets.map((W, i) => <W key={i} />)}
 				</Card>
 			</ErrorContext.Provider>
