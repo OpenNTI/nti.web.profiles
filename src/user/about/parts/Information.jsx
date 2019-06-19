@@ -13,7 +13,8 @@ const t = scoped(LOCALE_PATHS.DISTRICT, {
 	title: 'Information',
 	district: 'District',
 	teacherCertNumber: 'Teacher Certification',
-	adminDistricts: 'Admin Districts'
+	adminDistricts: 'Admin Districts',
+	districtSite: 'District Site'
 });
 
 const FIELDS = [
@@ -45,6 +46,16 @@ const FIELDS = [
 		return {
 			label: t('adminDistricts'),
 			value: names.join(', ')
+		};
+	},
+	(user) => {
+		const {district_school:site} = user;
+
+		if (!site) { return null; }
+
+		return {
+			label: t('districtSite'),
+			value: site
 		};
 	}
 ];
