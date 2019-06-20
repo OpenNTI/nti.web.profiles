@@ -52,8 +52,8 @@ const CACHE = {};
  * @return {Component} A react component to handle editing of the field
  */
 export default function getWidget (schema) {
-	const {name, type, required} = schema;
-	const key = JSON.stringify(schema);
+	const {name, type} = schema;
+	const key = `${name}-${type}`;
 
 	if (!name) {
 		throw new Error('Must specify a name.');
@@ -76,6 +76,7 @@ export default function getWidget (schema) {
 	})
 	class Input extends React.Component {
 		static propTypes = {
+			input: PropTypes.object,
 			setValue: PropTypes.func,
 		}
 
@@ -85,10 +86,12 @@ export default function getWidget (schema) {
 		}
 
 		render () {
+			const {input, ...otherProps} = this.props;
+			const required = input.required;
 			const props = {
 				name,
-				...this.props,
-				schema,
+				...otherProps,
+				schema: input,
 				required,
 				onChange: this.onChange,
 			};

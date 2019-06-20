@@ -36,14 +36,22 @@ class Form extends React.Component {
 		const {setError} = this.props;
 
 		const title = t(key, {fallback: key});
-		const widgets = Object.values(fragment).map(entry => getWidget(entry));
+		const inputs = Object.values(fragment);
+		// const widgets = Object.values(fragment).map(entry => getWidget(entry));
 		const errorContext = {
 			onError: (e) => setError(e, key)
 		};
+
 		return (
 			<ErrorContext.Provider key={key} value={errorContext}>
-				<Card className={slugify(key)} title={title} key={`${key}-card`}>
-					{widgets.map((W, i) => <W key={i} />)}
+				<Card className={slugify(key)} title={title}>
+					{inputs.map((input) => {
+						const Cmp = getWidget(input);
+
+						if (!Cmp) { return null; }
+
+						return (<Cmp key={input.name} input={input} />);
+					})}
 				</Card>
 			</ErrorContext.Provider>
 		);
