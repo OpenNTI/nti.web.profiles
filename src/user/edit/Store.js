@@ -5,7 +5,7 @@ import {buffer} from '@nti/lib-commons';
 import {ensureArray as arr, slugify} from '../../util';
 
 import {FieldConfig} from './config';
-import {addGroupsToSchema, getGroupedSchemaFields, trimValue} from './util';
+import {addGroupsToSchema, getGroupedSchemaFields, trimValue, getAffectedValues} from './util';
 
 const PREFIX = 'nti-profile-edit-store';
 const px = x => `${PREFIX}:${x}`;
@@ -130,8 +130,12 @@ export class Store extends Stores.SimpleStore {
 	}
 
 	[SET_FIELD_VALUE] = (name, value) => {
+		const changed = {[name]: value};
+		const affected = getAffectedValues(this.entity, changed, this.#profileType, this.#schema);
+
 		this.set({
-			[name]: value,
+			...affected,
+			...changed,
 			[HAS_UNSAVED_CHANGES]: true
 		});
 
