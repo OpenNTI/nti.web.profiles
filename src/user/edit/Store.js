@@ -104,7 +104,7 @@ export class Store extends Stores.SimpleStore {
 	}
 
 	async busy (work) {
-		return new Promise(async (resolve, reject) => {
+		const inner = async (resolve, reject) => {
 			let error, result;
 
 			this.set({
@@ -126,7 +126,9 @@ export class Store extends Stores.SimpleStore {
 			});
 
 			error ? reject(error) : resolve(result);
-		});
+		};
+
+		return new Promise((r, t) => inner(r, t));
 	}
 
 	[SET_FIELD_VALUE] = (name, value) => {
