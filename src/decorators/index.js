@@ -1,0 +1,1 @@
+export ResolveEntityProp from './resolve-entity-prop';
