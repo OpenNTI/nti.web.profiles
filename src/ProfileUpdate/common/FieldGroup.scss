@@ -29,6 +29,12 @@
 		max-width: 100%;
 	}
 
+	.profile-update-warning {
+		margin-top: 0.5rem;
+		font: italic 400 0.875rem/1.3 $body-font-family;
+		color: $secondary-grey;
+	}
+
 	//the only client that has this is OPSRC, so just
 	//hard code this for now. In the future we might
 	//need to check if its the last input in the list

@@ -35,7 +35,7 @@ class ProfileUpdateDefault extends React.Component {
 		const title = getLabel ? getLabel() : label;
 
 		return (
-			<FieldGroup order={fieldOrder} title={title} {...this.props} />
+			<FieldGroup key={key} order={fieldOrder} title={title} {...this.props} />
 		);
 	}
 }

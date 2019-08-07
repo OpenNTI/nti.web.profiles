@@ -12,6 +12,7 @@ const TYPE_TO_CONFIG = {
 		groups: [
 			{
 				fields: [
+					'email',
 					'role',
 					'affiliation',
 					'district_school'
