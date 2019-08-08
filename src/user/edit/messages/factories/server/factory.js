@@ -15,6 +15,10 @@ const VALIDATION_ERROR = 'ValidationError';
 const UNKNOWN_ERROR = 'UnknownError';
 const LIST_DELIMITER = 'ListDelimiter';
 
+const ALLOW_SERVER_MESSAGES = {
+	email: true
+};
+
 const t = scoped('nti-profile-edit.server-error-messages', {
 	EmailAddressInvalid: 'The email address you have entered is not valid.',
 	unknown: 'An error occurred processing your request.',
@@ -42,7 +46,7 @@ const localizeFieldName = name => !name ? null : t(['fieldNames', name], {fallba
 
 const extractValidationErrors = x => {
 	// has ValidationErrors or is a validation error or bail
-	return arr(x.ValidationErrors || ((x.statusCode === 422 && x.field) ? x : null)).filter(Boolean);
+	return arr(x.ValidationErrors || ((x.statusCode === 422 && x.field && !ALLOW_SERVER_MESSAGES[x.field]) ? x : null)).filter(Boolean);
 };
 
 const categorize = errors => arr(errors).reduce((acc, error) => {
