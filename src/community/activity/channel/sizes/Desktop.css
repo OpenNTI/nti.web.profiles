@@ -1,0 +1,10 @@
+.community-desktop {
+	max-width: 1024px;
+	margin: 0 auto;
+}
+
+.community-desktop-sidebar {
+	flex: 0 0 auto;
+	width: 334px;
+	margin-right: 10px;
+}

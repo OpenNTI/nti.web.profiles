@@ -14,13 +14,10 @@ const Queries = {
 };
 
 export default
-@Store.connect(['loading', 'channels', 'activeChannel', 'error'])
+@Store.connect(['loading', 'channels', 'error'])
 class CommunityActivityFrame extends React.Component {
 	static deriveBindingFromProps (props) {
-		return {
-			community: props.community,
-			activeChannelId: props.channelId
-		};
+		return props.community;
 	}
 
 	static propTypes = {
@@ -32,8 +29,7 @@ class CommunityActivityFrame extends React.Component {
 
 		loading: PropTypes.bool,
 		error: PropTypes.any,
-		channels: PropTypes.any,
-		activeChannel: PropTypes.object
+		channels: PropTypes.any
 	}
 
 
@@ -52,16 +48,16 @@ class CommunityActivityFrame extends React.Component {
 	renderMobile = () => this.renderSize(Sizes.Mobile)
 
 	renderSize (size) {
-		const {children, loading, error, ...otherProps} = this.props;
+		const {children, loading, error, channels, ...otherProps} = this.props;
 
 		if (error) {
 			return (<Error error={error} />);
 		}
 
 		return (
-			<Loading.Placeholder loading={loading} fallback={<Loading.Spinner large />}>
+			<Loading.Placeholder loading={loading || !channels} fallback={<Loading.Spinner large />}>
 				{React.Children.map(children, (child) => {
-					return React.cloneElement(child, {...otherProps});
+					return React.cloneElement(child, {size, channels, ...otherProps});
 				})}
 			</Loading.Placeholder>
 		);

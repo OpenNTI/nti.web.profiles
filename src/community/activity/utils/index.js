@@ -1,0 +1,1 @@
+export getFirstChannel from './get-first-channel';

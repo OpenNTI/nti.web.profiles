@@ -1,9 +1,20 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import {RedirectTo} from '@nti/web-routing';
 
-export default function CommunityChannels () {
+import {getFirstChannel} from '../utils';
+
+//TODO: figure out if we need to do the redirect for mobile, of if we want to show a list of channels
+
+CommunityChannels.propTypes = {
+	channels: PropTypes.oneOfType([PropTypes.array, PropTypes.object]).isRequired
+};
+export default function CommunityChannels ({channels}) {
+	const firstChannel = getFirstChannel(channels);
+
+	if (!firstChannel) { return null; }
+	
 	return (
-		<div>
-			Channels
-		</div>
+		<RedirectTo.Object object={firstChannel} />
 	);
 }

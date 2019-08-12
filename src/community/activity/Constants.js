@@ -3,3 +3,6 @@ export const Sizes = {
 	Tablet: 'tablet',
 	Mobile: 'mobile'
 };
+
+export const Grid = 'Grid';
+export const List = 'List';
