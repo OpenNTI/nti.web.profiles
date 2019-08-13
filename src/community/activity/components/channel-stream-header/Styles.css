@@ -38,7 +38,8 @@
 
 .sort-flyout {
 	color: var(--secondary-grey);
-	padding: 0 15px;
+	padding-left: 0.625rem;
+	min-width: 140px;
 	display: inline-flex;
 	flex-direction: row;
 	align-items: center;
@@ -63,7 +64,7 @@
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
-	padding: 0 10px;
+	padding: 0 0.625rem;
 	cursor: pointer;
 	opacity: 0.5;
 }
@@ -73,7 +74,7 @@
 }
 
 .layout .option:last-of-type {
-	padding-right: 17px;
+	padding-right: 1rem;
 }
 
 .layout .option:first-of-type {

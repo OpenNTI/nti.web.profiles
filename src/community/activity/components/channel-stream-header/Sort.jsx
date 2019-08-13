@@ -30,7 +30,6 @@ export default function Sort (props) {
 			trigger={trigger}
 			verticalAlign={Flyout.ALIGNMENTS.BOTTOM}
 			horizontalAlign={Flyout.ALIGNMENTS.LEFT}
-			sizing={Flyout.SIZES.MATCH_SIDE}
 		>
 			<SortMenu {...props} />
 		</Flyout.Triggered>
