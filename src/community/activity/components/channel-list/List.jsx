@@ -17,6 +17,7 @@ ChannelList.propTypes = {
 };
 export default function ChannelList ({list, activeChannel}) {
 	const {label, channels} = list;
+	const activeId = activeChannel && activeChannel.getID();
 
 	return (
 		<div className={cx('channel-list')}>
@@ -29,7 +30,7 @@ export default function ChannelList ({list, activeChannel}) {
 				{channels.map((channel) => {
 					return (
 						<li key={channel.getID()}>
-							<Item channel={channel} active={activeChannel.getID() === channel.getID()} />
+							<Item channel={channel} active={activeId === channel.getID()} />
 						</li>
 					);
 				})}

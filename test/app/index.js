@@ -6,7 +6,7 @@ import '@nti/style-common/variables.css';
 
 import Test from './community';
 
-window.$AppConfig = window.$AppConfig || {server: '/dataserver2/'};
+window.$AppConfig = window.$AppConfig || {server: '/dataserver2/', username: 'andrew.ligon'};
 
 
 // class Test extends React.Component {

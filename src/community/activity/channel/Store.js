@@ -2,6 +2,8 @@ import {Stores, Interfaces} from '@nti/lib-store';
 import {getAppUserScopedStorage} from '@nti/web-client';
 import {Array as arr} from '@nti/lib-commons';
 
+import {Grid} from '../Constants';
+
 
 function Storage () {
 	let storage;
@@ -46,8 +48,16 @@ class CommunityActivityChannelStore extends Stores.BoundStore {
 			return channelList.findChannel(channelId);
 		}, null);
 
+		const oldSort = this.get('sort');
+		const knownSorts = channel && channel.contentsDataSource && channel.contentsDataSource.getKnownParam('sortOn');
+
+		const sort = oldSort && knownSorts.indexOf(oldSort) >= 0 ? oldSort : knownSorts[0];
+
 		this.set({
-			channel
+			channel,
+			sort,
+			layout: this.get('layout') || Grid,
+			availableSorts: knownSorts
 		});
 	}
 
