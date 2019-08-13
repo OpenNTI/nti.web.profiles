@@ -1,8 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classnames from 'classnames/bind';
 import {Text} from '@nti/web-commons';
 
+import Styles from './Styles.css';
 import Item from './Item';
+
+const cx = classnames.bind(Styles);
 
 ChannelList.propTypes = {
 	list: PropTypes.shape({
@@ -15,9 +19,9 @@ export default function ChannelList ({list, activeChannel}) {
 	const {label, channels} = list;
 
 	return (
-		<div>
+		<div className={cx('channel-list')}>
 			{label && (
-				<Text.Base as="div">
+				<Text.Base as="div" className={cx('channel-header')}>
 					{label}
 				</Text.Base>
 			)}

@@ -1,6 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classnames from 'classnames/bind';
 import {LinkTo} from '@nti/web-routing';
+
+import Styles from './Styles.css';
+
+const cx = classnames.bind(Styles);
 
 ChannelListItem.propTypes = {
 	channel: PropTypes.shape({
@@ -8,9 +13,9 @@ ChannelListItem.propTypes = {
 	}),
 	active: PropTypes.bool
 };
-export default function ChannelListItem ({channel}) {
+export default function ChannelListItem ({channel, active}) {
 	return (
-		<LinkTo.Object object={channel}>
+		<LinkTo.Object object={channel} className={cx('channel', {active})}>
 			{channel.title}
 		</LinkTo.Object>
 	);
