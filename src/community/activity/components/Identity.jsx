@@ -1,9 +1,18 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-export default function CommunityIdentity () {
+
+CommunityIdentity.propTypes = {
+	community: PropTypes.shape({
+		displayName: PropTypes.string,
+		about: PropTypes.string
+	})
+};
+export default function CommunityIdentity ({community}) {
 	return (
 		<div>
-			Community Identity
+			<div>{community.displayName}</div>
+			<div>{community.about}</div>
 		</div>
 	);
 }

@@ -1,9 +1,13 @@
 import React from 'react';
 
-export default function CommunitySidebar () {
+import ChannelList from './channel-list';
+import Identity from './Identity';
+
+export default function CommunitySidebar (props) {
 	return (
 		<div>
-			Community Sidebar
+			<Identity {...props} />
+			<ChannelList {...props} />
 		</div>
 	);
 }

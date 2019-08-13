@@ -1,5 +1,6 @@
 import {Stores, Interfaces} from '@nti/lib-store';
 import {getAppUserScopedStorage} from '@nti/web-client';
+import {Array as arr} from '@nti/lib-commons';
 
 
 function Storage () {
@@ -37,7 +38,7 @@ class CommunityActivityChannelStore extends Stores.BoundStore {
 		const channels = this.channels = this.binding.channels;
 		const channelId = this.channelId = this.binding.channelId;
 
-		const channelLists = Array.isArray(channels) ? channels : [channels];
+		const channelLists = arr.ensure(channels);
 
 		const channel = channelLists.reduce((acc, channelList) => {
 			if (acc) { return acc;}
