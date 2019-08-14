@@ -12,6 +12,8 @@ import propTypes from './prop-types';
 const cx = classnames.bind(Styles);
 const {Aside} = Layouts;
 
+const BatchSize = 20;
+
 ChannelDesktopLayout.propTypes = propTypes;
 export default function ChannelDesktopLayout (props) {
 	const {
@@ -37,7 +39,7 @@ export default function ChannelDesktopLayout (props) {
 					setLayout={setLayout}
 					setSort={setSort}
 				/>
-				{channel && <ChannelStream channel={channel} sort={sort} layout={layout} />}
+				{channel && <ChannelStream channel={channel} sort={sort} layout={layout} batchSize={BatchSize} />}
 			</div>
 		</Aside.Container>
 	);
