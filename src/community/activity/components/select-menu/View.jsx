@@ -19,27 +19,33 @@ const t = scoped('nti-profile.community.activity.components.sort-menu.View', {
 });
 
 
-ChannelSortMenu.getSortDisplay = (sort) => t(`sortLabels.${sort}`);
-ChannelSortMenu.propTypes = {
-	sort: PropTypes.string,
-	setSort: PropTypes.func,
-	availableSorts: PropTypes.arrayOf(PropTypes.string)
+ChannelSelectMenu.getSortDisplay = (sort) => t(`sortLabels.${sort}`);
+ChannelSelectMenu.propTypes = {
+	header: PropTypes.string,
+
+	selected: PropTypes.string,
+	select: PropTypes.func,
+	options: PropTypes.arrayOf(
+		PropTypes.shape({
+			value: PropTypes.string,
+			label: PropTypes.string
+		})
+	)
 };
-export default function ChannelSortMenu ({sort, setSort, availableSorts}) {
+export default function ChannelSelectMenu ({header, selected, select, options}) {
 	return (
-		<div className={cx('sort-menu')}>
+		<div className={cx('select-menu')}>
 			<Text.Base className={cx('header')}>
 				{t('header')}
 			</Text.Base>
-			<ul className={cx('sort-menu')}>
-				{availableSorts.map((sortOption, index) => {
+			<ul>
+				{options.map((option, index) => {
 					return (
 						<li key={index}>
 							<Item
-								label={ChannelSortMenu.getSortDisplay(sortOption)}
-								sort={sortOption}
-								selected={sortOption === sort}
-								setSort={setSort}
+								option={option}
+								selected={selected === option.value}
+								select={select}
 							/>
 						</li>
 					);

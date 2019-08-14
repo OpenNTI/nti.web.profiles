@@ -1,12 +1,9 @@
 import React from 'react';
 
-import propTypes from './prop-types';
+import Mobile from './Mobile';
 
-ChannelTabletLayout.propTypes = propTypes;
-export default function ChannelTabletLayout () {
+export default function ChannelTabletLayout (props) {
 	return (
-		<div>
-			Tablet Channel
-		</div>
+		<Mobile {...props} />
 	);
 }

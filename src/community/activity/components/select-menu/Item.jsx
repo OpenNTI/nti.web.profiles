@@ -9,28 +9,30 @@ const cx = classnames.bind(Styles);
 
 export default class SortItem extends React.PureComponent {
 	static propTypes = {
-		label: PropTypes.string,
-		sort: PropTypes.string,
+		option: PropTypes.shape({
+			value: PropTypes.string,
+			label: PropTypes.string
+		}),
 		selected: PropTypes.bool,
-		setSort: PropTypes.func
+		select: PropTypes.func
 	}
 
-	onSelectSort = () => {
-		const {setSort, selected, sort} = this.props;
+	onSelect = () => {
+		const {select, selected, option} = this.props;
 
-		if (!selected && setSort) {
-			setSort(sort);
+		if (!selected && select) {
+			select(option.value);
 		}
 	}
 
 
 	render () {
-		const {label, selected} = this.props;
+		const {option, selected} = this.props;
 		
 		return (
-			<div className={cx('sort-menu-item', {selected})} onClick={this.onSelectSort}>
+			<div className={cx('select-menu-item', {selected})} onClick={this.onSelect}>
 				{selected && (<i className={cx('icon-check', 'check-mark')} />)}
-				<Text.Base className={cx('label')}>{label}</Text.Base>
+				<Text.Base className={cx('label')}>{option.label}</Text.Base>
 			</div>
 		);	
 	}

@@ -12,12 +12,20 @@ CommunityIdentity.propTypes = {
 	community: PropTypes.shape({
 		displayName: PropTypes.string,
 		about: PropTypes.string
-	})
+	}),
+	showOptions: PropTypes.func
 };
-export default function CommunityIdentity ({community, className}) {
+export default function CommunityIdentity ({community, className, showOptions}) {
 	return (
 		<div className={cx('community-identity', className)}>
-			<Text.Condensed as="div" className={cx('display-name')}>{community.displayName}</Text.Condensed>
+			<div className={cx('title')}>
+				<Text.Condensed as="div" className={cx('display-name')}>
+					{community.displayName}
+				</Text.Condensed>
+				{showOptions && (
+					<span className={cx('show-options')} onClick={showOptions} >...</span>
+				)}
+			</div>
 			<Text.Base as="div" className={cx('about')}>{community.about}</Text.Base>
 		</div>
 	);
