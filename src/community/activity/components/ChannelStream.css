@@ -1,0 +1,4 @@
+.channel-stream-empty :global(.empty-state-component) {
+	max-width: 450px;
+	margin: 0 auto;
+}

@@ -1,24 +1,28 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classnames from 'classnames/bind';
 import {scoped} from '@nti/lib-locale';
 import {Stream} from '@nti/web-discussions';
 import {EmptyState} from '@nti/web-commons';
 
+import Styles from './ChannelStream.css';
 import  Card from './Card';
 
+const cx = classnames.bind(Styles);
 const t = scoped('nti-profile.community.activity.components.ChannelStream', {
 	empty: 'There are no active discussions. Be the first to start one.'
 });
 
-const renderEmpty = () => (<Card><EmptyState header={t('empty')} /></Card>);
+const renderEmpty = () => (<Card className={cx('channel-stream-empty')}><EmptyState header={t('empty')} /></Card>);
 
 ChannelStream.propTypes = {
 	channel: PropTypes.object,
 	sort: PropTypes.string,
-	layout: PropTypes.string
+	layout: PropTypes.string,
+	batchSize: PropTypes.number
 };
-export default function ChannelStream ({channel, sort, layout}) {
+export default function ChannelStream ({channel, sort, layout, batchSize}) {
 	return (
-		<Stream.Body context={channel} sort={sort} layout={layout} renderEmpty={renderEmpty} />
+		<Stream.Body context={channel} sort={sort} layout={layout} renderEmpty={renderEmpty} batchSize={batchSize} />
 	);
 }
