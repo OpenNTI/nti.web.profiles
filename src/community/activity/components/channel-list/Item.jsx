@@ -15,7 +15,7 @@ ChannelListItem.propTypes = {
 };
 export default function ChannelListItem ({channel, active}) {
 	return (
-		<LinkTo.Object object={channel} className={cx('channel', {active})}>
+		<LinkTo.Object object={channel} className={cx('channel', {active})} data-title={channel.title}>
 			{channel.title}
 		</LinkTo.Object>
 	);

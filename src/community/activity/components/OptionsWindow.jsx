@@ -27,12 +27,8 @@ export default class OptionsWindow extends React.PureComponent {
 	}
 
 
-	setSort = (sort) => {
-		const {onDismiss, setSort} = this.props;
-
-		if (setSort) {
-			setSort(sort);
-		}
+	close = () => {
+		const {onDismiss} = this.props;
 
 		if (onDismiss) {
 			onDismiss();
@@ -40,16 +36,25 @@ export default class OptionsWindow extends React.PureComponent {
 	}
 
 
+	setSort = (sort) => {
+		const {setSort} = this.props;
+
+		if (setSort) {
+			setSort(sort);
+		}
+
+		this.close();
+	}
+
+
 	setLayout = (layout) => {
-		const {onDismiss, setLayout} = this.props;
+		const {setLayout} = this.props;
 
 		if (setLayout) {
 			setLayout(layout);
 		}
 
-		if (onDismiss) {
-			onDismiss();
-		}
+		this.close();
 	}
 
 	render () {
@@ -59,7 +64,7 @@ export default class OptionsWindow extends React.PureComponent {
 			<section className={cx('options-window', {fullscreen})}>
 				{fullscreen && (<LockScroll />)}
 				<div className={cx('header-bar')}>
-					<i className={cx('icon-light-x', 'close')} />
+					<i className={cx('icon-light-x', 'close')} onClick={this.close} />
 					<Text.Base className={cx('header')}>{t('header')}</Text.Base>
 					<span className={cx('gap')} />
 				</div>

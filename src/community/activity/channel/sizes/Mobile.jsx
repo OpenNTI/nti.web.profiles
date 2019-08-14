@@ -5,6 +5,7 @@ import {Prompt} from '@nti/web-commons';
 import Identity from '../../components/Identity';
 import OptionsWindow from '../../components/OptionsWindow';
 import ChannelStreamHeader from '../../components/channel-stream-header';
+import ChannelList from '../../components/channel-list';
 
 import Styles from './Mobile.css';
 import propTypes from './prop-types';
@@ -56,8 +57,11 @@ export default class ChannelMobileLayout extends React.Component {
 						/>
 					</Prompt.Dialog>
 				)}
-				<Identity community={community} channels={channels} channel={channel} showOptions={this.showOptions} />
-				<ChannelStreamHeader className={cx('mobile-channel-header')} channel={channel} />
+				<div className={cx('header')}>
+					<Identity community={community} showOptions={this.showOptions} />
+					<ChannelList channels={channels} channel={channel} row />
+					<ChannelStreamHeader className={cx('mobile-channel-header')} channel={channel} />
+				</div>
 			</div>
 		);
 	}
