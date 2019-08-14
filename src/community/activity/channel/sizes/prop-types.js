@@ -10,5 +10,6 @@ export default {
 	sort: PropTypes.string,
 	setSort: PropTypes.func,
 	layout: PropTypes.string,
-	setLayout: PropTypes.func
+	setLayout: PropTypes.func,
+	size: PropTypes.string
 };

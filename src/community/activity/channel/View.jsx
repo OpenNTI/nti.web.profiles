@@ -27,7 +27,7 @@ class CommunityChannel extends React.Component {
 		const Cmp = Sizes[size];
 
 		return (
-			<Cmp {...otherProps} />
+			<Cmp {...otherProps} size={size} />
 		);
 	}
 }

@@ -19,10 +19,18 @@ ChannelStream.propTypes = {
 	channel: PropTypes.object,
 	sort: PropTypes.string,
 	layout: PropTypes.string,
+	columns: PropTypes.number,
 	batchSize: PropTypes.number
 };
-export default function ChannelStream ({channel, sort, layout, batchSize}) {
+export default function ChannelStream ({channel, sort, layout, batchSize, columns}) {
 	return (
-		<Stream.Body context={channel} sort={sort} layout={layout} renderEmpty={renderEmpty} batchSize={batchSize} />
+		<Stream.Body
+			context={channel}
+			sort={sort}
+			layout={layout}
+			renderEmpty={renderEmpty}
+			columns={columns}
+			batchSize={batchSize}
+		/>
 	);
 }

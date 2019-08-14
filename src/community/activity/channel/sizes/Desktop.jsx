@@ -39,7 +39,15 @@ export default function ChannelDesktopLayout (props) {
 					setLayout={setLayout}
 					setSort={setSort}
 				/>
-				{channel && <ChannelStream channel={channel} sort={sort} layout={layout} batchSize={BatchSize} />}
+				{channel && (
+					<ChannelStream
+						channel={channel}
+						sort={sort}
+						layout={layout}
+						batchSize={BatchSize}
+						columns={2}
+					/>
+				)}
 			</div>
 		</Aside.Container>
 	);
