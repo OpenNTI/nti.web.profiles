@@ -4,6 +4,7 @@ import {Layouts} from '@nti/web-commons';
 
 import Sidebar from '../../components/Sidebar';
 import ChannelStreamHeader from '../../components/channel-stream-header';
+import ChannelStream from '../../components/ChannelStream';
 
 import Styles from './Desktop.css';
 import propTypes from './prop-types';
@@ -36,6 +37,7 @@ export default function ChannelDesktopLayout (props) {
 					setLayout={setLayout}
 					setSort={setSort}
 				/>
+				{channel && <ChannelStream channel={channel} sort={sort} layout={layout} />}
 			</div>
 		</Aside.Container>
 	);
