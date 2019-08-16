@@ -7,6 +7,8 @@ import PropTypes from 'prop-types';
 export default {
 	community: PropTypes.object,
 	channel: PropTypes.object,
+	topicId: PropTypes.string,
+	commentId: PropTypes.string,
 	sort: PropTypes.string,
 	setSort: PropTypes.func,
 	layout: PropTypes.string,

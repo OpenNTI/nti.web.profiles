@@ -18,6 +18,7 @@ class CommunityChannel extends React.Component {
 	static propTypes = {
 		channels: PropTypes.oneOfType([PropTypes.object, PropTypes.array]).isRequired,
 		channelId: PropTypes.string.isRequired,
+		topicId: PropTypes.string,
 		size: PropTypes.string
 	}
 
