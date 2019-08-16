@@ -1,6 +1,7 @@
 .community-sidebar {
 	background: white;
 	position: sticky;
+	overflow: hidden;
 	top: var(--community-sidebar-top-offset, 0px);
 
 	--side-padding: 1rem;

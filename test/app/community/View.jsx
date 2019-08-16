@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {getService} from '@nti/web-client';
 import {Router, Route} from '@nti/web-routing';
 
-import Community from '../../../src/community/';
+import * as Community from '../../../src/community/';
 
 import PickCourse from './PickCourse';
 
@@ -43,7 +43,7 @@ class CommunityTestWrapper extends React.Component {
 		if (!community) { return null; }
 
 		return (
-			<Community community={community} />
+			<Community.View community={community} />
 		);
 	}
 }
