@@ -20,7 +20,7 @@ export default function ChannelList ({list, activeChannel}) {
 	const activeId = activeChannel && activeChannel.getID();
 
 	return (
-		<div className={cx('channel-list')}>
+		<div className={cx('channel-list', {'has-label': !!label})}>
 			{label && (
 				<Text.Base as="div" className={cx('channel-header')}>
 					{label}
