@@ -1,0 +1,21 @@
+.no-group-item-list li,
+li.group {
+	border-radius: 3px;
+	margin-bottom: 0.625rem;
+	overflow: hidden;
+	box-shadow: 0 1px 3px 0 rgba(0,0,0,0.25);
+}
+
+
+.group-label {
+	background-color: var(--panel-background);
+	font-size: 0.875rem;
+	font-weight: 600;
+	line-height: 2;
+	color: var(--primary-grey);
+	padding: 0 var(--side-padding, 1rem);
+}
+
+.group-item-list li:not(:last-of-type) {
+	border-bottom: 1px solid var(--border-grey-light);
+}

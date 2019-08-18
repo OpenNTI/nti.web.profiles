@@ -7,6 +7,7 @@ import {EmptyState} from '@nti/web-commons';
 
 import Styles from './ChannelStream.css';
 import  Card from './Card';
+import {getGrouperForSort} from './Groupers';
 
 const cx = classnames.bind(Styles);
 const t = scoped('nti-profile.community.activity.components.ChannelStream', {
@@ -14,6 +15,11 @@ const t = scoped('nti-profile.community.activity.components.ChannelStream', {
 });
 
 const renderEmpty = () => (<Card className={cx('channel-stream-empty')}><EmptyState header={t('empty')} /></Card>);
+
+const SortOrders = {
+	'CreatedTime': 'DESC',
+	'NewestDescendantCreatedTime': 'DESC'
+};
 
 ChannelStream.propTypes = {
 	channel: PropTypes.object,
@@ -23,14 +29,18 @@ ChannelStream.propTypes = {
 	batchSize: PropTypes.number
 };
 export default function ChannelStream ({channel, sort, layout, batchSize, columns}) {
+	const grouperProps = getGrouperForSort(sort);
+
 	return (
 		<Stream.Body
 			context={channel}
 			sort={sort}
+			sortOrder={SortOrders[sort]}
 			layout={layout}
 			renderEmpty={renderEmpty}
 			columns={columns}
 			batchSize={batchSize}
+			{...grouperProps}
 		/>
 	);
 }

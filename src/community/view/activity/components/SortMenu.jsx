@@ -7,7 +7,7 @@ import SelectMenu from './select-menu';
 const t = scoped('nti-profile.community.activity.components.SortMenu', {
 	header: 'Sort By',
 	sortLabels: {
-		'createdTime': 'Most Recent',
+		'CreatedTime': 'Most Recent',
 		'NewestDescendantCreatedTime': 'Recent Activity',
 		'PostCount': 'Comment Count',
 		'LikeCount': 'Like Count'
