@@ -7,9 +7,15 @@ export default Router.for([
 	Route({
 		path: '/:topicId?/:commentId?',
 		component: View,
-		getRouteFor: (obj) => {
+		getRouteFor: (obj, context) => {
+			const hash = context === 'comment' ? '#comment' : '';
+
 			if (obj.isTopic) {
-				return `./${encodeForURI(obj.getID())}`;
+				return `./${encodeForURI(obj.getID())}${hash}`;
+			}
+
+			if (obj.isComment) {
+				return `./${encodeForURI(obj.ContainerId)}/${encodeForURI(obj.getID())}`;
 			}
 		}
 	})
