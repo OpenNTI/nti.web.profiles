@@ -28,6 +28,7 @@ export default function ChannelDesktopLayout (props) {
 		setSort,
 		topicId,
 		commentId,
+		topicWindowClassName,
 		...otherProps
 	} = props;
 
@@ -53,7 +54,7 @@ export default function ChannelDesktopLayout (props) {
 					/>
 				)}
 				{topicId && channel && (
-					<Prompt.Dialog className="community-topic-dialog">
+					<Prompt.Dialog className={cx('community-topic-dialog', topicWindowClassName)}>
 						<Topic
 							channel={channel}
 							topicId={topicId}

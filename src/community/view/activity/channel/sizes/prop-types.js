@@ -13,5 +13,7 @@ export default {
 	setSort: PropTypes.func,
 	layout: PropTypes.string,
 	setLayout: PropTypes.func,
-	size: PropTypes.string
+	size: PropTypes.string,
+
+	topicWindowClassName: PropTypes.string
 };

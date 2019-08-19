@@ -28,11 +28,11 @@ class ChannelActivityTopic extends React.Component {
 
 
 	render () {
-		const {loading, overrides, topic, ...otherProps} = this.props;
-
-		if (loading || !topic) { return null;}
+		const {overrides, topic, ...otherProps} = this.props;
 
 		const Cmp = overrides ? overrides.getItemFor(topic) : null;
+
+		if (!Cmp) { return null; }
 
 		return (
 			<Cmp topic={topic} {...otherProps} />
