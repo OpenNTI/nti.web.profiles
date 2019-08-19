@@ -31,7 +31,7 @@ function Storage () {
 }
 
 export default
-@Interfaces.Stateful('nti-community-activity-channel', ['sort', 'layout'], Storage())
+@Interfaces.Stateful('nti-community-activity-channel', ['sortOn', 'layout'], Storage())
 class CommunityActivityChannelStore extends Stores.BoundStore {
 	load () {
 		//if nothing changed, don't do anything
@@ -48,22 +48,22 @@ class CommunityActivityChannelStore extends Stores.BoundStore {
 			return channelList.findChannel(channelId);
 		}, null);
 
-		const oldSort = this.get('sort');
+		const oldSort = this.get('sortOn');
 		const knownSorts = channel && channel.contentsDataSource && channel.contentsDataSource.getKnownParam('sortOn');
 
-		const sort = oldSort && knownSorts.indexOf(oldSort) >= 0 ? oldSort : knownSorts[0];
+		const sortOn = oldSort && knownSorts.indexOf(oldSort) >= 0 ? oldSort : knownSorts[0];
 
 		this.set({
 			channel,
-			sort,
+			sortOn,
 			layout: this.get('layout') || Grid,
 			availableSorts: knownSorts
 		});
 	}
 
 
-	setSort (sort) {
-		this.set({sort});
+	setSortOn (sortOn) {
+		this.set({sortOn});
 	}
 
 

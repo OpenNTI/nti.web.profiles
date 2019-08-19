@@ -6,7 +6,7 @@ import Store from './Store';
 import Sizes from './sizes';
 
 export default
-@Store.connect(['channel', 'sort', 'setSort', 'layout', 'setLayout', 'availableSorts'])
+@Store.connect(['channel', 'sortOn', 'setSortOn', 'layout', 'setLayout', 'availableSorts'])
 class CommunityChannel extends React.Component {
 	static deriveBindingFromProps (props) {
 		return {

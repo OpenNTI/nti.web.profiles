@@ -10,17 +10,17 @@ import Styles from './Styles.css';
 const cx = classnames.bind(Styles);
 
 Sort.propTypes = {
-	sort: PropTypes.string,
+	sortOn: PropTypes.string,
 	availableSorts: PropTypes.arrayOf(PropTypes.string)
 };
 export default function Sort (props) {
-	const {sort, availableSorts} = props;
+	const {sortOn, availableSorts} = props;
 
 	if (!availableSorts || !availableSorts.length) { return null; }
 
 	const trigger = (
 		<div className={cx('sort-flyout')}>
-			<Text.Base className={cx('label')}>{SortMenu.getSortDisplay(sort)}</Text.Base>
+			<Text.Base className={cx('label')}>{SortMenu.getSortDisplay(sortOn)}</Text.Base>
 			<i className={cx('icon', 'icon-chevron-down-10')} />
 		</div>
 	);

@@ -24,8 +24,8 @@ export default function ChannelDesktopLayout (props) {
 		layout,
 		setLayout,
 		availableSorts,
-		sort,
-		setSort,
+		sortOn,
+		setSortOn,
 		topicId,
 		commentId,
 		topicWindowClassName,
@@ -40,14 +40,14 @@ export default function ChannelDesktopLayout (props) {
 					channel={channel}
 					availableSorts={availableSorts}
 					layout={layout}
-					sort={sort}
+					sortOn={sortOn}
 					setLayout={setLayout}
-					setSort={setSort}
+					setSortOn={setSortOn}
 				/>
 				{channel && (
 					<ChannelStream
 						channel={channel}
-						sort={sort}
+						sortOn={sortOn}
 						layout={layout}
 						batchSize={BatchSize}
 						columns={2}

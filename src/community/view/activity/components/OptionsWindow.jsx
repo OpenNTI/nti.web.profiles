@@ -22,8 +22,8 @@ export default class OptionsWindow extends React.PureComponent {
 		setLayout: PropTypes.func,
 
 		availableSorts: PropTypes.arrayOf(PropTypes.string),
-		sort: PropTypes.string,
-		setSort: PropTypes.func
+		sortOn: PropTypes.string,
+		setSortOn: PropTypes.func
 	}
 
 
@@ -36,11 +36,11 @@ export default class OptionsWindow extends React.PureComponent {
 	}
 
 
-	setSort = (sort) => {
-		const {setSort} = this.props;
+	setSortOn = (sortOn) => {
+		const {setSortOn} = this.props;
 
-		if (setSort) {
-			setSort(sort);
+		if (setSortOn) {
+			setSortOn(sortOn);
 		}
 
 		this.close();
@@ -58,7 +58,7 @@ export default class OptionsWindow extends React.PureComponent {
 	}
 
 	render () {
-		const {fullscreen, layout, sort, availableSorts} = this.props;
+		const {fullscreen, layout, sortOn, availableSorts} = this.props;
 
 		return (
 			<section className={cx('options-window', {fullscreen})}>
@@ -69,7 +69,7 @@ export default class OptionsWindow extends React.PureComponent {
 					<span className={cx('gap')} />
 				</div>
 				<LayoutMenu layout={layout} setLayout={this.setLayout} />
-				<SortMenu sort={sort} availableSorts={availableSorts} setSort={this.setSort} />
+				<SortMenu sortOn={sortOn} availableSorts={availableSorts} setSortOn={this.setSortOn} />
 			</section>
 		);
 	}

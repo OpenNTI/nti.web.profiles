@@ -17,25 +17,27 @@ const t = scoped('nti-profile.community.activity.components.ChannelStream', {
 const renderEmpty = () => (<Card className={cx('channel-stream-empty')}><EmptyState header={t('empty')} /></Card>);
 
 const SortOrders = {
-	'CreatedTime': 'DESC',
-	'NewestDescendantCreatedTime': 'DESC'
+	'createdTime': 'descending',
+	'NewestDescendantCreatedTime': 'descending',
+	'PostCount': 'descending',
+	'LikeCount': 'descending'
 };
 
 ChannelStream.propTypes = {
 	channel: PropTypes.object,
-	sort: PropTypes.string,
+	sortOn: PropTypes.string,
 	layout: PropTypes.string,
 	columns: PropTypes.number,
 	batchSize: PropTypes.number
 };
-export default function ChannelStream ({channel, sort, layout, batchSize, columns}) {
-	const grouperProps = getGrouperForSort(sort);
+export default function ChannelStream ({channel, sortOn, layout, batchSize, columns}) {
+	const grouperProps = getGrouperForSort(sortOn);
 
 	return (
 		<Stream.Body
 			context={channel}
-			sort={sort}
-			sortOrder={SortOrders[sort]}
+			sortOn={sortOn}
+			sortOrder={SortOrders[sortOn]}
 			layout={layout}
 			renderEmpty={renderEmpty}
 			columns={columns}

@@ -39,8 +39,8 @@ export default class ChannelMobileLayout extends React.Component {
 			layout,
 			setLayout,
 			availableSorts,
-			sort,
-			setSort,
+			sortOn,
+			setSortOn,
 			size
 		} = this.props;
 		const {showOptions} = this.state;
@@ -55,8 +55,8 @@ export default class ChannelMobileLayout extends React.Component {
 							layout={layout}
 							setLayout={setLayout}
 							availableSorts={availableSorts}
-							sort={sort}
-							setSort={setSort}
+							sortOn={sortOn}
+							setSortOn={setSortOn}
 						/>
 					</Prompt.Dialog>
 				)}
@@ -68,7 +68,7 @@ export default class ChannelMobileLayout extends React.Component {
 				{channel && (
 					<ChannelStream
 						channel={channel}
-						sort={sort}
+						sortOn={sortOn}
 						layout={layout}
 						batchSize={10}
 						columns={size === Sizes.Tablet ? 2 : 1}

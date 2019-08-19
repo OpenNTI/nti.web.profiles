@@ -7,7 +7,7 @@ import SelectMenu from './select-menu';
 const t = scoped('nti-profile.community.activity.components.SortMenu', {
 	header: 'Sort By',
 	sortLabels: {
-		'CreatedTime': 'Most Recent',
+		'createdTime': 'Most Recent',
 		'NewestDescendantCreatedTime': 'Recent Activity',
 		'PostCount': 'Comment Count',
 		'LikeCount': 'Like Count'
@@ -17,11 +17,11 @@ const t = scoped('nti-profile.community.activity.components.SortMenu', {
 
 ChannelSortMenu.getSortDisplay = (sort) => t(`sortLabels.${sort}`);
 ChannelSortMenu.propTypes = {
-	sort: PropTypes.string,
-	setSort: PropTypes.func,
+	sortOn: PropTypes.string,
+	setSortOn: PropTypes.func,
 	availableSorts: PropTypes.arrayOf(PropTypes.string)
 };
-export default function ChannelSortMenu ({sort, setSort, availableSorts}) {
+export default function ChannelSortMenu ({sortOn, setSortOn, availableSorts}) {
 	if (!availableSorts || !availableSorts.length) { return null; }
 
 	const options = availableSorts.map((value) => ({label: ChannelSortMenu.getSortDisplay(value), value}));
@@ -30,8 +30,8 @@ export default function ChannelSortMenu ({sort, setSort, availableSorts}) {
 		<SelectMenu
 			header={t('header')}
 			options={options}
-			selected={sort}
-			select={setSort}
+			selected={sortOn}
+			select={setSortOn}
 		/>
 	);
 }
