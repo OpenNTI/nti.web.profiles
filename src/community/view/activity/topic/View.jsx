@@ -15,6 +15,10 @@ class ChannelActivityTopic extends React.Component {
 	}
 
 	static propTypes = {
+		location: PropTypes.shape({
+			hash: PropTypes.string
+		}),
+
 		channel: PropTypes.object,
 		topicId: PropTypes.string,
 		overrides: PropTypes.shape({
@@ -26,16 +30,23 @@ class ChannelActivityTopic extends React.Component {
 		error: PropTypes.any
 	}
 
+	get focusComment () {
+		const {location} = this.props;
+
+		return location && location.hash === '#comment';
+	}
+
 
 	render () {
 		const {overrides, topic, ...otherProps} = this.props;
+
 
 		const Cmp = overrides ? overrides.getItemFor(topic) : null;
 
 		if (!Cmp) { return null; }
 
 		return (
-			<Cmp topic={topic} {...otherProps} />
+			<Cmp topic={topic} focusComment={this.focusComment} {...otherProps} />
 		);
 	}
 }
