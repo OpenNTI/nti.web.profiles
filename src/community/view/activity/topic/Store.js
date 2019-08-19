@@ -13,6 +13,14 @@ export default class CommunityActivityTopic extends Stores.BoundStore {
 		this.channel = this.binding.channel;
 		const topicId = this.topicId = this.binding.topicId;
 
+		if (topicId === 'new-topic') {
+			this.set({
+				topic: {isTopic: true, isNewTopic: true}
+			});
+
+			return;
+		}
+
 		this.set({
 			loading: true
 		});

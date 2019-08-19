@@ -10,7 +10,7 @@ class ChannelActivityTopic extends React.Component {
 	static deriveBindingFromProps (props) {
 		return {
 			channel: props.channel,
-			topicId: decodeFromURI(props.topicId)
+			topicId: props.topicId === 'new-topic' ? props.topicId : decodeFromURI(props.topicId)
 		};
 	}
 

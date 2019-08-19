@@ -10,6 +10,10 @@ export default Router.for([
 		getRouteFor: (obj, context) => {
 			const hash = context === 'comment' ? '#comment' : '';
 
+			if (obj.isNewTopic) {
+				return './new-topic';
+			}
+
 			if (obj.isTopic) {
 				return `./${encodeForURI(obj.getID())}${hash}`;
 			}
