@@ -17,7 +17,7 @@ const t = scoped('nti-profiles.community.edit.form.View', {
 });
 
 export default
-@Store.monitor(['save', 'cance'])
+@Store.monitor(['save', 'cancel'])
 class CommunityEditForm extends React.Component {
 	static propTypes = {
 		save: PropTypes.func,

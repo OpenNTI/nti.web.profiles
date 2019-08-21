@@ -90,6 +90,8 @@ export default class CommunityEditStore extends Stores.BoundStore {
 	}
 
 	cancel () {
-		debugger;
+		if (this.binding.onCancel) {
+			this.binding.onCancel();
+		}
 	}
 }
