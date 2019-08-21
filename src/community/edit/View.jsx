@@ -5,6 +5,7 @@ import {Loading, Error} from '@nti/web-commons';
 
 import Styles from './View.css';
 import Store from './Store';
+import Form from './form';
 
 const cx = classnames.bind(Styles);
 
@@ -13,7 +14,9 @@ export default
 class CommunityEditor extends React.Component {
 	static deriveBindingFromProps (props) {
 		return {
-			community: props.community
+			community: props.community,
+			afterSave: props.afterSave,
+			onCancel: props.onCancel
 		};
 	}
 
@@ -28,17 +31,13 @@ class CommunityEditor extends React.Component {
 
 
 	render () {
-		const {loading, error} = this.props;
+		const {loading, error, ...otherProps} = this.props;
 
 		return (
 			<div className={cx('community-editor')}>
 				<Loading.Placeholder loading={loading} fallback={(<Loading.Spinner.Large />)}>
 					{error && (<Error error={error} />)}
-					{!error && (
-						<div>
-							Community Editor
-						</div>
-					)}
+					{!error && (<Form {...otherProps} />)}
 				</Loading.Placeholder>
 			</div>
 		);
