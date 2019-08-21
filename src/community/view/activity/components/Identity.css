@@ -15,10 +15,25 @@
 	line-height: 1.3;
 	font-weight: 600;
 	color: var(--primary-grey);
-	margin-bottom: 0.625rem;
+}
+
+.edit {
+	color: var(--secondary-grey);
+	cursor: pointer;
+}
+
+.edit-label,
+.edit-icon {
+	vertical-align: middle;
+}
+
+.edit-label {
+	font-size: 0.875rem;
+	font-weight: 600;
 }
 
 .about {
+	margin-top: 0.625rem;
 	color: var(--primary-grey);
 	line-height: 1.3;
 }
