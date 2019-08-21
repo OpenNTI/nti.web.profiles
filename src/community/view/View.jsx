@@ -9,3 +9,4 @@ export default Router.for([
 		component: Activity
 	})
 ], {frame: Frame});
+	
