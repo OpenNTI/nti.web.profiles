@@ -14,7 +14,7 @@ export default Router.for([
 				return './new-topic';
 			}
 
-			if (obj.isTopic) {
+			if (obj.isTopic || obj.isNote) {
 				return `./${encodeForURI(obj.getID())}${hash}`;
 			}
 
