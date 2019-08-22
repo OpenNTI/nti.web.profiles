@@ -26,4 +26,6 @@ export default class ChannelListStore extends Stores.BoundStore {
 	cleanup () {
 		if (this.binding.unregister) { this.binding.unregister(this); }
 	}
+
+	save () {}
 }

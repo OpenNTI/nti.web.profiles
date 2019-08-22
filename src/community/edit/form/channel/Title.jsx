@@ -17,7 +17,7 @@ export default
 class TitleInput extends React.Component {
 	static propTypes = {
 		value: PropTypes.string,
-		onChange: PropTypes.string,
+		onChange: PropTypes.func,
 		error: PropTypes.any,
 		readOnly: PropTypes.bool
 	}

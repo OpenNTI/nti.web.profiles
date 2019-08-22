@@ -29,8 +29,22 @@ export default class CommunityStore extends Stores.BoundStore {
 		const displayName = this.get('displayName');
 		const about = this.get('about');
 
+		let toSave = null;
+
+		if (displayName !== community.displayName) {
+			toSave = toSave || {};
+			toSave.displayName = displayName;
+		}
+
+		if (about !== community.about) {
+			toSave = toSave || {};
+			toSave.about = about;
+		}
+
+		if (!toSave) { return; }
+
 		try {
-			await community.save({displayName, about});
+			await community.save(toSave);
 		} catch (e) {
 			if (e.field === 'displayName') { this.set({displayNameError: e}); }
 			if (e.field === 'about') { this.set({about: e}); }

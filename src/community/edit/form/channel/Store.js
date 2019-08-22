@@ -26,7 +26,7 @@ export default class ChannelFieldStore extends Stores.BoundStore {
 	}
 
 	setTitle (title) {
-		this.setImmediate({title, tittleError: null});
+		this.setImmediate({title, titleError: null});
 	}
 
 	setDescription (description) {
@@ -39,5 +39,39 @@ export default class ChannelFieldStore extends Stores.BoundStore {
 		});
 	}
 
-	save () {}
+	async save () {
+		const {channel} = this.binding;
+		const deleted = this.get('deleted');
+
+		if (deleted) {
+			//TODO: fill this int
+			return;
+		}
+
+		const title = this.get('title');
+		const description = this.get('description');
+
+		let toSave = null;
+
+		if (title !== channel.title) {
+			toSave = toSave || {};
+			toSave.title = title; 
+		}
+
+		if (description !== channel.description) {
+			toSave = toSave || {};
+			toSave.description = description;
+		}
+
+		if (!toSave) { return; }
+
+		try {
+			await channel.save(toSave);
+		} catch (e) {
+			if (e.field === 'title') { this.set({titleError: e}); }
+			if (e.field === 'description') { this.set({descriptionError: e}); }
+
+			throw e;
+		}
+	}
 }
