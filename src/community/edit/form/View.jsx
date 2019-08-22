@@ -9,6 +9,7 @@ import Store from '../Store';
 import Styles from './Style.css';
 import About from './About';
 import DisplayName from './DisplayName';
+import Channels from './channels';
 
 const cx = classnames.bind(Styles);
 const t = scoped('nti-profiles.community.edit.form.View', {
@@ -50,6 +51,7 @@ class CommunityEditForm extends React.Component {
 				<div className={cx('form-body')}>
 					<DisplayName {...otherProps} />
 					<About {...otherProps} />
+					<Channels {...otherProps} />
 				</div>
 				<DialogButtons buttons={buttons} />
 			</form>
