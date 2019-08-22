@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
+import {scoped} from '@nti/lib-locale';
 import {Text} from '@nti/web-commons';
 
 import FormStore from '../../Store';
@@ -10,6 +11,9 @@ import Styles from './Style.css';
 import ChannelListStore from './Store';
 
 const cx = classnames.bind(Styles);
+const t = scoped('nti-profiles.community.edit.form.channel-list.View', {
+	channels: 'Channels'
+});
 
 export default
 @FormStore.monitor(['register', 'unregister'])
@@ -30,6 +34,7 @@ class ChannelListField extends React.Component {
 
 	static propTypes = {
 		channelList: PropTypes.object,
+		only: PropTypes.bool,
 
 		pinnedChannels: PropTypes.array,
 		sortableChannels: PropTypes.array
@@ -37,16 +42,16 @@ class ChannelListField extends React.Component {
 
 
 	render () {
-		const {channelList, pinnedChannels, sortableChannels} = this.props;
+		const {channelList, only, pinnedChannels, sortableChannels} = this.props;
 
 		if (!channelList) { return null; }
 
-		// const {label} = channelList;
-		const label = 'Label';
+		const {label} = channelList;
+		const display = label || (only ? t('channels') : '');
 
 		return (
 			<div className={cx('channel-list')}>
-				{label && (<Text.Base className={cx('label')}>{label}</Text.Base>)}
+				{display && (<Text.Base className={cx('label')}>{display}</Text.Base>)}
 				{this.renderPinned(pinnedChannels)}
 				{this.renderSortable(sortableChannels)}
 			</div>

@@ -53,7 +53,7 @@ class CommunityEditForm extends React.Component {
 					<div className={cx('channel-lists')}>
 						{(channelList || []).map((list) => {
 							return (
-								<ChannelList key={list.getID()} channelList={list} />
+								<ChannelList key={list.getID()} channelList={list} only={channelList.length === 1} />
 							);
 						})}
 					</div>
