@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 
-import FormStore from '../../Store';
+import ChannelListStore from '../channel-list/Store';
 
 import Styles from './Style.css';
 import ChannelStore from './Store';
@@ -14,7 +14,7 @@ import Delete from './Delete';
 const cx = classnames.bind(Styles);
 
 export default
-@FormStore.monitor(['register', 'unregister'])
+@ChannelListStore.monitor(['register', 'unregister'])
 @ChannelStore.connect(['deleted'])
 class ChannelFields extends React.Component {
 	static deriveBindingFromProps (props) {

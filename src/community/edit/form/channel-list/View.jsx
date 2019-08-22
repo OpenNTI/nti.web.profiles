@@ -9,6 +9,7 @@ import Channel from '../channel';
 
 import Styles from './Style.css';
 import ChannelListStore from './Store';
+import CreateChannel from './CreateChannel';
 
 const cx = classnames.bind(Styles);
 const t = scoped('nti-profiles.community.edit.form.channel-list.View', {
@@ -54,6 +55,7 @@ class ChannelListField extends React.Component {
 				{display && (<Text.Base className={cx('label')}>{display}</Text.Base>)}
 				{this.renderPinned(pinnedChannels)}
 				{this.renderSortable(sortableChannels)}
+				<CreateChannel />
 			</div>
 		);
 	}

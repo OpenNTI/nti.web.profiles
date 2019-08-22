@@ -3,8 +3,9 @@ import {Stores} from '@nti/lib-store';
 export default class ChannelFieldStore extends Stores.BoundStore {
 	load () {
 		if (this.binding.register) { this.binding.register(this); }
+		if (this.channel && this.binding.channel === this.channel) { return; }
 
-		const {channel} = this.binding;
+		const channel = this.channel = this.binding.channel;
 
 		this.set({
 			pinned: channel.pinned,
@@ -34,9 +35,16 @@ export default class ChannelFieldStore extends Stores.BoundStore {
 	}
 
 	delete () {
-		this.set({
-			deleted: true
-		});
+		const {channel} = this.binding;
+
+		if (channel.immediateDelete) {
+			channel.immediateDelete();
+		} else {
+			this.set({
+				deleted: true
+			});
+		}
+
 	}
 
 	async save () {
