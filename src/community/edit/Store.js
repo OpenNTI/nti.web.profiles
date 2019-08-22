@@ -59,7 +59,7 @@ export default class CommunityEditStore extends Stores.BoundStore {
 
 		try {
 			await Promise.all(
-				stores.map(store => store.save())
+				stores.map(store => callSaveSafely(store))
 			);
 
 			if (this.binding.afterSave) {
@@ -73,5 +73,15 @@ export default class CommunityEditStore extends Stores.BoundStore {
 
 	cancel () {
 
+	}
+}
+
+async function callSaveSafely (store) {
+	try {
+		const resp = await store.save();
+
+		return resp;
+	} catch (e) {
+		return null;
 	}
 }
