@@ -46,7 +46,7 @@ const noGrouper = {
 const getGroupInfo = (label) => ({label, className: cx('group'), itemListClassName: cx('group-item-list'), labelClassName: cx('group-label')});
 
 const SortToGrouper = {
-	CreatedTime: {
+	createdTime: {
 		grouper: (obj) => {
 			const created = new Date(obj.getCreatedTime());
 
