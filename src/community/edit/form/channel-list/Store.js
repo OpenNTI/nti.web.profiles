@@ -44,7 +44,7 @@ export default class ChannelListStore extends Stores.BoundStore {
 			[NewChannel]: true,
 			getID: () => id,
 			getSavedChannel: () => savedChannel,
-			getWasDeleted: () => deleted,
+			get wasDeleted () { return deleted; },
 
 			//Mock data
 			title: '',
@@ -80,6 +80,8 @@ export default class ChannelListStore extends Stores.BoundStore {
 		const sortable = this.get('sortableChannels');
 
 		const order = ([...pinned, ...sortable]).reduce((acc, channel) => {
+			if (channel.wasDeleted) { return acc; }
+
 			if (channel[NewChannel]) {
 				const saved = channel.getSavedChannel();
 

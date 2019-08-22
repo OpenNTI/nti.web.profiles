@@ -35,25 +35,17 @@ export default class ChannelFieldStore extends Stores.BoundStore {
 	}
 
 	delete () {
-		const {channel} = this.binding;
-
-		if (channel.immediateDelete) {
-			channel.immediateDelete();
-		} else {
-			this.set({
-				deleted: true
-			});
-		}
-
+		this.setImmediate({
+			deleted: true
+		});
 	}
 
 	async save () {
-		const {channel} = this.binding;
+		const {channel} = this;
 		const deleted = this.get('deleted');
 
 		if (deleted) {
-			//TODO: fill this int
-			return;
+			return this.deleteChannel();
 		}
 
 		const title = this.get('title');
@@ -79,6 +71,20 @@ export default class ChannelFieldStore extends Stores.BoundStore {
 			if (e.field === 'title') { this.set({titleError: e}); }
 			if (e.field === 'description') { this.set({descriptionError: e}); }
 
+			throw e;
+		}
+	}
+
+
+	async deleteChannel () {
+		const {channel} = this;
+
+		if (channel.wasDeleted) { return; }
+
+		try {
+			await channel.delete();
+		} catch (e) {
+			this.set({titleError: e});
 			throw e;
 		}
 	}

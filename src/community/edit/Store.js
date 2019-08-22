@@ -58,11 +58,13 @@ export default class CommunityEditStore extends Stores.BoundStore {
 		const stores = Array.from(this.subStores);
 
 		try {
-			const {status} = await Promise.allSettled(
+			const result = await Promise.allSettled(
 				stores.map(store => store.save())
 			);
 
-			if (status === 'fulfilled' && this.binding.afterSave) {
+			const success = result.every(r => r.status === 'fulfilled');
+
+			if (success && this.binding.afterSave) {
 				this.binding.afterSave();
 			}
 		} finally {
@@ -72,6 +74,8 @@ export default class CommunityEditStore extends Stores.BoundStore {
 
 
 	cancel () {
-
+		if (this.binding.onCancel) {
+			this.binding.onCancel();
+		}
 	}
 }
