@@ -1,5 +1,6 @@
 import uuid from 'uuid';
 import {Stores} from '@nti/lib-store';
+import {Array as arr} from '@nti/lib-commons';
 
 const NewChannel = Symbol('New Channel');
 
@@ -30,6 +31,14 @@ export default class ChannelListStore extends Stores.BoundStore {
 
 	cleanup () {
 		if (this.binding.unregister) { this.binding.unregister(this); }
+	}
+
+	moveChannel (original, update) {
+		const sortable = this.get('sortableChannels');
+
+		this.setImmediate({
+			sortableChannels: arr.move(sortable, original, update)
+		});
 	}
 
 	createChannel () {

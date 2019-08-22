@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 import {scoped} from '@nti/lib-locale';
-import {Text} from '@nti/web-commons';
+import {Text, DnD} from '@nti/web-commons';
 
 import FormStore from '../../Store';
 import Channel from '../channel';
@@ -21,8 +21,7 @@ export default
 @ChannelListStore.connect([
 	'pinnedChannels',
 	'sortableChannels',
-	'setOrder',
-	'addNewChannel'
+	'moveChannel'
 ])
 class ChannelListField extends React.Component {
 	static deriveBindingFromProps (props) {
@@ -38,7 +37,17 @@ class ChannelListField extends React.Component {
 		only: PropTypes.bool,
 
 		pinnedChannels: PropTypes.array,
-		sortableChannels: PropTypes.array
+		sortableChannels: PropTypes.array,
+		moveChannel: PropTypes.func
+	}
+
+
+	onOrderChange = (original, updated) => {
+		const {moveChannel} = this.props;
+
+		if (moveChannel) {
+			moveChannel(original, updated);
+		}
 	}
 
 
@@ -69,7 +78,7 @@ class ChannelListField extends React.Component {
 				{channels.map((channel) => {
 					return (
 						<li key={channel.getID()}>
-							{this.renderChannel(channel)}
+							<Channel channel={channel} />
 						</li>
 					);
 				})}
@@ -81,25 +90,21 @@ class ChannelListField extends React.Component {
 	renderSortable (channels) {
 		if (!channels || !channels.length) { return null; }
 
-		//TODO: make this sortable
-
 		return (
-			<ol className={cx('channels')}>
-				{channels.map((channel) => {
-					return (
-						<li key={channel.getID()}>
-							{this.renderChannel(channel)}
-						</li>
-					);
-				})}
-			</ol>
+			<DnD.Sortable
+				items={channels}
+				onMove={this.onOrderChange}
+				renderer={this.renderSortableChannel}
+			/>
 		);
 	}
 
 
-	renderChannel (channel) {
+	renderSortableChannel = (channel, props) => {
 		return (
-			<Channel channel={channel} />
+			<DnD.Item key={channel.getID()} {...props}>
+				<Channel channel={channel} />
+			</DnD.Item>
 		);
 	}
 }
