@@ -4,14 +4,13 @@ import classnames from 'classnames/bind';
 import {scoped} from '@nti/lib-locale';
 import {Input} from '@nti/web-commons';
 
-import Store from '../Store';
-
 import Styles from './Style.css';
+import Store from './Store';
 
 const LineBreakRegex = /\r?\n|\r$/;
 
 const cx = classnames.bind(Styles);
-const t = scoped('nti-profiles.community.edit.form.about', {
+const t = scoped('nti-profiles.community.edit.form.community.about', {
 	label: 'Description',
 	placeholder: 'Community Description...'
 });

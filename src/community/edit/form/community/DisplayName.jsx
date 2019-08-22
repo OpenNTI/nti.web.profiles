@@ -4,12 +4,11 @@ import classnames from 'classnames/bind';
 import {scoped} from '@nti/lib-locale';
 import {Input} from '@nti/web-commons';
 
-import Store from '../Store';
-
 import Styles from './Style.css';
+import Store from './Store';
 
 const cx = classnames.bind(Styles);
-const t = scoped('nti-profiles.community.edit.form.DisplayName', {
+const t = scoped('nti-profiles.community.edit.form.community.DisplayName', {
 	label: 'Title',
 	placeholder: 'Community Title...'
 });
