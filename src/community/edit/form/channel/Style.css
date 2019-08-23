@@ -6,6 +6,10 @@
 	padding: 0.625rem 0;
 }
 
+.channel-fields.read-only {
+	opacity: 0.4;
+}
+
 .drag-handle {
 	flex: 0 0 auto;
 	padding: 3px;
@@ -16,7 +20,6 @@
 
 .drag-handle.disabled {
 	pointer-events: none;
-	color: var(--tertiary-grey);
 }
 
 .meta {
@@ -43,7 +46,6 @@
 
 .delete.disabled {
 	pointer-events: none;
-	color: var(--tertiary-grey);
 }
 
 .input {
@@ -63,4 +65,9 @@
 
 .input.description {
 	color: var(--secondary-grey);
+}
+
+
+.channel-fields.read-only .input.description:empty {
+	display: none;
 }

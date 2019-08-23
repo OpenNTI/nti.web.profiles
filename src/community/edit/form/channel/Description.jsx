@@ -31,7 +31,7 @@ class DescriptionInput extends React.Component {
 					className={cx('input', 'description')}
 					value={value}
 					onChange={onChange}
-					placeholder={t('placeholder')}
+					placeholder={!readOnly && t('placeholder')}
 					readOnly={readOnly}
 				/>
 			</Input.Label>

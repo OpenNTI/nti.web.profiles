@@ -15,7 +15,7 @@ const cx = classnames.bind(Styles);
 
 export default
 @ChannelListStore.monitor(['register', 'unregister'])
-@ChannelStore.connect(['deleted'])
+@ChannelStore.connect(['deleted', 'readOnly'])
 class ChannelFields extends React.Component {
 	static deriveBindingFromProps (props) {
 		return {
@@ -31,12 +31,12 @@ class ChannelFields extends React.Component {
 	}
 
 	render () {
-		const {deleted} = this.props;
+		const {deleted, readOnly} = this.props;
 
 		if (deleted) { return null; }
 
 		return (
-			<div className={cx('channel-fields')}>
+			<div className={cx('channel-fields', {'read-only': readOnly})}>
 				<DragHandle />
 				<div className={cx('no-drag', 'meta')}>
 					<div className={cx('contents')}>
