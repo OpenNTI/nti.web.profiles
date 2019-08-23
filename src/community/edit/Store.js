@@ -50,21 +50,23 @@ export default class CommunityEditStore extends Stores.BoundStore {
 
 
 	async save () {
+		//don't save more than once
+		if (this.get('saving')) { return; }
+
 		if (!this.subStores || this.subStores.size === 0) { return; }
 
 		this.set({saving: true});
 
-
 		const stores = Array.from(this.subStores);
 
 		try {
-			const result = await Promise.allSettled(
-				stores.map(store => store.save())
+			let error = false;
+
+			await Promise.all(
+				stores.map(store => store.save().catch(e => error = true))
 			);
 
-			const success = result.every(r => r.status === 'fulfilled');
-
-			if (success && this.binding.afterSave) {
+			if (!error && this.binding.afterSave) {
 				this.binding.afterSave();
 			}
 		} finally {

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 import {scoped} from '@nti/lib-locale';
-import {DialogButtons} from '@nti/web-commons';
+import {DialogButtons, Text, Loading} from '@nti/web-commons';
 
 import Store from '../Store';
 
@@ -13,13 +13,15 @@ import ChannelList from './channel-list';
 const cx = classnames.bind(Styles);
 const t = scoped('nti-profiles.community.edit.form.View', {
 	save: 'Save',
-	cancel: 'Cancel'
+	cancel: 'Cancel',
+	saving: 'Saving...'
 });
 
 export default
-@Store.monitor(['save', 'cancel', 'channelList'])
+@Store.monitor(['save', 'cancel', 'channelList', 'saving'])
 class CommunityEditForm extends React.Component {
 	static propTypes = {
+		saving: PropTypes.bool,
 		save: PropTypes.func,
 		cancel: PropTypes.func,
 		channelList: PropTypes.array
@@ -37,10 +39,10 @@ class CommunityEditForm extends React.Component {
 	}
 
 	render () {
-		const {cancel, channelList, ...otherProps} = this.props;
+		const {cancel, channelList, saving, ...otherProps} = this.props;
 		const buttons = [
-			{label: t('cancel'), type: 'button', onClick: cancel},
-			{label: t('save'), type: 'submit'}
+			{label: t('cancel'), type: 'button', onClick: cancel, disabled: saving},
+			{label: t('save'), type: 'submit', disabled: saving}
 		];
 
 		delete otherProps.save;
@@ -58,6 +60,12 @@ class CommunityEditForm extends React.Component {
 						})}
 					</div>
 				</div>
+				{saving && (
+					<div className={cx('saving-mask')}>
+						<Text.Base className={cx('message')}>{t('saving')}</Text.Base>
+						<Loading.Spinner />
+					</div>
+				)}
 				<DialogButtons buttons={buttons} />
 			</form>
 		);
