@@ -8,7 +8,7 @@ const t = scoped('nti-profile.community.activity.components.SortMenu', {
 	header: 'Sort By',
 	sortLabels: {
 		'createdTime': 'Most Recent',
-		'NewestDescendantCreatedTime': 'Recent Activity',
+		'Last Modified': 'Recent Activity',
 		'PostCount': 'Comment Count',
 		'LikeCount': 'Like Count'
 	}
