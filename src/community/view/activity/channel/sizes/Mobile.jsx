@@ -7,6 +7,7 @@ import Identity from '../../components/Identity';
 import OptionsWindow from '../../components/OptionsWindow';
 import ChannelStreamHeader from '../../components/channel-stream-header';
 import ChannelList from '../../components/channel-list';
+import ChannelDescription from '../../components/ChannelDescription';
 import ChannelStream from '../../components/ChannelStream';
 
 import Styles from './Mobile.css';
@@ -65,6 +66,7 @@ export default class ChannelMobileLayout extends React.Component {
 					<ChannelList channels={channels} channel={channel} row />
 					<ChannelStreamHeader className={cx('mobile-channel-header')} channel={channel} />
 				</div>
+				<ChannelDescription channel={channel} />
 				{channel && (
 					<ChannelStream
 						channel={channel}

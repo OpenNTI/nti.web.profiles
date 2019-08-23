@@ -4,6 +4,7 @@ import {Layouts, Prompt} from '@nti/web-commons';
 
 import Sidebar from '../../components/Sidebar';
 import ChannelStreamHeader from '../../components/channel-stream-header';
+import ChannelDescription from '../../components/ChannelDescription';
 import ChannelStream from '../../components/ChannelStream';
 import Topic from '../../topic';
 
@@ -44,6 +45,7 @@ export default function ChannelDesktopLayout (props) {
 					setLayout={setLayout}
 					setSortOn={setSortOn}
 				/>
+				<ChannelDescription channel={channel} />				
 				{channel && (
 					<ChannelStream
 						channel={channel}
