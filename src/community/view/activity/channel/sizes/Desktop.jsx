@@ -1,12 +1,11 @@
 import React from 'react';
 import classnames from 'classnames/bind';
-import {Layouts, Prompt} from '@nti/web-commons';
+import {Layouts} from '@nti/web-commons';
 
 import Sidebar from '../../components/Sidebar';
 import ChannelStreamHeader from '../../components/channel-stream-header';
 import ChannelDescription from '../../components/ChannelDescription';
 import ChannelStream from '../../components/ChannelStream';
-import Topic from '../../topic';
 
 import Styles from './Desktop.css';
 import propTypes from './prop-types';
@@ -26,11 +25,7 @@ export default function ChannelDesktopLayout (props) {
 		setLayout,
 		availableSorts,
 		sortOn,
-		setSortOn,
-		topicId,
-		commentId,
-		topicWindowClassName,
-		...otherProps
+		setSortOn
 	} = props;
 
 	return (
@@ -54,16 +49,6 @@ export default function ChannelDesktopLayout (props) {
 						batchSize={BatchSize}
 						columns={2}
 					/>
-				)}
-				{topicId && channel && (
-					<Prompt.Dialog className={cx('community-topic-dialog', topicWindowClassName)}>
-						<Topic
-							channel={channel}
-							topicId={topicId}
-							commentId={commentId}
-							{...otherProps}
-						/>
-					</Prompt.Dialog>
 				)}
 			</div>
 		</Aside.Container>
