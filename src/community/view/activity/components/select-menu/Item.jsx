@@ -32,7 +32,7 @@ export default class SortItem extends React.PureComponent {
 		return (
 			<div className={cx('select-menu-item', {selected})} onClick={this.onSelect}>
 				{selected && (<i className={cx('icon-check', 'check-mark')} />)}
-				<Text.Base className={cx('label')}>{option.label}</Text.Base>
+				<Text.Base>{option.label}</Text.Base>
 			</div>
 		);	
 	}
