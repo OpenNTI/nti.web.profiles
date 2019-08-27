@@ -25,12 +25,13 @@ export default function ChannelDesktopLayout (props) {
 		setLayout,
 		availableSorts,
 		sortOn,
-		setSortOn
+		setSortOn,
+		title
 	} = props;
 
 	return (
 		<Aside.Container className={cx('community-desktop')} asideClassname={cx('community-desktop-sidebar')}>
-			<Aside side="left" component={Sidebar} community={community} channels={channels} channel={channel} />
+			<Aside side="left" component={Sidebar} community={community} channels={channels} channel={channel} title={title} />
 			<div className={cx('community-desktop-body')}>
 				<ChannelStreamHeader
 					channel={channel}

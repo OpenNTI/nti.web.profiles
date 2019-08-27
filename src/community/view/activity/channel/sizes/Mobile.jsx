@@ -42,7 +42,8 @@ export default class ChannelMobileLayout extends React.Component {
 			availableSorts,
 			sortOn,
 			setSortOn,
-			size
+			size,
+			title
 		} = this.props;
 		const {showOptions} = this.state;
 
@@ -62,7 +63,7 @@ export default class ChannelMobileLayout extends React.Component {
 					</Prompt.Dialog>
 				)}
 				<div className={cx('header')}>
-					<Identity community={community} showOptions={this.showOptions} />
+					<Identity community={community} showOptions={this.showOptions} title={title} />
 					<ChannelList channels={channels} channel={channel} row />
 					<ChannelStreamHeader className={cx('mobile-channel-header')} channel={channel} />
 				</div>

@@ -15,5 +15,6 @@ export default {
 	setLayout: PropTypes.func,
 	size: PropTypes.string,
 
+	title: PropTypes.string,
 	topicWindowClassName: PropTypes.string
 };

@@ -14,6 +14,7 @@ const t = scoped('nti-profiles.community.view.activity.components.Identity', {
 
 CommunityIdentity.propTypes = {
 	className: PropTypes.string,
+	title: PropTypes.string,
 	community: PropTypes.shape({
 		canEdit: PropTypes.func,
 		displayName: PropTypes.string,
@@ -21,12 +22,12 @@ CommunityIdentity.propTypes = {
 	}),
 	showOptions: PropTypes.func
 };
-export default function CommunityIdentity ({community, className, showOptions}) {
+export default function CommunityIdentity ({community, title, className, showOptions}) {
 	return (
 		<div className={cx('community-identity', className)}>
 			<div className={cx('title')}>
 				<Text.Condensed as="div" className={cx('display-name')}>
-					{community.displayName}
+					{title || community.displayName}
 				</Text.Condensed>
 				{showOptions && (
 					<span className={cx('show-options')} onClick={showOptions} >...</span>

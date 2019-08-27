@@ -8,7 +8,8 @@ import {Modal} from '../edit';
 export default class CommunityFrame extends React.Component {
 	static propTypes = {
 		children: PropTypes.element,
-		community: PropTypes.object
+		community: PropTypes.object,
+		title: PropTypes.string
 	}
 
 	getCommunityEditRoute = (obj, context) => {
@@ -19,12 +20,13 @@ export default class CommunityFrame extends React.Component {
 
 
 	renderCommunityEdit = (_, setHash) => {
-		const {community} = this.props;
+		const {community, title} = this.props;
 		const close = () => setHash('');
 
 		return (
 			<Prompt.Dialog>
 				<Modal
+					title={title}
 					community={community}
 					onCancel={close}
 					afterSave={close}

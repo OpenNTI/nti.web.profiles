@@ -17,21 +17,23 @@ export default
 @Store.monitor({'displayName': 'value', 'setDisplayName': 'onChange', 'displayNameError': 'error'})
 class DisplayNameInput extends React.Component {
 	static propTypes = {
+		title: PropTypes.string,
 		value: PropTypes.string,
 		onChange: PropTypes.func,
 		error: PropTypes.any
 	}
 
 	render () {
-		const {value, onChange, error} = this.props;
+		const {title, value, onChange, error} = this.props;
 
 		return (
 			<Input.Label className={cx('label')} label={t('label')} error={error}>
 				<Input.Text
 					className={cx('input', 'title')}
-					value={value}
+					value={title || value}
 					onChange={onChange}
 					placeholder={t('placeholder')}
+					readOnly={!!title}
 				/>
 			</Input.Label>
 		); 
