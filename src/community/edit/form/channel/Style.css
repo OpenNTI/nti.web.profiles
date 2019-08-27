@@ -4,6 +4,7 @@
 	align-items: flex-start;
 	border-bottom: 1px solid var(--border-grey-light);
 	padding: 0.625rem 0;
+	background: white; /*NTI-8313 - trying ot mitigate ghost-bleed*/
 }
 
 .channel-fields.read-only {
