@@ -34,10 +34,15 @@
 	margin-right: 0.625rem;
 }
 
+.new-post .locked,
 .new-post .placeholder {
 	font-size: 0.875rem;
 	line-height: 1.4;
 	color: var(--primary-grey);
+}
+
+.new-post .locked {
+	color: var(--secondary-grey);
 }
 
 .sort-flyout {
@@ -93,4 +98,18 @@
 	width: 1px;
 	opacity: 0.2;
 	background: #787878;
+}
+
+.avatar-square {
+	display: flex;
+	flex-direction: column;
+	align-content: center;
+	align-items: center;
+	justify-content: center;
+	width: 2.5rem;
+	height: 2.5rem;
+	margin-right: 0.625rem;
+	color: #fff;
+	background: #CCCCCC;
+	border-radius: 0.1875rem;
 }

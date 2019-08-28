@@ -10,7 +10,8 @@ import Styles from './Styles.css';
 
 const cx = classnames.bind(Styles);
 const t = scoped('nti-profiles.community.activity.components.channel-stream-header.NewPost', {
-	placeholder: 'Write something...'
+	placeholder: 'Write something...',
+	locked: 'Only facilitators can post to this forum.'
 });
 
 
@@ -20,9 +21,18 @@ NewPost.propTypes = {
 	})
 };
 export default function NewPost ({channel}) {
-	if (!channel || !channel.canAddTopic) { return null; }
+	const locked = (!channel || !channel.canAddTopic);
 
-	return (
+	return locked ? (
+		<div className={cx('new-post')}>
+			<div className={cx('new-post-inner')}>
+				<div className={cx('avatar-square')}>
+					<i className="icon-lock"/>
+				</div>
+				<Text.Base className={cx('locked')}>{t('locked')}</Text.Base>
+			</div>
+		</div>
+	) : (
 		<LinkTo.Object object={{isTopic: true, isNewTopic: true}} className={cx('new-post')}>
 			<div className={cx('new-post-inner')}>
 				<User.Avatar className={cx('avatar')} user={getAppUsername()} />
