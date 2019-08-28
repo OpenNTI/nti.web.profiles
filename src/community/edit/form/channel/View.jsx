@@ -27,17 +27,18 @@ class ChannelFields extends React.Component {
 
 	static propTypes = {
 		channel: PropTypes.object,
-		deleted: PropTypes.bool
+		deleted: PropTypes.bool,
+		connectDragSource: PropTypes.func
 	}
 
 	render () {
-		const {deleted, readOnly} = this.props;
+		const {connectDragSource, deleted, readOnly} = this.props;
 
 		if (deleted) { return null; }
 
 		return (
 			<div className={cx('channel-fields', {'read-only': readOnly})}>
-				<DragHandle />
+				<DragHandle connect={connectDragSource}/>
 				<div className={cx('no-drag', 'meta')}>
 					<div className={cx('contents')}>
 						<Title />
@@ -46,6 +47,6 @@ class ChannelFields extends React.Component {
 					<Delete />
 				</div>
 			</div>
-		);	
+		);
 	}
 }

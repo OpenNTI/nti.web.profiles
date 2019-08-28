@@ -72,7 +72,7 @@ class ChannelListField extends React.Component {
 
 	renderPinned (channels) {
 		if (!channels || !channels.length) { return null; }
-		
+
 		return (
 			<ol className={cx('channels')}>
 				{channels.map((channel) => {
@@ -102,7 +102,7 @@ class ChannelListField extends React.Component {
 
 	renderSortableChannel = (channel, props) => {
 		return (
-			<DnD.Item key={channel.getID()} {...props}>
+			<DnD.Item customHandle key={channel.getID()} {...props}>
 				<Channel channel={channel} />
 			</DnD.Item>
 		);

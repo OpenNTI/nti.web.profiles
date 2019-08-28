@@ -11,14 +11,15 @@ export default
 @Store.monitor(['pinned'])
 class DragHandle extends React.Component {
 	static propTypes = {
+		connect: PropTypes.func.isRequired,
 		pinned: PropTypes.bool
 	}
 
 
 	render () {
-		const {pinned} = this.props;
+		const {connect = x=>x, pinned} = this.props;
 
-		return (
+		return connect(
 			<div className={cx('drag-handle', {disabled: pinned})}>
 				<i className={cx('icon-gripper')} />
 			</div>
