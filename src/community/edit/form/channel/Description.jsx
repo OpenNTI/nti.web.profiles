@@ -26,7 +26,7 @@ class DescriptionInput extends React.Component {
 		const {value, onChange, error, readOnly} = this.props;
 
 		return (
-			<Input.Label className={cx('label')} error={error}>
+			<Input.Label error={error}>
 				<Input.Text
 					className={cx('input', 'description')}
 					value={value}

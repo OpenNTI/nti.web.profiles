@@ -49,7 +49,8 @@
 	pointer-events: none;
 }
 
-.input {
+input.input[type],
+textarea.input {
 	display: block;
 	width: 100%;
 	border: none;
@@ -58,6 +59,17 @@
 	height: initial;
 	font-size: 0.875rem;
 	line-height: 1.3;
+
+	/*Foundation overrides*/
+	margin: 0;
+	box-shadow: none;
+}
+
+/*Foundation overrides*/
+input.input[type][readonly],
+textarea.input[readonly] {
+	background: none;
+	cursor: initial;
 }
 
 .input.title {

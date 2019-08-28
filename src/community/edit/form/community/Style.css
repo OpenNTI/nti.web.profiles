@@ -29,7 +29,8 @@
 	color: var(--primary-grey);
 }
 
-.input {
+input.input[type],
+textarea.input {
 	width: 100%;
 	background: none;
 	color: var(--primary-grey);
@@ -37,7 +38,20 @@
 	border: 0px solid var(--border-grey-light);
 	border-bottom-width: 1px;
 	padding: 0;
+
+	/*Foundation overrides*/
+	margin: 0;
+	box-shadow: none;
 }
+
+/*Foundation overrides*/
+input.input[type][readonly],
+textarea.input[readonly] {
+	background: none;
+	cursor: initial;
+}
+
+
 
 .input.title {
 	font-size: 1.5rem;

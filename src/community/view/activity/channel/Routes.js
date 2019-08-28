@@ -15,11 +15,11 @@ export default Router.for([
 			}
 
 			if (obj.isTopic || obj.isNote) {
-				return `./${encodeForURI(obj.getID())}${hash}`;
+				return `./${encodeForURI(obj.getID())}/${hash}`;
 			}
 
 			if (obj.isComment) {
-				return `./${encodeForURI(obj.ContainerId)}/${encodeForURI(obj.getID())}`;
+				return `./${encodeForURI(obj.ContainerId)}/`;
 			}
 		}
 	})

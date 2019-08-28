@@ -12,7 +12,7 @@ export default Router.for([
 		component: Channel,
 		getRouteFor: (obj) => {
 			if (obj.isCommunityChannel) {
-				return `./${encodeForURI(obj.getID())}`;
+				return `./${encodeForURI(obj.getID())}/`;
 			}
 		}
 	}),

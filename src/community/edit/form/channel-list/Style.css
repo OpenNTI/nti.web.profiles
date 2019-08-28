@@ -19,11 +19,13 @@
 }
 
 .create-channel {
+	display: inline-block;
 	border: none;
 	background: none;
 	margin-top: 1.25rem;
 	color: var(--primary-blue);
 	cursor: pointer;
+	padding: 0;
 }
 
 .create-icon {
@@ -41,4 +43,9 @@
 	font-size: 0.875rem;
 	font-weight: 600;
 	line-height: 1.3;
+}
+
+:global(.no-touch) .create-channel {
+	background: none;
+	color: var(--primary-blue);
 }

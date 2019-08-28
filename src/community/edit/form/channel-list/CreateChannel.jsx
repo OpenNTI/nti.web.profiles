@@ -26,12 +26,12 @@ class CreateChannel extends React.Component {
 		if (!canCreateChannel) { return null; }
 
 		return (
-			<button type="button" className={cx('create-channel')} onClick={createChannel}>
+			<span role="button" className={cx('create-channel')} onClick={createChannel}>
 				<i className={cx('icon-add', 'create-icon')} />
 				<Text.Base className={cx('create-label')}>
 					{t('createChannel')}
 				</Text.Base>
-			</button>
+			</span>
 		);
 	}
 }
