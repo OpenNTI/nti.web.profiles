@@ -53,14 +53,21 @@
 	box-shadow: inset 3px 0 0 0 rgba(0, 0, 0, 0.15);
 }
 
+.list .channel.active .channel-report {
+	color: white;
+}
+
 :global(.no-touch) .list .channel-report {
 	visibility: hidden;
+}
+
+:global(.no-touch) .list .channel.active:hover .channel-report {
+	color: white;
 }
 
 :global(.no-touch) .list .channel:hover .channel-report,
 :global(.no-touch) .list .channel:hover .channel-report:hover {
 	visibility: visible;
-	color: white;
 }
 
 
