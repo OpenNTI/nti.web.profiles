@@ -20,7 +20,7 @@ class DeleteChannel extends React.Component {
 
 		return (
 			<button type="button" className={cx('delete', {disabled: !canDelete})} onClick={canDelete ? doDelete : null}>
-				<i className="icon-light-x" />
+				<i className="icon-remove" />
 			</button>
 		);
 	}
