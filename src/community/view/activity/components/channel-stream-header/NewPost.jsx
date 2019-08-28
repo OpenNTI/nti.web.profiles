@@ -23,7 +23,7 @@ NewPost.propTypes = {
 export default function NewPost ({channel}) {
 	const locked = (!channel || !channel.canAddTopic);
 
-	return locked ? (
+	return !channel ? <div/> : locked ? (
 		<div className={cx('new-post')}>
 			<div className={cx('new-post-inner')}>
 				<div className={cx('avatar-square')}>
