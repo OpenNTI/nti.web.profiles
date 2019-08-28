@@ -1,3 +1,7 @@
+.channel-list + .channel-list {
+	margin-top: 2.625rem;
+}
+
 .label {
 	display: block;
 	font-size: 0.625rem;
