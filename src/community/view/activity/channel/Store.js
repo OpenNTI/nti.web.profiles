@@ -4,6 +4,18 @@ import {Array as arr} from '@nti/lib-commons';
 
 import {Grid} from '../Constants';
 
+function findChannel (channelLists, channelId) {
+	const find = (id) => (
+		channelLists.reduce((acc, channelList) => {
+			if (acc) { return acc; }
+
+			return channelList.findChannel(id);
+		}, null)
+	);
+
+	//Work around for react-router dorking the pathname...
+	return find(channelId) || find(encodeURIComponent(channelId));
+}
 
 function Storage () {
 	let storage;
@@ -42,11 +54,7 @@ class CommunityActivityChannelStore extends Stores.BoundStore {
 
 		const channelLists = arr.ensure(channels);
 
-		const channel = channelLists.reduce((acc, channelList) => {
-			if (acc) { return acc;}
-
-			return channelList.findChannel(channelId);
-		}, null);
+		const channel = findChannel(channelLists, channelId);
 
 		const oldSort = this.get('sortOn');
 		const knownSorts = channel && channel.contentsDataSource && channel.contentsDataSource.getKnownParam('sortOn');
