@@ -1,6 +1,6 @@
 import {ensureArray as arr} from '../../../util';
 
-import fixSchemaEntry from './fix-schema-entry';
+
 /**
  * Ensures each entry in the schema includes a group property according to the mapping defined above
  * @param {Object} schema The schema to be modified

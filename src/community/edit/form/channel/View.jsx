@@ -28,7 +28,8 @@ class ChannelFields extends React.Component {
 	static propTypes = {
 		channel: PropTypes.object,
 		deleted: PropTypes.bool,
-		connectDragSource: PropTypes.func
+		connectDragSource: PropTypes.func,
+		readOnly: PropTypes.bool,
 	}
 
 	render () {

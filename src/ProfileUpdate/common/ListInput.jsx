@@ -8,6 +8,7 @@ export default class ProfileUpdateListInput extends React.Component {
 		field: PropTypes.shape({
 			schema: PropTypes.shape({
 				description: PropTypes.string,
+				name: PropTypes.string,
 				title: PropTypes.string,
 				value_type: PropTypes.object //eslint-disable-line
 			})

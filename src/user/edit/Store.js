@@ -7,6 +7,7 @@ import {ensureArray as arr, slugify} from '../../util';
 import {FieldConfig} from './config';
 import {addGroupsToSchema, getGroupedSchemaFields, trimValue, getAffectedValues} from './util';
 
+const hasProperty = (x, k) => Object.prototype.hasOwnProperty.call(x, k);
 const PREFIX = 'nti-profile-edit-store';
 const px = x => `${PREFIX}:${x}`;
 
@@ -95,7 +96,7 @@ export class Store extends Stores.SimpleStore {
 			return;
 		}
 
-		const inSchema = key => this.#schema.hasOwnProperty(key);
+		const inSchema = key => hasProperty(this.#schema,key);
 		Object.keys(this[DATA])
 			.filter(inSchema)
 			.forEach(k => delete this[DATA][k]);
@@ -161,7 +162,7 @@ export class Store extends Stores.SimpleStore {
 	}
 
 	#getPayload = () => {
-		const inSchema = ([key]) => this.#schema.hasOwnProperty(key);
+		const inSchema = ([key]) => hasProperty(this.#schema,key);
 		const reassemble = (acc, [key, value]) => ({...acc, [key]: trimValue(value)});
 		return Object.entries(this[DATA])
 			.filter(inSchema)

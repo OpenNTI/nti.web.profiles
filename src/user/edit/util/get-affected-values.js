@@ -1,6 +1,6 @@
 const TYPES_TO_AFFECTED = {
 	'IOPSRCUserProfile': (entity, change, schema) => {
-		if (change.hasOwnProperty('affiliation') && change['affiliation'] !== entity['affiliation']) {
+		if (Object.prototype.hasOwnProperty.call(change,'affiliation') && change['affiliation'] !== entity['affiliation']) {
 			return {'district_school': null};
 		}
 	}

@@ -16,6 +16,7 @@ export default class SalltProfileChoiceInput extends React.Component {
 		field: PropTypes.shape({
 			schema: PropTypes.shape({
 				description: PropTypes.string,
+				name: PropTypes.string,
 				title: PropTypes.string,
 				choices: PropTypes.array
 			})
