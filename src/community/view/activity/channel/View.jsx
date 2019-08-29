@@ -49,7 +49,7 @@ class CommunityChannel extends React.Component {
 		const {channel, topicId, commentId, topicWindowClassName, ...otherProps} = this.props;
 
 		return (
-			<div>
+			<>
 				{this.renderList()}
 				{topicId && channel && (
 					<Prompt.Dialog className={cx('community-topic-dialog', topicWindowClassName)}>
@@ -61,7 +61,7 @@ class CommunityChannel extends React.Component {
 						/>
 					</Prompt.Dialog>
 				)}
-			</div>
+			</>
 		);
 	}
 
