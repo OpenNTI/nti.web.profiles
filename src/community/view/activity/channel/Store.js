@@ -4,17 +4,27 @@ import {Array as arr} from '@nti/lib-commons';
 
 import {Grid} from '../Constants';
 
+
+
 function findChannel (channelLists, channelId) {
-	const find = (id) => (
-		channelLists.reduce((acc, channelList) => {
-			if (acc) { return acc; }
+	const channel = channelLists.reduce((acc, channelList) => {
+		if (acc) { return acc; }
 
-			return channelList.findChannel(id);
-		}, null)
-	);
+		return channelList.findChannel(channelId);
+	}, null);
 
-	//Work around for react-router dorking the pathname...
-	return find(channelId) || find(encodeURIComponent(channelId));
+	if (channel) { return channel; }
+
+	return channelLists.reduce((acc, channelList) => {
+		if (acc) { return acc; }
+
+		return (channelList.channels || []).reduce((found, searching) => {
+			if (found) { return found; }
+			if (decodeURIComponent(searching.getID()) === channelId) { return searching; }
+
+			return found;
+		}, null);
+	}, null);
 }
 
 function Storage () {
