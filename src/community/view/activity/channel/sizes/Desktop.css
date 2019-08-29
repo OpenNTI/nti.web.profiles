@@ -9,3 +9,8 @@
 	width: 334px;
 	margin-right: 10px;
 }
+
+.community-desktop-body {
+	max-width: 680px;
+	overflow-x: hidden;
+}
