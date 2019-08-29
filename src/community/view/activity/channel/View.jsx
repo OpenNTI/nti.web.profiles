@@ -14,7 +14,7 @@ const {Responsive} = Layouts;
 const cx = classnames.bind(Styles);
 
 export default
-@Store.connect(['channel', 'sortOn', 'setSortOn', 'layout', 'setLayout', 'availableSorts'])
+@Store.connect(['notFound', 'channel', 'sortOn', 'setSortOn', 'layout', 'setLayout', 'availableSorts'])
 class CommunityChannel extends React.Component {
 	static deriveBindingFromProps (props) {
 		return {

@@ -1,0 +1,48 @@
+.channel-not-found {
+	padding: 1rem 2rem;
+}
+
+.not-found {
+	display: flex;
+	flex-direction: row;
+	align-items: flex-start;
+}
+
+.icon {
+	flex: 0 0 auto;
+	font-size: 4rem;
+	margin-right: 1rem;
+	color: var(--primary-orange);
+}
+
+.message {
+	flex: 1 1 auto;
+}
+
+.channel-not-found .header {
+	display: block;
+	font-size: 1.5rem;
+	font-weight: 300;
+	font-style: italic;
+	color: var(--tertiary-grey);
+}
+
+.channel-not-found .description {
+	display: block;
+	font-size: 0.875rem;
+	font-weight: 400;
+	color: var(--primary-grey);
+}
+
+.channel-not-found .options {
+	padding: 0.5rem 0;
+	font-size: 0.875rem;
+	font-weight: 300;
+}
+
+.channel-not-found .options a {
+	color: var(--primary-blue);
+	text-decoration: none;
+	cursor: pointer;
+}
+

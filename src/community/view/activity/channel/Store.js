@@ -67,12 +67,20 @@ class CommunityActivityChannelStore extends Stores.BoundStore {
 
 		const channel = findChannel(channelLists, channelId);
 
+		if (!channel) {
+			this.set({
+				notFound: true
+			});
+			return;
+		}
+
 		const oldSort = this.get('sortOn');
 		const knownSorts = channel && channel.contentsDataSource && channel.contentsDataSource.getKnownParam('sortOn');
 
 		const sortOn = oldSort && knownSorts.indexOf(oldSort) >= 0 ? oldSort : knownSorts[0];
 
 		this.set({
+			notFound: false,
 			channel,
 			sortOn,
 			layout: this.get('layout') || Grid,

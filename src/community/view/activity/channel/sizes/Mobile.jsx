@@ -9,6 +9,7 @@ import ChannelStreamHeader from '../../components/channel-stream-header';
 import ChannelList from '../../components/channel-list';
 import ChannelDescription from '../../components/ChannelDescription';
 import ChannelStream from '../../components/ChannelStream';
+import ChannelNotFound from '../../components/ChannelNotFound';
 
 import Styles from './Mobile.css';
 import propTypes from './prop-types';
@@ -37,6 +38,7 @@ export default class ChannelMobileLayout extends React.Component {
 			community,
 			channels,
 			channel,
+			notFound,
 			layout,
 			setLayout,
 			availableSorts,
@@ -65,9 +67,10 @@ export default class ChannelMobileLayout extends React.Component {
 				<div className={cx('header')}>
 					<Identity community={community} showOptions={this.showOptions} title={title} />
 					<ChannelList channels={channels} channel={channel} row />
-					<ChannelStreamHeader className={cx('mobile-channel-header')} channel={channel} />
+					{channel && (<ChannelStreamHeader className={cx('mobile-channel-header')} channel={channel} />)}
 				</div>
-				<ChannelDescription channel={channel} />
+				{notFound && (<ChannelNotFound {...this.props} />)}
+				{channel && (<ChannelDescription channel={channel} />)}
 				{channel && (
 					<ChannelStream
 						channel={channel}

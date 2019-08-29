@@ -6,6 +6,7 @@ import Sidebar from '../../components/Sidebar';
 import ChannelStreamHeader from '../../components/channel-stream-header';
 import ChannelDescription from '../../components/ChannelDescription';
 import ChannelStream from '../../components/ChannelStream';
+import ChannelNotFound from '../../components/ChannelNotFound';
 
 import Styles from './Desktop.css';
 import propTypes from './prop-types';
@@ -21,6 +22,7 @@ export default function ChannelDesktopLayout (props) {
 		community,
 		channels,
 		channel,
+		notFound,
 		layout,
 		setLayout,
 		availableSorts,
@@ -33,15 +35,18 @@ export default function ChannelDesktopLayout (props) {
 		<Aside.Container className={cx('community-desktop')} asideClassname={cx('community-desktop-sidebar')}>
 			<Aside side="left" component={Sidebar} community={community} channels={channels} channel={channel} title={title} />
 			<div className={cx('community-desktop-body')}>
-				<ChannelStreamHeader
-					channel={channel}
-					availableSorts={availableSorts}
-					layout={layout}
-					sortOn={sortOn}
-					setLayout={setLayout}
-					setSortOn={setSortOn}
-				/>
-				<ChannelDescription channel={channel} />				
+				{notFound && (<ChannelNotFound {...props} />)}
+				{channel && (
+					<ChannelStreamHeader
+						channel={channel}
+						availableSorts={availableSorts}
+						layout={layout}
+						sortOn={sortOn}
+						setLayout={setLayout}
+						setSortOn={setSortOn}
+					/>
+				)}
+				{channel && (<ChannelDescription channel={channel} />)}
 				{channel && (
 					<ChannelStream
 						channel={channel}
