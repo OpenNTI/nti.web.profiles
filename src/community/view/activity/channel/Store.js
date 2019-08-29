@@ -58,7 +58,7 @@ export default
 class CommunityActivityChannelStore extends Stores.BoundStore {
 	load () {
 		//if nothing changed, don't do anything
-		if (this.binding.channels === this.channels && this.binding.channelId === this.channelId) { return; }
+		if (this.binding.channels === this.channels && this.binding.channelId === this.channelId) {	return;	}
 
 		const channels = this.channels = this.binding.channels;
 		const channelId = this.channelId = this.binding.channelId;
@@ -69,7 +69,8 @@ class CommunityActivityChannelStore extends Stores.BoundStore {
 
 		if (!channel) {
 			this.set({
-				notFound: true
+				notFound: true,
+				channel: null
 			});
 			return;
 		}

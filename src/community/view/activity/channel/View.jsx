@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 import {decodeFromURI} from '@nti/lib-ntiids';
 import {Layouts, Prompt} from '@nti/web-commons';
+import {RedirectTo} from '@nti/web-routing';
 
+import {getFirstChannel} from '../utils';
 import Topic from '../topic';
 
 import Styles from './View.css';
@@ -81,6 +83,14 @@ class CommunityChannel extends React.Component {
 	}
 
 	render () {
+		const {channel, channels} = this.props;
+
+		if (channel && channel.wasDeleted) {
+			const first = channels && getFirstChannel(channels);
+
+			return first ? (<RedirectTo.Object object={first} />) : null;
+		}
+
 		return (
 			<>
 				<Responsive.Item query={Responsive.isWebappContext} render={this.renderWebApp} />
