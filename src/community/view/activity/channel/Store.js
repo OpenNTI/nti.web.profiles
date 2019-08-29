@@ -15,6 +15,7 @@ function findChannel (channelLists, channelId) {
 
 	if (channel) { return channel; }
 
+	//Hack to work around react router mangling the paths
 	return channelLists.reduce((acc, channelList) => {
 		if (acc) { return acc; }
 
