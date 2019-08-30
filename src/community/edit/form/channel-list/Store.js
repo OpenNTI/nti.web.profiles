@@ -7,7 +7,7 @@ const NewChannel = Symbol.for('New Channel');
 export default class ChannelListStore extends Stores.BoundStore {
 	load () {
 		if (this.binding.register) { this.binding.register(this); }
-		if (this.channelList && this.binding.channellist === this.channelList) { return; }
+		if (this.channelList && this.binding.channelList === this.channelList) { return; }
 
 		const channelList = this.channelList = this.binding.channelList;
 		const {channels} = channelList;
