@@ -53,16 +53,17 @@ class ChannelFields extends React.Component {
 	}
 
 	render () {
-		const {connectDragSource, deleted, readOnly} = this.props;
+		const {connectDragSource, deleted, readOnly, channel} = this.props;
 
 		if (deleted) { return null; }
+		const newish = channel[Symbol.for('New Channel')];
 
 		return (
 			<div className={cx('channel-fields', {'read-only': readOnly})}>
 				<DragHandle connect={connectDragSource}/>
 				<div className={cx('no-drag', 'meta')} ref={this.noTouchy}>
 					<div className={cx('contents')}>
-						<Title />
+						<Title autoFocus={newish}/>
 						<Description />
 					</div>
 					<Delete />

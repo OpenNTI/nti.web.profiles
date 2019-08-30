@@ -19,15 +19,17 @@ class TitleInput extends React.Component {
 		value: PropTypes.string,
 		onChange: PropTypes.func,
 		error: PropTypes.any,
+		autoFocus: PropTypes.bool,
 		readOnly: PropTypes.bool
 	}
 
 	render () {
-		const {value, onChange, error, readOnly} = this.props;
+		const {value, onChange, error, autoFocus, readOnly} = this.props;
 
 		return (
 			<Input.Label className={cx('title-input')} error={error}>
 				<Input.Text
+					autoFocus={autoFocus}
 					className={cx('input', 'title')}
 					value={value}
 					onChange={onChange}

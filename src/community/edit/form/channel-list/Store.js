@@ -2,7 +2,7 @@ import uuid from 'uuid';
 import {Stores} from '@nti/lib-store';
 import {Array as arr} from '@nti/lib-commons';
 
-const NewChannel = Symbol('New Channel');
+const NewChannel = Symbol.for('New Channel');
 
 export default class ChannelListStore extends Stores.BoundStore {
 	load () {
