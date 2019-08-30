@@ -24,9 +24,7 @@ export default function CommunityEditModal (props) {
 				<Text.Base className={cx('modal-header')}>{t('header')}</Text.Base>
 				{onCancel && (<a role="button" className={cx('modal-close')} onClick={onCancel}><i className="icon-light-x" /></a>)}
 			</div>
-			<div className={cx('modal-content')}>
-				<Editor {...props} />
-			</div>
+			<Editor {...props} />
 		</div>
 	);
 }
