@@ -36,7 +36,7 @@ export default function CommunityIdentity ({community, title, className, showOpt
 			{community.canEdit() && (
 				<LinkTo.Object object={community} className={cx('edit')} context="edit">
 					<i className={cx('icon-edit', 'edit-icon')} />
-					<Text.Base className={cx('edit-label')}>{t('edit')}</Text.Base>
+					<Text.Base className={cx('edit-label', 'community-edit-link')}>{t('edit')}</Text.Base>
 				</LinkTo.Object>
 			)}
 			<Text.Base as="div" className={cx('about')}>{community.about}</Text.Base>
