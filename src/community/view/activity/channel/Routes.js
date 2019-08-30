@@ -14,12 +14,16 @@ export default Router.for([
 				return './new-topic';
 			}
 
-			if (obj.isTopic || obj.isNote) {
+			if (obj.isTopic || (obj.isNote && !obj.inReplyTo)) {
 				return `./${encodeForURI(obj.getID())}/${hash}`;
 			}
 
 			if (obj.isComment) {
-				return `./${encodeForURI(obj.ContainerId)}/`;
+				return `./${encodeForURI(obj.ContainerId)}/#${encodeForURI(obj.getID())}`;
+			}
+
+			if (obj.isNote && obj.inReplyTo) {
+				return `./${encodeForURI(obj.inReplyTo)}/#${encodeForURI(obj.getID())}`;
 			}
 		}
 	})

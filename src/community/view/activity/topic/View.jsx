@@ -36,6 +36,19 @@ class ChannelActivityTopic extends React.Component {
 		return location && location.hash === '#comment';
 	}
 
+	get selectedComment () {
+		const {location} = this.props;
+		const hash = location && location.hash;
+
+		if (!hash || hash === '#comment') { return null; }
+
+		try {
+			return decodeFromURI(hash.replace(/^#/, ''));
+		} catch (e) {
+			return null;
+		}
+	}
+
 
 	render () {
 		const {overrides, topic, ...otherProps} = this.props;
@@ -46,7 +59,12 @@ class ChannelActivityTopic extends React.Component {
 		if (!Cmp) { return null; }
 
 		return (
-			<Cmp topic={topic} focusComment={this.focusComment} {...otherProps} />
+			<Cmp
+				topic={topic}
+				focusNewComment={this.focusNewComment}
+				selectedComment={this.selectedComment}
+				{...otherProps}
+			/>
 		);
 	}
 }
