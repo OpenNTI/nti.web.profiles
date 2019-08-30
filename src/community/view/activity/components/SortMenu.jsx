@@ -10,6 +10,7 @@ const t = scoped('nti-profile.community.activity.components.SortMenu', {
 		'createdTime': 'Most Recent',
 		'Last Modified': 'Recent Activity',
 		'PostCount': 'Comment Count',
+		'ReferencedByCount': 'Comment Count',
 		'LikeCount': 'Like Count'
 	}
 });
