@@ -61,6 +61,7 @@ export default class ChannelListStore extends Stores.BoundStore {
 			isModifiable: true,
 			pinned: false,
 			canDelete: true,
+			doNotPromptOnDelete: true,
 			delete: () => deleted = true,
 			save: async (data) => {
 				const {channelList} = this;

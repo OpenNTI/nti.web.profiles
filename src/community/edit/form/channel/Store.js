@@ -18,6 +18,7 @@ export default class ChannelFieldStore extends Stores.BoundStore {
 			descriptionError: null,
 			
 			canDelete: channel.canDelete,
+			doNotPromptOnDelete: channel.doNotPromptOnDelete,
 			deleted: false,
 		});
 	}
