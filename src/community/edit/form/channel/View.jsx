@@ -60,7 +60,7 @@ class ChannelFields extends React.Component {
 		return (
 			<div className={cx('channel-fields', {'read-only': readOnly})}>
 				<DragHandle connect={connectDragSource}/>
-				<div style={{touchAction: 'none'}} className={cx('no-drag', 'meta')} ref={this.noTouchy}>
+				<div className={cx('no-drag', 'meta')} ref={this.noTouchy}>
 					<div className={cx('contents')}>
 						<Title />
 						<Description />
