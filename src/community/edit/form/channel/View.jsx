@@ -12,6 +12,7 @@ import Description from './Description';
 import Delete from './Delete';
 
 const cx = classnames.bind(Styles);
+const block = e => e.stopPropagation();
 
 export default
 @ChannelListStore.monitor(['register', 'unregister'])
@@ -32,6 +33,25 @@ class ChannelFields extends React.Component {
 		readOnly: PropTypes.bool,
 	}
 
+	noTouchy = (el) => {
+		if (this.cleanupTouchBlocker) {
+			this.cleanupTouchBlocker();
+		}
+
+		if (el) {
+			el.addEventListener('touchstart', block);
+			el.addEventListener('touchmove', block);
+			el.addEventListener('touchend', block);
+
+			this.cleanupTouchBlocker = () => {
+				delete this.cleanupTouchBlocker;
+				el.removeEventListener('touchstart', block);
+				el.removeEventListener('touchmove', block);
+				el.removeEventListener('touchend', block);
+			};
+		}
+	}
+
 	render () {
 		const {connectDragSource, deleted, readOnly} = this.props;
 
@@ -40,7 +60,7 @@ class ChannelFields extends React.Component {
 		return (
 			<div className={cx('channel-fields', {'read-only': readOnly})}>
 				<DragHandle connect={connectDragSource}/>
-				<div className={cx('no-drag', 'meta')}>
+				<div style={{touchAction: 'none'}} className={cx('no-drag', 'meta')} ref={this.noTouchy}>
 					<div className={cx('contents')}>
 						<Title />
 						<Description />
