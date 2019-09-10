@@ -1,0 +1,44 @@
+.community-creation-form :global(.dialog-buttons .button.primary) {
+	padding: 0 2.5rem;
+}
+
+.form-body {
+	max-width: 400px;
+	padding: 0 var(--side-padding, 1.875rem) 1.375rem;
+}
+
+.text-input {
+	width: 100%;
+	background: white;
+	border-radius: none;
+	border-color: var(--border-grey);
+}
+
+.auto-subscribe {
+	margin-top: 1.25rem;
+}
+
+.auto-subscribe .field {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+.auto-subscribe .field .message {
+	flex: 1 1 auto;
+	padding-right: 2.5rem;
+}
+
+.auto-subscribe .field .message .label {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	color: var(--primary-grey);
+}
+
+.auto-subscribe .field .message .description {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	color: var(--secondary-grey);
+}
