@@ -11,7 +11,7 @@ const cx = classnames.bind(Styles);
 const t = scoped('nti-profiles.community.edit.forum.channel.Delete', {
 	confirm: {
 		title: 'Are you sure?',
-		message: 'Deleting a channel will also delete all of it\'s posts. Do you want to continue?'
+		message: 'Deleting a channel will also delete all of its posts. Do you want to continue?'
 	}
 });
 
