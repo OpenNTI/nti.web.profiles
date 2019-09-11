@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 import {scoped} from '@nti/lib-locale';
-import {Text, Loading, EmptyState } from '@nti/web-commons';
+import {Text, Loading, EmptyState, Errors } from '@nti/web-commons';
 
 import Styles from './Modal.css';
 import Store from './Store';
@@ -16,7 +16,7 @@ const t = scoped('nti-profiles.community.creation.Modal', {
 });
 
 export default
-@Store.connect(['loading', 'available', 'cancel', 'saving'])
+@Store.connect(['loading', 'available', 'cancel', 'saving', 'error'])
 class CommunityCreationModal extends React.Component {
 	static deriveBindingFromProps (props) {
 		return {
@@ -33,6 +33,7 @@ class CommunityCreationModal extends React.Component {
 		loading: PropTypes.bool,
 		available: PropTypes.bool,
 		saving: PropTypes.bool,
+		error: PropTypes.any,
 		cancel: PropTypes.func
 	}
 
@@ -63,7 +64,7 @@ class CommunityCreationModal extends React.Component {
 	}
 
 	renderForm () {
-		const {saving} = this.props;
+		const {saving, error} = this.props;
 
 		return (
 			<div className={cx('community-creation-modal')}>
@@ -71,6 +72,7 @@ class CommunityCreationModal extends React.Component {
 					<i className={cx('icon-bold-x', 'close-icon')} />
 				</a>
 				<Text.Base as="h1" className={cx('heading')}>{t('header')}</Text.Base>
+				{error && (<Errors.Message error={error} className={cx('error')} />)}
 				<Form />
 				{saving && (
 					<div className={cx('saving-mask')}>

@@ -6,6 +6,12 @@
 	--side-padding: 1.875rem;
 }
 
+.error {
+	display: block;
+	padding: var(--side-padding, 1.875rem);
+	max-width: 400px;
+}
+
 .saving-mask {
 	position: absolute;
 	top: 0; bottom: 0;

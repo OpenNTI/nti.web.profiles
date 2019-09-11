@@ -39,17 +39,40 @@ export default class CommunityCreationStore extends Stores.BoundStore {
 	}
 
 	setDisplayName (displayName) {
-		this.setImmediate({displayName});
+		this.setImmediate({displayName, displayNameError: null, error: null});
 	}
 
 	setAutoSubscribe (autoSubscribe) {
-		this.setImmediate({autoSubscribe});
+		this.setImmediate({autoSubscribe, autoSubscribeError: null, error: null});
 	}
 
-	save () {
+	async save () {
+		const displayName = this.get('displayName');
+		const autoSubscribe = this.get('autoSubscribe');
+
 		this.set({
 			saving: true
 		});
+
+		try {
+			const service = await getService();
+			const communities = service.getCommunities();
+
+			const community = await communities.createCommunity({displayName, 'auto-subscribe': autoSubscribe});
+
+			if (this.binding.afterSave) {
+				this.binding.afterSave(community);
+			}
+
+		} catch (e) {
+			if (e.field === 'alias') {
+				this.set({displayNameError: e, saving: false});
+			} else if (e.field === 'auto-subscribe') {
+				this.set({autoSubscribeError: e, saving: false});
+			} else {
+				this.set({error: e, saving: false});
+			}
+		}
 	}
 
 	cancel () {
