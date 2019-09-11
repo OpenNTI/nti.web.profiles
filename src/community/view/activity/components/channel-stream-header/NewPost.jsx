@@ -33,7 +33,7 @@ export default function NewPost ({channel}) {
 			</div>
 		</div>
 	) : (
-		<LinkTo.Object object={{isTopic: true, isNewTopic: true}} className={cx('new-post')}>
+		<LinkTo.Object object={{isTopic: true, isNewTopic: true}} className={cx('new-post')} title={t('placeholder')}>
 			<div className={cx('new-post-inner')}>
 				<User.Avatar className={cx('avatar')} user={getAppUsername()} />
 				<Text.Base className={cx('placeholder')}>{t('placeholder')}</Text.Base>
