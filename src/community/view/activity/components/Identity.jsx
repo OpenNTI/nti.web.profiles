@@ -5,6 +5,8 @@ import {scoped} from '@nti/lib-locale';
 import {Text} from '@nti/web-commons';
 import {LinkTo} from '@nti/web-routing';
 
+import {Avatar} from '../../../common';
+
 import Styles from './Identity.css';
 
 const cx = classnames.bind(Styles);
@@ -23,8 +25,11 @@ CommunityIdentity.propTypes = {
 	showOptions: PropTypes.func
 };
 export default function CommunityIdentity ({community, title, className, showOptions}) {
+	const hasAvatar = Avatar.hasAvatar(community);
+
 	return (
-		<div className={cx('community-identity', className)}>
+		<div className={cx('community-identity', className, {avatar: hasAvatar})}>
+			{hasAvatar && (<Avatar className={cx('avatar')} community={community} />)}
 			<div className={cx('title')}>
 				<Text.Condensed as="div" className={cx('display-name')}>
 					{title || community.displayName}
