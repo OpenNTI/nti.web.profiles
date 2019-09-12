@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Router, Route, View} from '@nti/web-routing';
-import {Prompt} from '@nti/web-commons';
+import {Prompt, Background} from '@nti/web-commons';
 
 import {Modal} from '../edit';
+import {Background as CommunityBackground} from '../common';
 
 export default class CommunityFrame extends React.Component {
 	static propTypes = {
@@ -48,10 +49,14 @@ export default class CommunityFrame extends React.Component {
 		return (
 			<View.WithTitle title={this.getTitle()}>
 				<Router.RouteForProvider getRouteFor={this.getCommunityEditRoute}>
-					{React.Children.map(children, (item) => {
-						return React.cloneElement(item, {community});
-					})}
-					<Route.Hash matches="#community-edit" render={this.renderCommunityEdit} />
+					<CommunityBackground community={community} childProp="imgUrl">
+						<Background className="community-background">
+							{React.Children.map(children, (item) => {
+								return React.cloneElement(item, {community});
+							})}
+							<Route.Hash matches="#community-edit" render={this.renderCommunityEdit} />
+						</Background>
+					</CommunityBackground>
 				</Router.RouteForProvider>
 			</View.WithTitle>
 		);
