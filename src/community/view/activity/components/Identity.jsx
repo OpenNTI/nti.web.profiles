@@ -5,7 +5,7 @@ import {scoped} from '@nti/lib-locale';
 import {Text} from '@nti/web-commons';
 import {LinkTo} from '@nti/web-routing';
 
-import {Avatar} from '../../../common';
+import {Avatar, MembershipControls} from '../../../common';
 
 import Styles from './Identity.css';
 
@@ -22,9 +22,10 @@ CommunityIdentity.propTypes = {
 		displayName: PropTypes.string,
 		about: PropTypes.string
 	}),
-	showOptions: PropTypes.func
+	showOptions: PropTypes.func,
+	showJoin: PropTypes.bool
 };
-export default function CommunityIdentity ({community, title, className, showOptions}) {
+export default function CommunityIdentity ({community, title, className, showOptions, showJoin}) {
 	const hasAvatar = Avatar.hasAvatar(community);
 
 	return (
@@ -36,6 +37,9 @@ export default function CommunityIdentity ({community, title, className, showOpt
 				</Text.Condensed>
 				{showOptions && (
 					<span className={cx('show-options')} onClick={showOptions} >...</span>
+				)}
+				{showJoin && (
+					<MembershipControls.Join showLeave community={community} className={cx('identity-join')}/>
 				)}
 			</div>
 			{community.canEdit() && (

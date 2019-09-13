@@ -1,0 +1,59 @@
+.community-join:global(.nti-button) {
+	background: var(--secondary-green);
+	padding: 0.5rem 1.25rem;
+	color: white;
+	position: relative;
+}
+
+.community-join:global(.nti-button).error {
+	background-color: var(--primary-red);
+}
+
+.community-join-leave:global(.nti-button) {
+	background: none;
+	color: var(--primary-red);
+	font-weight: 300;
+}
+
+.community-join:global(.nti-button).joining,
+.community-join:global(.nti-button).leaving,
+.community-join:global(.nti-button).joined,
+.community-join:global(.nti-button).error {
+	color: rgba(255, 255, 255, 0);
+}
+
+.community-join:global(.nti-button).joined {
+	background: white;
+	text-align: left;
+}
+
+.joining-spinner {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.joining-error-icon {
+	color: white;
+	font-size: 1.25rem;
+	display: inline-block;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.joined-ellipsis {
+	color: var(--secondary-grey);
+	position: absolute;
+	top: 50%;
+	right: 0;
+	transform: translateY(-50%);
+}
+
+.join-error-message {
+	padding: 0.5rem 1rem;
+	display: block;
+	max-width: 200px;
+}

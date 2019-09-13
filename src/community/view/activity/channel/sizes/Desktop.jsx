@@ -33,7 +33,7 @@ export default function ChannelDesktopLayout (props) {
 
 	return (
 		<Aside.Container className={cx('community-desktop')} asideClassname={cx('community-desktop-sidebar')}>
-			<Aside side="left" component={Sidebar} community={community} channels={channels} channel={channel} title={title} />
+			<Aside side="left" component={Sidebar} community={community} channels={channels} channel={channel} title={title} showJoin />
 			<div className={cx('community-desktop-body')}>
 				{notFound && (<ChannelNotFound {...props} />)}
 				{channel && (

@@ -57,3 +57,8 @@
 	padding-left: var(--side-padding, 1rem);
 	cursor: pointer;
 }
+
+.identity-join {
+	position: relative;
+	top: -4px;
+}
