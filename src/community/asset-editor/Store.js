@@ -19,6 +19,8 @@ export default class AssetEditorStore extends Stores.BoundStore {
 
 		this.set({
 			loading: true,
+			assetName: assetName,
+			commmunity: community,
 			imageAsset: null,
 			solidAsset: null,
 			gradientAsset: null
@@ -59,7 +61,16 @@ export default class AssetEditorStore extends Stores.BoundStore {
 
 	setValue (type, value) {
 		const values = this.get('values');
+		const prev = values[type];
 
-		this.setImmediate({values: {...values, [type]: value}});
+		this.setImmediate({
+			values: {
+				...values,
+				[type]: {
+					...prev,
+					updated: value
+				}
+			}
+		});
 	}
 }

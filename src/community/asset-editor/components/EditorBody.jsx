@@ -11,26 +11,33 @@ import Styles from './EditorBody.css';
 const cx = classnames.bind(Styles);
 
 export default
-@Store.monitor(['current', 'values', 'setValue', 'error'])
+@Store.monitor(['current', 'values', 'setValue', 'error', 'assetName'])
 class CommunityAssetEditorBody extends React.Component {
 	static propTypes = {
 		current: PropTypes.string,
 		values: PropTypes.object,
 		setValue: PropTypes.func,
-		error: PropTypes.any
+		error: PropTypes.any,
+		assetName: PropTypes.string
 	}
 
-	onChange = () => {}
+	onChange = (value) => {
+		const {current, setValue} = this.props;
+
+		if (setValue) {
+			setValue(current, value);
+		}
+	}
 
 	render () {
-		const {current, values, error} = this.props;
+		const {current, values, error, assetName} = this.props;
 		const Cmp = getForType(current);
 
 		return (
 			<div className={cx('community-asset-editor-body')}>
 				{error && !current && (<Errors error={error} />)}
 				{current && Cmp && (
-					<Cmp value={values[current]} onChange={this.onChange} error={error} />
+					<Cmp value={values[current]} onChange={this.onChange} error={error} assetName={assetName} />
 				)}
 			</div>
 		);
