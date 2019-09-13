@@ -3,13 +3,13 @@ import PropTypes from 'prop-types';
 import {scoped} from '@nti/lib-locale';
 import {Image} from '@nti/web-commons';
 
-import DefaultCommunitBackground from './assets/default-community-background.png';
+import DefaultCommunityBackground from './assets/default-community-background.png';
 
 const t = scoped('nti-profiles.community.common.Background', {
 	alt: '%(displayName)s Background Image'
 });
 
-CommunityBackground.Default = DefaultCommunitBackground;
+CommunityBackground.Default = DefaultCommunityBackground;
 CommunityBackground.hasBackground = (community) => community && !community.noBackground;
 CommunityBackground.propTypes = {
 	community: PropTypes.shape({
@@ -27,7 +27,7 @@ export default function CommunityBackground ({community, ...otherProps}) {
 	return (
 		<Image
 			src={backgroundURL || blurredAvatarURL}
-			fallback={DefaultCommunitBackground}
+			fallback={DefaultCommunityBackground}
 			alt={t('alt', {displayName})}
 			{...otherProps}
 		/>
