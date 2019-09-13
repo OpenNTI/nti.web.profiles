@@ -30,7 +30,7 @@ export default class CommunityAssetImageEditor extends React.Component {
 		assetName: PropTypes.string,
 		value: PropTypes.shape({
 			original: PropTypes.string,
-			updated: PropTypes.string
+			updated: PropTypes.object
 		}),
 		onChange: PropTypes.func
 	}

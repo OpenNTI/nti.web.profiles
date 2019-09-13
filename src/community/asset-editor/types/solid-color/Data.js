@@ -1,4 +1,6 @@
-import {isSVG} from '../../utils';
+import {SolidColorImage} from '@nti/web-whiteboard';
+
+import {isSVG, getSVGDataURL} from '../../utils';
 
 import {Name as NameConst} from './Constant';
 
@@ -10,4 +12,17 @@ export const getAssetState = (url, raw) => {
 		original: url,
 		updated: null
 	};
+};
+
+export const saveTo = async ({updated}, community, assetName) => {
+	const svg = SolidColorImage.getSVGFromSolidColorState(updated);
+	const dataURL = await getSVGDataURL(svg);
+
+	const data = {
+		[assetName]: dataURL
+	};
+
+	const resp = await community.putToLink('edit', data);
+
+	await community.refresh(resp);
 };
