@@ -6,7 +6,7 @@ import {Loading} from '@nti/web-commons';
 import Store from './Store';
 import Style from './View.css';
 import Controls from './components/Controls';
-import Editor from './components/Editor';
+import EditorBody from './components/EditorBody';
 import TypeSwitcher from './components/TypeSwitcher';
 
 const cx = classnames.bind(Style);
@@ -47,7 +47,7 @@ class CommunityAssetEditor extends React.Component {
 						<TypeSwitcher />
 					</div>
 					<div className={cx('body')}>
-						<Editor />
+						<EditorBody />
 						<Controls />
 					</div>
 				</Loading.Placeholder>

@@ -36,7 +36,9 @@ export default class AssetEditorStore extends Stores.BoundStore {
 					this.set({
 						loading: false,
 						current: Type.Name,
-						[Type.Name]: state
+						values: {
+							[Type.Name]: state
+						}
 					});
 					return;
 				}
@@ -51,8 +53,13 @@ export default class AssetEditorStore extends Stores.BoundStore {
 		}
 	}
 
-
 	setCurrent (current) {
 		this.set({current});
+	}
+
+	setValue (type, value) {
+		const values = this.get('values');
+
+		this.setImmediate({values: {...values, [type]: value}});
 	}
 }
