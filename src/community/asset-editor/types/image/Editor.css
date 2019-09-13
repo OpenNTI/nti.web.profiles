@@ -1,0 +1,26 @@
+.community-image-editor {
+	position: relative;
+}
+
+.community-image {
+	width: 100%;
+}
+
+.note {
+	padding: 1.25rem;
+}
+
+.note .label {
+	display: block;
+	font-size: 0.625rem;
+	font-weight: bold;
+	text-transform: uppercase;
+	color: var(--secondary-grey);
+}
+
+.note .message {
+	display: block;
+	font-size: 0.875rem;
+	font-weight: normal;
+	color: var(--secondary-grey);
+}
