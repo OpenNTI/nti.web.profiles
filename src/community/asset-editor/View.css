@@ -1,0 +1,16 @@
+.community-asset-editor {
+	background-color: white;
+	display: flex;
+	flex-direction: row;
+	align-items: stretch;
+	width: 470px;
+}
+
+.navigation {
+	flex: 0 0 auto;
+}
+
+.body {
+	flex: 1 1 auto;
+}
+

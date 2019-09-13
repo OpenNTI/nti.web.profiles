@@ -1,0 +1,7 @@
+.linear-gradient-icon {
+	background-image: url('../assets/linear-gradient.png');
+}
+
+.linear-gradient-icon-active {
+	background-image: url('../assets/linear-gradient-active.png');
+}

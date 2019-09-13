@@ -1,0 +1,7 @@
+.solid-color-icon {
+	background-image: url('../assets/solid-color.png');
+}
+
+.solid-color-icon-active {
+	background-image: url('../assets/solid-color-active.png');
+}

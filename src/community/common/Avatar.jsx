@@ -6,14 +6,13 @@ import {Image} from '@nti/web-commons';
 import DefaultCommunityAvatar from './assets/default-community-avatar.png';
 
 const aspectRatio = 334 / 175;
-const DefaultAvatar = typeof DefaultCommunityAvatar !== 'string' ? DefaultCommunityAvatar.src : DefaultCommunityAvatar;
 const t = scoped('nti-profiles.community.common.Avatar', {
 	alt: '%(displayName)s Avatar'
 });
 
 
 CommunityAvatar.aspectRatio = aspectRatio;
-CommunityAvatar.Default = DefaultAvatar;
+CommunityAvatar.Default = DefaultCommunityAvatar;
 CommunityAvatar.hasAvatar = (community) => community && !community.noAvatar;
 CommunityAvatar.propTypes = {
 	className: PropTypes.string,
@@ -32,7 +31,7 @@ export default function CommunityAvatar ({community, className, ...otherProps}) 
 		<Image.Container aspectRatio={aspectRatio} className={className}>
 			<Image
 				src={avatarURL}
-				fallback={DefaultAvatar}
+				fallback={DefaultCommunityAvatar}
 				alt={t('alt', {displayName})}
 				aspectRatio={aspectRatio}
 				letterbox="black"

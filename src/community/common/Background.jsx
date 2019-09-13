@@ -5,12 +5,11 @@ import {Image} from '@nti/web-commons';
 
 import DefaultCommunitBackground from './assets/default-community-background.png';
 
-const DefaultBackground = typeof DefaultCommunitBackground !== 'string' ? DefaultCommunitBackground.src : DefaultCommunitBackground;
 const t = scoped('nti-profiles.community.common.Background', {
 	alt: '%(displayName)s Background Image'
 });
 
-CommunityBackground.Default = DefaultBackground;
+CommunityBackground.Default = DefaultCommunitBackground;
 CommunityBackground.hasBackground = (community) => community && !community.noBackground;
 CommunityBackground.propTypes = {
 	community: PropTypes.shape({
@@ -27,7 +26,7 @@ export default function CommunityBackground ({community, ...otherProps}) {
 	return (
 		<Image
 			src={backgroundURL}
-			fallback={DefaultBackground}
+			fallback={DefaultCommunitBackground}
 			alt={t('alt', {displayName})}
 			{...otherProps}
 		/>

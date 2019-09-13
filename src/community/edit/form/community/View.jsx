@@ -29,7 +29,6 @@ class CommunityEditFormCommunityFields extends React.Component {
 
 
 	render () {
-
 		return (
 			<div className={cx('community-fields')}>
 				<DisplayName {...this.props} />
