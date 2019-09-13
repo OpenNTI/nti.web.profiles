@@ -12,7 +12,7 @@ import TypeSwitcher from './components/TypeSwitcher';
 const cx = classnames.bind(Style);
 
 export default
-@Store.connect(['loading'])
+@Store.connect(['loading', 'saving', 'save'])
 class CommunityAssetEditor extends React.Component {
 	static deriveBindingFromProps (props) {
 		return {
@@ -33,7 +33,19 @@ class CommunityAssetEditor extends React.Component {
 		onCancel: PropTypes.func,
 
 		loading: PropTypes.bool,
-		error: PropTypes.any
+		saving: PropTypes.bool,
+		save: PropTypes.func
+	}
+
+	onSubmit = (e) => {
+		e.preventDefault();
+		e.stopPropagation();
+
+		const {save} = this.props;
+
+		if (save) {
+			save();
+		}
 	}
 
 
@@ -46,10 +58,10 @@ class CommunityAssetEditor extends React.Component {
 					<div className={cx('navigation')}>
 						<TypeSwitcher />
 					</div>
-					<div className={cx('body')}>
+					<form className={cx('body')} onSubmit={this.onSubmit}>
 						<EditorBody />
 						<Controls />
-					</div>
+					</form>
 				</Loading.Placeholder>
 			</div>
 		);

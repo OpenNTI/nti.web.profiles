@@ -19,6 +19,7 @@ export default class AssetEditorStore extends Stores.BoundStore {
 
 		this.set({
 			loading: true,
+			error: null,
 			assetName: assetName,
 			commmunity: community,
 			imageAsset: null,
@@ -56,7 +57,7 @@ export default class AssetEditorStore extends Stores.BoundStore {
 	}
 
 	setCurrent (current) {
-		this.set({current});
+		this.set({current, error: null});
 	}
 
 	setValue (type, value) {
@@ -64,6 +65,7 @@ export default class AssetEditorStore extends Stores.BoundStore {
 		const prev = values[type];
 
 		this.setImmediate({
+			error: null,
 			values: {
 				...values,
 				[type]: {
@@ -72,5 +74,45 @@ export default class AssetEditorStore extends Stores.BoundStore {
 				}
 			}
 		});
+	}
+
+
+	cancel () {
+		if (this.binding.onCancel) {
+			this.binding.onCancel();
+		}
+	}
+
+
+	async save () {
+		const current = this.get('current');
+		const values = this.get('values');
+
+		const toSave = values[current];
+
+		if (!toSave) { return; }
+
+		try {
+			for (let Type of Types) {
+				if (Type.Name === current && Type.saveTo) {
+					this.set({saving: true});
+
+					await Type.saveTo(values[current], this.community, this.assetName);
+
+					if (this.binding.afterSave) {
+						this.binding.afterSave();
+					}
+
+					this.set({saving: false});
+				}
+			}
+
+			throw new Error('Unknown Asset Type');
+		} catch (e) {
+			this.set({
+				saving: false,
+				error: e
+			});
+		}
 	}
 }

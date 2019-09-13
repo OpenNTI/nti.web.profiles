@@ -27,6 +27,8 @@ export default class AvatarInput extends React.Component {
 		});
 	}
 
+	closeEditAvatar = () => this.setState({editAvatar: false})
+
 	render () {
 		const {community} = this.props;
 		const {editAvatar} = this.state;

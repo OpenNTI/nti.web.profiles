@@ -35,10 +35,10 @@ class CommunityAssetEditorBody extends React.Component {
 
 		return (
 			<div className={cx('community-asset-editor-body')}>
-				{error && !current && (<Errors error={error} />)}
 				{current && Cmp && (
 					<Cmp value={values[current]} onChange={this.onChange} error={error} assetName={assetName} />
 				)}
+				{error && (<Errors.Message error={error} />)}
 			</div>
 		);
 	}
