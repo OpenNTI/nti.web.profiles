@@ -4,6 +4,8 @@ import classnames from 'classnames/bind';
 import {scoped} from '@nti/lib-locale';
 import {Image, Text} from '@nti/web-commons';
 
+import {Avatar} from '../../../common';
+
 import {Name} from './Constants';
 import Styles from './Editor.css';
 
@@ -32,7 +34,9 @@ export default class CommunityAssetImageEditor extends React.Component {
 
 		return (
 			<div className={cx('community-image-editor')}>
-				<Image src={updated || original} className={cx('community-image')} />
+				<Image.Container aspectRatio={Avatar.aspectRatio} className={cx('community-image')}>
+					<Image src={updated || original} className={cx('community-image')} />
+				</Image.Container>
 				<div className={cx('note')}>
 					<Text.Base className={cx('label')}>{t('notice.label')}</Text.Base>
 					<Text.Base className={cx('message')}>{t('notice.message')}</Text.Base>
