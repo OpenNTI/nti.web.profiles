@@ -15,17 +15,18 @@ CommunityBackground.propTypes = {
 	community: PropTypes.shape({
 		noBackground: PropTypes.bool,
 		backgroundURL: PropTypes.string,
+		blurredAvatarURL: PropTypes.string,
 		displayName: PropTypes.string
 	})
 };
 export default function CommunityBackground ({community, ...otherProps}) {
 	if (!community || community.noBackground) { return null; }
 
-	const {backgroundURL, displayName} = community;
+	const {backgroundURL, blurredAvatarURL, displayName} = community;
 
 	return (
 		<Image
-			src={backgroundURL}
+			src={backgroundURL || blurredAvatarURL}
 			fallback={DefaultCommunitBackground}
 			alt={t('alt', {displayName})}
 			{...otherProps}
