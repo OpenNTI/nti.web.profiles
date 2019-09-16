@@ -1,15 +1,18 @@
 import {SolidColorImage} from '@nti/web-whiteboard';
 
-import {isSVG, getSVGDataURL} from '../../utils';
+import {getSVGDataURL} from '../../utils';
+import {Avatar} from '../../../common';
 
 import {Name as NameConst} from './Constant';
 
 export const Name = NameConst;
 export const getAssetState = (url, raw) => {
-	if (!isSVG(url)) { return null; }
+	const original = SolidColorImage.getSolidColorStateFromSVG(raw);
+
+	if (!original) { return null;}
 
 	return {
-		original: url,
+		original,
 		updated: null
 	};
 };
