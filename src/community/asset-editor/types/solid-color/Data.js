@@ -15,7 +15,7 @@ export const getAssetState = (url, raw) => {
 };
 
 export const saveTo = async ({updated}, community, assetName) => {
-	const svg = SolidColorImage.getSVGFromSolidColorState(updated);
+	const svg = SolidColorImage.getSVGFromSolidColorState(updated, Avatar.aspectRatio);
 	const dataURL = await getSVGDataURL(svg);
 
 	const data = {
