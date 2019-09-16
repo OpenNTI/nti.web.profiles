@@ -7,6 +7,7 @@ import Styles from './Sidebar.css';
 import Card from './Card';
 import ChannelList from './channel-list';
 import Identity from './Identity';
+import MembersLink from './MembersLink';
 
 const cx = classnames.bind(Styles);
 
@@ -14,9 +15,8 @@ export default function CommunitySidebar (props) {
 	return (
 		<Card className={cx('community-sidebar')}>
 			<Identity {...props} className={cx('side-bar-identity')} />
-			<div className={cx('side-bar-members')}>
-				<MembersPreview.InlineList {...props} max={9} />
-			</div>
+			<MembersPreview.InlineList {...props} className={cx('side-bar-members')} max={9} />
+			<MembersLink {...props} />
 			<ChannelList {...props} className={cx('side-bar-channel-list')} />
 		</Card>
 	);

@@ -3,8 +3,10 @@ import PropTypes from 'prop-types';
 import {Router, Route, View} from '@nti/web-routing';
 import {Prompt, Background} from '@nti/web-commons';
 
-import {Modal} from '../edit';
+import {Modal as EditModal} from '../edit';
 import {Background as CommunityBackground} from '../common';
+
+import {Modal as MembersModal} from './members';
 
 export default class CommunityFrame extends React.Component {
 	static propTypes = {
@@ -17,6 +19,10 @@ export default class CommunityFrame extends React.Component {
 		if (obj.isCommunity && context === 'edit') {
 			return '#community-edit';
 		}
+
+		if (obj.isCommunity && context === 'members') {
+			return '#members';
+		}
 	}
 
 
@@ -26,12 +32,23 @@ export default class CommunityFrame extends React.Component {
 
 		return (
 			<Prompt.Dialog>
-				<Modal
+				<EditModal
 					title={title}
 					community={community}
 					onCancel={close}
 					afterSave={close}
 				/>
+			</Prompt.Dialog>
+		);
+	}
+
+	renderMembers = (_, setHash) => {
+		const {community} = this.props;
+		const close = () => setHash('');
+
+		return (
+			<Prompt.Dialog>
+				<MembersModal community={community} doClose={close} />
 			</Prompt.Dialog>
 		);
 	}
@@ -55,6 +72,7 @@ export default class CommunityFrame extends React.Component {
 								return React.cloneElement(item, {community});
 							})}
 							<Route.Hash matches="#community-edit" render={this.renderCommunityEdit} />
+							<Route.Hash matches="#members" render={this.renderMembers} />
 						</Background>
 					</CommunityBackground>
 				</Router.RouteForProvider>

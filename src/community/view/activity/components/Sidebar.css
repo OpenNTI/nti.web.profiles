@@ -8,5 +8,5 @@
 }
 
 .side-bar-members {
-	padding: 0 var(--side-padding, 1rem) 1.25rem;
+	padding: 0 var(--side-padding, 1rem);
 }
