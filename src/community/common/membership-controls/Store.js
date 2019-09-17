@@ -1,14 +1,46 @@
 import {Stores} from '@nti/lib-store';
 import {wait} from '@nti/lib-commons';
+import {getAppUsername} from '@nti/web-client';
 
 export default class CommunityMemberShipControlStore extends Stores.BoundStore {
 	load () {
 		const community = this.community = this.binding.community;
 
+		if (this.cleanupListeners) { this.cleanupListeners(); }
+
+		const update = (e) => this.update(e);
+
+		community.addListener('members-changed', update);
+
+		this.cleanupListeners = () => {
+			community.removeListener('members-changed', update);
+			delete this.cleanupListeners;
+		};
+
 		this.set({
 			joined: community.isJoined,
 			canJoin: community.canJoin,
 			canLeave: community.canLeave
+		});
+	}
+
+	cleanup () {
+		if (this.cleanupListeners) {
+			this.cleanupListeners();
+		}
+	}
+
+
+	update ({Added, Removed}) {
+		const appUser = getAppUsername();
+		const added = Boolean((Added || []).find(u => u === appUser));
+		const removed = Boolean((Removed || []).find(u => u === appUser));
+
+		if (!added && !removed) { return; }
+		
+		setImmediate(async () => {
+			await this.community.refresh();
+			this.load();
 		});
 	}
 

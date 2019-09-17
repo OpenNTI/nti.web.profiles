@@ -13,12 +13,10 @@ export default class CommunityMemberPreview extends Stores.BoundStore {
 
 		const loadPreview = () => this.loadPreview();
 
-		community.addListener('members-added', loadPreview);
-		community.addListener('members-removed', loadPreview);
+		community.addListener('members-changed', loadPreview);
 
 		this.cleanupListeners = () => {
-			community.removeListener('members-added', loadPreview);
-			community.removeListener('members-removed', loadPreview);
+			community.removeListener('members-changed', loadPreview);
 			delete this.cleanupListeners;
 		};
 
