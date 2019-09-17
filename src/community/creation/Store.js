@@ -1,5 +1,6 @@
 import {Stores} from '@nti/lib-store';
 import {getService} from '@nti/web-client';
+import {Models} from '@nti/lib-interfaces';
 
 export default class CommunityCreationStore extends Stores.BoundStore {
 	async load () {
@@ -58,7 +59,13 @@ export default class CommunityCreationStore extends Stores.BoundStore {
 			const service = await getService();
 			const communities = service.getCommunities();
 
-			const community = await communities.createCommunity({displayName, 'auto-subscribe': autoSubscribe});
+			const data = {displayName};
+
+			if (autoSubscribe) {
+				data['auto_subscribe'] = Models.entities.Community.SiteAutoSubscribe;
+			}
+
+			const community = await communities.createCommunity(data);
 
 			if (this.binding.afterSave) {
 				this.binding.afterSave(community);
