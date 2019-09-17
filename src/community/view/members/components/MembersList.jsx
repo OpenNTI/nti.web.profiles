@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 import {scoped} from '@nti/lib-locale';
-import {Errors, EmptyState} from '@nti/web-commons';
+import {Errors, EmptyState, Loading} from '@nti/web-commons';
 
 import Store from '../Store';
 
@@ -18,18 +18,27 @@ const t = scoped('nti-profiles.community.view.members.components.MembersList', {
 });
 
 export default
-@Store.monitor(['items', 'error', 'searchTerm'])
+@Store.monitor(['items', 'error', 'searchTerm', 'searching'])
 class CommunityMemberShipList extends React.Component {
 	static propTypes = {
 		items: PropTypes.array,
 		selected: PropTypes.object,
 		error: PropTypes.any,
-		searchTerm: PropTypes.string
+		searchTerm: PropTypes.string,
+		searching: PropTypes.bool
 	}
 
 
 	render () {
-		const {items, error, searchTerm} = this.props;
+		const {items, error, searchTerm, searching} = this.props;
+
+		if (!items && searching) {
+			return (
+				<div className={cx('members-list-searching')}>
+					<Loading.Spinner />
+				</div>
+			);
+		}
 
 		if (!items || !items.length) {
 			return (

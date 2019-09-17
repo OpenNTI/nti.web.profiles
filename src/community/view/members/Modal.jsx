@@ -44,18 +44,21 @@ class CommunityMemebersModal extends React.Component {
 
 	render () {
 		const {doClose, items, loading, error, searchTerm, loadMore} = this.props;
+		const isLoading = loading;
 		const initial = !items && !searchTerm;
 		const errored = initial && error;
 
 		return (
 			<Prompt.BaseWindow title={t('title.loading')} doClose={doClose} className={cx('community-members-modal')}>
-				<Loading.Placeholder loading={loading && initial} fallback={<Loading.Spinner.Large />}>
-					<InfiniteScroll.Continuous loadMore={loadMore} buffer={200}>
-						<Header />
-						{errored && (<ErrorCmp error={error} />)}
-						{!errored && (<MembersList />) }
-					</InfiniteScroll.Continuous>
-				</Loading.Placeholder>
+				<Header />
+				<div className={cx('community-members-modal-body')}>
+					<Loading.Placeholder loading={isLoading && initial} fallback={<Loading.Spinner.Large />}>
+						<InfiniteScroll.Continuous loadMore={loadMore} buffer={200}>
+							{errored && (<ErrorCmp error={error} />)}
+							{!errored && (<MembersList />) }
+						</InfiniteScroll.Continuous>
+					</Loading.Placeholder>
+				</div>
 			</Prompt.BaseWindow>
 		);
 	}

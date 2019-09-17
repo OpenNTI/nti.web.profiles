@@ -15,6 +15,14 @@ function getParams (batchSize, searchTerm) {
 export default
 @mixin(Mixins.Searchable)
 class CommunityMembersStore extends Stores.BoundStore {
+	constructor () {
+		super();
+
+		this.set({
+			loading: true
+		});
+	}
+
 	load () {
 		if (this.community === this.binding.community && this.searchTerm === this.lastSearchTerm) { return; }
 
@@ -37,6 +45,10 @@ class CommunityMembersStore extends Stores.BoundStore {
 		const {community, lastSearchTerm, currentPage} = this;
 		const dataSource = community.getMembersDataSource();
 
+		const startedLoad = Date.now();
+
+		this.lastLoadStarted = startedLoad;
+
 		this.setImmediate({
 			loading: true
 		});
@@ -46,7 +58,7 @@ class CommunityMembersStore extends Stores.BoundStore {
 				await currentPage.loadNextPage() :
 				await dataSource.requestPage(0, getParams(BatchSize, lastSearchTerm));
 
-			if (this.community !== community || lastSearchTerm !== this.searchTerm) { return; }
+			if (this.community !== community || lastSearchTerm !== this.searchTerm || this.lastLoadStarted !== startedLoad) { return; }
 
 			if (!page) {
 				this.set({loading: false, hasMore: false});
@@ -60,6 +72,7 @@ class CommunityMembersStore extends Stores.BoundStore {
 
 			this.setImmediate({
 				loading: false,
+				searching: false,
 				hasMore,
 				items: [...existingItems, ...Items]
 			});
@@ -67,7 +80,8 @@ class CommunityMembersStore extends Stores.BoundStore {
 			this.setImmediate({
 				loading: false,
 				error: e,
-				hasMore: false
+				hasMore: false,
+				searching: false
 			});
 		}
 	}
@@ -76,6 +90,13 @@ class CommunityMembersStore extends Stores.BoundStore {
 		const hasMore = this.get('hasMore');
 
 		return hasMore ? (() => this.loadNextPage()) : null;
+	}
+
+	applySearchTerm (term) {
+		this.set({
+			items: null,
+			searching: Boolean(term)
+		});
 	}
 
 
