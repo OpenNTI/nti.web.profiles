@@ -8,6 +8,7 @@ import Styles from './Modal.css';
 import Store from './Store';
 import Header from './components/header';
 import MembersList from './components/MembersList';
+import Selection from './components/Selection';
 
 const {InfiniteScroll} = Layouts;
 const cx = classnames.bind(Styles);
@@ -50,6 +51,7 @@ class CommunityMemebersModal extends React.Component {
 		return (
 			<Prompt.BaseWindow title={title} doClose={doClose} className={cx('community-members-modal')}>
 				<Header />
+				<Selection />
 				<div className={cx('community-members-modal-body')}>
 					<Loading.Placeholder loading={isLoading && initial} fallback={<Loading.Spinner.Large />}>
 						<InfiniteScroll.Continuous loadMore={loadMore} buffer={200}>

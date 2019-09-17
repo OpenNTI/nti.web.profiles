@@ -33,7 +33,7 @@ class CommunityMember extends React.Component {
 		const {member, toggleMemberSelected} = this.props;
 
 		if (toggleMemberSelected) {
-			toggleMemberSelected(member.getID());
+			toggleMemberSelected(member);
 		}
 	}
 
@@ -42,7 +42,7 @@ class CommunityMember extends React.Component {
 		const {member, removeMember} = this.props;
 
 		if (removeMember) {
-			removeMember(member.getID());
+			removeMember(member);
 		}
 	}
 

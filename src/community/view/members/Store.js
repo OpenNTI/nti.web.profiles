@@ -100,14 +100,20 @@ class CommunityMembersStore extends Stores.BoundStore {
 		});
 	}
 
+	clearSelected () {
+		this.set({
+			selected: {}
+		});
+	}
 
-	toggleMemberSelected (memberId) {
+	toggleMemberSelected (member) {
 		const selected = this.get('selected') || {};
+		const memberId = member.getID();
 
 		if (selected[memberId]) {
 			delete selected[memberId];
 		} else {
-			selected[memberId] = true;
+			selected[memberId] = member;
 		}
 
 		this.set({
@@ -115,20 +121,45 @@ class CommunityMembersStore extends Stores.BoundStore {
 		});
 	}
 
+	async removeMemberIds (memberIds) {
+		const {community} = this;
+
+		try {
+			await community.removeMembers(memberIds);
+
+			delete this.currentPage;
+			
+			this.setImmediate({
+				items: [],
+				selected: {}
+			});
+			
+			this.loadNextPage();
+		} catch (e) {
+			this.set({
+				error: e
+			});
+		}
+	}
 	removeSelected () {
 		const selected = this.get('selected');
 
-		return this.removeMember(Object.keys(selected));
+		return this.removeMemberIds(Object.keys(selected));
 	}
 
 
 	removeAllMembers () {}
 
-	async removeMember (member) {
+
+	removeMember (member) {
+		return this.removeMemberIds(member.getID ? member.getID() : member);	
+	}
+
+	async addMemberIds (memberIds) {
 		const {community} = this;
 
 		try {
-			await community.removeMembers(member);
+			await community.addMembers(memberIds);
 
 			delete this.currentPage;
 			
@@ -145,24 +176,7 @@ class CommunityMembersStore extends Stores.BoundStore {
 		}
 	}
 
-	async addMembers (members) {
-		const {community} = this;
-
-		try {
-			await community.addMembers(members);
-
-			delete this.currentPage;
-			
-			this.setImmediate({
-				items: [],
-				selected: {}
-			});
-			
-			this.loadNextPage();
-		} catch (e) {
-			this.set({
-				error: e
-			});
-		}
+	addMember (member) {
+		return this.addMemberIds(member.getID ? member.getID() : member);	
 	}
 }
