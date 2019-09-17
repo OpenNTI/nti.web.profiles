@@ -6,6 +6,7 @@ import {Prompt, Layouts, Loading, Error as ErrorCmp} from '@nti/web-commons';
 
 import Styles from './Modal.css';
 import Store from './Store';
+import AddMember from './components/AddMembers';
 import Header from './components/header';
 import MembersList from './components/MembersList';
 import Selection from './components/Selection';
@@ -50,6 +51,7 @@ class CommunityMemebersModal extends React.Component {
 
 		return (
 			<Prompt.BaseWindow title={title} doClose={doClose} className={cx('community-members-modal')}>
+				<AddMember />
 				<Header />
 				<Selection />
 				<div className={cx('community-members-modal-body')}>
