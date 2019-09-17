@@ -3,11 +3,36 @@ import {Stores} from '@nti/lib-store';
 const DefaultMax = 10;
 
 export default class CommunityMemberPreview extends Stores.BoundStore {
-	async load () {
+	load () {
 		if (this.community === this.binding.community && this.max === this.binding.max) { return; }
 
 		const community = this.community = this.binding.community;
-		const max = this.max = this.binding.max;
+		this.max = this.binding.max;
+
+		if (this.cleanupListeners) { this.cleanupListeners(); }
+
+		const loadPreview = () => this.loadPreview();
+
+		community.addListener('members-added', loadPreview);
+		community.addListener('members-removed', loadPreview);
+
+		this.cleanupListeners = () => {
+			community.removeListener('members-added', loadPreview);
+			community.removeListener('members-removed', loadPreview);
+			delete this.cleanupListeners;
+		};
+
+		this.loadPreview();
+	}
+
+	cleanup () {
+		if (this.cleanupListeners) {
+			this.cleanupListeners();
+		}
+	}
+
+	async loadPreview () {
+		const {community, max} = this;
 
 		this.set({
 			loading: true,
