@@ -93,8 +93,49 @@ class CommunityMembersStore extends Stores.BoundStore {
 		});
 	}
 
+	removeSelected () {
+		const selected = this.get('selected');
 
-	removeMember (memberId) {}
+		return this.removeMember(Object.keys(selected));
+	}
 
-	addMember (memberId) {}
+	async removeMember (member) {
+		const {community} = this;
+
+		try {
+			await community.removeMembers(member);
+
+			delete this.currentPage;
+			
+			this.setImmediate({
+				items: []
+			});
+			
+			this.loadNextPage();
+		} catch (e) {
+			this.set({
+				error: e
+			});
+		}
+	}
+
+	async addMembers (members) {
+		const {community} = this;
+
+		try {
+			await community.addMembers(members);
+
+			delete this.currentPage;
+			
+			this.setImmediate({
+				items: []
+			});
+			
+			this.loadNextPage();
+		} catch (e) {
+			this.set({
+				error: e
+			});
+		}
+	}
 }
