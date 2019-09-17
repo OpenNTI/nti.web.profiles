@@ -34,6 +34,7 @@ class CommunityMembersStore extends Stores.BoundStore {
 			loading: false,
 			items: null,
 			errors: null,
+			community: this.community,
 			canRemoveMembers: this.community.canRemoveMembers,
 			canAddMembers: this.community.canAddMembers
 		});
@@ -120,6 +121,9 @@ class CommunityMembersStore extends Stores.BoundStore {
 		return this.removeMember(Object.keys(selected));
 	}
 
+
+	removeAllMembers () {}
+
 	async removeMember (member) {
 		const {community} = this;
 
@@ -129,7 +133,8 @@ class CommunityMembersStore extends Stores.BoundStore {
 			delete this.currentPage;
 			
 			this.setImmediate({
-				items: []
+				items: [],
+				selected: {}
 			});
 			
 			this.loadNextPage();
@@ -149,7 +154,8 @@ class CommunityMembersStore extends Stores.BoundStore {
 			delete this.currentPage;
 			
 			this.setImmediate({
-				items: []
+				items: [],
+				selected: {}
 			});
 			
 			this.loadNextPage();

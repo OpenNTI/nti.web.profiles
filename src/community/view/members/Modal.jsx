@@ -6,15 +6,15 @@ import {Prompt, Layouts, Loading, Error as ErrorCmp} from '@nti/web-commons';
 
 import Styles from './Modal.css';
 import Store from './Store';
-import Header from './components/Header';
+import Header from './components/header';
 import MembersList from './components/MembersList';
 
 const {InfiniteScroll} = Layouts;
 const cx = classnames.bind(Styles);
 const t = scoped('nti-profiles.community.view.members.Modal', {
 	title: {
-		one: '%(count)s Member',
-		other: '%(count)s Members'
+		view: 'Members',
+		manage: 'Manage Members'
 	}
 });
 
@@ -45,8 +45,10 @@ class CommunityMemebersModal extends React.Component {
 		const initial = !items && !searchTerm;
 		const errored = initial && error;
 
+		const title = community.canManageMembers ? t('title.manage') : t('title.view');
+
 		return (
-			<Prompt.BaseWindow title={t('title', {count: community.memberCount})} doClose={doClose} className={cx('community-members-modal')}>
+			<Prompt.BaseWindow title={title} doClose={doClose} className={cx('community-members-modal')}>
 				<Header />
 				<div className={cx('community-members-modal-body')}>
 					<Loading.Placeholder loading={isLoading && initial} fallback={<Loading.Spinner.Large />}>
