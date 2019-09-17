@@ -13,11 +13,8 @@ const {InfiniteScroll} = Layouts;
 const cx = classnames.bind(Styles);
 const t = scoped('nti-profiles.community.view.members.Modal', {
 	title: {
-		loading: 'Members',
-		loaded: {
-			one: '%(count)s Member',
-			other: '%(count)s Members'
-		}
+		one: '%(count)s Member',
+		other: '%(count)s Members'
 	}
 });
 
@@ -43,13 +40,13 @@ class CommunityMemebersModal extends React.Component {
 
 
 	render () {
-		const {doClose, items, loading, error, searchTerm, loadMore} = this.props;
+		const {community, doClose, items, loading, error, searchTerm, loadMore} = this.props;
 		const isLoading = loading;
 		const initial = !items && !searchTerm;
 		const errored = initial && error;
 
 		return (
-			<Prompt.BaseWindow title={t('title.loading')} doClose={doClose} className={cx('community-members-modal')}>
+			<Prompt.BaseWindow title={t('title', {count: community.memberCount})} doClose={doClose} className={cx('community-members-modal')}>
 				<Header />
 				<div className={cx('community-members-modal-body')}>
 					<Loading.Placeholder loading={isLoading && initial} fallback={<Loading.Spinner.Large />}>
