@@ -12,6 +12,21 @@ function getParams (batchSize, searchTerm) {
 	return params;
 }
 
+function dedup (items) {
+	const {unique} = items.reduce((acc, item) => {
+		const id = item.getID();
+
+		if (!acc.seen[id]) {
+			acc.unique.push(item);
+			acc.seen[id] = true;
+		}
+
+		return acc;
+	}, {unique: [], seen: {}});
+
+	return unique;
+}
+
 export default
 @mixin(Mixins.Searchable)
 class CommunityMembersStore extends Stores.BoundStore {
@@ -75,7 +90,7 @@ class CommunityMembersStore extends Stores.BoundStore {
 				loading: false,
 				searching: false,
 				hasMore,
-				items: [...existingItems, ...Items]
+				items: dedup([...existingItems, ...Items])
 			});
 		} catch (e) {
 			this.setImmediate({
@@ -125,58 +140,56 @@ class CommunityMembersStore extends Stores.BoundStore {
 		const {community} = this;
 
 		try {
-			await community.removeMembers(memberIds);
-
-			delete this.currentPage;
+			const resp = await community.removeMembers(memberIds);
+			
+			const items = this.get('items');
+			const {Removed} = resp;
+			const removedMap = Removed.reduce((acc, id) => ({...acc, [id]: true}), {});
 			
 			this.setImmediate({
-				items: [],
+				items: items.filter(item => !removedMap[item.getID()]),
 				selected: {}
 			});
-			
-			this.loadNextPage();
 		} catch (e) {
 			this.set({
 				error: e
 			});
 		}
 	}
+
 	removeSelected () {
 		const selected = this.get('selected');
 
 		return this.removeMemberIds(Object.keys(selected));
 	}
 
-
-	removeAllMembers () {}
-
+	removeAllMembers () {
+		this.removeMemberIds('everyone');
+	}
 
 	removeMember (member) {
 		return this.removeMemberIds(member.getID ? member.getID() : member);	
 	}
 
-	async addMemberIds (memberIds) {
+	async addMember (member) {
 		const {community} = this;
 
 		try {
-			await community.addMembers(memberIds);
+			const memberId = member.getID ? member.getID() : member;
+			const resp = await community.addMembers(memberId);
 
-			delete this.currentPage;
-			
-			this.setImmediate({
-				items: [],
+			const items = this.get('items');
+			const {Added} = resp;
+			const wasAdded = Boolean((Added || []).find(u => u === memberId));
+
+			this.set({
+				items: wasAdded ? dedup([member, ...items]) : items,
 				selected: {}
-			});
-			
-			this.loadNextPage();
+			});			
 		} catch (e) {
 			this.set({
 				error: e
 			});
 		}
-	}
-
-	addMember (member) {
-		return this.addMemberIds(member.getID ? member.getID() : member);	
 	}
 }
