@@ -5,7 +5,7 @@ import {scoped} from '@nti/lib-locale';
 import TypeButton from '../../components/TypeButton';
 
 import Styles from './Button.css';
-import {Name} from './Constants';
+import {Name} from './Constant';
 
 const cx = classnames.bind(Styles);
 const t = scoped('nti-profiles.community.asset-editor.types.linear-gradient', {

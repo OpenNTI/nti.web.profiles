@@ -7,6 +7,7 @@ import {Name as NameConst} from './Constant';
 
 export const Name = NameConst;
 export const getAssetState = (url, raw) => {
+
 	const original = SolidColorImage.getSolidColorStateFromSVG(raw);
 
 	if (!original) { return null;}
