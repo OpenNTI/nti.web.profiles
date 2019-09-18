@@ -37,6 +37,18 @@ class CommunityMembersHeaderLabel extends React.Component {
 
 	flyout = React.createRef()
 
+	removeAllMembers = () => {
+		if (this.flyout.current) {
+			this.flyout.current.dismiss();
+		}
+
+		const {removeAllMembers} = this.props;
+
+		if (removeAllMembers) {
+			removeAllMembers();
+		}
+	}
+
 	render () {
 		const {selected} = this.props;
 		const selectedCount = selected ? Object.keys(selected).length : 0;
