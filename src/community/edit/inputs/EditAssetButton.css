@@ -1,11 +1,4 @@
-.avatar-input {
-	position: relative;
-}
-
-.edit-avatar:global(.nti-button) {
-	position: absolute;
-	top: 1rem; bottom: auto;
-	left: auto; right: 0.625rem;
+.edit-asset-button:global(.nti-button) {
 	padding: 6px 12px;
 	background-color: rgba(51, 51, 51, 0.92);
 	border-radius: 2rem;
@@ -14,13 +7,13 @@
 	align-items: center;
 }
 
-.edit-avatar i {
+.edit-asset-button .icon {
 	opacity: 0.4;
 	margin-right: 0.5rem;
 	font-size: 1.125rem;
 }
 
-.edit-avatar .change {
+.edit-asset-button .change {
 	font-size: 0.875rem;
 	font-weight: 600;
 	line-height: 1.3;

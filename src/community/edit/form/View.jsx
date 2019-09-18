@@ -7,7 +7,7 @@ import {DialogButtons, Text, Loading} from '@nti/web-commons';
 import Store from '../Store';
 
 import Styles from './Style.css';
-import Avatar from './avatar';
+import Assets from './assets';
 import Community from './community';
 import ChannelList from './channel-list';
 
@@ -51,7 +51,7 @@ class CommunityEditForm extends React.Component {
 
 		return (
 			<form className={cx('community-edit-form')} onSubmit={this.save}>
-				<Avatar {...otherProps} />
+				<Assets {...otherProps} />
 				<div className={cx('form-body')}>
 					<Community {...otherProps} />
 					<div className={cx('channel-lists')}>

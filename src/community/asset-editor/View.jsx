@@ -14,6 +14,8 @@ const cx = classnames.bind(Style);
 export default
 @Store.connect(['loading', 'saving', 'save'])
 class CommunityAssetEditor extends React.Component {
+	static syncAssets = Store.syncAssets
+
 	static deriveBindingFromProps (props) {
 		return {
 			community: props.community,

@@ -11,6 +11,10 @@ const DefaultAssets = {
 };
 
 export default class AssetEditorStore extends Stores.BoundStore {
+	static syncAssets (community) {
+		return community.save({backgroundURL: null});
+	}
+
 	async load () {
 		if (this.community === this.binding.community && this.assetName === this.binding.assetName) { return; }
 		
