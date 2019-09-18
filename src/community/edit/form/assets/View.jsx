@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 import {scoped} from '@nti/lib-locale';
-import {Prompt, Image, Checkbox, Text} from '@nti/web-commons';
+import {Prompt, Image, Text} from '@nti/web-commons';
 
 import {Avatar, Background} from '../../../common';
 import AssetEditor from '../../../asset-editor';
@@ -12,7 +12,7 @@ import Styles from './View.css';
 
 const cx = classnames.bind(Styles);
 const t = scoped('nti-profiles.community.edit.form.assets.View', {
-	syncBackground: 'Use cover image for background.'
+	syncBackground: 'Set cover image as background.'
 });
 
 export default class AssetsInput extends React.Component {
@@ -34,24 +34,18 @@ export default class AssetsInput extends React.Component {
 		});
 	}
 
-	changeSync = (e) => {
+	doSync = (e) => {
 		const {community} = this.props;
 
-		if (!e.target.checked) {
-			this.setState({
-				editBackground: true
-			});
-		} else {
-			this.setState({syncing: true}, async () => {
-				try {
-					await AssetEditor.syncAssets(community);
-				} finally {
-					this.setState({
-						syncing: false
-					});
-				}
-			});
-		}
+		this.setState({syncing: true}, async () => {
+			try {
+				await AssetEditor.syncAssets(community);
+			} finally {
+				this.setState({
+					syncing: false
+				});
+			}
+		});
 	}
 
 	closeEditAvatar = () => this.setState({editAvatar: false})
@@ -63,7 +57,7 @@ export default class AssetsInput extends React.Component {
 
 		if (!Avatar.hasAvatar(community)) { return null; }
 
-		const synced = !community.backgroundURL;
+		const notSynced = Boolean(community.backgroundURL);
 
 		return (
 			<div className={cx('assets-input', {syncing})}>
@@ -77,12 +71,11 @@ export default class AssetsInput extends React.Component {
 					<Avatar community={community} />
 					<EditAssetButton className={cx('edit-button')} onClick={this.openEditAvatar} />
 				</div>
-				<div className={cx('synced')}>
-					<Checkbox checked={synced} onChange={this.changeSync}/>
-					<Text.Base>
+				{notSynced && (
+					<Text.Base as="a" role="button" className={cx('sync')} onClick={this.doSync}>
 						{t('syncBackground')}
 					</Text.Base>
-				</div>
+				)}
 				{editAvatar && (
 					<Prompt.Dialog onBeforeDismiss={this.closeEditAvatar}>
 						<AssetEditor

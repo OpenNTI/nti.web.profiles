@@ -13,7 +13,7 @@
 	left: var(--side-padding, 1.5rem); right: auto;
 	width: 65%;
 	border-radius: 5px;
-	box-shadow: 0 1px 3px 0 rgba(0,0,0,0.25);
+	box-shadow: 0 15px 15px 0 rgba(0, 0, 0, 0.7);
 	overflow: hidden;
 }
 
@@ -23,19 +23,15 @@
 	left: auto; right: 1rem;
 }
 
-.synced {
-	padding: 0.25rem var(--side-padding, 1.5rem);
-	background: var(--panel-background);
-	display: flex;
-	flex-direction: row;
-	align-items: center;
+.sync {
+	cursor: pointer;
+	position: absolute;
+	top: auto; bottom: 1rem;
+	left: auto; right: var(--side-padding, 1.5rem);
 	font-size: 0.875rem;
 	line-height: 1.3;
-	color: var(--secondary-grey);
-	border-bottom: 1px solid var(--border-grey-light);
+	color: white;
+	text-decoration: underline;
+	text-shadow: 0 0 3px rgba(0, 0, 0, 0.7);
 }
-
-.synced :global(.checkbox-component) {
-	cursor: pointer;
-} 
 
