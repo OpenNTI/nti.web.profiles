@@ -8,6 +8,7 @@ import Styles from './Style.css';
 import CommunityStore from './Store';
 import About from './About';
 import DisplayName from './DisplayName';
+import AutoSubscribe from './AutoSubscribe';
 
 const cx = classnames.bind(Styles);
 
@@ -29,10 +30,13 @@ class CommunityEditFormCommunityFields extends React.Component {
 
 
 	render () {
+		const {community} = this.props;
+
 		return (
 			<div className={cx('community-fields')}>
 				<DisplayName {...this.props} />
 				<About {...this.props} />
+				{!community.notAutoSubscribeable && (<AutoSubscribe {...this.props} />)}
 			</div>
 		);
 	}

@@ -8,7 +8,8 @@ export default class CommunityStore extends Stores.BoundStore {
 
 		this.set({
 			displayName: community ? community.displayName : '',
-			about: community ? community.about : ''
+			about: community ? community.about : '',
+			autoSubscribeRule: community && community.autoSubscribeRule
 		});
 	}
 
@@ -24,10 +25,15 @@ export default class CommunityStore extends Stores.BoundStore {
 		this.setImmediate({about, aboutError: null});
 	}
 
+	setAutoSubscribeRule (autoSubscribeRule) {
+		this.set({autoSubscribeRule, autoSubscribeRuleError: null});
+	}
+
 	async save () {
 		const {community} = this.binding;
 		const displayName = this.get('displayName');
 		const about = this.get('about');
+		const autoSubscribeRule = this.get('autoSubscribeRule');
 
 		let toSave = null;
 
@@ -41,13 +47,19 @@ export default class CommunityStore extends Stores.BoundStore {
 			toSave.about = about;
 		}
 
+		if (autoSubscribeRule !== community.autoSubscribeRule) {
+			toSave = toSave || {};
+			toSave.autoSubscribeRule = autoSubscribeRule;
+		}
+
 		if (!toSave) { return; }
 
 		try {
 			await community.save(toSave);
 		} catch (e) {
 			if (e.field === 'displayName') { this.set({displayNameError: e}); }
-			if (e.field === 'about') { this.set({about: e}); }
+			if (e.field === 'about') { this.set({aboutError: e}); }
+			if (e.field === 'autoSubscribeRule') { this.set({autoSubscribeRuleError: e}); }
 
 			throw e;
 		}

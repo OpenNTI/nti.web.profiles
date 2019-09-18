@@ -1,0 +1,26 @@
+.auto-subscribe {
+	display: block;
+}
+
+.auto-subscribe .field {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+.auto-subscribe .field .message {
+	flex: 1 1 auto;
+	padding-right: 2.5rem;
+	font-size: 0.875rem;
+	line-height: 1.3;
+}
+
+.auto-subscribe .field .message .label {
+	display: block;
+	color: var(--primary-grey);
+}
+
+.auto-subscribe .field .message .description {
+	display: block;
+	color: var(--secondary-grey);
+}
