@@ -67,6 +67,13 @@ export default class ChannelListStore extends Stores.BoundStore {
 				const {channelList} = this;
 
 				savedChannel = await channelList.createChannel(data);
+
+				const channels = this.get('sortableChannels');
+
+				this.setImmediate({
+					sortableChannels: channels.map(existing => (existing.getID() === id ? savedChannel : existing))
+				});
+
 				return savedChannel;
 			}
 		};
