@@ -2,10 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 import {scoped} from '@nti/lib-locale';
-import {User, Checkbox, Text, Flyout, Button} from '@nti/web-commons';
+import {Checkbox, Text, Flyout, Button} from '@nti/web-commons';
 import {LinkTo} from '@nti/web-routing';
 
 import Store from '../Store';
+import {ListItem} from '../../../../identity';
 
 import Styles from './Member.css';
 
@@ -70,20 +71,7 @@ class CommunityMember extends React.Component {
 		return (
 			<div className={cx('community-member', {selected: isSelected})}>
 				{canRemoveMembers && (<Checkbox checked={isSelected} onChange={this.select} />)}
-				<div className={cx('avatar-container')}>
-					<User.Avatar user={member} className={cx('member-avatar')} />
-					<User.Presence user={member} border className={cx('member-presence')} />
-				</div>
-				<div className={cx('meta')}>
-					<Text.Base>
-						<User.DisplayName user={member} className={cx('member-name')} />
-					</Text.Base>
-					{member.email && (
-						<Text.Base className={cx('member-email')}>
-							{member.email}
-						</Text.Base>
-					)}
-				</div>
+				<ListItem className={cx('member-identity')} entity={member} />
 				{canRemoveMembers && (
 					<Flyout.Triggered
 						ref={this.flyout}

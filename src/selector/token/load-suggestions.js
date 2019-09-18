@@ -1,4 +1,8 @@
+import React from 'react';
 import {getService} from '@nti/web-client';
+
+import {ListItem} from '../../identity';
+import {Data} from '../../community';
 
 async function getSearchResults (term) {
 	if (!term || term.length < 3) { return []; }
@@ -12,20 +16,16 @@ async function getSearchResults (term) {
 
 function buildToken (user) {
 	return {
-		value: user.getID(),
-		display: user.displayName,
-		isSameToken: (t) => t.value === user.getID()
+		value: user,
+		display: React.createElement(ListItem, {entity: user}),
+		isSameToken: (t) => t.value && t.value.getID() === user.getID()
 	};
 }
 
 export default async function loadSuggestions (match, showEveryone) {
 	if (!match && !showEveryone) { return []; }
 	if (!match && showEveryone) {
-		return [{
-			value: 'everyone',
-			display: 'Everyone',
-			isSameToken: (t) => t.value && t.value === 'everyone'
-		}];
+		return [buildToken(Data.EveryoneCommunity)];
 	}
 
 	const results = await getSearchResults(match);

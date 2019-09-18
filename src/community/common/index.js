@@ -1,3 +1,4 @@
+export * as Data from './Data';
 export * as MembersPreview from './members-preview';
 export * as MembershipControls from './membership-controls';
 export Avatar from './Avatar';
