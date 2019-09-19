@@ -6,7 +6,7 @@ import {LinearGradientImage} from '@nti/web-whiteboard';
 import {Name} from './Constant';
 
 const DefaultGradient = {
-	rotation: '45',
+	rotation: '-45',
 	stops: [
 		{color: Color.fromHex('#3fb3f6'), offset: '0%'},
 		{color: Color.fromHex('#fff'), offset: '100%'}
