@@ -39,7 +39,12 @@ export default function CommunityIdentity ({community, title, className, showOpt
 					<span className={cx('show-options')} onClick={showOptions} >...</span>
 				)}
 				{showJoin && (
-					<MembershipControls.Join showLeave community={community} className={cx('identity-join')}/>
+					<MembershipControls.Join
+						showLeave
+						community={community}
+						className={cx('identity-join')}
+						onNoAccess={LinkTo.Static.goHome}
+					/>
 				)}
 			</div>
 			{community.canEdit() && (

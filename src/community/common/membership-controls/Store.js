@@ -85,6 +85,7 @@ export default class CommunityMemberShipControlStore extends Stores.BoundStore {
 
 		try {
 			await community.leave();
+			await this.checkAccess();
 			await minWait();
 
 			this.set({
@@ -98,6 +99,19 @@ export default class CommunityMemberShipControlStore extends Stores.BoundStore {
 				leaving: false,
 				error: e
 			});
+		}
+	}
+
+
+	async checkAccess () {
+		const {community} = this;
+
+		try {
+			await community.refresh();
+		} catch (e) {
+			if (this.binding.onNoAccess) {
+				this.binding.onNoAccess();
+			}
 		}
 	}
 }

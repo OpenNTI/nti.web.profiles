@@ -18,7 +18,8 @@ export default
 class CommunityJoinButton extends React.Component {
 	static deriveBindingFromProps (props) {
 		return {
-			community: props.community
+			community: props.community,
+			onNoAccess: props.onNoAccess
 		};
 	}
 
@@ -26,6 +27,7 @@ class CommunityJoinButton extends React.Component {
 		className: PropTypes.string,
 		community: PropTypes.object,
 		showLeave: PropTypes.bool,
+		onNoAccess: PropTypes.func,
 
 		joined: PropTypes.bool,
 		join: PropTypes.bool,
