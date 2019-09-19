@@ -33,7 +33,7 @@ export default function CommunityAutoSubscribeInput ({className, value, onChange
 					<Text.Base className={cx('label')}>{t('label')}</Text.Base>
 					<Text.Base className={cx('description')}>{t('description')}</Text.Base>
 				</div>
-				<Input.Toggle value={value} onChange={setSiteAutoSubscribe} hideLabel />
+				<Input.Toggle value={value} onChange={setSiteAutoSubscribe} />
 			</div>
 			{error && (
 				<Errors.Message error={error} />
