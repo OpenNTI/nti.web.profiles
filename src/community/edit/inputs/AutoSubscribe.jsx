@@ -17,7 +17,7 @@ const t = scoped('nti-profiles.community.edit.inputs.AutoSubscribe', {
 
 CommunityAutoSubscribeInput.propTypes = {
 	className: PropTypes.string,
-	value: PropTypes.bool,
+	value: PropTypes.object,
 	onChange: PropTypes.func,
 	error: PropTypes.any
 };
@@ -33,7 +33,7 @@ export default function CommunityAutoSubscribeInput ({className, value, onChange
 					<Text.Base className={cx('label')}>{t('label')}</Text.Base>
 					<Text.Base className={cx('description')}>{t('description')}</Text.Base>
 				</div>
-				<Input.Toggle value={value} onChange={setSiteAutoSubscribe} />
+				<Input.Toggle value={Boolean(value)} onChange={setSiteAutoSubscribe} />
 			</div>
 			{error && (
 				<Errors.Message error={error} />
