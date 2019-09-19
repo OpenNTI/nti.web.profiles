@@ -1,8 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {Color} from '@nti/lib-commons';
 import {SolidColorImage} from '@nti/web-whiteboard';
 
 import {Name} from './Constant';
+
+const DefaultColor = {
+	color: Color.fromHex('#3fb3f6')
+};
 
 export default class CommunityAssetSolidColorImageEditor extends React.Component {
 	static Name = Name;
@@ -28,7 +33,7 @@ export default class CommunityAssetSolidColorImageEditor extends React.Component
 		const {original, updated} = value || {};
 
 		return (
-			<SolidColorImage.Editor value={updated || original} onChange={this.onChange} />
+			<SolidColorImage.Editor value={updated || original || DefaultColor} onChange={this.onChange} />
 		);
 	}
 }
