@@ -15,14 +15,16 @@ const cx = classnames.bind(Styles);
 const t = scoped('nti-profiles.community.edit.form.View', {
 	save: 'Save',
 	cancel: 'Cancel',
-	saving: 'Saving...'
+	saving: 'Saving...',
+	deleting: 'Deleting...'
 });
 
 export default
-@Store.monitor(['save', 'cancel', 'channelList', 'saving'])
+@Store.monitor(['save', 'deleting', 'cancel', 'channelList', 'saving'])
 class CommunityEditForm extends React.Component {
 	static propTypes = {
 		saving: PropTypes.bool,
+		deleting: PropTypes.bool,
 		save: PropTypes.func,
 		cancel: PropTypes.func,
 		channelList: PropTypes.array
@@ -40,11 +42,13 @@ class CommunityEditForm extends React.Component {
 	}
 
 	render () {
-		const {cancel, channelList, saving, ...otherProps} = this.props;
+		const {cancel, channelList, saving, deleting, ...otherProps} = this.props;
 		const buttons = [
 			{label: t('cancel'), type: 'button', onClick: cancel, disabled: saving},
 			{label: t('save'), type: 'submit', disabled: saving}
 		];
+
+		const doMask = saving || deleting;
 
 		delete otherProps.save;
 
@@ -62,9 +66,9 @@ class CommunityEditForm extends React.Component {
 						})}
 					</div>
 				</div>
-				{saving && (
+				{doMask && (
 					<div className={cx('saving-mask')}>
-						<Text.Base className={cx('message')}>{t('saving')}</Text.Base>
+						<Text.Base className={cx('message')}>{deleting ? t('deleting') : t('saving')}</Text.Base>
 						<Loading.Spinner />
 					</div>
 				)}

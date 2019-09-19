@@ -62,3 +62,7 @@ textarea.input[readonly] {
 .community-edit-auto-subscribe {
 	margin-top: 1.5rem;
 }
+
+.delete-control {
+	margin-top: 1.5rem;
+}

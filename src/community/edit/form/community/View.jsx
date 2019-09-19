@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 
 import FormStore from '../../Store.js';
+import {Delete} from '../../inputs';
 
 import Styles from './Style.css';
 import CommunityStore from './Store';
@@ -37,6 +38,7 @@ class CommunityEditFormCommunityFields extends React.Component {
 				<DisplayName {...this.props} />
 				<About {...this.props} />
 				{!community.notAutoSubscribeable && (<AutoSubscribe {...this.props} />)}
+				<Delete className={cx('delete-control')} {...this.props} />
 			</div>
 		);
 	}

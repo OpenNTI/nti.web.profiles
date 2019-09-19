@@ -6,7 +6,8 @@ const initialState = {
 	displayName: null,
 	about: null,
 	channels: null,
-	channelOrders: null
+	channelOrders: null,
+	deleting: false
 };
 
 export default class CommunityEditStore extends Stores.BoundStore {
@@ -18,6 +19,16 @@ export default class CommunityEditStore extends Stores.BoundStore {
 		}
 
 		const community = this.community = this.binding.community;
+
+		if (this.cleanupListeners) { this.cleanupListeners(); }
+
+		const onDeleting = () => this.set({deleting: true});
+
+		community.addListener('deleting', onDeleting);
+		this.cleanupListeners = () => {
+			community.removeListener('deleting', onDeleting);
+		};
+
 
 		this.set({...initialState});
 
@@ -33,6 +44,12 @@ export default class CommunityEditStore extends Stores.BoundStore {
 				loading: false,
 				error: e
 			});
+		}
+	}
+
+	cleanup () {
+		if (this.cleanupListeners) {
+			this.cleanupListeners();
 		}
 	}
 

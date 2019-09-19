@@ -1,0 +1,35 @@
+.community-delete .field {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+.community-delete .field .message {
+	flex: 1 1 auto;
+	padding-right: 2.5rem;
+	font-size: 0.875rem;
+	line-height: 1.3;
+}
+
+.community-delete .field .message .label {
+	display: block;
+	color: var(--primary-grey);
+}
+
+.community-delete .field .message .description {
+	display: block;
+	color: var(--secondary-grey);
+}
+
+.community-delete .lock-box {
+	padding: 0.5rem 0;
+}
+
+.community-delete.locked .lock-box {
+	visibility: hidden;
+	pointer-events: none;
+}
+
+.community-delete .remove-button {
+	background-color: var(--primary-red);
+}
