@@ -87,7 +87,7 @@ export default class AssetsInput extends React.Component {
 					</Prompt.Dialog>
 				)}
 				{editBackground && (
-					<Prompt.Dialog onBeforeDismiss={this.closeEditBackground}>
+					<Prompt.Dialog onBeforeDismiss={this.closeEditBackground} closeOnMaskClick={false} >
 						<AssetEditor
 							community={community}
 							assetName="backgroundURL"
