@@ -30,8 +30,8 @@ class CommunityJoinButton extends React.Component {
 		onNoAccess: PropTypes.func,
 
 		joined: PropTypes.bool,
-		join: PropTypes.bool,
-		leave: PropTypes.bool,
+		join: PropTypes.func,
+		leave: PropTypes.func,
 		canJoin: PropTypes.bool,
 		canLeave: PropTypes.bool,
 		joining: PropTypes.bool,
