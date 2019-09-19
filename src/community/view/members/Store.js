@@ -178,6 +178,16 @@ class CommunityMembersStore extends Stores.BoundStore {
 			const memberId = member.getID ? member.getID() : member;
 			const resp = await community.addMembers(memberId);
 
+			if (memberId === 'everyone') {
+				delete this.currentPage;
+				this.setImmediate({
+					loading: true,
+					items: []
+				});
+				this.loadNextPage();
+				return;
+			}
+
 			const items = this.get('items');
 			const {Added} = resp;
 			const wasAdded = Boolean((Added || []).find(u => u === memberId));
