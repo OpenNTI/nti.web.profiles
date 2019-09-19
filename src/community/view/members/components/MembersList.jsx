@@ -18,9 +18,10 @@ const t = scoped('nti-profiles.community.view.members.components.MembersList', {
 });
 
 export default
-@Store.monitor(['items', 'error', 'searchTerm', 'searching'])
+@Store.monitor(['loading', 'items', 'error', 'searchTerm', 'searching'])
 class CommunityMemberShipList extends React.Component {
 	static propTypes = {
+		loading: PropTypes.bool,
 		items: PropTypes.array,
 		selected: PropTypes.object,
 		error: PropTypes.any,
@@ -30,7 +31,7 @@ class CommunityMemberShipList extends React.Component {
 
 
 	render () {
-		const {items, error, searchTerm, searching} = this.props;
+		const {items, loading, error, searchTerm, searching} = this.props;
 
 		if (!items && searching) {
 			return (
@@ -57,6 +58,11 @@ class CommunityMemberShipList extends React.Component {
 						</li>
 					);
 				})}
+				{loading && (
+					<li className={cx('loading')}>
+						<Loading.Spinner />
+					</li>
+				)}
 				{error && (
 					<li className={cx('error-item')}>
 						<Errors.Message error={error} />
