@@ -19,6 +19,7 @@
 	line-height: 1.3;
 	font-weight: 600;
 	color: var(--primary-grey);
+	word-break: break-all;
 }
 
 
