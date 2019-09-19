@@ -11,8 +11,8 @@ const CommunityModel = Models.entities.Community;
 
 const cx = classnames.bind(Styles);
 const t = scoped('nti-profiles.community.edit.inputs.AutoSubscribe', {
-	label: 'Auto-Subscribe',
-	description: 'Everyone has access to view and engage in this community.'
+	label: 'Auto-Join New Users',
+	description: 'When a new user creates an account, automatically add them to this community.'
 });
 
 CommunityAutoSubscribeInput.propTypes = {
