@@ -1,6 +1,6 @@
 import {scoped} from '@nti/lib-locale';
 
-import EveryoneCommunityAvatar from './assets/global-community-asset.png';
+import EveryoneCommunityAvatar from './assets/global-community-asset.svg';
 
 const t = scoped('nti-profile.community.common.Constants', {
 	everyone: 'Everyone'
