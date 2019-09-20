@@ -9,7 +9,7 @@
 	flex: 1 1 auto;
 }
 
-.members-actions-button:global(.nti-button.primary),
+.member-count,
 .members-selected {
 	background: none;
 	color: var(--primary-grey);
@@ -21,9 +21,16 @@
 	align-items: center;
 }
 
-.members-actions-icon {
-	margin-left: 0.25rem;
-	font-size: 0.875rem;
+.members {
+	display: flex;
+    align-items: center;
+    flex-direction: row
+}
+
+.members-actions-button:global(.nti-button.primary) {
+	background: none;
+	padding: 0 0.25rem 7px;
+	color: var(--primary-grey);
 }
 
 .remove-all-members:global(.nti-button.primary) {

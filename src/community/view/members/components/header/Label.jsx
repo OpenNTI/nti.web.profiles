@@ -23,7 +23,7 @@ const t = scoped('nti-profiles.community.view.members.components.header.Label', 
 });
 
 export default
-@Store.monitor(['selected', 'community', 'canRemoveMembers', 'removeAllMembers'])
+@Store.monitor(['selected', 'community', 'canRemoveMembers', 'removeAllMembers', 'searchTerm'])
 class CommunityMembersHeaderLabel extends React.Component {
 	static propTypes = {
 		selected: PropTypes.object,
@@ -32,7 +32,8 @@ class CommunityMembersHeaderLabel extends React.Component {
 		}),
 
 		canRemoveMembers: PropTypes.bool,
-		removeAllMembers: PropTypes.func
+		removeAllMembers: PropTypes.func,
+		searchTerm: PropTypes.string
 	}
 
 	flyout = React.createRef()
@@ -70,30 +71,34 @@ class CommunityMembersHeaderLabel extends React.Component {
 	}
 
 	renderMembers () {
-		const {community, canRemoveMembers} = this.props;
+		const {community, canRemoveMembers, searchTerm} = this.props;
 		const {memberCount} = community || {};
 		const label = community ? t('members', {count: memberCount}) : t('loadingMembers');
+
+		if (searchTerm) { return null; }
 
 		if (!canRemoveMembers) { return (<Text.Base>{label}</Text.Base>); }
 
 		const trigger = (
 			<Button className={cx('members-actions-button')}>
-				{label}
-				<i className={cx('icon-chevron-down', 'members-actions-icon')} />
+				...
 			</Button>
 		);
 
 		return (
-			<Flyout.Triggered
-				ref={this.flyout}
-				trigger={trigger}
-				verticalAlign={Flyout.ALIGNMENTS.BOTTOM}
-				horizontalAlign={Flyout.ALIGNMENTS.LEFT}
-			>
-				<Button className={cx('remove-all-members')} onClick={this.removeAllMembers}>
-					<Text.Base>{t('removeAllMembers')}</Text.Base>
-				</Button>
-			</Flyout.Triggered>
+			<div className={cx('members')}>
+				<Text.Base className={cx('member-count')}>{label}</Text.Base>
+				<Flyout.Triggered
+					ref={this.flyout}
+					trigger={trigger}
+					verticalAlign={Flyout.ALIGNMENTS.BOTTOM}
+					horizontalAlign={Flyout.ALIGNMENTS.LEFT}
+				>
+					<Button className={cx('remove-all-members')} onClick={this.removeAllMembers}>
+						<Text.Base>{t('removeAllMembers')}</Text.Base>
+					</Button>
+				</Flyout.Triggered>
+			</div>
 		);
 	}
 }
