@@ -15,6 +15,10 @@ import Sizes from './sizes';
 const {Responsive} = Layouts;
 const cx = classnames.bind(Styles);
 
+function isValidTopicId (topicId) {
+	return topicId && topicId !== 'object';
+}
+
 export default
 @Store.connect(['notFound', 'channel', 'sortOn', 'setSortOn', 'layout', 'setLayout', 'availableSorts'])
 class CommunityChannel extends React.Component {
@@ -51,7 +55,7 @@ class CommunityChannel extends React.Component {
 		return (
 			<>
 				{this.renderList()}
-				{topicId && channel && (
+				{isValidTopicId(topicId) && channel && (
 					<Prompt.Dialog className={cx('community-topic-dialog', topicWindowClassName)}>
 						<Topic
 							channel={channel}
@@ -68,7 +72,7 @@ class CommunityChannel extends React.Component {
 	renderMobile = () => {
 		const {channel, topicId, commentId, ...otherProps} = this.props;
 
-		if (topicId && channel) {
+		if (isValidTopicId(topicId) && channel) {
 			return (
 				<Topic
 					channel={channel}
