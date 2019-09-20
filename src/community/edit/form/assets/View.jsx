@@ -77,7 +77,7 @@ export default class AssetsInput extends React.Component {
 					</Text.Base>
 				)}
 				{editAvatar && (
-					<Prompt.Dialog onBeforeDismiss={this.closeEditAvatar}>
+					<Prompt.Dialog onBeforeDismiss={this.closeEditAvatar} closeOnMaskClick={false} >
 						<AssetEditor
 							community={community}
 							assetName="avatarURL"
