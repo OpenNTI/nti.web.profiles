@@ -1,9 +1,7 @@
 import {Stores, Mixins} from '@nti/lib-store';
 import {mixin} from '@nti/lib-decorators';
-import {wait} from '@nti/lib-commons';
 
 const BatchSize = 20;
-const MinWait = 1000;
 
 function getParams (batchSize, searchTerm) {
 	const params = {};
@@ -183,7 +181,6 @@ class CommunityMembersStore extends Stores.BoundStore {
 
 		if (!pending || !pending.length) { return; }
 
-		const minWait = wait.min(MinWait);
 		const {hasEveryone, toAdd} = pending.reduce((acc, member) => {
 			const id = member.value.getID();
 
@@ -203,8 +200,6 @@ class CommunityMembersStore extends Stores.BoundStore {
 
 		try {
 			const resp = await community.addMembers(hasEveryone ? 'everyone' : toAdd);
-
-			await minWait();
 
 			if (hasEveryone) {
 				delete this.currentPage;
