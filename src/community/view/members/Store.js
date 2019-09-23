@@ -1,7 +1,9 @@
 import {Stores, Mixins} from '@nti/lib-store';
 import {mixin} from '@nti/lib-decorators';
+import {wait} from '@nti/lib-commons';
 
 const BatchSize = 20;
+const MinWait = 1000;
 
 function getParams (batchSize, searchTerm) {
 	const params = {};
@@ -171,35 +173,68 @@ class CommunityMembersStore extends Stores.BoundStore {
 		return this.removeMemberIds(member.getID ? member.getID() : member);	
 	}
 
-	async addMember (member) {
+	setPendingMembers (pending) {
+		this.setImmediate({pending});
+	}
+
+	async addPendingMembers () {
 		const {community} = this;
+		const pending = this.get('pending');
+
+		if (!pending || !pending.length) { return; }
+
+		const minWait = wait.min(MinWait);
+		const {hasEveryone, toAdd} = pending.reduce((acc, member) => {
+			const id = member.value.getID();
+
+			if (id === 'everyone') {
+				acc.hasEveryone = true;
+			} else {
+				acc.toAdd.push(id);
+			}
+
+			return acc;
+		}, {hasEveryone: false, toAdd: []});
+
+		this.set({
+			pending: null,
+			adding: true
+		});
 
 		try {
-			const memberId = member.getID ? member.getID() : member;
-			const resp = await community.addMembers(memberId);
+			const resp = await community.addMembers(hasEveryone ? 'everyone' : toAdd);
 
-			if (memberId === 'everyone') {
+			await minWait();
+
+			if (hasEveryone) {
 				delete this.currentPage;
 				this.setImmediate({
 					loading: true,
-					items: []
+					items: [],
+					pending: null,
+					adding: false
 				});
 				this.loadNextPage();
 				return;
 			}
 
 			const items = this.get('items');
-			const {Added} = resp;
-			const wasAdded = Boolean((Added || []).find(u => u === memberId));
+			const addedSet = new Set((resp && resp.Added) || []);
+			const wasAdded = pending
+				.filter(m => addedSet.has(m.value.getID()))
+				.map(m => m.value);
 
 			this.set({
-				items: wasAdded ? dedup([member, ...items]) : items,
-				selected: {}
-			});			
+				items: dedup([...wasAdded, ...items]),
+				selected: {},
+				pending: null,
+				adding: false
+			});
 		} catch (e) {
 			this.set({
 				error: e
 			});
 		}
+
 	}
 }

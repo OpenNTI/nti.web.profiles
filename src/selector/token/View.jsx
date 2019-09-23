@@ -21,10 +21,10 @@ export default class UserTokenEditor extends React.Component {
 		allowEveryone: PropTypes.bool
 	}
 
-	getSuggestions = (match) => {
+	getSuggestions = (match, selected) => {
 		const {allowEveryone} = this.props;
 
-		return loadSuggestions(match, allowEveryone);
+		return loadSuggestions(match, selected, allowEveryone);
 	}
 
 	render () {

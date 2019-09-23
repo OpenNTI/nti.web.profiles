@@ -14,3 +14,22 @@
 	display: block;
 	width: 100%;
 }
+
+.add-members.has-selection .user-input{
+	border-radius: 2px 2px 0 0;
+}
+
+
+.add-members :global(.dialog-buttons) {
+	visibility: hidden;
+	pointer-events: none;
+	background: var(--panel-background);
+	box-shadow: 0 1px 0 0 var(--border-grey-light),
+		1px 0 0 0 var(--border-grey-light),
+		-1px 0 0 0 var(--border-grey-light);
+}
+
+.add-members.has-selection :global(.dialog-buttons) {
+	visibility: visible;
+	pointer-events: all;
+}
