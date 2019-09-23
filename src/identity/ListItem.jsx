@@ -52,15 +52,15 @@ class ProfileIdentityListItem extends React.Component {
 
 		return (
 			<div className={cx('nti-profile-identity-list-item', className)} {...otherProps} >
-				<div className={cx('avatar-container')}>
+				<div className={cx('avatar-container', 'nti-profile-identity-list-item-avatar-container')}>
 					<AvatarInfo.Cmp {...{[AvatarInfo.prop]: entity}} className={cx('avatar')} />
 					{Presence && (<Presence user={entity} border className={cx('presence')} />)}
 				</div>
 				<div className={cx('info')}>
 					<Text.Base>
-						<User.DisplayName user={entity} className={cx('name')} />
+						<User.DisplayName user={entity} className={cx('name', 'nti-profile-identity-list-item-name')} />
 					</Text.Base>
-					<List.SeparatedInline className={cx('meta')}>
+					<List.SeparatedInline className={cx('meta', 'nti-profile-identity-list-item-meta')}>
 						{email && (
 							<Text.Base className={cx('email')}>
 								{email}
