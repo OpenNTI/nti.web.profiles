@@ -139,8 +139,24 @@ class CommunityMembersStore extends Stores.BoundStore {
 	async removeMemberIds (memberIds) {
 		const {community} = this;
 
+		this.setImmediate({
+			removing: true
+		});
+
 		try {
 			const resp = await community.removeMembers(memberIds);
+
+			if (memberIds === 'everyone') {
+				delete this.currentPage;
+				this.setImmediate({
+					loading: true,
+					items: [],
+					selected: {},
+					removing: false
+				});
+				this.loadNextPage();
+				return;
+			}
 			
 			const items = this.get('items');
 			const {Removed} = resp;
@@ -148,11 +164,13 @@ class CommunityMembersStore extends Stores.BoundStore {
 			
 			this.setImmediate({
 				items: items.filter(item => !removedMap[item.getID()]),
-				selected: {}
+				selected: {},
+				removing: false
 			});
 		} catch (e) {
 			this.set({
-				error: e
+				error: e,
+				removing: false
 			});
 		}
 	}

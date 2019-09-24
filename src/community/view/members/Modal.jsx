@@ -17,11 +17,12 @@ const t = scoped('nti-profiles.community.view.members.Modal', {
 	title: {
 		view: 'Members',
 		manage: 'Manage Members'
-	}
+	},
+	removing: 'Removing...'
 });
 
 export default
-@Store.connect(['loading', 'items', 'error', 'hasMore', 'loadMore', 'searchTerm'])
+@Store.connect(['loading', 'removing', 'items', 'error', 'hasMore', 'loadMore', 'searchTerm'])
 class CommunityMemebersModal extends React.Component {
 	static deriveBindingFromProps (props) {
 		return {
@@ -35,6 +36,7 @@ class CommunityMemebersModal extends React.Component {
 
 		items: PropTypes.array,
 		loading: PropTypes.bool,
+		removing: PropTypes.bool,
 		error: PropTypes.any,
 		loadMore: PropTypes.func,
 		searchTerm: PropTypes.string
@@ -42,7 +44,7 @@ class CommunityMemebersModal extends React.Component {
 
 
 	render () {
-		const {community, doClose, items, loading, error, searchTerm, loadMore} = this.props;
+		const {community, doClose, items, loading, removing, error, searchTerm, loadMore} = this.props;
 		const isLoading = loading;
 		const initial = !items && !searchTerm;
 		const errored = initial && error;
@@ -62,6 +64,7 @@ class CommunityMemebersModal extends React.Component {
 						</InfiniteScroll.Continuous>
 					</Loading.Placeholder>
 				</div>
+				<Loading.Overlay loading={removing} label={t('removing')} />
 			</Prompt.BaseWindow>
 		);
 	}
