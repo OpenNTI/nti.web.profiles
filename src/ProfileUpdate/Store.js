@@ -115,19 +115,22 @@ export default class ProfileUpdateStore extends Stores.SimpleStore {
 
 
 	async validateAfterFieldChange (field) {
+		const oldType = this.get('type');
 		const entity = this.get('entity');
 		const groups = this.get('fieldGroups');
 		const dataToSend = this.getDataToSend();
 
 		try {
-			const {ProfileSchema: newSchema} = await entity.putToLink('account.profile.preflight', dataToSend);
+			const {ProfileSchema: newSchema, ProfileType: type, OriginalProfileType: baseType} = await entity.putToLink('account.profile.preflight', dataToSend);
 
 			this.set('isValid', true);
 			this.set('schema', newSchema);
-			this.setFieldGroups(mergeFieldGroups(...getFieldGroup(newSchema, []), ...updateFieldGroups(newSchema, groups)));
+			this.set('type', type);
+			this.set('baseType', baseType);
+			this.setFieldGroups(mergeFieldGroups(...getFieldGroup(newSchema, [], type, baseType), ...updateFieldGroups(newSchema, groups, type, oldType)));
 			this.emitChange('isValid');
 		} catch (e) {
-			const {ValidationErrors, ProfileSchema:newSchema} = e;
+			const {ValidationErrors, ProfileSchema:newSchema, ProfileType: type, OriginalProfileType: baseType} = e;
 
 			if (field.schema.name === 'role' && dataToSend.role === 'Employer/Community Member') {
 				ValidationErrors.push({
@@ -137,7 +140,9 @@ export default class ProfileUpdateStore extends Stores.SimpleStore {
 
 			this.set('isValid', false);
 			this.set('schema', newSchema);
-			this.setFieldGroups(mergeFieldGroups(...getFieldGroup(newSchema, ValidationErrors), ...updateFieldGroups(newSchema, groups)));
+			this.set('type', type);
+			this.set('baseType', baseType);
+			this.setFieldGroups(mergeFieldGroups(...getFieldGroup(newSchema, ValidationErrors, type, baseType), ...updateFieldGroups(newSchema, groups, type, oldType)));
 			this.emitChange('isValid', 'fields');
 		}
 	}

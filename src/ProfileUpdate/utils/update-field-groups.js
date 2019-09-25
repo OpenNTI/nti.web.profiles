@@ -12,9 +12,14 @@ function updateSchema (schema, field) {
 }
 
 function updateFields (schema, fields) {
-	return fields.map(field => updateSchema(schema, field));
+	return fields
+		.filter(field => Boolean(schema[field.schema.name]))
+		.map(field => updateSchema(schema, field));
 }
 
-export default function updateFieldGroups (schema, groups) {
-	return groups.map(fields => updateFields(schema, fields));
+export default function updateFieldGroups (schema, groups, type, oldType) {
+	if (oldType !== type) { return []; }
+
+	return groups
+		.map(fields => updateFields(schema, fields));
 }

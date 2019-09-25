@@ -23,6 +23,14 @@ const TYPE_HANDLERS = {
 			validationErrors.map(x => getField(schema[x.field], x))
 		];
 	},
+	'IOSDEUserProfile': (schema, validationErrors) => {
+		return [[
+			getField(schema['role'], null),
+			...(validationErrors
+				.filter(x => x.field !== 'role')
+				.map(x => getField(schema[x.field], x)))
+		]];
+	},
 	'ISALLTUserProfile': (schema, validationErrors) => {
 		const fields = [
 			...validationErrors.map(x => getField(schema[x.field], x))

@@ -1,13 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Registry from '../Registry';
 import FieldGroup from '../../common/FieldGroup';
 
 import {getConfigForType} from './Config';
 
 export default
-@Registry.register(Registry.Default)
 class ProfileUpdateDefault extends React.Component {
 	static propTypes = {
 		fields: PropTypes.array,
