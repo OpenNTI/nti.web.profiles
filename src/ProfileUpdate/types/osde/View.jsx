@@ -2,12 +2,26 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Registry from '../Registry';
+import FieldGroup from '../../common/FieldGroup';
 
 import FieldRegistry from './Registry';
 
-
 const type = 'IOSDEUserProfile';
 const registry = FieldRegistry.getInstance();
+
+function getFieldOrder (fields) {
+	let order = [];
+
+	for (let field of fields) {
+		if (field.schema.name === 'role') {
+			order = [field, ...order];
+		} else {
+			order.push(field);
+		}
+	}
+
+	return order;
+}
 
 @Registry.register(type)
 class ProfileUpdateOSDEProfile extends React.Component {
@@ -22,17 +36,21 @@ class ProfileUpdateOSDEProfile extends React.Component {
 
 		if (!fields) { return null; }
 
-		const fieldInputs = fields.filter(field => !!registry.getItemFor(field, values));
+		const ordered = getFieldOrder(fields);
 
 		return (
 			<ul className="nti-profile-update-fields">
-				{fieldInputs.map((field, index) => {
+				{ordered.map((field, index) => {
 					const value = values[field.schema.name];
 					const Cmp = registry.getItemFor(field, values);
 
+					const fieldRender = Cmp ?
+						(<Cmp field={field} value={value} index={index} {...otherProps} />) :
+						(<FieldGroup fields={[field]} order={[field.schema.name]} values={values} {...otherProps} />);
+
 					return (
 						<li key={index}>
-							<Cmp field={field} value={value} index={index} {...otherProps} />
+							{fieldRender}
 						</li>
 					);
 				})}
