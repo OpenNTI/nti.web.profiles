@@ -1,5 +1,23 @@
 import {ensureArray as arr} from '../../../util';
 
+const OSDEBase = {
+	about: [
+		'about',
+		'realname',
+		'alias',
+		'email',
+		'location',
+		'home_page',
+		'facebook',
+		'instagram',
+		'linkedIn',
+		'twitter'
+	],
+	education: 'education',
+	positions: 'positions',
+	interests: 'interests'
+};
+
 const DEFAULT = Symbol('Default');
 const FIELD_GROUPS = {
 	[DEFAULT]: {
@@ -32,8 +50,7 @@ const FIELD_GROUPS = {
 			'facebook',
 			'instagram',
 			'linkedIn',
-			'twitter',
-			'googlePlus'
+			'twitter'
 		],
 		community: [
 			'cultures',
@@ -64,8 +81,7 @@ const FIELD_GROUPS = {
 			'facebook',
 			'instagram',
 			'linkedIn',
-			'twitter',
-			'googlePlus'
+			'twitter'
 		],
 		information: [
 			'role',
@@ -79,12 +95,40 @@ const FIELD_GROUPS = {
 		education: 'education',
 		positions: 'positions',
 		interests: 'interests'
-	}
+	},
+	'IOSDEStudentProfile': {
+		information: ['role', 'affiliation', 'expected_graduation'],
+		...OSDEBase
+	},
+	'IOSDEOtherProfile': {
+		information: ['role', 'other_role'],
+		...OSDEBase
+	},
+	'IOSDEEmployerProfile': {
+		information: ['role', 'work_email', 'company_name', 'company_mailing_address'],
+		...OSDEBase
+	},
+	'IOSDENurseProfile': {
+		information: ['role', 'affiliation', 'work_email'],
+		...OSDEBase
+	},
+	'IOSDEStaffProfile': {
+		information: ['role', 'affiliation', 'job_title', 'work_email'],
+		...OSDEBase
+	},
+	'IOSDEAdminProfile': 'IOSDEStaffProfile',
+	'IOSDEEducatorProfile': 'IOSDEStaffProfile'
 };
 
 
 export function getFieldGroups (schema, type) {
-	return FIELD_GROUPS[type] || FIELD_GROUPS[DEFAULT];
+	const fieldGroups = FIELD_GROUPS[type] || FIELD_GROUPS[DEFAULT];
+
+	if (typeof fieldGroups === 'string') {
+		return FIELD_GROUPS[fieldGroups] || FIELD_GROUPS[DEFAULT];
+	}
+
+	return fieldGroups;
 }
 
 //flat array of all fields in the groups for a schema
