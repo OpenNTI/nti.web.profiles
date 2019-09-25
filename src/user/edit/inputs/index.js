@@ -8,6 +8,7 @@ import {SET_FIELD_VALUE} from '../Store';
 
 import Bool from './Boolean';
 import Choice from './Choice';
+import DateTime from './DateTime';
 import Education from './Education';
 import FieldContainer from './FieldContainer';
 import List from './List';
@@ -39,6 +40,7 @@ const NAMES = {
 
 const COMPONENTS = [
 	Choice,
+	DateTime,
 	Text,
 	Bool,
 	MultipleSelect
