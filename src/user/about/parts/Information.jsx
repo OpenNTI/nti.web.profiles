@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {scoped} from '@nti/lib-locale';
+import {DateTime} from '@nti/web-commons';
 
 import {Card} from '../../../common';
 import {LOCALE_PATHS} from '../../constants';
@@ -14,8 +15,24 @@ const t = scoped(LOCALE_PATHS.DISTRICT, {
 	district: 'District',
 	teacherCertNumber: 'Teacher Certification',
 	adminDistricts: 'Admin Districts',
-	districtSite: 'District Site'
+	districtSite: 'District Site',
+	jobTitle: 'Job Title',
+	workEmail: 'Work Email',
+	otherRole: 'Other Role',
+	companyName: 'Company Name',
+	companyMailingAddress: 'Company Mailing Address',
+	expectedGraduation: 'Expected Graduation Date'
 });
+
+const propertyGetter = (property, label) => {
+	return (user) => {
+		const value = user[property];
+
+		if (!value) { return null; }
+
+		return {label, value};
+	};
+};
 
 const FIELDS = [
 	(user) => {
@@ -56,6 +73,21 @@ const FIELDS = [
 		return {
 			label: t('districtSite'),
 			value: site
+		};
+	},
+	propertyGetter('job_title', t('jobTitle')),
+	propertyGetter('other_role', t('otherRole')),
+	propertyGetter('work_email', t('workEmail')),
+	propertyGetter('company_name', t('compnayName')),
+	propertyGetter('company_mailing_address', t('companyMailingAddress')),
+	(user) => {
+		const {expected_graduation: date} = user;
+
+		if (!date) { return null; }
+
+		return {
+			label: t('expectedGraduation'),
+			value: DateTime.format(date, 'MMMM YYYY')
 		};
 	}
 ];
