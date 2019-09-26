@@ -12,17 +12,6 @@ export default class DateTimeInput extends React.PureComponent {
 
 	static propTypes = {
 		className: PropTypes.string,
-		value: PropTypes.object,
-		onChange: PropTypes.func
-	}
-
-	get value () {
-		debugger;
-		return null;
-	}
-
-	onChange = () => {
-		debugger;
 	}
 
 	render () {
