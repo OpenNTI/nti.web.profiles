@@ -4,6 +4,7 @@ import cx from 'classnames';
 
 import BooleanInput from './BooleanInput';
 import ChoiceInput from './ChoiceInput';
+import DateTimeInput from './DateTimeInput';
 import EmailInput from './EmailInput';
 import IntegerInput from './IntegerInput';
 import ListInput from './ListInput';
@@ -15,7 +16,8 @@ const TYPE_TO_INPUT = {
 	bool: BooleanInput,
 	int: IntegerInput,
 	list: ListInput,
-	'nti.dataserver.users.interfaces.EmailAddress': EmailInput 
+	'nti.dataserver.users.interfaces.EmailAddress': EmailInput,
+	datetime: DateTimeInput
 };
 
 function getInputForField (field) {
