@@ -1,0 +1,15 @@
+.profile-date-time-field {
+	display: inline-flex;
+	flex-direction: row;
+	align-items: middle;
+	justify-content: flex-start;
+}
+
+.profile-date-time-field :global(.nti-select-input .select-label) {
+	border-radius: 2px 0 0 2px;
+}
+
+:global(.nti-profile-field-container) .profile-date-time-field :global(input:not([type=radio]):not([type=checkbox]).year-input) {
+	border-radius: 0 2px 2px 0;
+	border-left-width: 0;
+}

@@ -9,6 +9,10 @@ export default function trimValue (value) {
 		return value.map(trimValue);
 	}
 
+	if (value instanceof Date) {
+		return value.toISOString();
+	}
+
 	if (typeof value === 'object') {
 		return Object.entries(value)
 			.reduce((out, [key, inner]) => ({...out, [key]: trimValue(inner)}), {});
