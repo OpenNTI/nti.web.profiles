@@ -2,7 +2,7 @@ export default function mergeGroupFields (...groups) {
 	let mergedGroups = [];
 	let seenFields = {};
 
-	for (let group of groups) {
+	for (let group of groups.reverse()) {
 		let mergedGroup = [];
 
 		for (let field of group) {
