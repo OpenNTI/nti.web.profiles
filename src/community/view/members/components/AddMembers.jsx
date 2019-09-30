@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 import {scoped} from '@nti/lib-locale';
-import {Text, DialogButtons, Loading} from '@nti/web-commons';
+import {Text, DialogButtons, Loading, Prompt} from '@nti/web-commons';
 
 import Store from '../Store';
 import {Token} from '../../../../selector';
@@ -14,7 +14,11 @@ const t = scoped('nti-profiles.community.view.members.components.AddMembers', {
 	label: 'Add People',
 	addEveryone: 'Add Everyone',
 	addMembers: 'Add %(memberCount)s',
-	cancel: 'Cancel'
+	cancel: 'Cancel',
+	confirm: {
+		title: 'Are you sure?',
+		message: 'Adding everyone will add every user in the site to "%(community)s". Undoing this action will require manually removing each person.'
+	}
 });
 
 function getButtonLabel (toAdd) {
@@ -26,17 +30,36 @@ function getButtonLabel (toAdd) {
 }
 
 export default
-@Store.monitor(['pending', 'canAddMembers', 'addPendingMembers', 'setPendingMembers', 'adding'])
+@Store.monitor(['community', 'pending', 'canAddMembers', 'addPendingMembers', 'setPendingMembers', 'adding'])
 class AddMembers extends React.Component {
 	static propTypes = {
 		adding: PropTypes.bool,
 		pending: PropTypes.array,
 		canAddMembers: PropTypes.bool,
 		addPendingMembers: PropTypes.func,
-		setPendingMembers: PropTypes.func
+		setPendingMembers: PropTypes.func,
+		community: PropTypes.shape({
+			displayName: PropTypes.string
+		})
 	}
 
-	selectMemember = (toAdd) => this.setState({toAdd});
+	addMembers = async () => {
+		const {pending, addPendingMembers, community} = this.props;
+
+		if (!addPendingMembers) { return; }
+
+		const hasEveryone = (pending || []).some(p => p.value.getID() === 'everyone');
+
+		if (!hasEveryone) { return addPendingMembers(); }
+
+		try {
+			await Prompt.areYouSure(t('confirm.message', {community: community.displayName}), t('confirm.title'));
+
+			addPendingMembers();
+		} catch (e) {
+			//swallow
+		}
+	}
 
 	clearSelected = () => {
 		const {setPendingMembers} = this.props;
@@ -47,13 +70,13 @@ class AddMembers extends React.Component {
 	} 
 
 	render () {
-		const {canAddMembers, adding, pending, setPendingMembers, addPendingMembers} = this.props;
+		const {canAddMembers, adding, pending, setPendingMembers} = this.props;
 
 		if (!canAddMembers) { return null; }
 
 		const buttons = [
 			{label: t('cancel'), onClick: this.clearSelected},
-			{label: getButtonLabel(pending), onClick: addPendingMembers}
+			{label: getButtonLabel(pending), onClick: this.addMembers}
 		];
 
 		return (
