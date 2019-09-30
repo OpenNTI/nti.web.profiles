@@ -6,7 +6,16 @@ import FieldGroup from '../../common/FieldGroup';
 
 import FieldRegistry from './Registry';
 
-const type = 'IOSDEUserProfile';
+const type = [
+	'IOSDEUserProfile',
+	'IOSDEStudentProfile',
+	'IOSDEOtherProfile',
+	'IOSDEEmployerProfile',
+	'IOSDENurseProfile',
+	'IOSDEStaffProfile',
+	'IOSDEAdminProfile',
+	'IOSDEEducatorProfile'
+];
 const registry = FieldRegistry.getInstance();
 
 function getFieldOrder (fields) {
