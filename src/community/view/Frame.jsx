@@ -12,7 +12,8 @@ export default class CommunityFrame extends React.Component {
 	static propTypes = {
 		children: PropTypes.element,
 		community: PropTypes.object,
-		title: PropTypes.string
+		title: PropTypes.string,
+		noBackground: PropTypes.bool
 	}
 
 	getCommunityEditRoute = (obj, context) => {
@@ -61,20 +62,31 @@ export default class CommunityFrame extends React.Component {
 
 
 	render () {
+		const {community, noBackground} = this.props;
+		const routes = this.renderRoutes();
+
+		if (noBackground) { return routes; }
+
+		return (
+			<CommunityBackground community={community} childProp="imgUrl">
+				<Background className="community-background">
+					{routes}
+				</Background>
+			</CommunityBackground>
+		);
+	}
+
+	renderRoutes () {
 		const {children, community} = this.props;
 
 		return (
 			<View.WithTitle title={this.getTitle()}>
 				<Router.RouteForProvider getRouteFor={this.getCommunityEditRoute}>
-					<CommunityBackground community={community} childProp="imgUrl">
-						<Background className="community-background">
-							{React.Children.map(children, (item) => {
-								return React.cloneElement(item, {community});
-							})}
-							<Route.Hash matches="#community-edit" render={this.renderCommunityEdit} />
-							<Route.Hash matches="#members" render={this.renderMembers} />
-						</Background>
-					</CommunityBackground>
+					{React.Children.map(children, (item) => {
+						return React.cloneElement(item, {community});
+					})}
+					<Route.Hash matches="#community-edit" render={this.renderCommunityEdit} />
+					<Route.Hash matches="#members" render={this.renderMembers} />
 				</Router.RouteForProvider>
 			</View.WithTitle>
 		);
