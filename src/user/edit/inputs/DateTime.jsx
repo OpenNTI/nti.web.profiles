@@ -12,15 +12,20 @@ export default class DateTimeInput extends React.PureComponent {
 
 	static propTypes = {
 		className: PropTypes.string,
+		value: PropTypes.oneOfType([
+			PropTypes.string,
+			PropTypes.object
+		])
 	}
 
 	render () {
-		const {className, ...otherProps} = this.props;
+		const {className, value, ...otherProps} = this.props;
 
 		return (
 			<Input.Date
 				precision={Input.Date.Precision.month}
 				className={cx('profile-date-time-field', className)}
+				value={typeof value === 'string' ? new Date(value) : value}
 				{...otherProps}
 			/>
 		);
