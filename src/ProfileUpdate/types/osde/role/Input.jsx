@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import {Input} from '@nti/web-commons';
 import {scoped} from '@nti/lib-locale';
 
-import Registry from '../Registry';
 import Label from '../../../common/Label';
 
 const t = scoped('nti-web-profiles.profile-update.fields', {
@@ -13,12 +12,7 @@ const t = scoped('nti-web-profiles.profile-update.fields', {
 	}
 });
 
-function handles (item) {
-	return item.schema.name === 'role';
-}
-
 export default
-@Registry.register(handles)
 class RoleField extends React.Component {
 	static propTypes = {
 		field: PropTypes.object.isRequired,
