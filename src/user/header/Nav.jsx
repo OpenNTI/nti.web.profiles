@@ -30,7 +30,9 @@ export default class ProfileHeaderNav extends React.Component {
 			<nav>
 				<List.ResponsiveInline className="profile-header-nav" flyoutProps={{dark: true}}>
 					<NavLink object={entity} context="about" title={t('about')} exact/>
-					<NavLink object={entity} context="activity" title={t('activity')} />
+					{entity.hasLink('Activity') && (
+						<NavLink object={entity} context="activity" title={t('activity')} />
+					)}
 					{achievementsAvailable && (
 						<NavLink object={entity} context="achievements" title={t('achievements')} />
 					)}
