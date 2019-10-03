@@ -199,8 +199,12 @@ class CommunityMembersStore extends Stores.BoundStore {
 
 		if (!pending || !pending.length) { return; }
 
-		const {hasEveryone, toAdd} = pending.reduce((acc, member) => {
+		const {hasEveryone, onlyUsers, toAdd} = pending.reduce((acc, member) => {
 			const id = member.value.getID();
+
+			if (!member.value.isUser) {
+				acc.onlyUsers = false;
+			}
 
 			if (id === 'everyone') {
 				acc.hasEveryone = true;
@@ -209,7 +213,7 @@ class CommunityMembersStore extends Stores.BoundStore {
 			}
 
 			return acc;
-		}, {hasEveryone: false, toAdd: []});
+		}, {hasEveryone: false, onlyUsers: true, toAdd: []});
 
 		this.set({
 			pending: null,
@@ -219,7 +223,7 @@ class CommunityMembersStore extends Stores.BoundStore {
 		try {
 			const resp = await community.addMembers(hasEveryone ? 'everyone' : toAdd);
 
-			if (hasEveryone) {
+			if (hasEveryone || !onlyUsers) {
 				delete this.currentPage;
 				this.setImmediate({
 					loading: true,
