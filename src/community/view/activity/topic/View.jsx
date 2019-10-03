@@ -66,7 +66,7 @@ class ChannelActivityTopic extends React.Component {
 		const {overrides, error, channel, topic, ...otherProps} = this.props;
 
 		if (error) {
-			const options = [(<a href="#" key={0} onCLick={goBack}>{NotFound.Card.optionLabels.back}</a>)];
+			const options = [(<a href="#" key={0} onClick={goBack}>{NotFound.Card.optionLabels.back}</a>)];
 
 			if (channel) {
 				options.push(
