@@ -1,8 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {scoped} from '@nti/lib-locale';
 import {decodeFromURI} from '@nti/lib-ntiids';
+import {NotFound, Text} from '@nti/web-commons';
+import {LinkTo, getHistory} from '@nti/web-routing';
 
 import Store from './Store';
+
+const t = scoped('nti-profiles.community.view.activity.topic.View', {
+	notFound: {
+		header: 'Unable to load item',
+		description: 'Your link may contain errors or this item may no longer exist.'
+	}
+});
+
+const goBack = () => getHistory().goBack();
 
 export default
 @Store.connect(['loading', 'topic', 'error'])
@@ -51,8 +63,29 @@ class ChannelActivityTopic extends React.Component {
 
 
 	render () {
-		const {overrides, topic, ...otherProps} = this.props;
+		const {overrides, error, channel, topic, ...otherProps} = this.props;
 
+		if (error) {
+			const options = [(<a href="#" key={0} onCLick={goBack}>{NotFound.Card.optionLabels.back}</a>)];
+
+			if (channel) {
+				options.push(
+					<LinkTo.Object object={channel}>
+						<Text.Base>
+							{channel.title}
+						</Text.Base>
+					</LinkTo.Object>
+				);
+			}
+
+			return (
+				<NotFound.Card
+					header={t('notFound.header')}
+					description={t('notFound.description')}
+					options={options}
+				/>
+			);
+		}
 
 		const Cmp = overrides ? overrides.getItemFor(topic) : null;
 
@@ -61,6 +94,7 @@ class ChannelActivityTopic extends React.Component {
 		return (
 			<Cmp
 				topic={topic}
+				channel={channel}
 				focusNewComment={this.focusNewComment}
 				selectedComment={this.selectedComment}
 				{...otherProps}
