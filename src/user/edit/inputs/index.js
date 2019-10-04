@@ -54,8 +54,8 @@ const CACHE = {};
  * @return {Component} A react component to handle editing of the field
  */
 export default function getWidget (schema) {
-	const {name, type} = schema;
-	const key = `${name}-${type}`;
+	const {name, type, description} = schema;
+	const key = `${name}-${type}-${description}`;
 
 	if (!name) {
 		throw new Error('Must specify a name.');
