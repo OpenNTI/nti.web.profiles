@@ -97,7 +97,7 @@ const FIELD_GROUPS = {
 		interests: 'interests'
 	},
 	'IOSDEStudentProfile': {
-		information: ['role', 'affiliation', 'expected_graduation'],
+		information: ['role', 'expected_graduation', 'affiliation'],
 		...OSDEBase
 	},
 	'IOSDEOtherProfile': {
@@ -105,7 +105,7 @@ const FIELD_GROUPS = {
 		...OSDEBase
 	},
 	'IOSDEEmployerProfile': {
-		information: ['role', 'work_email', 'company_name', 'company_mailing_address'],
+		information: ['role', 'company_name', 'company_mailing_address', 'work_email'],
 		...OSDEBase
 	},
 	'IOSDENurseProfile': {
