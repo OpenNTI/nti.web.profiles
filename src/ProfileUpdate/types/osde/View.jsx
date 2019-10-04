@@ -40,10 +40,12 @@ function getFieldOrder (fields, type) {
 	const allFields = Object.keys(fieldMap);
 	const seenFields = {};
 
-	const order = fieldOrder.map((field) => {
-		seenFields[field] = true;
-		return fieldMap[field];
-	});
+	const order = fieldOrder
+		.map((field) => {
+			seenFields[field] = true;
+			return fieldMap[field];
+		})
+		.filter(Boolean);
 
 	return [
 		...order,
