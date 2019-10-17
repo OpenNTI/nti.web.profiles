@@ -1,4 +1,7 @@
 import {Stores} from '@nti/lib-store';
+import Logger from '@nti/util-logger';
+
+const logger = Logger.get('profile-update');
 
 import {getFieldGroup, mergeFieldGroups, shouldKeepValue, updateFieldGroups} from './utils';
 
@@ -64,7 +67,12 @@ export default class ProfileUpdateStore extends Stores.SimpleStore {
 
 		try {
 			const profile = await entity.fetchLink('account.profile');
-			const {ProfileSchema:schema, ProfileType: type, OriginalProfileType: baseType, ValidationErrors:errors} = profile;
+			const {
+				ProfileSchema: schema,
+				ProfileType: type,
+				OriginalProfileType: baseType,
+				ValidationErrors: errors
+			} = profile;
 
 			this.set('loading', false);
 			this.set('schema', schema);
@@ -129,8 +137,21 @@ export default class ProfileUpdateStore extends Stores.SimpleStore {
 			this.set('baseType', baseType);
 			this.setFieldGroups(mergeFieldGroups(...getFieldGroup(newSchema, [], type, baseType), ...updateFieldGroups(newSchema, groups, type, oldType)));
 			this.emitChange('isValid');
-		} catch (e) {
-			const {ValidationErrors, ProfileSchema:newSchema, ProfileType: type, OriginalProfileType: baseType} = e;
+		}
+		catch (e) {
+			const {
+				ValidationErrors,
+				ProfileSchema: newSchema,
+				ProfileType: type,
+				OriginalProfileType: baseType
+			} = e;
+
+			if (!newSchema) {
+				logger.error(e);
+				this.set('error', 'Encountered an unanticipated error.');
+				this.emitChange('error');
+				return;
+			}
 
 			if (field.schema.name === 'role' && dataToSend.role === 'Employer/Community Member') {
 				ValidationErrors.push({
@@ -142,7 +163,12 @@ export default class ProfileUpdateStore extends Stores.SimpleStore {
 			this.set('schema', newSchema);
 			this.set('type', type);
 			this.set('baseType', baseType);
-			this.setFieldGroups(mergeFieldGroups(...getFieldGroup(newSchema, ValidationErrors, type, baseType), ...updateFieldGroups(newSchema, groups, type, oldType)));
+			this.setFieldGroups(
+				mergeFieldGroups(
+					...getFieldGroup(newSchema, ValidationErrors, type, baseType),
+					...updateFieldGroups(newSchema, groups, type, oldType)
+				)
+			);
 			this.emitChange('isValid', 'fields');
 		}
 	}
