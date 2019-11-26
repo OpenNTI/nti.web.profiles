@@ -101,7 +101,7 @@ const FIELD_GROUPS = {
 		...OSDEBase
 	},
 	'IOSDEOtherProfile': {
-		information: ['role', 'other_role'],
+		information: ['role', 'other_role', 'work'],
 		...OSDEBase
 	},
 	'IOSDEEmployerProfile': {
