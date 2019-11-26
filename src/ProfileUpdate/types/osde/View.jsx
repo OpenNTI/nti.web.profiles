@@ -28,7 +28,7 @@ const FieldOrders = {
 	'IOSDENurseProfile': ['role', 'affiliation', 'work_email'],
 	'IOSDEEmployerProfile': ['role', 'location', 'company_name', 'company_mailing_address', 'work_email'],
 	'IOSDEStudentProfile': ['role', 'expected_graduation', 'affiliation'],
-	'IOSDEOtherProfile': ['role', 'other_role']
+	'IOSDEOtherProfile': ['role', 'other_role', 'work']
 };
 
 function getFieldOrder (fields, type) {

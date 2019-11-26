@@ -80,6 +80,7 @@ const FIELDS = [
 	propertyGetter('work_email', t('workEmail')),
 	propertyGetter('company_name', t('companyName')),
 	propertyGetter('company_mailing_address', t('companyMailingAddress')),
+	propertyGetter('work', t('companyName')),
 	(user) => {
 		const {expected_graduation: date} = user;
 
