@@ -94,7 +94,7 @@ export default class AssetEditorStore extends Stores.BoundStore {
 
 		const toSave = values[current];
 
-		if (!toSave) { return; }
+		if (!toSave || !toSave.updated) { return; }
 
 		try {
 			for (let Type of Types) {
