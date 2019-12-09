@@ -34,7 +34,7 @@ export default class AssetEditorStore extends Stores.BoundStore {
 		try {
 			const service = await getService();
 			const url = community[assetName] || DefaultAssets[assetName];
-			const raw = await service.get(url);
+			const raw = await service.get({url, headers: null});
 
 			for (let Type of Types) {
 				const state = Type.getAssetState && Type.getAssetState(url, raw);
