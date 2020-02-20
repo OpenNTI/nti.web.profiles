@@ -8,18 +8,8 @@ $header-ranges: (
 .nti-profile-certificates {
 	.content {
 		.items-container {
-			@include responsive-range(two-column, $header-ranges) {
-				&.completed {
-					.certificate-list {
-						.certificate-preview {
-							margin: 20px 0 0 19px;
-						}
-					}
-				}
-			}
-
 			.certificate-preview {
-				margin: 20px 20px 0 0;
+				margin: 0 0 20px 20px;
 				width: 226px;
 
 				.preview-image {
@@ -54,6 +44,9 @@ $header-ranges: (
 
 			&.in-progress {
 				.certificate-list {
+					display: flex;
+					flex-wrap: wrap;
+
 					.certificate-preview {
 						.preview-image {
 							opacity: 0.5;
