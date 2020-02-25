@@ -43,7 +43,7 @@ export default class ChannelListStore extends Stores.BoundStore {
 
 	createChannel () {
 		const sortable = this.get('sortableChannels');
-		const id = uuid();
+		const id = uuid.v4();
 
 		let savedChannel = null;
 		let deleted = false;
