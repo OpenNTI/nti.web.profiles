@@ -1,4 +1,4 @@
-import uuid from 'uuid';
+import {v4 as uuid} from 'uuid';
 import {Stores} from '@nti/lib-store';
 import {Array as arr} from '@nti/lib-commons';
 
@@ -43,7 +43,7 @@ export default class ChannelListStore extends Stores.BoundStore {
 
 	createChannel () {
 		const sortable = this.get('sortableChannels');
-		const id = uuid.v4();
+		const id = uuid();
 
 		let savedChannel = null;
 		let deleted = false;
