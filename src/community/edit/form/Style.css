@@ -24,3 +24,9 @@
 	align-items: center;
 	justify-content: center;
 }
+
+.community-edit-form :global(.dialog-buttons) {
+	background: white;
+	position: sticky;
+	bottom: 0;
+}
