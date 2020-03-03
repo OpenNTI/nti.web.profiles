@@ -10,8 +10,8 @@ import Styles from './Form.css';
 
 const cx = classnames.bind(Styles);
 const t = scoped('nti-profiles.community.edit.form.AutoSubscribe', {
-	label: 'Auto-Subscribe',
-	description: 'Everyone has access to view and engage in this community.'
+	label: 'Auto-Join New Users',
+	description: 'When a new user creates an account, automatically add them to this community.'
 });
 
 export default
