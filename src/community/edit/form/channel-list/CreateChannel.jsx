@@ -20,13 +20,27 @@ class CreateChannel extends React.Component {
 		createChannel: PropTypes.func
 	}
 
+	buttonRef = React.createRef()
+
+	createChannel = () => {
+		const {createChannel} = this.props;
+
+		if (createChannel) {
+			createChannel();
+
+			setImmediate(() => {
+				this.buttonRef.current?.scrollIntoView?.();
+			});
+		}
+	}
+
 	render () {
-		const {canCreateChannel, createChannel} = this.props;
+		const {canCreateChannel} = this.props;
 
 		if (!canCreateChannel) { return null; }
 
 		return (
-			<span role="button" className={cx('create-channel')} onClick={createChannel}>
+			<span role="button" ref={this.buttonRef} className={cx('create-channel')} onClick={this.createChannel}>
 				<i className={cx('icon-add', 'create-icon')} />
 				<Text.Base className={cx('create-label')}>
 					{t('createChannel')}
