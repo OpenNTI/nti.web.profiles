@@ -44,7 +44,7 @@ export default class CommunityStore extends Stores.BoundStore {
 
 		if (about !== community.about) {
 			toSave = toSave || {};
-			toSave.about = about;
+			toSave.about = about || null;
 		}
 
 		if (autoSubscribeRule !== community.autoSubscribeRule) {
