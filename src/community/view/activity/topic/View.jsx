@@ -48,6 +48,12 @@ class ChannelActivityTopic extends React.Component {
 		return location && location.hash === '#comment';
 	}
 
+	get editMode () {
+		const {location} = this.props;
+
+		return location && location.hash === '#edit';
+	}
+
 	get selectedComment () {
 		const {location} = this.props;
 		const hash = location && location.hash;
@@ -97,6 +103,7 @@ class ChannelActivityTopic extends React.Component {
 				channel={channel}
 				focusNewComment={this.focusNewComment}
 				selectedComment={this.selectedComment}
+				editMode={this.editMode}
 				{...otherProps}
 			/>
 		);

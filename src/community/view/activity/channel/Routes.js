@@ -3,12 +3,17 @@ import {encodeForURI} from '@nti/lib-ntiids';
 
 import View from './View';
 
+const ContextToHash = {
+	comment: '#comment',
+	edit: '#edit'
+};
+
 export default Router.for([
 	Route({
 		path: '/:topicId?/:commentId?',
 		component: View,
 		getRouteFor: (obj, context) => {
-			const hash = context === 'comment' ? '#comment' : '';
+			const hash = ContextToHash[context];
 
 			if (obj.isNewTopic) {
 				return './new-topic';
