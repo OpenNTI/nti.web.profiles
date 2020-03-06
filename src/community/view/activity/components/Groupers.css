@@ -13,7 +13,7 @@ li.group {
 	font-weight: 600;
 	line-height: 2;
 	color: var(--primary-grey);
-	padding: 0 var(--side-padding, 1rem);
+	padding: 0 var(--side-padding, 0.625rem);
 }
 
 .group-item-list li:not(:last-of-type) {

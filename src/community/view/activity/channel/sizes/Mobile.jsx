@@ -33,6 +33,20 @@ export default class ChannelMobileLayout extends React.Component {
 		});
 	}
 
+	setLayout = (...args) => {
+		//NOTE: Since the Dialog is setting scroll-lock on the page
+		//we need to wait for it to be gone before we change the layout
+		const {setLayout} = this.props;
+
+		this.setState({
+			showOptions: false
+		}, () => {
+			setImmediate(() => {
+				if (setLayout) { setLayout(...args); }
+			});
+		});
+	}
+
 	render () {
 		const {
 			community,
@@ -40,7 +54,6 @@ export default class ChannelMobileLayout extends React.Component {
 			channel,
 			notFound,
 			layout,
-			setLayout,
 			availableSorts,
 			sortOn,
 			setSortOn,
@@ -57,7 +70,7 @@ export default class ChannelMobileLayout extends React.Component {
 							fullscreen
 							community={community}
 							layout={layout}
-							setLayout={setLayout}
+							setLayout={this.setLayout}
 							availableSorts={availableSorts}
 							sortOn={sortOn}
 							setSortOn={setSortOn}
