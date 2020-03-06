@@ -13,7 +13,7 @@ export default Router.for([
 		path: '/:topicId?/:commentId?',
 		component: View,
 		getRouteFor: (obj, context) => {
-			const hash = ContextToHash[context];
+			const hash = ContextToHash[context] || '';
 
 			if (obj.isNewTopic) {
 				return './new-topic';
