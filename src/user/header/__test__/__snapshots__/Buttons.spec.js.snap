@@ -5,9 +5,14 @@ exports[`User profile header buttons test Is not acting user 1`] = `
   className="contact profile-manage-controls"
 >
   <div
+    aria-haspopup="dialog"
     className="flyout-trigger nti-button message message-button-flyout flyout-closed"
+    onBlur={[Function]}
+    onFocus={[Function]}
+    onKeyPress={[Function]}
     onMouseEnter={[Function]}
     onMouseLeave={[Function]}
+    tabIndex={0}
   >
     <span>
       <div

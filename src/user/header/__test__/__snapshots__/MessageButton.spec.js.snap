@@ -2,9 +2,14 @@
 
 exports[`User profile message button test Test not present 1`] = `
 <div
+  aria-haspopup="dialog"
   className="flyout-trigger nti-button message message-button-flyout flyout-closed"
+  onBlur={[Function]}
+  onFocus={[Function]}
+  onKeyPress={[Function]}
   onMouseEnter={[Function]}
   onMouseLeave={[Function]}
+  tabIndex={0}
 >
   <span>
     <div
