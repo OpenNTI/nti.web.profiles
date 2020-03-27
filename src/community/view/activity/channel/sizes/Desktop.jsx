@@ -49,6 +49,7 @@ export default function ChannelDesktopLayout (props) {
 				{channel && (<ChannelDescription channel={channel} />)}
 				{channel && (
 					<ChannelStream
+						searchContext={community.getID()}
 						channel={channel}
 						sortOn={sortOn}
 						layout={layout}

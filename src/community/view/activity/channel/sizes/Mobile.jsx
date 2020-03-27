@@ -86,6 +86,7 @@ export default class ChannelMobileLayout extends React.Component {
 				{channel && (<ChannelDescription channel={channel} />)}
 				{channel && (
 					<ChannelStream
+						searchContext={community.getID()}
 						channel={channel}
 						sortOn={sortOn}
 						layout={layout}

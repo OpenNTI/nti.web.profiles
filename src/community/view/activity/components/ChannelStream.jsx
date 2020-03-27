@@ -28,9 +28,10 @@ ChannelStream.propTypes = {
 	sortOn: PropTypes.string,
 	layout: PropTypes.string,
 	columns: PropTypes.number,
-	batchSize: PropTypes.number
+	batchSize: PropTypes.number,
+	searchContext: PropTypes.string,
 };
-export default function ChannelStream ({channel, sortOn, layout, batchSize, columns}) {
+export default function ChannelStream ({channel, sortOn, layout, batchSize, columns, searchContext}) {
 	const grouperProps = getGrouperForSort(sortOn);
 
 	return (
@@ -42,6 +43,7 @@ export default function ChannelStream ({channel, sortOn, layout, batchSize, colu
 			renderEmpty={renderEmpty}
 			columns={columns}
 			batchSize={batchSize}
+			searchContext={searchContext}
 			{...grouperProps}
 		/>
 	);
