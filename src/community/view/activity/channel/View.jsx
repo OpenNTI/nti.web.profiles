@@ -32,6 +32,7 @@ class CommunityChannel extends React.Component {
 	static propTypes = {
 		channel: PropTypes.object,
 		channels: PropTypes.oneOfType([PropTypes.object, PropTypes.array]).isRequired,
+		community: PropTypes.object,
 		channelId: PropTypes.string.isRequired,
 		topicId: PropTypes.string,
 		commentId: PropTypes.string,
@@ -50,7 +51,7 @@ class CommunityChannel extends React.Component {
 	}
 
 	renderWebApp = () => {
-		const {channel, topicId, commentId, topicWindowClassName, ...otherProps} = this.props;
+		const {community, channel, topicId, commentId, topicWindowClassName, ...otherProps} = this.props;
 
 		return (
 			<>
@@ -58,9 +59,11 @@ class CommunityChannel extends React.Component {
 				{isValidTopicId(topicId) && channel && (
 					<Prompt.Dialog className={cx('community-topic-dialog', topicWindowClassName)}>
 						<Topic
+							community={community}
 							channel={channel}
 							topicId={topicId}
 							commentId={commentId}
+							dialog
 							{...otherProps}
 						/>
 					</Prompt.Dialog>
@@ -70,11 +73,12 @@ class CommunityChannel extends React.Component {
 	}
 
 	renderMobile = () => {
-		const {channel, topicId, commentId, ...otherProps} = this.props;
+		const {community, channel, topicId, commentId, ...otherProps} = this.props;
 
 		if (isValidTopicId(topicId) && channel) {
 			return (
 				<Topic
+					community={community}
 					channel={channel}
 					topicId={topicId}
 					commentId={commentId}

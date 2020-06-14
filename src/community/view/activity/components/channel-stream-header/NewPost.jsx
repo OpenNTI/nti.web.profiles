@@ -17,11 +17,11 @@ const t = scoped('nti-profiles.community.activity.components.channel-stream-head
 
 NewPost.propTypes = {
 	channel: PropTypes.shape({
-		canAddTopic: PropTypes.bool
+		canAddDiscussion: PropTypes.bool
 	})
 };
 export default function NewPost ({channel}) {
-	const locked = (!channel || !channel.canAddTopic);
+	const locked = (!channel || !channel.canAddDiscussion);
 
 	return !channel ? <div/> : locked ? (
 		<div className={cx('new-post')}>

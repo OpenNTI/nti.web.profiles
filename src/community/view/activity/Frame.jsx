@@ -48,7 +48,7 @@ class CommunityActivityFrame extends React.Component {
 	renderMobile = () => this.renderSize(Sizes.Mobile)
 
 	renderSize (size) {
-		const {children, loading, error, channels, ...otherProps} = this.props;
+		const {children, loading, error, channels, community, ...otherProps} = this.props;
 
 		if (error) {
 			return (<Error error={error} />);
@@ -57,7 +57,7 @@ class CommunityActivityFrame extends React.Component {
 		return (
 			<Loading.Placeholder loading={loading || !channels} fallback={<Loading.Spinner large />}>
 				{React.Children.map(children, (child) => {
-					return React.cloneElement(child, {size, channels, ...otherProps});
+					return React.cloneElement(child, {size, channels, community, ...otherProps});
 				})}
 			</Loading.Placeholder>
 		);
