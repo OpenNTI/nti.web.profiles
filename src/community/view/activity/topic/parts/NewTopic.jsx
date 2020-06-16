@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Editor} from '@nti/web-discussions';
-import {Router} from '@nti/web-routing';
+import {Router, LinkTo} from '@nti/web-routing';
 
 
 NewChannelTopic.propTypes = {
@@ -17,10 +17,15 @@ export default function NewChannelTopic ({dialog, channel, community}) {
 	};
 
 	return (
-		<Editor
-			dialog={dialog}
-			container={[community, channel]}
-			afterSave={afterSave}
-		/>
+		<>
+			<LinkTo.Object object={channel}>
+				<button>Close</button>
+			</LinkTo.Object>
+			<Editor
+				dialog={dialog}
+				container={[community, channel]}
+				afterSave={afterSave}
+			/>
+		</>
 	);
 }
