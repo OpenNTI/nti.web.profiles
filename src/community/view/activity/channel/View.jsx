@@ -36,9 +36,7 @@ class CommunityChannel extends React.Component {
 		channelId: PropTypes.string.isRequired,
 		topicId: PropTypes.string,
 		commentId: PropTypes.string,
-		size: PropTypes.string,
-
-		topicWindowClassName: PropTypes.string
+		size: PropTypes.string
 	}
 
 	renderList () {
@@ -51,13 +49,13 @@ class CommunityChannel extends React.Component {
 	}
 
 	renderWebApp = () => {
-		const {community, channel, topicId, commentId, topicWindowClassName, ...otherProps} = this.props;
+		const {community, channel, topicId, commentId, ...otherProps} = this.props;
 
 		return (
 			<>
 				{this.renderList()}
 				{isValidTopicId(topicId) && channel && (
-					<Prompt.Dialog className={cx('community-topic-dialog', topicWindowClassName)}>
+					<Prompt.Dialog className={cx('community-topic-dialog')}>
 						<Topic
 							community={community}
 							channel={channel}

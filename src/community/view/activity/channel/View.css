@@ -1,0 +1,7 @@
+.community-topic-dialog {
+	justify-content: flex-start;
+	padding: 20px 0 0;
+	top: var(--nt-app-top-offset, 0);
+
+	--prompt-paging-window-header-sticky-top: -20px;
+}
