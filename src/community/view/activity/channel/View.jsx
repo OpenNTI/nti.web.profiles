@@ -49,7 +49,7 @@ class CommunityChannel extends React.Component {
 	}
 
 	renderWebApp = () => {
-		const {community, channel, topicId, commentId, ...otherProps} = this.props;
+		const {community, channels, channel, topicId, commentId, ...otherProps} = this.props;
 
 		return (
 			<>
@@ -59,6 +59,7 @@ class CommunityChannel extends React.Component {
 						<Topic
 							community={community}
 							channel={channel}
+							channels={channels}
 							topicId={topicId}
 							commentId={commentId}
 							dialog
@@ -71,13 +72,14 @@ class CommunityChannel extends React.Component {
 	}
 
 	renderMobile = () => {
-		const {community, channel, topicId, commentId, ...otherProps} = this.props;
+		const {community, channels, channel, topicId, commentId, ...otherProps} = this.props;
 
 		if (isValidTopicId(topicId) && channel) {
 			return (
 				<Topic
 					community={community}
 					channel={channel}
+					channels={channels}
 					topicId={topicId}
 					commentId={commentId}
 					{...otherProps}

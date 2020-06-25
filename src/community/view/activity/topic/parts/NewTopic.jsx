@@ -1,42 +1,39 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
-import {Editor} from '@nti/web-discussions';
-import {Router, LinkTo} from '@nti/web-routing';
-import {Text, Icons, StandardUI} from '@nti/web-commons';
+import {Create} from '@nti/web-discussions';
+import {Router} from '@nti/web-routing';
 
 import Styles from './NewTopic.css';
-
-const cx = classnames.bind(Styles);
 
 NewChannelTopic.propTypes = {
 	dialog: PropTypes.bool,
 	channel: PropTypes.object,
+
+	channels: PropTypes.array,
 	community: PropTypes.object
 };
-export default function NewChannelTopic ({dialog, channel, community}) {
+export default function NewChannelTopic ({dialog, channel, channels, community}) {
 	const router = Router.useRouter();
 
-	const afterSave = (newTopic) => {
-		router.routeTo.object(newTopic);
-	};
+	const afterSave = (newTopic) => router.routeTo.object(newTopic);
+	const onClose = () => router.routeTo.object(channel);
 
-	const Cmp = dialog ? StandardUI.Card : 'div';
+	const containers = channels.channels.map((possible) => {
+		return {
+			container: [community, possible],
+			title: possible.title 
+		};
+	});
 
 	return (
-		<Cmp className={cx('new-channel-topic', {dialog})}>
-			<div className={cx('header')}>
-				<Text.Base className={cx('channel')}>
-					{channel.title}
-				</Text.Base>
-				<LinkTo.Object object={channel} className={cx('close')}>
-					<Icons.X />
-				</LinkTo.Object>
-			</div>
-			<Editor
-				container={[community, channel]}
-				afterSave={afterSave}
-			/>
-		</Cmp>
+		<Create
+			dialog={dialog}
+			containers={containers}
+			initialContainer={[community, channel]}
+
+			onClose={onClose}
+			afterSave={afterSave}
+		/>
 	);
 }
