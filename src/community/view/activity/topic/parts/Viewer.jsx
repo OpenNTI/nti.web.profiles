@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {decodeFromURI} from '@nti/lib-ntiids';
 import {Viewer} from '@nti/web-discussions';
-import {LinkTo} from '@nti/web-routing';
+import {Router} from '@nti/web-routing';
 
 function getLocationBreakdown (location) {
 	const focusComment = location?.hash === '#comment';
@@ -30,14 +30,18 @@ CommunityTopicViewer.propTypes = {
 	})
 };
 export default function CommunityTopicViewer ({topic, channel, community, location, overrides, ...otherProps}) {
-	if (topic.isTopic && !topic.isBlogEntry) {
+	const router = Router.useRouter();
+
+	const onClose = () => router.routeTo.object(channel);
+
+	if (!topic.isBlogEntry) {
 		return (
-			<div>
-				<LinkTo.Object object={channel}>
-					<button>Close</button>
-				</LinkTo.Object>
-				<Viewer discussion={topic} container={[community, channel]} {...otherProps} />
-			</div>
+			<Viewer
+				discussion={topic}
+				container={[community, channel]}
+				onClose={onClose}
+				{...otherProps}
+			/>
 		);
 	}
 
