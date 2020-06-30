@@ -82,6 +82,7 @@ class CommunityChannel extends React.Component {
 					channels={channels}
 					topicId={topicId}
 					commentId={commentId}
+					dialog
 					{...otherProps}
 				/>
 			);
