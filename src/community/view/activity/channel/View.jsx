@@ -76,15 +76,17 @@ class CommunityChannel extends React.Component {
 
 		if (isValidTopicId(topicId) && channel) {
 			return (
-				<Topic
-					community={community}
-					channel={channel}
-					channels={channels}
-					topicId={topicId}
-					commentId={commentId}
-					dialog
-					{...otherProps}
-				/>
+				<Prompt.Dialog className={cx('community-topic-dialog')}>
+					<Topic
+						community={community}
+						channel={channel}
+						channels={channels}
+						topicId={topicId}
+						commentId={commentId}
+						dialog
+						{...otherProps}
+					/>
+				</Prompt.Dialog>
 			);
 		}
 
