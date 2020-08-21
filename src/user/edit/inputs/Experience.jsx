@@ -1,3 +1,4 @@
+import './Experience.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Parsers} from '@nti/web-editor';

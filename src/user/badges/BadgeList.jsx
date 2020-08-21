@@ -1,3 +1,4 @@
+import './BadgeList.scss';
 import React from 'react';
 import {bool, string, array} from 'prop-types';
 import cx from 'classnames';

@@ -1,3 +1,4 @@
+import './View.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Input, Flyout, DateTime, DayPicker, Prompt, DialogButtons, Panels} from '@nti/web-commons';

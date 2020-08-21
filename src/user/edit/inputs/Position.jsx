@@ -1,3 +1,4 @@
+import './Position.scss';
 import React from 'react';
 import {scoped} from '@nti/lib-locale';
 

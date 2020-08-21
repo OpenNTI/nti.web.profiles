@@ -1,3 +1,4 @@
+import './List.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 import {PropTypes as PT} from '@nti/lib-commons';
