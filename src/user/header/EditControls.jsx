@@ -40,7 +40,7 @@ class EditControls extends React.Component {
 		return match ? (
 			<Editing {...this.props} />
 		) : !loaded || !canEdit ? null : (
-			<LinkTo.Object className="nti-button primary edit-link" context="edit" object={this.props.entity}>{t('edit')}</LinkTo.Object>
+			<LinkTo.Object className="edit-link" context="edit" object={this.props.entity}><Button as="span">{t('edit')}</Button></LinkTo.Object>
 		);
 	}
 
@@ -118,7 +118,9 @@ class Editing extends React.Component {
 
 		return (
 			<div className="editing">
-				<LinkTo.Object className="nti-button secondary cancel" object={entity} context="about">{t('cancel')}</LinkTo.Object>
+				<LinkTo.Object className="cancel" object={entity} context="about">
+					<Button as="span" secondary>{t('cancel')}</Button>
+				</LinkTo.Object>
 				<Button form={formId} className="save" disabled={!unsaved} onClick={this.onSave}>{t('save')}</Button>
 			</div>
 		);
