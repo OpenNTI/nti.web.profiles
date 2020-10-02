@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Flyout} from '@nti/web-commons';
+import {Flyout, Button} from '@nti/web-commons';
 import {scoped} from '@nti/lib-locale';
 import {LinkTo} from '@nti/web-routing';
 
@@ -25,7 +25,7 @@ export default class ManageControls extends React.Component {
 		if(presence && presence.status !== null) {
 			return (
 				<LinkTo.Object context="open-chat" object={entity}>
-					<div className="nti-button message available"><div className="icon"/><span className="text">{t('message')}</span></div>
+					<Button className="message available"><div className="icon"/><span className="text">{t('message')}</span></Button>
 				</LinkTo.Object>
 			);
 		}
@@ -33,7 +33,7 @@ export default class ManageControls extends React.Component {
 			return (
 				<Flyout.Triggered
 					className="message-button-flyout"
-					trigger={<div className="nti-button message"><span><div className="icon"/><span className="text">{t('message')}</span></span></div>}
+					trigger={<Button className="message"><span><div className="icon"/><span className="text">{t('message')}</span></span></Button>}
 					verticalAlign={Flyout.ALIGNMENTS.TOP}
 					horizontalAlign={Flyout.ALIGNMENTS.CENTER}
 					ref={this.attachFlyoutRef}
