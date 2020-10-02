@@ -1,14 +1,17 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`User profile message button test Test not present 1`] = `
-<div
+<a
   aria-haspopup="dialog"
-  className="flyout-trigger nti-button message message-button-flyout flyout-closed"
+  className="nti-button flyout-trigger message message-button-flyout flyout-closed button primary"
   onBlur={[Function]}
+  onClick={[Function]}
   onFocus={[Function]}
+  onKeyDown={[Function]}
   onKeyPress={[Function]}
   onMouseEnter={[Function]}
   onMouseLeave={[Function]}
+  role="button"
   tabIndex={0}
 >
   <span>
@@ -21,7 +24,7 @@ exports[`User profile message button test Test not present 1`] = `
       Message
     </span>
   </span>
-</div>
+</a>
 `;
 
 exports[`User profile message button test Test present 1`] = `
@@ -29,8 +32,12 @@ exports[`User profile message button test Test present 1`] = `
   className="nti-link-to-path"
   to="#"
 >
-  <div
-    className="nti-button message available"
+  <a
+    className="nti-button message available button primary"
+    onClick={[Function]}
+    onKeyDown={[Function]}
+    role="button"
+    tabIndex="0"
   >
     <div
       className="icon"
@@ -40,6 +47,6 @@ exports[`User profile message button test Test present 1`] = `
     >
       Message
     </span>
-  </div>
+  </a>
 </div>
 `;

@@ -4,14 +4,17 @@ exports[`User profile manage controls test (is a contact) Basic render test 1`] 
 <div
   className="contact profile-manage-controls"
 >
-  <div
+  <a
     aria-haspopup="dialog"
-    className="flyout-trigger nti-button message message-button-flyout flyout-closed"
+    className="nti-button flyout-trigger message message-button-flyout flyout-closed button primary"
     onBlur={[Function]}
+    onClick={[Function]}
     onFocus={[Function]}
+    onKeyDown={[Function]}
     onKeyPress={[Function]}
     onMouseEnter={[Function]}
     onMouseLeave={[Function]}
+    role="button"
     tabIndex={0}
   >
     <span>
@@ -24,7 +27,7 @@ exports[`User profile manage controls test (is a contact) Basic render test 1`] 
         Message
       </span>
     </span>
-  </div>
+  </a>
   <a
     className="nti-button unfollow button primary"
     onClick={[Function]}
