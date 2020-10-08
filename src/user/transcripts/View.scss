@@ -57,7 +57,7 @@ $header-ranges: (
 				}
 
 				.confirm {
-					color: $primary-blue;
+					color: var(--primary-blue);
 					position: absolute;
 					right: 10px;
 					top: 0;
@@ -236,7 +236,7 @@ $header-ranges: (
 
 			a {
 				text-decoration: none;
-				color: $primary-blue;
+				color: var(--primary-blue);
 				font-weight: 500;
 			}
 

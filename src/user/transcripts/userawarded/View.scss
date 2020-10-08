@@ -65,7 +65,7 @@ $header-ranges: (
 					}
 
 					.save {
-						color: $primary-blue;
+						color: var(--primary-blue);
 						position: absolute;
 						right: 10px;
 						top: 0;
