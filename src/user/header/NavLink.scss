@@ -6,7 +6,7 @@
 	padding: 0 2rem;
 	box-shadow: 1px 0 0 0 rgba(0, 0, 0, 0.4);
 	transition: 0.1s color;
-	color: $tertiary-grey;
+	color: var(--tertiary-grey);
 
 	@include responsive-range(mobile) {
 		padding: 0 1.125rem;

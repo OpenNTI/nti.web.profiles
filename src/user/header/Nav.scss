@@ -5,7 +5,7 @@
 
 	.show-remaining-items {
 		&::before {
-			color: $tertiary-grey;
+			color: var(--tertiary-grey);
 			font-weight: 400;
 		}
 

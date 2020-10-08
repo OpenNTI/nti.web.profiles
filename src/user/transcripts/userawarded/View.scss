@@ -137,7 +137,7 @@ $header-ranges: (
 				padding-top: 0.3rem;
 				text-transform: uppercase;
 				font-weight: 600;
-				color: $tertiary-grey;
+				color: var(--tertiary-grey);
 				text-align: left;
 				margin-bottom: 4px;
 			}
@@ -230,22 +230,22 @@ $header-ranges: (
 					background-color: #fbfbfb;
 
 					.calendar-hanger {
-						border-left: solid 2px #b8b8b8;
-						border-right: solid 2px #b8b8b8;
+						border-left: solid 2px var(--tertiary-grey);
+						border-right: solid 2px var(--tertiary-grey);
 						margin-left: 3px;
 						height: 1px;
 						width: 8px;
 					}
 
 					.calendar-top {
-						background-color: #b8b8b8;
+						background-color: var(--tertiary-grey);
 						width: 14px;
 						height: 2px;
 						border-radius: 2px 2px 0 0;
 					}
 
 					.calendar-bottom {
-						border: solid 2px #b8b8b8;
+						border: solid 2px var(--tertiary-grey);
 						width: 14px;
 						height: 10px;
 					}

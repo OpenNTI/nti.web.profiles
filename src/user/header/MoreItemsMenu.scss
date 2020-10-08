@@ -24,14 +24,14 @@
 		& > li {
 			display: block;
 			text-align: initial;
-			color: $tertiary-grey;
+			color: var(--tertiary-grey);
 			text-transform: uppercase;
 			overflow: hidden;
 
 			a {
 				display: block;
 				padding: 0.5rem;
-				color: $tertiary-grey;
+				color: var(--tertiary-grey);
 				text-decoration: none;
 				box-shadow: 1px 0 0 0 $bgcolor;
 				overflow: hidden;

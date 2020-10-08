@@ -24,6 +24,6 @@
 	.email {
 		display: block;
 		font: normal 400 0.875rem/1.4 $body-font-family;
-		color: $tertiary-grey;
+		color: var(--tertiary-grey);
 	}
 }

@@ -34,7 +34,7 @@ $header-ranges: (
 				.empty-state {
 					font-size: 14px;
 					font-weight: 400;
-					color: $tertiary-grey;
+					color: var(--tertiary-grey);
 					font-style: italic;
 					text-align: left;
 				}
@@ -43,7 +43,7 @@ $header-ranges: (
 					font-size: 10px;
 					text-transform: uppercase;
 					font-weight: bold;
-					color: $tertiary-grey;
+					color: var(--tertiary-grey);
 					margin-bottom: 15px;
 				}
 

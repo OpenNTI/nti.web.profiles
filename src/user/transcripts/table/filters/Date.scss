@@ -23,22 +23,22 @@
 .transcript-date-filter-value {
 	.calendar-icon {
 		.calendar-hanger {
-			border-left: solid 2px #b8b8b8;
-			border-right: solid 2px #b8b8b8;
+			border-left: solid 2px var(--tertiary-grey);
+			border-right: solid 2px var(--tertiary-grey);
 			margin-left: 3px;
 			height: 2px;
 			width: 10px;
 		}
 
 		.calendar-top {
-			background-color: #b8b8b8;
+			background-color: var(--tertiary-grey);
 			width: 16px;
 			height: 4px;
 			border-radius: 2px 2px 0 0;
 		}
 
 		.calendar-bottom {
-			border: solid 2px #b8b8b8;
+			border: solid 2px var(--tertiary-grey);
 			width: 16px;
 			height: 11px;
 		}
@@ -60,7 +60,7 @@
 			font-size: 9px;
 			text-transform: uppercase;
 			font-weight: 600;
-			color: #b8b8b8;
+			color: var(--tertiary-grey);
 			margin-right: 0.75rem;
 			width: 2rem;
 			display: inline-block;

@@ -36,7 +36,7 @@ $header-ranges: (
 
 				.completed-date {
 					font-size: 10px;
-					color: $tertiary-grey;
+					color: var(--tertiary-grey);
 					text-transform: uppercase;
 					font-weight: bold;
 				}
@@ -54,7 +54,7 @@ $header-ranges: (
 						}
 
 						.course-title {
-							color: $tertiary-grey;
+							color: var(--tertiary-grey);
 						}
 					}
 				}

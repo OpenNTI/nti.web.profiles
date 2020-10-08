@@ -7,7 +7,7 @@
 		transition: border 0.375s;
 
 		&:focus, &:focus-within {
-			border-color: $tertiary-grey;
+			border-color: var(--tertiary-grey);
 		}
 
 		&:invalid {
@@ -35,7 +35,7 @@
 		width: 100%;
 
 		&::placeholder {
-			color: $tertiary-grey;
+			color: var(--tertiary-grey);
 		}
 
 		@include fieldborder;
