@@ -104,7 +104,7 @@ $header-ranges: (
 	}
 
 	.panel-title-bar {
-		background-color: #fbfbfb;
+		background-color: var(--panel-background);
 		box-shadow: 0 1px 0 0 #e2e2e2;
 		padding-left: 25px;
 		padding-right: 10px;
@@ -227,7 +227,7 @@ $header-ranges: (
 				.calendar-icon {
 					padding: 13px 13px 0;
 					border-right: solid 1px #ddd;
-					background-color: #fbfbfb;
+					background-color: var(--panel-background);
 
 					.calendar-hanger {
 						border-left: solid 2px var(--tertiary-grey);

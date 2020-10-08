@@ -34,7 +34,7 @@
 	.context {
 		padding: 0 1rem 1rem 1rem;
 		position: relative;
-		background: #fbfbfb;
+		background: var(--panel-background);
 		color: var(--primary-grey);
 		&:after, &:before {
 			bottom: -1px;
