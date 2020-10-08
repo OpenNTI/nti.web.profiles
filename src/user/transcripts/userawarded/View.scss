@@ -88,7 +88,7 @@ $header-ranges: (
 	background-color: white;
 
 	.error {
-		color: $primary-red;
+		color: var(--primary-red);
 		text-align: center;
 		max-width: 600px;
 		padding: 25px 25px 0;
@@ -171,7 +171,7 @@ $header-ranges: (
 						width: 90px;
 
 						&:invalid {
-							background-color: rgba($primary-red, 0.1);
+							background-color: rgba(var(--primary-red), 0.1);
 						}
 					}
 

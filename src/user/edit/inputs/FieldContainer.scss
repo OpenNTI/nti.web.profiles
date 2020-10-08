@@ -20,7 +20,7 @@
 	&.required > .nti-profile-field-label {
 		&::after {
 			content: '*';
-			color: $primary-red;
+			color: var(--primary-red);
 		}
 	}
 
