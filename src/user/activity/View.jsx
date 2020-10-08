@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {Stream} from '../../stream';
+import Stream from '../../stream';
 
 export default class View extends React.Component {
 
