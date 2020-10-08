@@ -48,7 +48,7 @@ $header-ranges: (
 						position: relative;
 						text-overflow: ellipsis;
 						white-space: nowrap;
-						color: $primary-grey;
+						color: var(--primary-grey);
 						font-size: 1.125rem;
 						font-weight: bold;
 						line-height: 2.8125rem;

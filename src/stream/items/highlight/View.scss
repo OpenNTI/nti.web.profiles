@@ -46,7 +46,7 @@
 					font: normal 400 14px/16px 'Open Sans', sans-serif;
 
 					&.plain {
-						color: $primary-grey;
+						color: var(--primary-grey);
 
 						&.colored {
 							background-color: #e3f4fe;
@@ -78,7 +78,7 @@
 						&:not(.colored),
 						&:not(.colored) .math {
 							background: none;
-							color: $primary-grey;
+							color: var(--primary-grey);
 							border-bottom: 1px solid #9fd9fa;
 						}
 					}

@@ -7,7 +7,7 @@
 		&::after {
 			// overlay the menu background color (single-color gradient) on
 			// the arrow color to make the arrow match the menu bg
-			background: linear-gradient($bgcolor 0, $bgcolor 100%) $primary-grey;
+			background: linear-gradient($bgcolor 0, $bgcolor 100%) var(--primary-grey);
 		}
 	}
 

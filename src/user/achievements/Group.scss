@@ -7,7 +7,7 @@ $header-ranges: (
 
 .achievement-group {
 	background-color: white;
-	color: $primary-grey;
+	color: var(--primary-grey);
 
 	@include responsive-range(two-column, $header-ranges) {
 		padding: 25px 20px;

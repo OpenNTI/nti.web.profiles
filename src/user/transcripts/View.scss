@@ -41,7 +41,7 @@ $header-ranges: (
 					position: relative;
 					text-overflow: ellipsis;
 					white-space: nowrap;
-					color: $primary-grey;
+					color: var(--primary-grey);
 					font-size: 1.125rem;
 					font-weight: bold;
 					line-height: 2.8125rem;
@@ -72,7 +72,7 @@ $header-ranges: (
 
 	.nti-profile-transcripts {
 		background: white;
-		color: $primary-grey;
+		color: var(--primary-grey);
 		min-height: 30rem;
 		width: 100%;
 
@@ -227,7 +227,7 @@ $header-ranges: (
 		width: 7rem;
 
 		.download-option {
-			color: $primary-grey;
+			color: var(--primary-grey);
 			padding: 0.5rem;
 			cursor: pointer;
 			font-size: 14px;
