@@ -1,7 +1,7 @@
 @import "~@nti/style-common";
 
 .profile-transcript-filter-button {
-	border: 1px solid $border-grey-light;
+	border: 1px solid var(--border-grey)-light;
 	border-radius: 4px;
 	background-color: white;
 	padding: 0.5rem;
@@ -21,7 +21,7 @@
 	.icon {
 		min-width: rem-calc(43px);
 		min-height: rem-calc(32px);
-		border-right: 1px solid $border-grey-light;
+		border-right: 1px solid var(--border-grey)-light;
 	}
 
 	.content {
