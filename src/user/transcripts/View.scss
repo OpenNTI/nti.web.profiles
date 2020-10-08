@@ -193,7 +193,7 @@ $header-ranges: (
 				border: 1px solid #e2e2e2;
 				border-radius: 3px;
 				padding: 0 1.5rem;
-				color: $secondary-grey;
+				color: var(--secondary-grey);
 
 				&.disabled {
 					opacity: 0.5;

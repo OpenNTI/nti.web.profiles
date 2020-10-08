@@ -97,7 +97,7 @@
 	left: auto; right: 0;
 	width: 1px;
 	opacity: 0.2;
-	background: #787878;
+	background: var(--secondary-grey-alt);
 }
 
 .avatar-square {

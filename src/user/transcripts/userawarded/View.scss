@@ -188,7 +188,7 @@ $header-ranges: (
 						cursor: pointer;
 						display: flex;
 						position: relative;
-						color: $secondary-grey;
+						color: var(--secondary-grey);
 
 						.type-value {
 							overflow: hidden;
@@ -215,7 +215,7 @@ $header-ranges: (
 				border: solid 1px #ddd;
 				height: 40px;
 				cursor: pointer;
-				color: $secondary-grey;
+				color: var(--secondary-grey);
 				font-weight: 300;
 				display: flex;
 
@@ -273,7 +273,7 @@ $header-ranges: (
 		.award-type-option {
 			font-size: 12px;
 			padding: 0.5rem;
-			color: $secondary-grey;
+			color: var(--secondary-grey);
 			cursor: pointer;
 		}
 	}

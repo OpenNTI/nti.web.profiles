@@ -30,7 +30,7 @@
 		max-width: 100%;
 
 		.label {
-			color: $secondary-grey;
+			color: var(--secondary-grey);
 			font: normal 400 1rem/1.3 $body-font-family;
 			text-transform: none;
 			margin-bottom: 0.5rem;
