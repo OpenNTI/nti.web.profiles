@@ -8,7 +8,7 @@
 		text-transform: uppercase;
 		font-size: 0.625rem;
 		padding: 0px;
-		color: $tertiary-grey;
+		color: var(--tertiary-grey);
 		display: flex;
 		flex-direction: row;
 		flex-wrap: wrap;
@@ -34,7 +34,7 @@
 
 			&.last {
 				flex: 0 0 auto;
-				color: $primary-blue;
+				color: var(--primary-blue);
 			}
 		}
 	}
@@ -45,7 +45,7 @@
 				display: inline-block;
 				width: 100%;
 				height: 0.75rem;
-				background: $tertiary-grey;
+				background: var(--tertiary-grey);
 				opacity: 0.5;
 				text-indent: -1000px;
 				overflow: hidden;
@@ -57,7 +57,7 @@
 			}
 
 			&.last span {
-				background: $primary-blue;
+				background: var(--primary-blue);
 			}
 		}
 	}

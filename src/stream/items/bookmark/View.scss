@@ -9,13 +9,13 @@
 		border-style: solid;
 		border-color: #eaeaea;
 		border-width: 0 0 1px 0;
-		font: normal 500 14px/38px 'Open Sans', sans-serif;
-		color: #b8b8b8;
+		font: normal 500 14px/38px var(--body-font-family);
+		color: var(--tertiary-grey);
 		-webkit-font-smoothing: antialiased;
 		-moz-osx-font-smoothing: grayscale;
 
 		.username {
-    		color: $primary-blue;
+    		color: var(--primary-blue);
 		}
 	}
 
@@ -55,7 +55,7 @@
 			flex-grow: 1;
 
 			.page-title {
-				color: #494949;
+				color: var(--primary-grey);
 				font-size: 16px;
 				line-height: 22px;
 				-webkit-font-smoothing: antialiased;

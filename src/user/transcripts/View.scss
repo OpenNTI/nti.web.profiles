@@ -41,13 +41,13 @@ $header-ranges: (
 					position: relative;
 					text-overflow: ellipsis;
 					white-space: nowrap;
-					color: $primary-grey;
+					color: var(--primary-grey);
 					font-size: 1.125rem;
 					font-weight: bold;
 					line-height: 2.8125rem;
 					margin: 0 auto;
 					width: 50%;
-					font-family: "Open Sans Condensed";
+					font-family: var(--header-font-family);
 				}
 
 				.reset {
@@ -57,7 +57,7 @@ $header-ranges: (
 				}
 
 				.confirm {
-					color: $primary-blue;
+					color: var(--primary-blue);
 					position: absolute;
 					right: 10px;
 					top: 0;
@@ -72,7 +72,7 @@ $header-ranges: (
 
 	.nti-profile-transcripts {
 		background: white;
-		color: $primary-grey;
+		color: var(--primary-grey);
 		min-height: 30rem;
 		width: 100%;
 
@@ -193,7 +193,7 @@ $header-ranges: (
 				border: 1px solid #e2e2e2;
 				border-radius: 3px;
 				padding: 0 1.5rem;
-				color: $secondary-grey;
+				color: var(--secondary-grey);
 
 				&.disabled {
 					opacity: 0.5;
@@ -209,7 +209,7 @@ $header-ranges: (
 		.empty-message {
 			text-align: center;
 			font-size: 24px;
-			color: #b8b8b8;
+			color: var(--tertiary-grey);
 			margin-top: 2rem;
 		}
 	}
@@ -227,7 +227,7 @@ $header-ranges: (
 		width: 7rem;
 
 		.download-option {
-			color: $primary-grey;
+			color: var(--primary-grey);
 			padding: 0.5rem;
 			cursor: pointer;
 			font-size: 14px;
@@ -236,7 +236,7 @@ $header-ranges: (
 
 			a {
 				text-decoration: none;
-				color: $primary-blue;
+				color: var(--primary-blue);
 				font-weight: 500;
 			}
 
@@ -244,7 +244,7 @@ $header-ranges: (
 				pointer-events: none;
 
 				a {
-					color: $tertiary-grey;
+					color: var(--tertiary-grey);
 					font-weight: 300;
 				}
 			}

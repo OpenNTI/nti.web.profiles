@@ -1,6 +1,6 @@
 @import "~@nti/style-common/all";
 
 body {
-	color: $primary-grey;
+	color: var(--primary-grey);
 	background-color: lightblue;
 }

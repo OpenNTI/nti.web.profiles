@@ -6,7 +6,7 @@
 	}
 
 	a {
-		color: #3fb3f6;
+		color: var(--primary-blue);
 		text-decoration: none;
 	}
 
@@ -14,7 +14,7 @@
 		font-size: 0.625rem;
 		font-weight: bold;
 		text-transform: uppercase;
-		color: $tertiary-grey;
+		color: var(--tertiary-grey);
 		display: block;
 
 		@include respond-to(handhelds) {

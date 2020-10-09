@@ -31,7 +31,7 @@
 		line-height: 28px;
 		margin-left: 10px;
 		margin-top: 10px;
-		color: $secondary-grey;
+		color: var(--secondary-grey);
 		cursor: pointer;
 	}
 
@@ -58,8 +58,8 @@
 		&.date-filter {
 			&.selected {
 				background-color: rgba(63, 179, 246, 0.15);
-				box-shadow: inset 3px 0 0 0 $primary-blue;
-				color: $primary-blue;
+				box-shadow: inset 3px 0 0 0 var(--primary-blue);
+				color: var(--primary-blue);
 			}
 		}
 
@@ -86,7 +86,7 @@
 	.option-title {
 		font-size: 10px;
 		text-transform: uppercase;
-		color: $tertiary-grey;
+		color: var(--tertiary-grey);
 		padding-bottom: 10px;
 		padding-left: 20px;
 		margin-top: 16px;

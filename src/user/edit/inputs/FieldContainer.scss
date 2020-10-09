@@ -7,11 +7,11 @@
 		transition: border 0.375s;
 
 		&:focus, &:focus-within {
-			border-color: $tertiary-grey;
+			border-color: var(--tertiary-grey);
 		}
 
 		&:invalid {
-			border-color: $error-text-color;
+			border-color: var(--primary-red);
 		}
 	}
 
@@ -20,13 +20,13 @@
 	&.required > .nti-profile-field-label {
 		&::after {
 			content: '*';
-			color: $primary-red;
+			color: var(--primary-red);
 		}
 	}
 
 	input:not([type=radio]):not([type=checkbox]) {
 		background: white;
-		color: $primary-grey;
+		color: var(--primary-grey);
 		border: 1px solid #e8e8e8;
 		line-height: 1.5em;
 		padding: 0.25em;
@@ -35,7 +35,7 @@
 		width: 100%;
 
 		&::placeholder {
-			color: $tertiary-grey;
+			color: var(--tertiary-grey);
 		}
 
 		@include fieldborder;

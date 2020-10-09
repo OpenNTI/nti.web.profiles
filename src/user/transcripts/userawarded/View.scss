@@ -48,13 +48,13 @@ $header-ranges: (
 						position: relative;
 						text-overflow: ellipsis;
 						white-space: nowrap;
-						color: $primary-grey;
+						color: var(--primary-grey);
 						font-size: 1.125rem;
 						font-weight: bold;
 						line-height: 2.8125rem;
 						margin: 0 auto;
 						width: 50%;
-						font-family: "Open Sans Condensed";
+						font-family: var(--header-font-family);
 						border: none;
 					}
 
@@ -65,7 +65,7 @@ $header-ranges: (
 					}
 
 					.save {
-						color: $primary-blue;
+						color: var(--primary-blue);
 						position: absolute;
 						right: 10px;
 						top: 0;
@@ -88,7 +88,7 @@ $header-ranges: (
 	background-color: white;
 
 	.error {
-		color: $primary-red;
+		color: var(--primary-red);
 		text-align: center;
 		max-width: 600px;
 		padding: 25px 25px 0;
@@ -104,7 +104,7 @@ $header-ranges: (
 	}
 
 	.panel-title-bar {
-		background-color: #fbfbfb;
+		background-color: var(--panel-background);
 		box-shadow: 0 1px 0 0 #e2e2e2;
 		padding-left: 25px;
 		padding-right: 10px;
@@ -137,7 +137,7 @@ $header-ranges: (
 				padding-top: 0.3rem;
 				text-transform: uppercase;
 				font-weight: 600;
-				color: $tertiary-grey;
+				color: var(--tertiary-grey);
 				text-align: left;
 				margin-bottom: 4px;
 			}
@@ -171,7 +171,7 @@ $header-ranges: (
 						width: 90px;
 
 						&:invalid {
-							background-color: rgba($primary-red, 0.1);
+							background-color: rgba(var(--primary-red), 0.1);
 						}
 					}
 
@@ -188,7 +188,7 @@ $header-ranges: (
 						cursor: pointer;
 						display: flex;
 						position: relative;
-						color: $secondary-grey;
+						color: var(--secondary-grey);
 
 						.type-value {
 							overflow: hidden;
@@ -215,7 +215,7 @@ $header-ranges: (
 				border: solid 1px #ddd;
 				height: 40px;
 				cursor: pointer;
-				color: $secondary-grey;
+				color: var(--secondary-grey);
 				font-weight: 300;
 				display: flex;
 
@@ -227,25 +227,25 @@ $header-ranges: (
 				.calendar-icon {
 					padding: 13px 13px 0;
 					border-right: solid 1px #ddd;
-					background-color: #fbfbfb;
+					background-color: var(--panel-background);
 
 					.calendar-hanger {
-						border-left: solid 2px #b8b8b8;
-						border-right: solid 2px #b8b8b8;
+						border-left: solid 2px var(--tertiary-grey);
+						border-right: solid 2px var(--tertiary-grey);
 						margin-left: 3px;
 						height: 1px;
 						width: 8px;
 					}
 
 					.calendar-top {
-						background-color: #b8b8b8;
+						background-color: var(--tertiary-grey);
 						width: 14px;
 						height: 2px;
 						border-radius: 2px 2px 0 0;
 					}
 
 					.calendar-bottom {
-						border: solid 2px #b8b8b8;
+						border: solid 2px var(--tertiary-grey);
 						width: 14px;
 						height: 10px;
 					}
@@ -273,7 +273,7 @@ $header-ranges: (
 		.award-type-option {
 			font-size: 12px;
 			padding: 0.5rem;
-			color: $secondary-grey;
+			color: var(--secondary-grey);
 			cursor: pointer;
 		}
 	}

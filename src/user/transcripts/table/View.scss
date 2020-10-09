@@ -40,7 +40,7 @@
 	}
 
 	.transcript-add-row {
-		color: $primary-blue;
+		color: var(--primary-blue);
 		cursor: pointer;
 		display: flex;
 
@@ -101,7 +101,7 @@
 
 			th div {
 				font-size: 10px;
-				color: $tertiary-grey;
+				color: var(--tertiary-grey);
 				font-weight: 600;
 				text-transform: uppercase;
 				text-align: left;

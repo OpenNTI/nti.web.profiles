@@ -2,7 +2,7 @@
 
 .nti-profile-transcripts-table.aggregate {
 	padding: 30px;
-	background-color: #fbfbfb;
+	background-color: var(--panel-background);
 	box-shadow: 0 1px 0 0 rgba(226, 226, 226, 0.5), 0 -1px 0 0 rgba(226, 226, 226, 0.5);
 
 	&.loading {
@@ -34,7 +34,7 @@
 
 	.view-more, .show-less {
 		cursor: pointer;
-		color: $primary-blue;
+		color: var(--primary-blue);
 		font-size: 14px;
 		margin-top: 10px;
 	}

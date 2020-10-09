@@ -18,12 +18,12 @@
 				position: absolute;
 				top: 0;
 				right: -20px;
-				color: $tertiary-grey;
+				color: var(--tertiary-grey);
 				cursor: pointer;
 
 				&:hover + * {
-					background-color: $quad-grey;
-					box-shadow: 20px 0 0 6px $quad-grey, -10px 0 0 6px $quad-grey;
+					background-color: var(--quad-grey);
+					box-shadow: 20px 0 0 6px var(--quad-grey), -10px 0 0 6px var(--quad-grey);
 				}
 			}
 		}

@@ -15,7 +15,7 @@
 
 		&.message {
 			background-color: #ddd;
-			color: $tertiary-grey;
+			color: var(--tertiary-grey);
 			position: relative;
 
 			.icon {
@@ -32,7 +32,7 @@
 			}
 
 			&.available {
-				background-color: $primary-blue;
+				background-color: var(--primary-blue);
 				color: white;
 
 				.icon {
@@ -42,12 +42,12 @@
 		}
 
 		&.follow {
-			background-color: $primary-green;
+			background-color: var(--primary-green);
 			color: white;
 		}
 
 		&.unfollow {
-			background-color: $primary-red;
+			background-color: var(--primary-red);
 			color: white;
 		}
 	}

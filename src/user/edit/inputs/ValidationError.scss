@@ -1,7 +1,7 @@
 @import "~@nti/style-common";
 
 .nti-profile-validation-error {
-	color: $error-text-color;
+	color: var(--primary-red);
 	font-size: 0.625em;
 	text-transform: uppercase;
 	font-weight: 800;

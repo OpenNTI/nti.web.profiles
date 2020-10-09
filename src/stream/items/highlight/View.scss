@@ -9,13 +9,13 @@
 		border-style: solid;
 		border-color: #eaeaea;
 		border-width: 0 0 1px 0;
-		font: normal 500 14px/38px 'Open Sans', sans-serif;
-		color: #b8b8b8;
+		font: normal 500 14px/38px var(--body-font-family);
+		color: var(--tertiary-grey);
 		-webkit-font-smoothing: antialiased;
 		-moz-osx-font-smoothing: grayscale;
 
 		.username {
-    		color: $primary-blue;
+    		color: var(--primary-blue);
 		}
 	}
 
@@ -43,10 +43,10 @@
 					position: relative;
 					margin: 0 0 20px 0;
 					left: -3px;
-					font: normal 400 14px/16px 'Open Sans', sans-serif;
+					font: normal 400 14px/16px var(--body-font-family);
 
 					&.plain {
-						color: $primary-grey;
+						color: var(--primary-grey);
 
 						&.colored {
 							background-color: #e3f4fe;
@@ -78,7 +78,7 @@
 						&:not(.colored),
 						&:not(.colored) .math {
 							background: none;
-							color: $primary-grey;
+							color: var(--primary-grey);
 							border-bottom: 1px solid #9fd9fa;
 						}
 					}

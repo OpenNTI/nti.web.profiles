@@ -7,7 +7,7 @@
 	font-size: 0.875em;
 
 	h2 {
-		color: $primary-grey;
+		color: var(--primary-grey);
 		margin: 0;
 		font-size: 1.5rem;
 		font-weight: 300;
@@ -22,7 +22,7 @@
 			margin: 3rem 0;
 			padding: 0;
 			border-bottom: none;
-			color: $tertiary-grey;
+			color: var(--tertiary-grey);
 			text-align: center;
 		}
 	}
