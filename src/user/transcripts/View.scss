@@ -47,7 +47,7 @@ $header-ranges: (
 					line-height: 2.8125rem;
 					margin: 0 auto;
 					width: 50%;
-					font-family: "Open Sans Condensed";
+					font-family: var(--header-font-family);
 				}
 
 				.reset {
