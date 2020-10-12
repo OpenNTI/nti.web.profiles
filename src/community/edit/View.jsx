@@ -1,13 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classnames from 'classnames/bind';
+import cx from 'classnames';
 import {Loading, Error} from '@nti/web-commons';
 
-import Styles from './View.css';
 import Store from './Store';
 import Form from './form';
-
-const cx = classnames.bind(Styles);
 
 export default
 @Store.connect(['loading', 'error'])
