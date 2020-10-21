@@ -18,7 +18,7 @@ CommunityIdentity.propTypes = {
 	className: PropTypes.string,
 	title: PropTypes.string,
 	community: PropTypes.shape({
-		canEdit: PropTypes.func,
+		isModifiable: PropTypes.bool,
 		displayName: PropTypes.string,
 		about: PropTypes.string
 	}),
@@ -47,7 +47,7 @@ export default function CommunityIdentity ({community, title, className, showOpt
 					/>
 				)}
 			</div>
-			{community.canEdit() && (
+			{community.isModifiable && (
 				<LinkTo.Object object={community} className={cx('edit', 'community-edit-link')} context="edit">
 					<i className={cx('icon-edit', 'edit-icon')} />
 					<Text.Base className={cx('edit-label')}>{t('edit')}</Text.Base>
