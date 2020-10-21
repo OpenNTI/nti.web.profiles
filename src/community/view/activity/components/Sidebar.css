@@ -2,7 +2,7 @@
 	background: white;
 	position: sticky;
 	overflow: hidden;
-	top: var(--community-sidebar-top-offset, 0px);
+	top: var(--community-sidebar-top-offset, 0);
 
 	--side-padding: 1rem;
 }

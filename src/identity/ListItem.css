@@ -19,7 +19,8 @@
 
 .presence {
 	position: absolute;
-	bottom: 3px; right: 0;
+	bottom: 3px;
+	right: 0;
 }
 
 .name {

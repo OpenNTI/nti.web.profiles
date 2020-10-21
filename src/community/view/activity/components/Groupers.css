@@ -3,9 +3,8 @@ li.group {
 	border-radius: 3px;
 	margin-bottom: 0.625rem;
 	overflow: hidden;
-	box-shadow: 0 1px 3px 0 rgba(0,0,0,0.25);
+	box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.25);
 }
-
 
 .group-label {
 	background-color: var(--panel-background);

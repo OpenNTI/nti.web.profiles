@@ -20,7 +20,6 @@
 	border-right: 1px solid rgba(0, 0, 0, 0.18);
 }
 
-
 .new-post-inner {
 	display: flex;
 	flex-direction: row;
@@ -93,8 +92,10 @@
 .layout .option:first-of-type::after {
 	content: '';
 	position: absolute;
-	top: 17px; bottom: 17px;
-	left: auto; right: 0;
+	top: 17px;
+	bottom: 17px;
+	left: auto;
+	right: 0;
 	width: 1px;
 	opacity: 0.2;
 	background: var(--secondary-grey-alt);
@@ -110,6 +111,6 @@
 	height: 2.5rem;
 	margin-right: 0.625rem;
 	color: #fff;
-	background: #CCCCCC;
+	background: #ccc;
 	border-radius: 0.1875rem;
 }

@@ -1,9 +1,10 @@
 .members-selection {
 	position: sticky;
 	top: 0;
-	z-index: 1; /*ewww*/
+	z-index: 1; /* ewww */
 	background: var(--panel-background);
-	box-shadow: 0 1px 0 0 var(--border-grey-light),
+	box-shadow:
+		0 1px 0 0 var(--border-grey-light),
 		0 -1px 0 0 var(--border-grey-light);
 	padding: 0.5rem var(--side-padding, 1.5rem);
 	display: flex;
@@ -20,8 +21,8 @@
 	line-height: 1.3;
 	color: var(--secondary-grey);
 	white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 .selected li {

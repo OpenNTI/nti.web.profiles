@@ -9,8 +9,10 @@
 
 .avatar {
 	position: absolute;
-	top: var(--side-padding, 1.5rem); bottom: auto;
-	left: var(--side-padding, 1.5rem); right: auto;
+	top: var(--side-padding, 1.5rem);
+	bottom: auto;
+	left: var(--side-padding, 1.5rem);
+	right: auto;
 	width: 65%;
 	border-radius: 5px;
 	box-shadow: 0 15px 15px 0 rgba(0, 0, 0, 0.7);
@@ -19,19 +21,22 @@
 
 .edit-button {
 	position: absolute;
-	top: 1rem; bottom: auto;
-	left: auto; right: 1rem;
+	top: 1rem;
+	bottom: auto;
+	left: auto;
+	right: 1rem;
 }
 
 .sync {
 	cursor: pointer;
 	position: absolute;
-	top: auto; bottom: 1rem;
-	left: auto; right: var(--side-padding, 1.5rem);
+	top: auto;
+	bottom: 1rem;
+	left: auto;
+	right: var(--side-padding, 1.5rem);
 	font-size: 0.875rem;
 	line-height: 1.3;
 	color: white;
 	text-decoration: underline;
 	text-shadow: 0 0 3px rgba(0, 0, 0, 0.7);
 }
-
