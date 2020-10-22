@@ -19,7 +19,7 @@ ChannelListItem.propTypes = {
 };
 export default function ChannelListItem ({channel, active}) {
 	return (
-		<LinkTo.Object object={channel} className={cx('channel', {active})} title={channel.title} noPathFix >
+		<LinkTo.Object object={channel} className={cx('channel', {active})} title={channel.title}>
 			<Text.Base className={cx('channel-label')}>
 				{channel.title}
 			</Text.Base>

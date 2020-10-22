@@ -82,9 +82,9 @@ export default class CommunityFrame extends React.Component {
 		return (
 			<View.WithTitle title={this.getTitle()}>
 				<Router.RouteForProvider getRouteFor={this.getCommunityEditRoute}>
-					{React.Children.map(children, (item) => {
-						return React.cloneElement(item, {community});
-					})}
+					{React.Children.map(children, (item) =>
+						React.cloneElement(item, {community})
+					)}
 					<Route.Hash matches="#community-edit" render={this.renderCommunityEdit} />
 					<Route.Hash matches="#members" render={this.renderMembers} />
 				</Router.RouteForProvider>
