@@ -11,6 +11,10 @@ export default class SalltProfileTextInput extends React.Component {
 				name: PropTypes.string,
 				title: PropTypes.string,
 				choices: PropTypes.array
+			}),
+			error: PropTypes.shape({
+				message: PropTypes.string,
+				code: PropTypes.string
 			})
 		}).isRequired,
 		value: PropTypes.string,
@@ -62,14 +66,16 @@ export default class SalltProfileTextInput extends React.Component {
 
 
 	render () {
-		const {field: {schema}} = this.props;
+		const {field: {schema, error: {message, code}}} = this.props;
 		const {value} = this.state;
+		const showMessage = message && code !== 'RequiredMissing';
 
 		return (
 			<div className={cx('profile-update-sallt-profile-text-input', schema.name)}>
 				<Input.Label label={schema.description}>
 					<Input.Text placeholder={schema.title} value={value} onChange={this.onChange} />
 				</Input.Label>
+				{showMessage ? (<div className="profile-update-warning">{message}</div>) : null}
 			</div>
 		);
 	}
