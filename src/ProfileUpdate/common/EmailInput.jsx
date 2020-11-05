@@ -71,8 +71,9 @@ export default class ProfileUpdateEmailInput extends React.Component {
 	}
 
 	render () {
-		const {field: {schema, error: {message, code}}} = this.props;
+		const {field: {schema, error}} = this.props;
 		const {value} = this.state;
+		const {message, code} = error ?? {};
 		const showMessage = message && code !== 'RequiredMissing';
 
 		return (
