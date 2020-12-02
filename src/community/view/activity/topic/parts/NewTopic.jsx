@@ -30,7 +30,7 @@ NewChannelTopic.propTypes = {
 	dialog: PropTypes.bool,
 	channel: PropTypes.object,
 
-	channels: PropTypes.array,
+	channels: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
 	community: PropTypes.object
 };
 export default function NewChannelTopic ({dialog, channel, channels, community}) {
