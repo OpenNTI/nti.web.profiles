@@ -20,7 +20,7 @@ exports[`Bookmark renders correctly 1`] = `
     </div>
      created a bookmark on 
     <time
-      className="nti-text"
+      className="ntiText"
       dateTime="2018-08-31T00:00:00+00:00"
     >
       August 31, 2018
@@ -28,7 +28,7 @@ exports[`Bookmark renders correctly 1`] = `
   </div>
   <div
     className="nti-link-to-path"
-    to="/object/user4-OID-0x04e6fa%3A5573657273%3AnywS9Pjp8FE"
+    to="/id/user4-OID-0x04e6fa%3A5573657273%3AnywS9Pjp8FE"
   >
     <div
       className="bookmark-content"
@@ -52,7 +52,7 @@ exports[`Bookmark renders correctly 1`] = `
         >
           <div
             className="nti-link-to-path"
-            to="/object/user4-OID-0x04e6fa%3A5573657273%3AnywS9Pjp8FE"
+            to="/id/user4-OID-0x04e6fa%3A5573657273%3AnywS9Pjp8FE"
           >
             <ul
               className="breadcrumb-list"
