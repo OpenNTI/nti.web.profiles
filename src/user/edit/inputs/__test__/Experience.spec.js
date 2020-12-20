@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { render } from '@testing-library/react';
 import {scoped} from '@nti/lib-locale';
 
 import Experience from '../Experience';
@@ -15,7 +15,7 @@ const t = scoped('nti-web-profile.user-profile.edit.experience.Test', {
 });
 
 
-const FIELDMETA = {
+const FIELD_META = {
 	organization: {
 		name: 'companyName'
 	},
@@ -27,27 +27,27 @@ const FIELDMETA = {
 /* eslint-env jest */
 describe('Profile experience editor tests', () => {
 	function verifyContainer (container, name, label, required) {
-		const inputEl = container.find('input').first();
-		const labelEl = container.find('.nti-profile-field-label').first();
+		const inputEl = container.querySelector('input');
+		const labelEl = container.querySelector('.nti-profile-field-label');
 
-		expect(labelEl.text()).toEqual(label);
-		expect(inputEl.prop('name')).toEqual(name);
+		expect(labelEl.textContent).toEqual(label);
+		expect(inputEl.getAttribute('name')).toEqual(name);
 
 		if(required) {
-			expect(container.prop('className')).toMatch(/required/);
+			expect(container.getAttribute('class')).toMatch(/required/);
 		}
 		else {
-			expect(container.prop('className')).not.toMatch(/required/);
+			expect(container.getAttribute('class')).not.toMatch(/required/);
 		}
 	}
 
 	test('Standard schema (organization required, others optional)', async () => {
-		const cmp = mount(<Experience schema={standardSchema} fieldMeta={FIELDMETA} localizer={t}/>);
+		const result = render(<Experience schema={standardSchema} fieldMeta={FIELD_META} localizer={t}/>);
 
-		const fieldContainers = cmp.find('.nti-profile-field-container');
+		const fieldContainers = result.container.querySelectorAll('.nti-profile-field-container');
 
-		fieldContainers.forEach((container) => {
-			const className = container.prop('className');
+		for(const container of fieldContainers) {
+			const className = container.getAttribute('class');
 
 			if(className.match(/organization/)) {
 				verifyContainer(container, 'companyName', COMPANY_ALIAS, true);
@@ -62,8 +62,8 @@ describe('Profile experience editor tests', () => {
 				verifyContainer(container, 'endYear', 'End Year', false);
 			}
 			else if(className.match(/description/)) {
-				expect(container.find('.nti-draft-core').exists()).toBe(true);
+				expect(container.querySelector('.nti-draft-core')).toBeTruthy();
 			}
-		});
+		}
 	});
 });

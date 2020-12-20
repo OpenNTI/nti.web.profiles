@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
 
 import RowDetail from '../RowDetail';
 
@@ -16,15 +16,15 @@ describe('RowDetail test', () => {
 		issuer: 'test issuer',
 		getAwardedDate: () => {}
 	};
-	const cmp = shallow(
-		<RowDetail
-			item={item}
-			onDismiss={() => {}}
-		/>
-	);
 
 	test('NTI-5808: Test decimal place', () => {
+		const {container: root} = render(
+			<RowDetail
+				item={item}
+				onDismiss={() => {}}
+			/>
+		);
 		const { creditDefinition: { type, unit }} = item;
-		expect(cmp.find('.detail-info .value').first().text()).toEqual(`${item.amount.toFixed(2)} ${type} ${unit}`);
+		expect(root.querySelector('.detail-info .value').textContent).toEqual(`${item.amount.toFixed(2)} ${type} ${unit}`);
 	});
 });
