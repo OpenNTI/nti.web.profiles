@@ -97,8 +97,8 @@ export default class DateFilter extends React.Component {
 
 		return (
 			<div className="date">
-				<div className="date-value start-date"><span className="date-info">{t('from')}</span><span>{DateTime.format(filterValue.startDate, 'll')}</span></div>
-				<div className="date-value end-date"><span className="date-info">{t('to')}</span><span>{filterValue.endDate ? DateTime.format(filterValue.endDate, 'll') : t('today')}</span></div>
+				<div className="date-value start-date"><span className="date-info">{t('from')}</span><span>{DateTime.format(filterValue.startDate, DateTime.MONTH_ABBR_DAY_YEAR)}</span></div>
+				<div className="date-value end-date"><span className="date-info">{t('to')}</span><span>{filterValue.endDate ? DateTime.format(filterValue.endDate, DateTime.MONTH_ABBR_DAY_YEAR) : t('today')}</span></div>
 			</div>
 		);
 	}

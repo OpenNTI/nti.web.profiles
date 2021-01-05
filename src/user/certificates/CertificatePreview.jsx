@@ -63,7 +63,7 @@ export default class CertificatePreview extends React.Component {
 					{CatalogEntry.Title}
 				</div>
 				{CourseProgress.getCompletedDate()
-					? <div className="completed-date">{t('earned') + ' ' + DateTime.format(CourseProgress.getCompletedDate(), 'LL')}</div>
+					? <div className="completed-date">{t('earned') + ' ' + DateTime.format(CourseProgress.getCompletedDate())}</div>
 					: <Progress pct={Math.floor(CourseProgress.PercentageProgress * 100)}/>}
 			</div>
 		);

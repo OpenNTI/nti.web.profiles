@@ -129,7 +129,7 @@ export default class UserAwardedCreditView extends React.Component {
 		return (
 			<div className="award-credit-date-value">
 				{this.renderDateIcon()}
-				<div className="date-value">{date && DateTime.format(date, 'LL')}</div>
+				<div className="date-value">{date && DateTime.format(date)}</div>
 				<i className="icon-chevron-down"/>
 			</div>
 		);

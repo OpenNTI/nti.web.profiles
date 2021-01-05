@@ -32,7 +32,7 @@ export function getTimeGroupHeader (time) {
 
 	if (between(oneWeekAgo, twoDaysAgo)) {
 		//TODO: explore this format...
-		return DateTime.format(time, 'l');
+		return DateTime.format(time, DateTime.DATE);
 	}
 
 	return DateTime.fromNow(time);

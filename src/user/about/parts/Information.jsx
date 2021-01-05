@@ -88,7 +88,7 @@ const FIELDS = [
 
 		return {
 			label: t('expectedGraduation'),
-			value: DateTime.format(date, 'MMMM YYYY')
+			value: DateTime.format(date, DateTime.MONTH_NAME_YEAR)
 		};
 	}
 ];
