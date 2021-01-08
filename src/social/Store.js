@@ -10,27 +10,27 @@ export default class Store extends Stores.SimpleStore {
 		this.set({ActiveUsers});
 	}
 
-	async OnIncomingMessage (sender, message) {
+	async onIncomingMessage (sender, message) {
 
 	}
 
-	async OnPresenceChanged (user, presenceInfo) {
+	async onPresenceChanged (user, presenceInfo) {
 
 	}
 
-	async Load () {
+	async load () {
 
 	}
 
-	async UpdateLastViewed (user) {
+	async updateLastViewed (user) {
 
 	}
 
-	async UpdateUnread (user) {
+	async updateUnread (user) {
 
 	}
 
-	async ResolveChat (user) {
+	async resolveChat (user) {
 
 	}
 
