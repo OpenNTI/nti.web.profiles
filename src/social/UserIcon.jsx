@@ -1,3 +1,4 @@
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Avatar, Badge } from '@nti/web-commons';
 
