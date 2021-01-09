@@ -33,12 +33,4 @@ export default class Store extends Stores.SimpleStore {
 	async resolveChat (user) {
 
 	}
-
-	ExpandContacts () {
-
-	}
-
-	ShowChatWindow (chat) {
-
-	}
 }
