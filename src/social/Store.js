@@ -15,6 +15,8 @@ export default class Store extends Stores.SimpleStore {
 		this.updateUnread();
 	}
 
+	async onPresenceChanged (user, presenceInfo) {
+		// TODO: this method should update the list of active users as they change their presence
 	}
 
 	async onPresenceChanged (user, presenceInfo) {
