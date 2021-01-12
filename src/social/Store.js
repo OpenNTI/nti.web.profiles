@@ -10,7 +10,10 @@ export default class Store extends Stores.SimpleStore {
 		this.set({ActiveUsers});
 	}
 
-	async onIncomingMessage (sender, message) {
+	async onIncomingMessage (user, message) {
+		await this.resolveChatFor(user);
+		this.updateUnread();
+	}
 
 	}
 
