@@ -85,7 +85,19 @@ export default class Store extends Stores.SimpleStore {
 		this.set({UnreadCount});
 	}
 
-	async resolveChat (user) {
+	async updateLastViewed (user) {
+		const LastViewed = this.get('LastViewed'), UnreadCount = this.get('UnreadCount');
 
+		// TODO: check lastViewed link for the chat
+		if (this.get('Batches')[user.id].hasLink(`${user.id}/lastViewed`)) {
+			const now = new Date();
+			// TODO: check lastViewed link for the chat
+			this.batch.putToLink(`${user.id}/lastViewed`, now.getTime() / 1000);
+			LastViewed[user.id] = now;
+			UnreadCount[user.id] = 0;
+
+			this.set({LastViewed, UnreadCount});
+			this.updateUnread();
+		}
 	}
 }
