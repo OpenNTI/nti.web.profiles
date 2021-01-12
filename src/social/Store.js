@@ -1,7 +1,11 @@
 import { Stores } from '@nti/lib-store';
-
+import { getService } from '@nti/web-client';
 import { subscribeToIncomingMessage, subscribeToPresenceChange } from './Socket';
 
+const MESSAGE_INBOX = 'RUGDByOthersThatIMightBeInterestedIn';
+const CONTENT_ROOT = 'tag:nextthought.com,2011-10:Root';
+
+const BATCH_SIZE = 10;
 
 export default class Store extends Stores.SimpleStore {
 	static Singleton = true;
