@@ -43,8 +43,13 @@ export default class Store extends Stores.SimpleStore {
 		}
 	}
 
-	async load () {
+	async resolveChat () {
+		const service = await getService();
+		const pageInfo = await service.getPageInfo(CONTENT_ROOT);
+		// TODO: check the way to get the url
+		this.url = pageInfo.getLink(MESSAGE_INBOX);
 
+		this.get('ActiveUsers').forEach(async (user) => await this.resolveChatFor(user));
 	}
 
 	async updateLastViewed (user) {
