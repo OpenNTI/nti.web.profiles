@@ -68,8 +68,21 @@ export default class Store extends Stores.SimpleStore {
 		this.set({ Batches, LastViewed });
 	}
 
-	async updateUnread (user) {
+	updateUnread () {
+		const UnreadCount = {};
 
+		const mod = (x) => x.getLastModified() || x.getCreatedTime();
+		const inc = (m, lastViewed) => (m > lastViewed ? 1 : 0);
+
+		this.get('ActiveUsers').forEach((user) => {
+			const msgs = this.get('Batches')[user.id];
+
+			const lastViewed = this.get('LastViewed')[user.id];
+
+			UnreadCount[user.id] = msgs.reduce((n, item) => n + inc(mod(item), lastViewed), 0);
+		});
+
+		this.set({UnreadCount});
 	}
 
 	async resolveChat (user) {
