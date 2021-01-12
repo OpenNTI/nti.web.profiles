@@ -52,8 +52,20 @@ export default class Store extends Stores.SimpleStore {
 		this.get('ActiveUsers').forEach(async (user) => await this.resolveChatFor(user));
 	}
 
-	async updateLastViewed (user) {
+	async resolveChatFor (user) {
+		// TODO: check the method of getting the batch of messages for the user
+		// TODO: check the service.get url
+		const Batches = this.get('Batches') || {}, LastViewed = this.get('LastViewed') || {};
 
+		Batches[user.id] = await service.getBatch(this.url, {
+			batchStart: items.length,
+			batchSize: BATCH_SIZE,
+		});
+
+		// TODO: check lastViewed link for the chat
+		LastViewed[user.id] = new Date(parseFloat(await service.get(`${this.url}/${user.id}/lastViewed`), 10) * 1000);
+
+		this.set({ Batches, LastViewed });
 	}
 
 	async updateUnread (user) {
