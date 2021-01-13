@@ -15,7 +15,7 @@ export default class Store extends Stores.SimpleStore {
 	}
 
 	async onIncomingMessage (user, message) {
-		await this.resolveChatFor(user);
+		await this.loadConversation(user);
 		this.updateUnread();
 	}
 
@@ -36,7 +36,7 @@ export default class Store extends Stores.SimpleStore {
 		this.set({Loading: true});
 
 		try {
-			await this.resolveChat();
+			await this.loadConversations();
 			this.updateUnread();
 
 		} catch (e) {
@@ -47,16 +47,16 @@ export default class Store extends Stores.SimpleStore {
 		}
 	}
 
-	async resolveChat () {
+	loadConversations = async () => {
 		const service = await getService();
 		const pageInfo = await service.getPageInfo(CONTENT_ROOT);
 		// TODO: check the way to get the url
 		this.url = pageInfo.getLink(MESSAGE_INBOX);
 
-		this.get('ActiveUsers').forEach(async (user) => await this.resolveChatFor(user));
+		this.get('ActiveUsers').forEach(async (user) => await this.loadConversation(user));
 	}
 
-	async resolveChatFor (user) {
+	loadConversation = async (user) => {
 		// TODO: check the method of getting the batch of messages for the user
 		// TODO: check the service.get url
 		const Batches = this.get('Batches') || {}, LastViewed = this.get('LastViewed') || {};
