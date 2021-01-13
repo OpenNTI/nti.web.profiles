@@ -53,7 +53,11 @@ export default class Store extends Stores.SimpleStore {
 		// TODO: check the way to get the url
 		this.url = pageInfo.getLink(MESSAGE_INBOX);
 
-		this.get('ActiveUsers').forEach(async (user) => await this.loadConversation(user));
+		await Promise.all(
+			this.get('ActiveUsers').map(
+				this.loadConversation
+			)
+		);
 	}
 
 	loadConversation = async (user) => {
@@ -76,14 +80,14 @@ export default class Store extends Stores.SimpleStore {
 		const UnreadCount = {};
 
 		const mod = (x) => x.getLastModified() || x.getCreatedTime();
-		const inc = (m, lastViewed) => (m > lastViewed ? 1 : 0);
+		const inc = (base, item, lastViewed) => base + (mod(item) > lastViewed ? 1 : 0);
 
 		this.get('ActiveUsers').forEach((user) => {
 			const msgs = this.get('Batches')[user.id];
 
 			const lastViewed = this.get('LastViewed')[user.id];
 
-			UnreadCount[user.id] = msgs.reduce((n, item) => n + inc(mod(item), lastViewed), 0);
+			UnreadCount[user.id] = msgs.reduce((n, item) => inc(n, item, lastViewed), 0);
 		});
 
 		this.set({UnreadCount});
