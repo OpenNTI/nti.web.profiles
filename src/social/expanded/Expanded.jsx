@@ -41,7 +41,7 @@ export default function ExpandedPanel ( { collapse } ) {
 		activeUsers,
 		loading,
 		error,
-	} = Store.useValues();
+	} = Store.useValue();
 
 	return (
 		<Container>
@@ -52,14 +52,16 @@ export default function ExpandedPanel ( { collapse } ) {
 					<Errors.Message error={error}/>
 				) : (
 					<>
-						{activeUsers?.map((user, index) =>
-							<React.Fragment key={index}>
-								<EntryContainer>
-									<UserIcon user={user} />
-									<DisplayName entity={user} className={styles.name} />
-								</EntryContainer>
-							</React.Fragment>
-						)}
+						{activeUsers?.map((user, index) => {
+							return (
+								<React.Fragment key={index}>
+									<EntryContainer>
+										<UserIcon user={user} />
+										<DisplayName entity={user} className={styles.name} />
+									</EntryContainer>
+								</React.Fragment>
+							);
+						})}
 					</>
 				)}
 			</Loading.Placeholder>
