@@ -26,14 +26,16 @@ export default function CollapsedPanel ( {expand, children} ) {
 		activeUsers,
 		loading,
 		error,
-	} = Store.useValues();
+	} = Store.useValue();
 
 	return (
 		<Container>
-			{children?.map((child, index) =>
-					<React.Fragment key={index}>
+			{React.Children.map(children, child => {
+				return (
+					<React.Fragment>
 						<IconContainer>{child}</IconContainer>
 					</React.Fragment>
+				);}
 			)}
 
 			<Loading.Placeholder loading={loading} fallback={(<Loading.Spinner className={styles.loading}/>)}>
@@ -41,12 +43,14 @@ export default function CollapsedPanel ( {expand, children} ) {
 					<Errors.Message error={error}/>
 				) : (
 					<>
-						{activeUsers?.map((user, index) =>
-							<React.Fragment key={index}>
-								<IconContainer>
-									<UserIcon user={user} />
-								</IconContainer>
-							</React.Fragment>
+						{activeUsers?.map((user, index) => {
+							return (
+								<React.Fragment key={index}>
+									<IconContainer>
+										<UserIcon user={user} />
+									</IconContainer>
+								</React.Fragment>
+							);}
 						)}
 					</>
 				)}
