@@ -7,7 +7,7 @@ export default styled.div`
 	padding: 0;
 	opacity: 0.6;
 
-	:hover {
+	&:hover {
 		opacity: 1;
 	}
 `;
