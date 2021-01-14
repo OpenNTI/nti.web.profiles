@@ -8,7 +8,7 @@ import VerticalPanel from './Panel';
 export default function ChatPanel () {
 	const {
 		load
-	} = Store.useValues();
+	} = Store.useValue();
 
 	useEffect(() => {
 		load();
