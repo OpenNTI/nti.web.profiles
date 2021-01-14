@@ -1,5 +1,6 @@
 import { Stores } from '@nti/lib-store';
 import { getService } from '@nti/web-client';
+
 import { subscribeToIncomingMessage, subscribeToPresenceChange } from './Socket';
 
 const MESSAGE_INBOX = 'RUGDByOthersThatIMightBeInterestedIn';
@@ -24,7 +25,7 @@ export default class Store extends Stores.SimpleStore {
 	}
 
 	async load () {
-		if (this.initialLoad) return;
+		if (this.initialLoad) {return;}
 		this.initialLoad = true;
 
 		// Subscribe to incoming messages
@@ -63,10 +64,12 @@ export default class Store extends Stores.SimpleStore {
 	loadConversation = async (user) => {
 		// TODO: check the method of getting the batch of messages for the user
 		// TODO: check the service.get url
+		const service = await getService();
+
 		const Batches = this.get('Batches') || {}, LastViewed = this.get('LastViewed') || {};
 
 		Batches[user.id] = await service.getBatch(this.url, {
-			batchStart: items.length,
+			batchStart: 0,
 			batchSize: BATCH_SIZE,
 		});
 
