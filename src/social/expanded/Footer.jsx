@@ -1,5 +1,5 @@
 export default styled.div`
-	position: absolute !important;
+	position: absolute;
 	bottom: 0;
 	left: 0;
 	right: 0;
