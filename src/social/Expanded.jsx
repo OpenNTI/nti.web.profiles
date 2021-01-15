@@ -2,14 +2,9 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { DisplayName, Errors, Loading } from '@nti/web-commons';
 
-import Store from '../Store';
-import UserIcon from '../BadgedAvatar';
-
-import ContactsButton from './Contacts';
-import Container from './Container';
-import EntryContainer from './EntryContainer';
-import Footer from './Footer';
-import Header from './Header';
+import {ContactsButton, Container, EntryContainer, Footer, Header} from './parts/expanded';
+import Store from './Store';
+import UserIcon from './BadgedAvatar';
 
 const styles = css`
 	.name {
