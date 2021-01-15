@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import {ExpandedPanel} from './expanded';
-import {CollapsedPanel} from './collapsed';
+import ExpandedPanel from './Expanded';
+import CollapsedPanel from './Collapsed';
 
 VerticalPanel.propTypes = {
 	expanded: PropTypes.bool.isRequired,
@@ -12,9 +12,9 @@ VerticalPanel.propTypes = {
 export default function VerticalPanel ( { expanded, children, setExpanded } ) {
 	return (
 		expanded ? (
-			<ExpandedPanel collapse={setExpanded(false)} />
+			<ExpandedPanel collapse={() => setExpanded(false)} />
 		) : (
-			<CollapsedPanel expand={setExpanded(true)}>{children}</CollapsedPanel>
+			<CollapsedPanel expand={() => setExpanded(true)}>{children}</CollapsedPanel>
 		)
 	);
 }
