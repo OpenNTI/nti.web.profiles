@@ -11,8 +11,8 @@ export default styled('div').attrs(( props ) => ({
 		content: "";
 		display: block;
 		background-position: center;
-		width: 21px;
-		height: 24px;
+		width: 32px;
+    	height: 21px;
 		opacity: 1;
 		background-image: url("../assets/icon-dark.svg");
 	}
