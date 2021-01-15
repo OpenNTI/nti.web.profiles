@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Errors, Loading } from '@nti/web-commons';
 
 import Store from '../Store';
-import UserIcon from '../UserIcon';
+import UserIcon from '../BadgedAvatar';
 
 import IconContainer from './IconContainer';
 import ExpandButton from './ExpandButton';
@@ -47,7 +47,7 @@ export default function CollapsedPanel ( {expand, children} ) {
 							return (
 								<React.Fragment key={index}>
 									<IconContainer>
-										<UserIcon user={user} />
+										<UserIcon entity={user} />
 									</IconContainer>
 								</React.Fragment>
 							);}
