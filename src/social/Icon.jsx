@@ -1,30 +1,25 @@
 import { Theme } from '@nti/web-commons';
 import PropTypes from 'prop-types';
 import React from 'react';
-import cx from 'classnames';
 
-const styles = css`
-	.container {
-		padding: 23px;
+const Icon = styled.div`
+	padding: 23px;
+
+	&::after {
+		content: "";
+		display: block;
+		background-position: center;
+		width: 21px;
+		height: 24px;
+		opacity: 1;
+		background-image: url("./assets/icon-dark.svg");
 	}
 
-	.icon {
-		&::after {
-			content: "";
-			display: block;
-			background-position: center;
-			width: 21px;
-			height: 24px;
-			opacity: 1;
-			background-image: url("./assets/icon-dark.svg");
-		}
-
-		&:focus {
-			outline: 0;
-		}
+	&:focus {
+		outline: 0;
 	}
 
-	.light::after {
+	&.theme-light::after {
 		background-image: url("./assets/icon-white.svg");
 	}
 `;
@@ -41,10 +36,9 @@ export default function ChatIcon ( { onClick, visible, children } ) {
 
 	return (
 		<>
-			{visible &&
-			<div className={styles.container}>
-				<div className={cx(styles.icon, styles[theme])} onClick={onClick}/>
-			</div>}
+			{visible && (
+				<Icon onClick={onClick} theme={theme}/>
+			)}
 
 			{child}
 		</>
