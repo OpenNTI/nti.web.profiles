@@ -1,7 +1,7 @@
 import { Theme } from '@nti/web-commons';
 import PropTypes from 'prop-types';
 import React from 'react';
-
+import cx from 'classnames';
 
 const styles = css`
 	.container {
@@ -31,14 +31,22 @@ const styles = css`
 
 ChatIcon.propTypes = {
 	onClick: PropTypes.func.isRequired,
+	visible: PropTypes.bool.isRequired,
 };
 
-export default function ChatIcon ( { onClick } ) {
+export default function ChatIcon ( { onClick, visible, children } ) {
+	const child = React.Children.only(children);
+
 	const theme = Theme.useThemeProperty('icon');
 
 	return (
-		<div className={styles.container} ref={ref}>
-			<div className={cx(styles.icon, styles[theme])} onClick={onClick}/>
-		</div>
+		<>
+			{visible &&
+			<div className={styles.container}>
+				<div className={cx(styles.icon, styles[theme])} onClick={onClick}/>
+			</div>}
+
+			{child}
+		</>
 	);
 }
