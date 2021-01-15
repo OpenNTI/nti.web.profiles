@@ -2,13 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Errors, Loading } from '@nti/web-commons';
 
-import Store from '../Store';
-import UserIcon from '../BadgedAvatar';
-
-import IconContainer from './IconContainer';
-import ExpandButton from './ExpandButton';
-import ContactsButton from './ContactsButton';
-import Container from './Container';
+import {Container, IconContainer, ExpandButton, ContactsButton} from './parts/collapsed';
+import Store from './Store';
+import UserIcon from './BadgedAvatar';
 
 const styles = css`
 	.loading {
