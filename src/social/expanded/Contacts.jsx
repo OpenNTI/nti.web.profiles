@@ -1,6 +1,15 @@
 import React from 'react';
+import { LinkTo } from '@nti/web-routing';
+import { scoped } from '@nti/lib-locale';
+import { Text } from '@nti/web-commons';
 
 import EntryContainer from './EntryContainer';
+
+const translation = scoped('nti-profiles.social.Panel', {
+	contacts:'Contacts',
+});
+
+const Translate = Text.Translator(translation);
 
 const ContactsIcon = styled.div`
 	background: url("../assets/contacts.png");
@@ -26,10 +35,6 @@ const ContactsText = styled('div')`
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
-
-	&:after {
-		content: 'Contacts'
-	}
 `;
 
 export default function ContactsButton () {
@@ -37,7 +42,11 @@ export default function ContactsButton () {
 	return (
 		<EntryContainer>
 			<ContactsIcon />
-			<ContactsText />
+			<ContactsText>
+				<LinkTo.Path to="contacts">
+					<Translate localeKey="contacts" />
+				</LinkTo.Path>
+			</ContactsText>
 		</EntryContainer>
 	);
 }
