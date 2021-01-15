@@ -1,4 +1,4 @@
-export default styled.div`
+export default styled('div')`
 	padding: 0;
 	width: 200px;
 	position: relative;

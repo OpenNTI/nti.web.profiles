@@ -1,4 +1,4 @@
-export default styled.div`
+export default styled('div')`
 	position: fixed;
 	top: 90px;
 	bottom: 60px;

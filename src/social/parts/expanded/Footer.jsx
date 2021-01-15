@@ -1,4 +1,4 @@
-export default styled.div`
+export default styled('div')`
 	position: absolute;
 	bottom: 0;
 	left: 0;
