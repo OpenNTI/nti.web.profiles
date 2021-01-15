@@ -44,14 +44,14 @@ const PresenceIcon = styled('div')`
 	}
 `;
 
-UserIcon.propTypes = {
+BadgedAvatar.propTypes = {
 	entity: PropTypes.oneOfType([
 		PropTypes.object,
 		PropTypes.string
 	]).isRequired,
 };
 
-export default function UserIcon ( { entity } ) {
+export default function BadgedAvatar ( { entity } ) {
 	const {
 		unreadCount,
 		updateLastViewed,
