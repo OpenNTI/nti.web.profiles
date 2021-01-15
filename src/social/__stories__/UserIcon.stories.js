@@ -2,11 +2,11 @@ import React from 'react';
 import {FakeStore} from '@nti/lib-store';
 
 import Store from '../Store';
-import UserIcon from '../UserIcon';
+import BadgedAvatar from '../BadgedAvatar';
 
 export default {
-	title: 'User Icon',
-	component: UserIcon,
+	title: 'Badged Avatar',
+	component: BadgedAvatar,
 };
 
 
@@ -26,7 +26,7 @@ export function Icon () {
 
 	return (
 		<FakeStore mock={store}>
-			<UserIcon user={user}/>
+			<BadgedAvatar entity={user}/>
 		</FakeStore>
 	);
 }
