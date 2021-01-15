@@ -1,5 +1,4 @@
 import React from 'react';
-import { action } from '@storybook/addon-actions';
 import {FakeStore} from '@nti/lib-store';
 
 import Store from '../Store';
