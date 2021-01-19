@@ -14,10 +14,10 @@ const styles = css`
 `;
 
 CollapsedPanel.propTypes = {
-	expand: PropTypes.func.isRequired,
+	toggle: PropTypes.func.isRequired,
 };
 
-export default function CollapsedPanel ( {expand, children} ) {
+export default function CollapsedPanel ( {toggle:expand, children} ) {
 	const {
 		activeUsers,
 		loading,
