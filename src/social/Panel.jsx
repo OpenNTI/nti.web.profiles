@@ -10,11 +10,6 @@ VerticalPanel.propTypes = {
 };
 
 export default function VerticalPanel ( { expanded, children, toggle } ) {
-	return (
-		expanded ? (
-			<ExpandedPanel collapse={toggle} />
-		) : (
-			<CollapsedPanel expand={toggle}>{children}</CollapsedPanel>
-		)
-	);
+	const Cmp = expanded ? ExpandedPanel : CollapsedPanel;
+	return <Cmp toggle={toggle}>{children}</Cmp>;
 }
