@@ -8,11 +8,19 @@ const CONTENT_ROOT = 'tag:nextthought.com,2011-10:Root';
 
 const BATCH_SIZE = 10;
 
+const AVAILABLE = 'available';
+
 export default class Store extends Stores.SimpleStore {
 	static Singleton = true;
 
 	static SetActiveUsers (ActiveUsers) {
-		this.set({ActiveUsers});
+		this.set({ActiveUsers: normalizeActiveUsers(ActiveUsers)});
+	}
+
+	static UpdatePresence (username, presence) {
+		if (!presence || !username) {return;}
+
+		presence.getName() === AVAILABLE ? this.ActiveUsers[username] = true : delete this.ActiveUsers[username];
 	}
 
 	async onIncomingMessage (user, message) {
@@ -112,3 +120,11 @@ export default class Store extends Stores.SimpleStore {
 		}
 	}
 }
+
+function normalizeActiveUsers (ActiveUsers) {
+	return Array.isArray(ActiveUsers) ? Object.keys(...(ActiveUsers).map(x => x.username)).reduce((ret, key) => {
+		ret[ActiveUsers[key]] = true;
+		return ret;
+	}, {}) : ActiveUsers;
+}
+
