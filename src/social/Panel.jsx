@@ -6,15 +6,15 @@ import CollapsedPanel from './Collapsed';
 
 VerticalPanel.propTypes = {
 	expanded: PropTypes.bool.isRequired,
-	setExpanded: PropTypes.func.isRequired,
+	toggle: PropTypes.func.isRequired,
 };
 
-export default function VerticalPanel ( { expanded, children, setExpanded } ) {
+export default function VerticalPanel ( { expanded, children, toggle } ) {
 	return (
 		expanded ? (
-			<ExpandedPanel collapse={() => setExpanded(false)} />
+			<ExpandedPanel collapse={toggle} />
 		) : (
-			<CollapsedPanel expand={() => setExpanded(true)}>{children}</CollapsedPanel>
+			<CollapsedPanel expand={toggle}>{children}</CollapsedPanel>
 		)
 	);
 }

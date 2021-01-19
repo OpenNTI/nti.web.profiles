@@ -21,16 +21,16 @@ export default function View () {
 
 	const [expanded, setExpanded] = useState(false);
 
-	function toggle () {
-		setVisible(!visible);
-	}
+	const toggleVisible = () => setVisible(current => !current);
+
+	const toggleExpanded = () => setExpanded(current => !current);
 
 	return (
 		<>
-			{!matches && <Icon onClick={toggle} />}
+			{!matches && <Icon onClick={toggleVisible} />}
 
 			{(visible || matches) && (
-				<VerticalPanel expanded={expanded} setExpanded={(val) => setExpanded(val)}>
+				<VerticalPanel expanded={expanded} toggle={toggleExpanded}>
 					<DateIcon />
 				</VerticalPanel>
 			)}
