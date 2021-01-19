@@ -21,13 +21,13 @@ export default function ChatPanel () {
 
 	const [expanded, setExpanded] = useState(false);
 
-	function toggleVisible () {
+	function toggle () {
 		setVisible(!visible);
 	}
 
 	return (
 		<>
-			{!matches && <Icon onClick={toggleVisible} />}
+			{!matches && <Icon onClick={toggle} />}
 
 			{(visible || matches) && (
 				<VerticalPanel expanded={expanded} setExpanded={(val) => setExpanded(val)}>
