@@ -23,6 +23,10 @@ export default class Store extends Stores.SimpleStore {
 		presence.getName() === AVAILABLE ? this.activeUsers[username] = true : delete this.activeUsers[username];
 	}
 
+	static removeContact (user) {
+		delete this.activeUsers[user.username];
+	}
+
 	async onIncomingMessage (user, message) {
 		await this.loadConversation(user);
 		this.updateUnread();
