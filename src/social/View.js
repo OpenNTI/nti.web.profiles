@@ -6,7 +6,7 @@ import {Icon} from './parts';
 import Store from './Store';
 import VerticalPanel from './Panel';
 
-export default function ChatPanel () {
+export default function View () {
 	const {
 		load
 	} = Store.useValue();
