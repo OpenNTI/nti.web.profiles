@@ -4,7 +4,8 @@ import {Hooks} from '@nti/web-commons';
 
 import {Icon} from './parts';
 import Store from './Store';
-import VerticalPanel from './Panel';
+import ExpandedPanel from './Expanded';
+import CollapsedPanel from './Collapsed';
 
 export default function View () {
 	const {
@@ -25,14 +26,16 @@ export default function View () {
 
 	const toggleExpanded = () => setExpanded(current => !current);
 
+	const Cmp = expanded ? ExpandedPanel : CollapsedPanel;
+
 	return (
 		<>
 			{!matches && <Icon onClick={toggleVisible} />}
 
 			{(visible || matches) && (
-				<VerticalPanel expanded={expanded} toggle={toggleExpanded}>
+				<Cmp toggle={toggleExpanded}>
 					<DateIcon />
-				</VerticalPanel>
+				</Cmp>
 			)}
 		</>
 	);
