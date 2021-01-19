@@ -28,9 +28,9 @@ export default function CollapsedPanel ( {expand, children} ) {
 		<Container>
 			{React.Children.map(children, child => {
 				return (
-					<React.Fragment>
+					<>
 						<IconContainer>{child}</IconContainer>
-					</React.Fragment>
+					</>
 				);}
 			)}
 
