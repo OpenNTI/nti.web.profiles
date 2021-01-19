@@ -28,10 +28,10 @@ const styles = css`
 `;
 
 ExpandedPanel.propTypes = {
-	collapse: PropTypes.func.isRequired,
+	toggle: PropTypes.func.isRequired,
 };
 
-export default function ExpandedPanel ( { collapse } ) {
+export default function ExpandedPanel ( { toggle:collapse } ) {
 	const {
 		activeUsers,
 		loading,
