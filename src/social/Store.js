@@ -26,7 +26,15 @@ export default class Store extends Stores.SimpleStore {
 	}
 
 	static removeContact (user) {
-		delete this.activeUsers[user.username];
+		delete this.activeUsers[user.get('Username')];
+
+		this.set({activeUsers: this.activeUsers});
+	}
+
+	static addContact (user) {
+		this.activeUsers[user.get('Username')] = true;
+
+		this.set({activeUsers: this.activeUsers});
 	}
 
 	async onIncomingMessage (user, message) {
