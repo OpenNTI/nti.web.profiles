@@ -54,6 +54,7 @@ export default class Store extends Stores.SimpleStore {
 			this.set({activeUsers: this.activeUsers});
 
 			await this.loadConversations();
+
 			this.updateUnread();
 
 		} catch (e) {
@@ -129,10 +130,10 @@ export default class Store extends Stores.SimpleStore {
 	}
 }
 
-function normalizeActiveUsers (ActiveUsers) {
-	return Array.isArray(ActiveUsers) ? Object.keys(...(ActiveUsers).map(x => x.username)).reduce((ret, key) => {
-		ret[ActiveUsers[key]] = true;
+function normalizeActiveUsers (activeUsers) {
+	return Array.isArray(activeUsers) ? Object.keys(...(activeUsers).map(x => x.username)).reduce((ret, key) => {
+		ret[activeUsers[key]] = true;
 		return ret;
-	}, {}) : ActiveUsers;
+	}, {}) : activeUsers;
 }
 
