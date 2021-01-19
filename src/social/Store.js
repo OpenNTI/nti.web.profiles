@@ -51,6 +51,8 @@ export default class Store extends Stores.SimpleStore {
 		this.set({Loading: true});
 
 		try {
+			this.set({activeUsers: this.activeUsers});
+
 			await this.loadConversations();
 			this.updateUnread();
 
