@@ -17,10 +17,10 @@ export default class Store extends Stores.SimpleStore {
 		this.activeUsers = normalizeActiveUsers(activeUsers);
 	}
 
-	static UpdatePresence (username, presence) {
+	static updatePresence (username, presence) {
 		if (!presence || !username) {return;}
 
-		presence.getName() === AVAILABLE ? this.ActiveUsers[username] = true : delete this.ActiveUsers[username];
+		presence.getName() === AVAILABLE ? this.activeUsers[username] = true : delete this.activeUsers[username];
 	}
 
 	async onIncomingMessage (user, message) {
