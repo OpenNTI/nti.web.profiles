@@ -13,8 +13,8 @@ const AVAILABLE = 'available';
 export default class Store extends Stores.SimpleStore {
 	static Singleton = true;
 
-	static SetActiveUsers (ActiveUsers) {
-		this.set({ActiveUsers: normalizeActiveUsers(ActiveUsers)});
+	static setActiveUsers (activeUsers) {
+		this.activeUsers = normalizeActiveUsers(activeUsers);
 	}
 
 	static UpdatePresence (username, presence) {
