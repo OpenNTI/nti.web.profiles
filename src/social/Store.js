@@ -45,8 +45,10 @@ export default class Store extends Stores.SimpleStore {
 		this.set({unreadCounts: this.unreadCounts});
 	}
 
-	async onPresenceChanged (user, presenceInfo) {
-		// TODO: this method should update the list of active users as they change their presence
+	static handleWindowNotify (username) {
+		this.unreadCounts[username]++;
+
+		this.set({unreadCounts: this.unreadCounts});
 	}
 
 	async load () {
