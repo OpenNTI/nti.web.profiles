@@ -35,7 +35,8 @@ export default class Store extends Stores.SimpleStore {
 		this.set({selectedUser: user.get('Username')});
 	}
 
-		this.set({activeUsers: this.activeUsers});
+	static deselectUser () {
+		this.set({selectedUser: null});
 	}
 
 	async onIncomingMessage (user, message) {
