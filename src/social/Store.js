@@ -13,6 +13,8 @@ export default class Store extends Stores.SimpleStore {
 
 	static setActiveUsers (activeUsers) {
 		this.activeUsers = normalizeActiveUsers(activeUsers);
+
+		this.set({activeUsers: this.activeUsers});
 	}
 
 	static updatePresence (username, presence) {
