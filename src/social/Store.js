@@ -8,8 +8,6 @@ const CONTENT_ROOT = 'tag:nextthought.com,2011-10:Root';
 
 const BATCH_SIZE = 10;
 
-const AVAILABLE = 'available';
-
 export default class Store extends Stores.SimpleStore {
 	static Singleton = true;
 
