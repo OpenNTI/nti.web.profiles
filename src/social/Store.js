@@ -31,8 +31,9 @@ export default class Store extends Stores.SimpleStore {
 		this.set({activeUsers: this.activeUsers});
 	}
 
-	static addContact (user) {
-		this.activeUsers[user.get('Username')] = true;
+	static selectUser (user) {
+		this.set({selectedUser: user.get('Username')});
+	}
 
 		this.set({activeUsers: this.activeUsers});
 	}
