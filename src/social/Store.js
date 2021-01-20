@@ -20,9 +20,9 @@ export default class Store extends Stores.SimpleStore {
 	static updatePresence (username, presence) {
 		if (!presence || !username) {return;}
 
-		const username = user.username;
+		this.activeUsers[username] = presence.getName();
 
-		presence.getName() === AVAILABLE ? this.activeUsers[username] = true : delete this.activeUsers[username];
+		this.set({activeUsers: this.activeUsers});
 	}
 
 	static removeContact (user) {
