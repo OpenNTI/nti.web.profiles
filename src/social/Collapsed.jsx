@@ -41,11 +41,9 @@ export default function CollapsedPanel ( {toggle:expand, children} ) {
 					<>
 						{activeUsers?.map((user, index) => {
 							return (
-								<React.Fragment key={index}>
-									<IconContainer>
-										<UserIcon entity={user} />
-									</IconContainer>
-								</React.Fragment>
+								<IconContainer key={index}>
+									<UserIcon entity={user} />
+								</IconContainer>
 							);}
 						)}
 					</>
