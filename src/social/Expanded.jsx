@@ -49,12 +49,10 @@ export default function ExpandedPanel ( { toggle:collapse } ) {
 					<>
 						{activeUsers?.map((user, index) => {
 							return (
-								<React.Fragment key={index}>
-									<EntryContainer>
-										<UserIcon user={user} />
-										<DisplayName entity={user} className={styles.name} />
-									</EntryContainer>
-								</React.Fragment>
+								<EntryContainer key={index}>
+									<UserIcon user={user} />
+									<DisplayName entity={user} className={styles.name} />
+								</EntryContainer>
 							);
 						})}
 					</>
