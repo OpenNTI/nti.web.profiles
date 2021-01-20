@@ -39,9 +39,10 @@ export default class Store extends Stores.SimpleStore {
 		this.set({selectedUser: null});
 	}
 
-	async onIncomingMessage (user, message) {
-		await this.loadConversation(user);
-		this.updateUnread();
+	static clearUnreadCount (user) {
+		this.unreadCounts[user.get('Username')] = 0;
+
+		this.set({unreadCounts: this.unreadCounts});
 	}
 
 	async onPresenceChanged (user, presenceInfo) {
