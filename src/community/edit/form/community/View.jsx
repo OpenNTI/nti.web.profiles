@@ -37,7 +37,7 @@ class CommunityEditFormCommunityFields extends React.Component {
 			<div className={cx('community-fields')}>
 				<DisplayName {...this.props} />
 				<About {...this.props} />
-				{!community.notAutoSubscribeable && (<AutoSubscribe {...this.props} />)}
+				{community.autoSubscribable && (<AutoSubscribe {...this.props} />)}
 				<Delete className={cx('delete-control')} {...this.props} />
 			</div>
 		);
