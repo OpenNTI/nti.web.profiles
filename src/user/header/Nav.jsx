@@ -5,6 +5,7 @@ import {scoped} from '@nti/lib-locale';
 import {List} from '@nti/web-commons';
 
 import {LOCALE_PATHS} from '../constants';
+import Achievements from '../achievements';
 
 import NavLink from './NavLink';
 
@@ -25,7 +26,6 @@ export default class ProfileHeaderNav extends React.Component {
 
 	render () {
 		const {entity} = this.props;
-		const achievementsAvailable = entity.hasLink('Badges') || entity.hasLink('Certificate');
 
 		return (
 			<nav>
@@ -34,7 +34,7 @@ export default class ProfileHeaderNav extends React.Component {
 					{entity.hasLink('Activity') && (
 						<NavLink object={entity} context="activity" title={t('activity')} />
 					)}
-					{achievementsAvailable && (
+					{Achievements.hasData(entity) && (
 						<NavLink object={entity} context="achievements" title={t('achievements')} />
 					)}
 					<NavLink object={entity} context="memberships" title={t('memberships')} />

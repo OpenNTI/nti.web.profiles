@@ -13,19 +13,22 @@ const t = scoped('nti-web-profile.achievements', {
 
 
 export default class View extends React.Component {
+	static hasData (user) {
+		return Badges.hasData(user) || Certificates.hasData(user);
+	}
 
 	static propTypes = {
-		user: PropTypes.object.isRequired
+		entity: PropTypes.object.isRequired
 	}
 
 	render () {
-		const {user} = this.props;
+		const {entity} = this.props;
 
-		return !user ? null : (
+		return !entity ? null : (
 			<MaybeEmpty message={t('empty')}>
 				<div className="nti-profiles-achievements">
-					<Badges entity={user} />
-					<Certificates entity={user} />
+					<Badges entity={entity} />
+					<Certificates entity={entity} />
 				</div>
 			</MaybeEmpty>
 		);

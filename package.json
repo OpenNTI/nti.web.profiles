@@ -46,6 +46,7 @@
     "@nti/web-commons": "NextThought/nti.web.commons",
     "@nti/web-discussions": "NextThought/nti.web.discussions",
     "@nti/web-editor": "NextThought/nti.web.editor",
+    "@nti/web-integrations": "^1.11.0",
     "@nti/web-modeled-content": "NextThought/nti.web.modeled-content",
     "@nti/web-reports": "NextThought/nti.web.reports",
     "@nti/web-routing": "NextThought/nti.web.routing",

@@ -26,6 +26,8 @@ export default
 	completedCourses: 'completedCourses'
 })
 class ProfileCertificatesView extends React.Component {
+	static hasData (user) { return user.hasLink('Certificate'); }
+
 	static propTypes = {
 		entity: PropTypes.object.isRequired,
 		store: PropTypes.object,
