@@ -13,8 +13,6 @@ const Queries = {
 	Mobile: ({containerWidth}) => containerWidth < 678
 };
 
-export default
-@Store.connect(['loading', 'channels', 'error'])
 class CommunityActivityFrame extends React.Component {
 	static deriveBindingFromProps (props) {
 		return props.community;
@@ -63,3 +61,5 @@ class CommunityActivityFrame extends React.Component {
 		);
 	}
 }
+
+export default Store.connect(['loading', 'channels', 'error'])(CommunityActivityFrame);
