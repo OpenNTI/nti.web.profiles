@@ -1,0 +1,47 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Topic List test Filtered 1`] = `
+<div
+  data-testid="discussion-selection-list"
+>
+  <div
+    data-testid="discussion-selection-item"
+  >
+    <div>
+      <i
+        className="icon-discuss"
+      />
+    </div>
+    <span
+      className="ntiText"
+      dangerouslySetInnerHTML={
+        Object {
+          "__html": "Start a new discussion
+in this channel",
+        }
+      }
+    />
+  </div>
+  <div
+    data-testid="discussion-selection-item"
+    onClick={[Function]}
+  >
+    <div
+      data-testid="discussion-selection-avatar"
+      style={
+        Object {
+          "backgroundImage": "url(\\"/app/resources/images/elements/discussion-icon.png\\")",
+        }
+      }
+    />
+    <div
+      dangerouslySetInnerHTML={
+        Object {
+          "__html": "<span>item </span><span class=\\"highlight\\">2</span>",
+        }
+      }
+      data-testid="discussion-selection-topic-title"
+    />
+  </div>
+</div>
+`;
