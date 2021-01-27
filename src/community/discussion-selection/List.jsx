@@ -24,11 +24,11 @@ List.propTypes = {
 };
 
 
-export default function List ({ items, onCreate, onSelect, searchTerm, ...props}) {
+export default function List ({ items, onCreate, onSelect, searchTerm, className, ...props}) {
 	const filteredItems = filterItemsBySearchTerm(items, searchTerm);
 
 	return (
-		<Container data-testid="discussion-selection-list">
+		<Container data-testid="discussion-selection-list" className={className}>
 
 			{(!filteredItems?.length) && (
 				<Empty data-testid="no-results">
