@@ -42,7 +42,7 @@ const Topic = React.forwardRef(function Topic ({onClick, item, selected, searchT
 	const handleClick = useCallback(() => onClick(item), [onClick, item]);
 
 	return (
-		<Container selected={selected?.has(item)} onClick={handleClick} ref={ref}>
+		<Container selected={selected} onClick={handleClick} ref={ref}>
 			<Avatar src={item.icon}/>
 			<Title
 				content={item.title}
@@ -55,7 +55,7 @@ const Topic = React.forwardRef(function Topic ({onClick, item, selected, searchT
 Topic.propTypes = {
 	onClick: PropTypes.func,
 	searchTerm: PropTypes.string,
-	selected: PropTypes.object,
+	selected: PropTypes.bool,
 	item: PropTypes.object.isRequired,
 };
 

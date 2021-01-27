@@ -19,16 +19,17 @@ List.propTypes = {
 		[Symbol.iterator]: PropTypes.func,
 	}),
 	searchTerm: PropTypes.string,
+	selected: PropTypes.instanceOf(Set),
 	onCreate: PropTypes.func,
 	onSelect: PropTypes.func,
 };
 
 
-export default function List ({ items, onCreate, onSelect, searchTerm, className, ...props}) {
+export default function List ({ items, onCreate, onSelect, searchTerm, selected, ...props}) {
 	const filteredItems = filterItemsBySearchTerm(items, searchTerm);
 
 	return (
-		<Container data-testid="discussion-selection-list" className={className}>
+		<Container data-testid="discussion-selection-list" {...props}>
 
 			{(!filteredItems?.length) && (
 				<Empty data-testid="no-results">
@@ -44,7 +45,7 @@ export default function List ({ items, onCreate, onSelect, searchTerm, className
 					item={item}
 					onClick={onSelect}
 					searchTerm={searchTerm}
-					{...props}
+					selected={selected?.has(item)}
 				/>
 			)
 			)}

@@ -1,6 +1,5 @@
 import React from 'react';
 
-import HighlightedContent from './HighlightedContent';
 
 export const ListContainerBase = styled.div`
 	display: flex;
@@ -32,19 +31,3 @@ export const Container = styled('div').attrs({'data-testid': 'discussion-selecti
 		outline: solid 2px var(--primary-blue) !important;
 	}
 `;
-
-export const ItemContent = styled(HighlightedContent)`
-	position: relative;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	width: calc(100% - 30px);
-	white-space: nowrap;
-`;
-
-export const Chevron = styled('div').attrs(props => ({
-	...props,
-	children: <i className="icon-chevron-right" />
-}))`
-	position: relative;
-`;
-
