@@ -5,6 +5,12 @@ import { Container } from './parts';
 
 const Box = styled(Container)`
 	background: white;
+	animation: show 2s forwards;
+	opacity: 0;
+
+	@keyframes show {
+		100% { opacity: 1; }
+	}
 `;
 
 const Shimmer = styled.div`
