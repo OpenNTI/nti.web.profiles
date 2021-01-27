@@ -6,7 +6,19 @@ import { Create } from '@nti/web-discussions';
 import ChannelSelect from './ChannelSelect';
 import List from './List';
 
+const RecessedList = styled(List)`
+	overflow: auto;
+	max-height: 400px;
+	margin: -20px;
+	padding: 20px;
+	padding-right: 17px; /* prevent scrollbar from pushing to two columns */
+`;
+
 const TopControls = styled.div`
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: flex-start;
 	background: white;
 	box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
 	margin: -20px -20px 20px;
@@ -51,7 +63,7 @@ const DiscussionPicker = React.forwardRef(({course, onSelect}, ref) => {
 			</TopControls>
 
 			{list && (
-				<List
+				<RecessedList
 					items={list}
 					selected={selected}
 					onSelect={x => dispatch({selected: x})}
