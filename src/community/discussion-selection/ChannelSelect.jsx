@@ -26,6 +26,7 @@ const Trigger = styled.div`
 	align-items: flex-start;
 	justify-content: center;
 	position: relative;
+	cursor: pointer;
 `;
 
 const Arrow = styled(Icons.DisclosureArrow)`
