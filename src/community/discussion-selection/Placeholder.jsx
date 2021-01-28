@@ -1,10 +1,11 @@
 import React, { useCallback, useRef } from 'react';
 import { Monitor } from '@nti/web-commons';
 
-import { Container } from './parts';
+import { Container, Spacer, useLayout } from './parts';
 
 const Box = styled(Container)`
-	background: white;
+	cursor: default;
+	background: white !important;
 	animation: show 2s forwards;
 	opacity: 0;
 
@@ -17,7 +18,6 @@ const Shimmer = styled.div`
 	animation: shimmer 2s infinite;
 	background: linear-gradient(to right, #eff1f3 4%, #e2e2e2 25%, #eff1f3 36%);
 	background-size: 1000px 100%;
-	border-radius: 4px;
 
 	@keyframes shimmer {
 		0% { background-position: -1000px 0; }
@@ -25,14 +25,42 @@ const Shimmer = styled.div`
 	}
 `;
 
-const Avatar = styled(Shimmer)`
-	height: 120px;
-	margin: 2px;
+const Avatar = styled(Shimmer).attrs(useLayout())`
+
+	&.layout-grid {
+		margin: 2px;
+		height: 120px;
+		border-radius: 4px;
+	}
+
+	&.layout-list {
+		flex: 0 0 auto;
+		width: 60px;
+		height: 48px;
+	}
 `;
 
-const Label = styled(Shimmer)`
-	margin: 4px;
-	height: 1em;
+const Label = styled(Shimmer).attrs(useLayout())`
+	height: 1rem;
+	width: 100px;
+	flex: 0 0 auto;
+	border-radius: 4px;
+
+	&.layout-grid {
+		margin: 4px;
+
+		&.title {
+			height: 26px;
+			width: 90%;
+		}
+	}
+
+	&.layout-list {
+		&.title {
+			height: 18px;
+			width: 50%;
+		}
+	}
 `;
 
 export default function Placeholder ({load}) {
@@ -53,8 +81,9 @@ export default function Placeholder ({load}) {
 	return (
 		<Monitor.OnScreen as={Box} onChange={onScreen}>
 			<Avatar/>
-			<Label style={{height: 26, width: '90%'}}/>
-			<Label style={{width: '80%'}}/>
+			<Label title/>
+			<Spacer/>
+			<Label />
 		</Monitor.OnScreen>
 	);
 }

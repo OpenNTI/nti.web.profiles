@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import { Hooks, Prompt } from '@nti/web-commons';
 import { Create } from '@nti/web-discussions';
 
-import ChannelSelect from './ChannelSelect';
+import {composeLayoutProvider} from './parts';
 import List from './List';
+import Toolbar from './Toolbar';
 
 const RecessedList = styled(List)`
 	overflow: auto;
@@ -14,13 +15,7 @@ const RecessedList = styled(List)`
 	padding-right: 17px; /* prevent scrollbar from pushing to two columns */
 `;
 
-const TopControls = styled.div`
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	justify-content: flex-start;
-	background: white;
-	box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+const RecessedToolbar = styled(Toolbar)`
 	margin: -20px -20px 20px;
 `;
 
@@ -44,13 +39,28 @@ function reducer ({selected = new Set(), ...state}, {selected: selection,...acti
 	};
 }
 
-const DiscussionPicker = React.forwardRef(({course, onSelect}, ref) => {
+function DiscussionPicker ({course, onSelect}) {
 	const community = course.getCommunity();
 	Hooks.useChanges(community);
 	const [firstChannel] = community;
-	const [{create, newTopic, selected, selectedChannel = firstChannel, sort = 'createdTime'}, dispatch] = useReducer(reducer, {});
+	const [{
+		create,
+		newTopic,
+		selected,
+		selectedChannel = firstChannel,
+	}, dispatch] = useReducer(reducer, {});
 
-	const list = useMemo(() => create ? null : selectedChannel?.getIterable({SortOn: sort}), [selectedChannel, create]);
+	const list = useMemo(
+		() => create ? null : selectedChannel?.getIterable({
+			sortOn: 'createdTime',
+			sortOrder: 'descending'
+		}),
+		[
+			create,
+			selectedChannel,
+		]
+	);
+
 	Hooks.useChanges(list);
 
 	moveNewTopicIntoSelection(dispatch, newTopic, list);
@@ -58,9 +68,11 @@ const DiscussionPicker = React.forwardRef(({course, onSelect}, ref) => {
 
 	return(
 		<>
-			<TopControls data-testid="discussion-selection-top-controls">
-				<ChannelSelect onChange={x => dispatch({selectedChannel: x})} selected={selectedChannel} community={community}/>
-			</TopControls>
+			<RecessedToolbar
+				community={community}
+				currentChannel={selectedChannel}
+				onChangeChannel={x => dispatch({selectedChannel: x})}
+			/>
 
 			{list && (
 				<RecessedList
@@ -90,15 +102,14 @@ const DiscussionPicker = React.forwardRef(({course, onSelect}, ref) => {
 		</>
 	);
 
-});
+}
 
-DiscussionPicker.displayName = 'DiscussionPicker';
 DiscussionPicker.propTypes = {
 	course: PropTypes.object,
 	onSelect: PropTypes.func
 };
 
-export default DiscussionPicker;
+export default composeLayoutProvider(DiscussionPicker);
 
 
 function HideLegacyPrompt () {
