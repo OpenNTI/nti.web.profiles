@@ -1,17 +1,22 @@
 /* eslint-env jest */
 import React from 'react';
 import renderer from 'react-test-renderer';
+import {Date as DateUtils} from '@nti/lib-commons';
 import { render, waitFor, fireEvent } from '@testing-library/react';
 
 import List from '../List';
 
 describe('Topic List test', () => {
+	afterEach(() => {
+		DateUtils.MockDate.uninstall();
+	});
 
 	test('Filtered', async () => {
+		DateUtils.MockDate.install(new Date('2021-01-28T01:44:00Z'));
 		const items = [
-			{ title: 'item 1', getCreatedTime: () => new Date() },
-			{ title: 'item 2', getCreatedTime: () => new Date() },
-			{ title: 'item 3', getCreatedTime: () => new Date() }
+			{ title: 'item 1', getCreatedTime: () => new Date('2021-01-28T01:43:48Z') },
+			{ title: 'item 2', getCreatedTime: () => new Date('2021-01-28T01:43:48Z') },
+			{ title: 'item 3', getCreatedTime: () => new Date('2021-01-28T01:43:48Z') }
 		];
 
 		const {getAllByTestId} = render(<List items={items} searchTerm="2"/>);
