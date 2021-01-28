@@ -7,7 +7,7 @@ import {Layouts} from '@nti/web-commons';
 const {Responsive} = Layouts;
 
 const ClassList = [
-	{query: ({width}) => width < 800, className: 'small'}
+	{query: ({width}) => width < 500, className: 'small'}
 ];
 
 Card.propTypes = {
