@@ -8,4 +8,8 @@ export default styled('div')`
 	border-radius: 5px;
 	padding-bottom: 60px;
 	transition: right 0.5s;
+
+	&.theme-light {
+		background-color: rgba(35, 35, 35, 0.15);
+	}
 `;

@@ -4,7 +4,6 @@ export default styled('div')`
 	bottom: 0;
 	width: 11px;
 	height: 11px;
-	background-color: white;
 	border-radius: 11px;
 
 	&:after {
@@ -17,5 +16,13 @@ export default styled('div')`
 		display: block;
 		left: 2px;
 		top: 2px;
+	}
+
+	&.presence-away:after {
+		background: var(--secondary-orange);
+	}
+
+	&.presence-dnd:after {
+		background: var(--primary-red);
 	}
 `;

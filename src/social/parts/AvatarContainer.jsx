@@ -1,7 +1,7 @@
 export default styled('div')`
 	--size: 42px;
 
-	position: relative;
+	position: absolute;
 	margin: 8px auto;
 	width: 42px;
 	height: 42px;
