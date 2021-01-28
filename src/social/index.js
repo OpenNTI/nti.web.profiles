@@ -1,3 +1,4 @@
 export { emitIncomingMessage, emitPresenceChanged } from './Socket';
-export { default as SocialView } from './View';
-export { default as SocialStore } from './Store';
+export { default as ChatSidebar } from './View';
+export { default as NewChatStore } from './Store';
+export { default as ChatWindowView } from './ChatWindow';
