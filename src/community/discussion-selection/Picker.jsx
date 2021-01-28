@@ -55,7 +55,6 @@ function DiscussionPicker ({course, onSelect}) {
 		() => create ? null : selectedChannel?.getIterable({
 			sortOn: 'createdTime',
 			sortOrder: 'descending',
-			filter: 'test'
 		}),
 		[
 			create,
