@@ -13,6 +13,22 @@ export default {
 export function Panel ( ) {
 	const store = new Store();
 
+	store.set({
+		activeUsers: {
+			user1: 'available',
+			user2: 'dnd',
+			user3: 'away',
+		}
+	});
+
+	store.set({
+		unreadCounts: {
+			user1: 1,
+			user2: 10,
+			user3: 100,
+		},
+	});
+
 	return (
 		<FakeStore mock={store}>
 			<View />
