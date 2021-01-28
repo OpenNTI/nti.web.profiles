@@ -4,59 +4,64 @@ export default class Store extends Stores.SimpleStore {
 	static Singleton = true;
 
 	static setActiveUsers (activeUsers) {
-		this.activeUsers = normalizeActiveUsers(activeUsers);
+		this.getStore().activeUsers = normalizeActiveUsers(activeUsers);
 
-		this.set({activeUsers: this.activeUsers});
+		this.getStore().set({ activeUsers: this.getStore().activeUsers });
 	}
 
+	/**
+	 * @param {string} username - user id
+	 * @param {string} presence - name of presence state
+	 * @returns {void}
+	 */
 	static updatePresence (username, presence) {
 		if (!presence || !username) {return;}
 
-		this.activeUsers[username] = presence.getName();
+		this.getStore().activeUsers = {
+			...this.getStore().activeUsers,
+			[username]: presence,
+		};
 
-		this.set({activeUsers: this.activeUsers});
+		this.getStore().set({ activeUsers: this.activeUsers });
 	}
 
-	static removeContact (user) {
-		delete this.activeUsers[user.get('Username')];
+	static removeContact (username) {
+		const activeUsers = this.getStore().get('activeUsers');
 
-		this.set({activeUsers: this.activeUsers});
+		delete activeUsers[username];
+
+		this.getStore().set({ activeUsers });
 	}
 
-	static selectUser (user) {
-		this.set({selectedUser: user.get('Username')});
+	static selectUser (username) {
+		this.getStore().set({ selectedUser: username });
 	}
 
 	static deselectUser () {
-		this.set({selectedUser: null});
+		this.getStore().set({ selectedUser: null });
 	}
 
-	static clearUnreadCount (user) {
-		this.unreadCounts[user.get('Username')] = 0;
+	static clearUnreadCount (username) {
+		let unreadCounts = this.getStore().get('unreadCounts');
+		unreadCounts = {
+			...unreadCounts,
+			[username]: 0,
+		};
 
-		this.set({unreadCounts: this.unreadCounts});
+		this.getStore().set({ unreadCounts });
 	}
 
 	static handleWindowNotify (username) {
-		this.unreadCounts[username]++;
+		let unreadCounts = this.getStore().get('unreadCounts');
 
-		this.set({unreadCounts: this.unreadCounts});
-	}
+		const oldValue = username in unreadCounts || 0;
 
-	async load () {
-		if (this.initialLoad) {return;}
-		this.initialLoad = true;
+		unreadCounts = {
+			...unreadCounts,
+			[username]: oldValue + 1,
+		};
 
-		this.set({Loading: true});
-
-		try {
-			this.set({activeUsers: this.activeUsers});
-		} catch (e) {
-			this.set({
-				Loading: false,
-				Error: e,
-			});
-		}
+		this.getStore().set({ unreadCounts });
 	}
 }
 
