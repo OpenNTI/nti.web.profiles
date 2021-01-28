@@ -4,9 +4,13 @@ export default class Store extends Stores.SimpleStore {
 	static Singleton = true;
 
 	static setActiveUsers (activeUsers) {
-		this.getStore().activeUsers = normalizeActiveUsers(activeUsers);
+		this.getStore().setActiveUsers(activeUsers);
+	}
 
-		this.getStore().set({ activeUsers: this.getStore().activeUsers });
+	setActiveUsers (activeUsers) {
+		this.activeUsers = normalizeActiveUsers(activeUsers);
+
+		this.set({ activeUsers: this.activeUsers });
 	}
 
 	/**
@@ -15,53 +19,77 @@ export default class Store extends Stores.SimpleStore {
 	 * @returns {void}
 	 */
 	static updatePresence (username, presence) {
-		if (!presence || !username) {return;}
+		this.getStore().updatePresence(username, presence);
+	}
 
-		this.getStore().activeUsers = {
-			...this.getStore().activeUsers,
+	updatePresence (username, presence) {
+		if (!presence || !username) { return; }
+
+		this.activeUsers = {
+			...this.activeUsers,
 			[username]: presence,
 		};
 
-		this.getStore().set({ activeUsers: this.activeUsers });
+		this.set({ activeUsers: this.activeUsers });
 	}
 
 	static removeContact (username) {
-		const activeUsers = this.getStore().get('activeUsers');
+		this.getStore().removeContact(username);
+	}
+
+	removeContact (username) {
+		const activeUsers = this.get('activeUsers');
 
 		delete activeUsers[username];
 
-		this.getStore().set({ activeUsers });
+		this.set({ activeUsers });
 	}
 
 	static selectUser (username) {
-		this.getStore().set({ selectedUser: username });
+		this.getStore().selectUser(username);
+	}
+
+	selectUser (username) {
+		this.set({selectedUser: username});
 	}
 
 	static deselectUser () {
-		this.getStore().set({ selectedUser: null });
+		this.getStore().deselectUser();
+	}
+
+	deselectUser () {
+		this.set({ selectedUser: null });
 	}
 
 	static clearUnreadCount (username) {
-		let unreadCounts = this.getStore().get('unreadCounts');
-		unreadCounts = {
-			...unreadCounts,
+		this.getStore().clearUnreadCount(username);
+	}
+
+	clearUnreadCount (username) {
+		let unreadCount = this.get('unreadCount');
+		unreadCount = {
+			...unreadCount,
 			[username]: 0,
 		};
 
-		this.getStore().set({ unreadCounts });
+		this.set({ unreadCount });
 	}
 
 	static handleWindowNotify (username) {
-		let unreadCounts = this.getStore().get('unreadCounts');
+		this.getStore().handleWindowNotify(username);
+	}
 
-		const oldValue = username in unreadCounts || 0;
+	handleWindowNotify (username) {
+		let unreadCount = this.get('unreadCount');
 
-		unreadCounts = {
-			...unreadCounts,
+		const oldValue = username in unreadCount || 0;
+
+		unreadCount = {
+			...unreadCount,
 			[username]: oldValue + 1,
 		};
 
-		this.getStore().set({ unreadCounts });
+		this.set({ unreadCount });
 	}
 }
 
