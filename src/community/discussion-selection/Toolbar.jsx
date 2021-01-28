@@ -12,6 +12,7 @@ const TopControls = styled.div`
 	flex-direction: row;
 	align-items: center;
 	justify-content: flex-start;
+	gap: 16px;
 `;
 
 const Spacer = styled.span`

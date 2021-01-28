@@ -54,7 +54,8 @@ function DiscussionPicker ({course, onSelect}) {
 	const list = useMemo(
 		() => create ? null : selectedChannel?.getIterable({
 			sortOn: 'createdTime',
-			sortOrder: 'descending'
+			sortOrder: 'descending',
+			filter: 'test'
 		}),
 		[
 			create,
