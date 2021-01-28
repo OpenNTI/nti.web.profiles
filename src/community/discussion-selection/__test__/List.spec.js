@@ -9,9 +9,9 @@ describe('Topic List test', () => {
 
 	test('Filtered', async () => {
 		const items = [
-			{ title: 'item 1' },
-			{ title: 'item 2' },
-			{ title: 'item 3' }
+			{ title: 'item 1', getCreatedTime: () => new Date() },
+			{ title: 'item 2', getCreatedTime: () => new Date() },
+			{ title: 'item 3', getCreatedTime: () => new Date() }
 		];
 
 		const {getAllByTestId} = render(<List items={items} searchTerm="2"/>);
@@ -32,9 +32,9 @@ describe('Topic List test', () => {
 		};
 
 		const topics = [
-			{ title: 'item 1', user: student },
-			{ title: 'item 2', user: student },
-			{ title: 'item 3', user: instructor }
+			{ title: 'item 1', user: student, getCreatedTime: () => new Date() },
+			{ title: 'item 2', user: student, getCreatedTime: () => new Date() },
+			{ title: 'item 3', user: instructor, getCreatedTime: () => new Date() }
 		];
 
 		const selectedTopics = new Set();

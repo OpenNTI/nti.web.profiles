@@ -3,13 +3,18 @@
 exports[`Topic List test Filtered 1`] = `
 <div
   data-testid="discussion-selection-list"
+  layout="grid"
 >
   <div
     data-testid="discussion-selection-item"
+    layout="grid"
   >
-    <div>
+    <div
+      layout="grid"
+    >
       <i
         className="icon-discuss"
+        layout="grid"
       />
     </div>
     <span
@@ -21,13 +26,38 @@ in this channel",
         }
       }
     />
+    <span
+      layout="grid"
+    />
+    <svg
+      className="svg-icon"
+    >
+      <g
+        fill="none"
+        fillRule="evenodd"
+        transform="translate(1 1)"
+      >
+        <circle
+          cx="12"
+          cy="12"
+          r="12"
+          stroke="currentColor"
+        />
+        <path
+          d="M13 5v6h6v2h-6v6h-2v-6H5v-2h6V5h2z"
+          fill="currentColor"
+        />
+      </g>
+    </svg>
   </div>
   <div
     data-testid="discussion-selection-item"
+    layout="grid"
     onClick={[Function]}
   >
     <div
       data-testid="discussion-selection-avatar"
+      layout="grid"
       style={
         Object {
           "backgroundImage": "url(\\"/app/resources/images/elements/discussion-icon.png\\")",
@@ -41,7 +71,17 @@ in this channel",
         }
       }
       data-testid="discussion-selection-topic-title"
+      layout="grid"
     />
+    <span
+      layout="grid"
+    />
+    <time
+      className="ntiText"
+      dateTime="2021-01-28T01:43:48Z"
+    >
+      a few seconds ago
+    </time>
   </div>
 </div>
 `;
