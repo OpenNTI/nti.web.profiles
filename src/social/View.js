@@ -1,4 +1,5 @@
-import React, {useEffect, useState} from 'react';
+import PropTypes from 'prop-types';
+import React, {useState} from 'react';
 import {DateIcon} from '@nti/web-calendar';
 import {Hooks} from '@nti/web-commons';
 
@@ -7,15 +8,11 @@ import Store from './Store';
 import ExpandedPanel from './Expanded';
 import CollapsedPanel from './Collapsed';
 
-export default function View () {
-	const {
-		load
-	} = Store.useValue();
+View.propTypes = {
+	navigation: PropTypes.bool.isRequired,
+};
 
-	useEffect(() => {
-		load();
-	}, [load]);
-
+function View ( { navigation } ) {
 	const matches = Hooks.useMatchesMediaQuery('(min-width: 1200px)');
 
 	const [visible, setVisible] = useState(false);
@@ -30,7 +27,7 @@ export default function View () {
 
 	return (
 		<>
-			{!matches && <Icon onClick={toggleVisible} />}
+			{!matches && navigation && <Icon onClick={toggleVisible} />}
 
 			{(visible || matches) && (
 				<Cmp toggle={toggleExpanded}>
@@ -40,3 +37,5 @@ export default function View () {
 		</>
 	);
 }
+
+export default Store.compose(View);

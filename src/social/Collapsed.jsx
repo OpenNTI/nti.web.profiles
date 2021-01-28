@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { LinkTo } from '@nti/web-routing';
 import { Errors, Loading } from '@nti/web-commons';
 
 import {Container, IconContainer, ExpandButton, ContactsButton} from './parts/collapsed';
@@ -39,10 +40,10 @@ export default function CollapsedPanel ( {toggle:expand, children} ) {
 					<Errors.Message error={error}/>
 				) : (
 					<>
-						{activeUsers?.map((user, index) => {
+						{activeUsers && Object.keys(activeUsers).map((entity, index) => {
 							return (
 								<IconContainer key={index}>
-									<UserIcon entity={user} />
+									<UserIcon entity={entity} presence={activeUsers[entity]}/>
 								</IconContainer>
 							);}
 						)}
@@ -52,7 +53,9 @@ export default function CollapsedPanel ( {toggle:expand, children} ) {
 
 			<ExpandButton onClick={expand}/>
 
-			<ContactsButton />
+			<LinkTo.Path to="contacts">
+				<ContactsButton />
+			</LinkTo.Path>
 
 		</Container>
 	);
