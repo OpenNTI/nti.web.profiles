@@ -1,8 +1,9 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { Layouts } from '@nti/web-commons';
 
 import ChannelSelect from './ChannelSelect';
 import { LayoutContext } from './parts';
+import Search from './Search';
 
 const TopControls = styled.div`
 	background: white;
@@ -21,13 +22,25 @@ const Switch = styled(Layouts.Switches.GridList)`
 	margin-right: 30px;
 `;
 
-export default function Toolbar ({onChangeChannel, currentChannel, community, ...props}) {
+export default function Toolbar ({onChangeChannel, currentChannel, community, onSearch, ...props}) {
 	const {layout, setLayout} = useContext(LayoutContext);
+	const [search, setSearch] = useState('');
+
+	const prev = useRef(search);
+	useEffect(() => {
+		if (prev.current !== search) {
+			prev.current = search;
+			onSearch?.(search || null);
+		}
+	});
+
 	return (
 		<TopControls data-testid="discussion-selection-top-controls" {...props}>
 			<ChannelSelect onChange={onChangeChannel} selected={currentChannel} community={community}/>
 			<Spacer/>
-			<Switch onChange={setLayout} value={layout}/>
+			<Search onChange={setSearch} value={search} />
+			<Switch onChange={setLayout} value={layout} />
 		</TopControls>
 	);
 }
+

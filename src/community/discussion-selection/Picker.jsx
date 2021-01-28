@@ -48,6 +48,7 @@ function DiscussionPicker ({course, onSelect}) {
 		newTopic,
 		selected,
 		selectedChannel = firstChannel,
+		search,
 	}, dispatch] = useReducer(reducer, {});
 
 	const list = useMemo(
@@ -72,12 +73,14 @@ function DiscussionPicker ({course, onSelect}) {
 				community={community}
 				currentChannel={selectedChannel}
 				onChangeChannel={x => dispatch({selectedChannel: x})}
+				onSearch={x => dispatch({search: x})}
 			/>
 
 			{list && (
 				<RecessedList
 					items={list}
 					selected={selected}
+					searchTerm={search}
 					onSelect={x => dispatch({selected: x})}
 					onCreate={() => dispatch({create: true})}
 				/>
