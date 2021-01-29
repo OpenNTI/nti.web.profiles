@@ -1,2 +1,2 @@
 export Modal from './Modal';
-export default from './View';
+export { default } from './View';

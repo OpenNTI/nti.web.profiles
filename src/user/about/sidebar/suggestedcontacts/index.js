@@ -1,1 +1,1 @@
-export default from './SuggestedContacts';
+export { default } from './SuggestedContacts';

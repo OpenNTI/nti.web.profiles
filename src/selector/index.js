@@ -1,2 +1,2 @@
 export Token from './token';
-export default from './View';
+export { default } from './View';
