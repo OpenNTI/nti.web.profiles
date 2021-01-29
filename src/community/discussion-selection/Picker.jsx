@@ -39,6 +39,9 @@ function reducer ({selected = new Set(), ...state}, {selected: selection,...acti
 	};
 }
 
+// Fake page that indicates it has more data so that our loading placeholder shows while we are typing.
+const LOADING = Object.assign([], {hasMore: true});
+
 function DiscussionPicker ({course, onSelect}) {
 	const community = course.getCommunity();
 	Hooks.useChanges(community);
@@ -51,14 +54,19 @@ function DiscussionPicker ({course, onSelect}) {
 		search,
 	}, dispatch] = useReducer(reducer, {});
 
+	const {searchChanging, searchTerm} = useSearching(search);
+
 	const list = useMemo(
-		() => create ? null : selectedChannel?.getIterable({
+		() => create ? null : searchChanging ? LOADING : selectedChannel?.getIterable({
 			sortOn: 'createdTime',
 			sortOrder: 'descending',
+			searchTerm
 		}),
 		[
 			create,
 			selectedChannel,
+			searchChanging,
+			searchTerm,
 		]
 	);
 
@@ -80,7 +88,7 @@ function DiscussionPicker ({course, onSelect}) {
 				<RecessedList
 					items={list}
 					selected={selected}
-					searchTerm={search}
+					searchTerm={searchTerm}
 					onSelect={x => dispatch({selected: x})}
 					onCreate={() => dispatch({create: true})}
 				/>
@@ -145,4 +153,13 @@ function moveNewTopicIntoSelection (dispatch, newTopic, items) {
 			}
 		}
 	}); // always run
+}
+
+
+function useSearching (searchInput) {
+	const searchTerm = Hooks.useDebounce(searchInput);
+	return {
+		searchTerm,
+		searchChanging: searchTerm !== searchInput
+	};
 }
