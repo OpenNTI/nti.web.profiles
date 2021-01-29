@@ -1,2 +1,2 @@
-export ContentIcon from './ContentIcon';
-export Panel from './Panel';
+export { default as ContentIcon } from './ContentIcon';
+export { default as Panel } from './Panel';

@@ -1,1 +1,1 @@
-export getFirstChannel from './get-first-channel';
+export { default as getFirstChannel } from './get-first-channel';

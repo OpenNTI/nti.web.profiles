@@ -1,3 +1,3 @@
-export AutoSubscribe from './AutoSubscribe';
-export Delete from './Delete';
-export EditAssetButton from './EditAssetButton';
+export { default as AutoSubscribe } from './AutoSubscribe';
+export { default as Delete } from './Delete';
+export { default as EditAssetButton } from './EditAssetButton';

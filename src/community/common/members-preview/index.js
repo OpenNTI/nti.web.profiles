@@ -1,1 +1,1 @@
-export InlineList from './InlineList';
+export { default as InlineList } from './InlineList';

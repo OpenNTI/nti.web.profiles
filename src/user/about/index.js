@@ -1,2 +1,2 @@
 export { default } from './View';
-export Frame from './Frame';
+export { default as Frame } from './Frame';

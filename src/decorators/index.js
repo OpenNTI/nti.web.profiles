@@ -1,1 +1,1 @@
-export ResolveEntityProp from './resolve-entity-prop';
+export { default as ResolveEntityProp } from './resolve-entity-prop';
