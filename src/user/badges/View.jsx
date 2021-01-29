@@ -30,13 +30,13 @@ export default function UserBadges ({entity}) {
 
 	const emptyState = isAppUser(entity) ?
 		(<Empty header={t('empty.self')} />) :
-		(<Empty header={t('empty.other')} />)
+		(<Empty header={t('empty.other')} />);
 
 	return (
 		<Group title={t('title')}>
 			<Credly.Badges.AwardedBadges
 				context={entity}
-				emptyState={emptyState}	
+				emptyState={emptyState}
 			/>
 		</Group>
 	);
