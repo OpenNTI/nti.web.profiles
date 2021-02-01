@@ -95,8 +95,13 @@ export const Container = styled('div').attrs(useLayout({'data-testid': 'discussi
 		flex-direction: row;
 		align-items: center;
 		justify-content: flex-start;
-		gap: 1rem;
 		padding-right: 20px;
+
+		/* gap: 1rem; */
+
+		& > :not(:first-child) {
+			margin-left: 1rem;
+		}
 	}
 
 	&.selected {
