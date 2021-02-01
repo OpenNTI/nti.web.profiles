@@ -12,7 +12,11 @@ const RecessedList = styled(List)`
 	max-height: 400px;
 	margin: -20px;
 	padding: 20px;
-	padding-right: 17px; /* prevent scrollbar from pushing to two columns */
+
+	/* prevent scrollbar from pushing to two columns.
+	The gap variable is from fallout of having to
+	support safari and its lack of support of flex-gap */
+	padding-right: calc(17px - var(--gap));
 `;
 
 const RecessedToolbar = styled(Toolbar)`

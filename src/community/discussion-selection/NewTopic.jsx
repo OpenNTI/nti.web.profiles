@@ -17,10 +17,16 @@ const Container = styled(BaseContainer).attrs(useLayout())`
 
 	&.layout-grid {
 		display: flex;
-		gap: 14px;
+
+		/* gap: 14px; */
 		flex-direction: column;
 		align-items: center;
 		justify-content: center;
+
+		/* This selector works around missing gap in safari */
+		& > :first-child {
+			margin-bottom: 14px;
+		}
 	}
 `;
 

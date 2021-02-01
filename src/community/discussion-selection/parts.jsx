@@ -35,8 +35,11 @@ export const useLayout = (extra) => {
 
 
 export const ListContainerBase = styled('div').attrs(useLayout())`
+
+	/* gap: 10px; */
+	--gap: 10px;
+
 	display: flex;
-	gap: 10px;
 	align-items: flex-start;
 	align-content: flex-start;
 
@@ -51,6 +54,9 @@ export const ListContainerBase = styled('div').attrs(useLayout())`
 
 	& > * {
 		flex: 0 0 auto;
+
+		/* sigh. gap solved this so well... */
+		margin: 0 10px 10px 0;
 	}
 `;
 
