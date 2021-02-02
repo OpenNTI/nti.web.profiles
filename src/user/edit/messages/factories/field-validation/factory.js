@@ -31,7 +31,7 @@ const t = scoped('nti-profile-edit.validation-error-messages', {
  * allowing only one error per where/name combination
  * to prevent multiple messages for the same field.
  * @param {Array} errors an array of error objects
- * @return {Object} A mapping of wheres to errors
+ * @returns {Object} A mapping of wheres to errors
  */
 function bucketByWhere (errors) {
 	return arr(errors)
@@ -54,7 +54,7 @@ function bucketByWhere (errors) {
 /**
 * For a given group of errors, count the number of required vs. invalid
 * @param  {Array} errors An array of field validation error objects
-* @return {Object} An object mapping 'types' (e.g. required or invalid) to number of occurrences
+* @returns {Object} An object mapping 'types' (e.g. required or invalid) to number of occurrences
 */
 const countTypes = errors => arr(errors).reduce((acc, {validity: {valueMissing} = {}}) => {
 	const type = valueMissing ? 'required' : 'invalid';
@@ -66,7 +66,7 @@ const countTypes = errors => arr(errors).reduce((acc, {validity: {valueMissing} 
 /**
  * Get the messages to display for the given bucketed errors.
  * @param  {Object} buckets A mapping of wheres to errors, e.g. {education: [error, error], about: [error]}
- * @return {Array} An array of messages for display
+ * @returns {Array} An array of messages for display
  */
 function messages (buckets) {
 	return Object.entries(buckets).map(([where, errors]) => {

@@ -12,7 +12,7 @@ const t = scoped('nti-web-profile.transcripts.table.rowdetail.RowDetail', {
 
 /**
  * Class RowDetail
- * @prop {object} item Transcript credit
+ * @prop {Object} item Transcript credit
  * @prop {function} onDismiss Close the detail
  * @returns {RowDetail} Transcript credit detail
  */

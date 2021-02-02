@@ -28,7 +28,7 @@ const unknown = (errors) => logger.warn('Unable to generate error message. Unrec
 /**
 * Bin errors by type (e.g. field validation vs. server error)
 * @param {Array} errors array of error objects
-* @return {Object} A mapping of type to errors: {server: [error, error, ...], field: [error, error, ...]}
+* @returns {Object} A mapping of type to errors: {server: [error, error, ...], field: [error, error, ...]}
 */
 function byType (errors) {
 	return arr(errors)

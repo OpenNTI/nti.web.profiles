@@ -51,7 +51,7 @@ const CACHE = {};
 /**
  * Returns an input component for the given field schema
  * @param  {Object} schema The schema for the field
- * @return {Component} A react component to handle editing of the field
+ * @returns {Component} A react component to handle editing of the field
  */
 export default function getWidget (schema) {
 	const {name, type, description} = schema;
