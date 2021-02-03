@@ -63,7 +63,7 @@ function DiscussionPicker ({course, onSelect}) {
 
 	const list = useMemo(
 		() => create ? null : searchChanging ? LOADING : selectedChannel?.getIterable({
-			accepts: Models.forums.Topic.MimeTypes.join(','),
+			accept: Models.forums.Topic.MimeTypes.join(','),
 			sortOn: 'createdTime',
 			sortOrder: 'descending',
 			searchTerm
