@@ -41,7 +41,7 @@ export default function UsersContainer ( { updateExpandBadge } ) {
 	}, [height]);
 
 	return (
-		<div className={styles.container} ref={containerRef}>
+		<Container ref={containerRef}>
 			{activeUsers && Object.keys(activeUsers).map((entity, index) => {
 				return (
 					<IconContainer key={index}>
