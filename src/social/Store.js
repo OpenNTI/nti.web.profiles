@@ -45,8 +45,13 @@ export default class Store extends Stores.SimpleStore {
 		this.set({ activeUsers });
 	}
 
-	static selectUser (username) {
-		this.getStore().selectUser(username);
+	static addContacts (users) {
+		this.getStore().addContacts(users);
+	}
+
+	addContacts (users) {
+		const activeUsers = users.reduce((acc, user) => ({ ...acc, [user.Username]: user }), {});
+		this.set({activeUsers});
 	}
 
 	selectUser (username) {
@@ -59,10 +64,6 @@ export default class Store extends Stores.SimpleStore {
 
 	deselectUser () {
 		this.set({ selectedUser: null });
-	}
-
-	static clearUnreadCount (username) {
-		this.getStore().clearUnreadCount(username);
 	}
 
 	clearUnreadCount (username) {
@@ -80,9 +81,9 @@ export default class Store extends Stores.SimpleStore {
 	}
 
 	handleWindowNotify (username) {
-		let unreadCount = this.get('unreadCount');
+		let unreadCount = this.get('unreadCount') || {};
 
-		const oldValue = username in unreadCount || 0;
+		const oldValue = unreadCount[username] || 0;
 
 		unreadCount = {
 			...unreadCount,
