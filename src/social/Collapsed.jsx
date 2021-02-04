@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { LinkTo } from '@nti/web-routing';
-import { Errors, Loading } from '@nti/web-commons';
+import { Badge, Errors, Loading, Theme } from '@nti/web-commons';
 
 import {Container, IconContainer, ExpandButton, ContactsButton} from './parts/collapsed';
 import Store from './Store';
-import UserIcon from './BadgedAvatar';
+import UsersContainer from './parts/collapsed/UsersContainer';
 
 const styles = css`
 	.loading {
@@ -27,13 +27,16 @@ CollapsedPanel.propTypes = {
 
 export default function CollapsedPanel ( {toggle:expand, children} ) {
 	const {
-		activeUsers,
 		loading,
 		error,
 	} = Store.useValue();
 
+	const theme = Theme.useThemeProperty('icon');
+
+	const [hiddenCountsSum, setHiddenCountsSum] = React.useState(0);
+
 	return (
-		<Container>
+		<Container theme={theme}>
 			{React.Children.map(children, child => {
 				return (
 					<>
@@ -46,23 +49,21 @@ export default function CollapsedPanel ( {toggle:expand, children} ) {
 				{error ? (
 					<Errors.Message error={error}/>
 				) : (
-					<>
-						{activeUsers && Object.keys(activeUsers).map((entity, index) => {
-							return (
-								<IconContainer key={index}>
-									<UserIcon entity={entity} presence={activeUsers[entity]}/>
-								</IconContainer>
-							);}
-						)}
-					</>
+					<UsersContainer updateExpandBadge={(x) => setHiddenCountsSum(x)}/>
 				)}
 			</Loading.Placeholder>
 
-			<ExpandButton onClick={expand}/>
+			<div className={styles.buttonsContainer}>
+				<div className={styles.expandContainer}>
+					<Badge badge={hiddenCountsSum} position={Badge.POSITIONS.TOP_LEFT} {...Badge.offset(12, 5)}>
+						<ExpandButton onClick={expand} />
+					</Badge>
+				</div>
 
-			<LinkTo.Path to="contacts">
-				<ContactsButton />
-			</LinkTo.Path>
+				<LinkTo.Path to="contacts">
+					<ContactsButton />
+				</LinkTo.Path>
+			</div>
 
 		</Container>
 	);

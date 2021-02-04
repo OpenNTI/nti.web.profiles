@@ -4,7 +4,7 @@ import React from 'react';
 
 import {ContactsButton, Container, EntryContainer, Footer, Header} from './parts/expanded';
 import Store from './Store';
-import UserIcon from './BadgedAvatar';
+import BadgedAvatar from './BadgedAvatar';
 
 const styles = css`
 	.name {
@@ -54,16 +54,16 @@ export default function ExpandedPanel ( { toggle:collapse } ) {
 				{error ? (
 					<Errors.Message error={error}/>
 				) : (
-					<>
+					<div className={styles.usersContainer}>
 						{activeUsers && Object.keys(activeUsers).map((entity, index) => {
 							return (
 								<EntryContainer key={index}>
-									<UserIcon entity={entity} presence={activeUsers[entity]} />
+									<BadgedAvatar entity={entity} presence={activeUsers[entity]} expanded/>
 									<DisplayName entity={entity} className={styles.name} />
 								</EntryContainer>
 							);
 						})}
-					</>
+					</div>
 				)}
 			</Loading.Placeholder>
 
