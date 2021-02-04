@@ -22,10 +22,10 @@ export function Panel ( ) {
 	});
 
 	store.set({
-		unreadCounts: {
+		unreadCount: {
 			user1: 1,
 			user2: 10,
-			user3: 100,
+			user3: 20,
 		},
 	});
 
