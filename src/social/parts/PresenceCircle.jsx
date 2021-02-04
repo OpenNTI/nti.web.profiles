@@ -7,7 +7,7 @@ export default styled('div')`
 	border-radius: 11px;
 
 	&:after {
-		background: var(--primary-green);
+		background: var(--presence-available);
 		width: 7px;
 		height: 7px;
 		border-radius: 90px;
@@ -19,10 +19,10 @@ export default styled('div')`
 	}
 
 	&.presence-away:after {
-		background: var(--secondary-orange);
+		background: var(--presence-away);
 	}
 
 	&.presence-dnd:after {
-		background: var(--primary-red);
+		background: var(--presence-dnd);
 	}
 `;

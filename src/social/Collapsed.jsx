@@ -12,6 +12,13 @@ const styles = css`
 		min-height: 100px;
 		overflow: hidden;
 	}
+	.expand-container {
+		position: absolute;
+		bottom: 55px;
+	}
+	.buttons-container {
+		height: 100px;
+	}
 `;
 
 CollapsedPanel.propTypes = {

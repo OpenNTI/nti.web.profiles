@@ -2,7 +2,6 @@ export default styled('div')`
 	--size: 42px;
 
 	position: absolute;
-	margin: 8px auto;
 	width: 42px;
 	height: 42px;
 	cursor: pointer;

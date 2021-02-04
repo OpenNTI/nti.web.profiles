@@ -8,4 +8,5 @@ export default styled.div`
 	border-radius: 5px;
 	padding-bottom: 60px;
 	transition: right 0.5s;
+	min-height: 170px;
 `;

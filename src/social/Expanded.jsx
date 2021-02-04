@@ -25,6 +25,16 @@ const styles = css`
 		min-height: 100px;
 		overflow: hidden;
 	}
+
+	.users-container {
+		position: absolute;
+		bottom: 62px;
+		top: 33px;
+		left: 10px;
+		right: 0;
+		overflow-y: auto;
+		overflow-x: hidden;
+	}
 `;
 
 export default function ExpandedPanel ( { toggle:collapse } ) {
