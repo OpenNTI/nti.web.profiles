@@ -7,11 +7,9 @@ import BadgedAvatar from '../../BadgedAvatar';
 
 import { IconContainer } from '.';
 
-const styles = css`
-	.container {
-		overflow: hidden;
-		height: calc(100% - 120px);
-	}
+const Container = styled.div`
+	overflow: hidden;
+	height: calc(100% - 120px);
 `;
 
 const ICON_HEIGHT = 40;
