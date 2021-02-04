@@ -5,7 +5,7 @@ import {Hooks} from '@nti/web-commons';
 import Store from '../../Store';
 import BadgedAvatar from '../../BadgedAvatar';
 
-import { IconContainer } from '.';
+import { Icon } from '.';
 
 const Container = styled.div`
 	overflow: hidden;
@@ -47,6 +47,6 @@ export default function UsersContainer ( { updateExpandBadge } ) {
 					</IconContainer>
 				);
 			})}
-		</div>
+		</Container>
 	);
 }
