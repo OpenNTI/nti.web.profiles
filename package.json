@@ -42,6 +42,7 @@
     "@nti/lib-ntiids": "NextThought/nti.lib.ntiids",
     "@nti/lib-store": "NextThought/nti.lib.store",
     "@nti/util-logger": "NextThought/nti.util.logger",
+    "@nti/web-calendar": "NextThought/nti.web.calendar",
     "@nti/web-client": "NextThought/nti.web.client",
     "@nti/web-commons": "NextThought/nti.web.commons",
     "@nti/web-discussions": "NextThought/nti.web.discussions",
