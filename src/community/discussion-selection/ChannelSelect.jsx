@@ -63,6 +63,10 @@ const ListItem = styled(Button).attrs({as: 'li', plain: true})`
 	}
 `;
 
+const SubLabel = styled(Text.Label)`
+	padding-top: 0.1em;
+	color: var(--tertiary-grey);
+`;
 
 ChannelSelect.propTypes = {
 	onChange: PropTypes.func,
@@ -87,11 +91,26 @@ export default function ChannelSelect ({onChange, selected, community}) {
 		>
 			<List>
 				{[...community].map((channel) => (
-					<ListItem key={channel.getID()} onClick={() => onChange?.(channel)}>
-						<Text.Base>{channel.title}</Text.Base>
-					</ListItem>
+					<Channel
+						channel={channel}
+						community={community}
+						key={channel.getID()}
+						onClick={() => onChange?.(channel)}
+					/>
 				))}
 			</List>
 		</Flyout.Triggered>
+	);
+}
+
+
+function Channel ({channel, community, ...props}) {
+	return (
+		<ListItem {...props}>
+			<Text.Base>{channel.title}</Text.Base>
+			{community.hasCompoundList && (
+				<SubLabel>{community.displayName}</SubLabel>
+			)}
+		</ListItem>
 	);
 }
