@@ -63,7 +63,7 @@ export default function BadgedAvatar ( { entity, presence, expanded } ) {
 	return (
 		<AvatarContainer onClick={handleClick}>
 			<Badge badge={unreadCount ? unreadCount[entity] : 0} position={Badge.POSITIONS.TOP_LEFT} {...Badge.offset(5, 4)}>
-				<MaskedAvatar entity={entity} presence={selected && presence}/>
+				<MaskedAvatar entity={entity} presence={selected ? presence : ''}/>
 			</Badge>
 			<PresenceCircle presence={presence}/>
 			{ window && <ChatWindow onClose={handleClose} entity={entity} visible={window} expanded={expanded}/> }
