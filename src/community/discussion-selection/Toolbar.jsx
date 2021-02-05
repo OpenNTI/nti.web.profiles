@@ -13,6 +13,9 @@ const TopControls = styled.div`
 	align-items: center;
 	justify-content: flex-start;
 	gap: 16px;
+	/* position relative and z-index of 1 are required to make the box-shadow drop over the sibling */
+	position: relative;
+	z-index: 1;
 `;
 
 const Spacer = styled.span`
