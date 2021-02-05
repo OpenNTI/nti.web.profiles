@@ -7,7 +7,6 @@ export default styled('div')`
 	border-radius: 11px;
 
 	&:after {
-		background: var(--presence-available);
 		width: 7px;
 		height: 7px;
 		border-radius: 90px;
@@ -16,6 +15,14 @@ export default styled('div')`
 		display: block;
 		left: 2px;
 		top: 2px;
+	}
+
+	&.presence-offline:after {
+		background: var(--presence-offline);
+	}
+
+	&.presence-available:after {
+		background: var(--presence-available);
 	}
 
 	&.presence-away:after {

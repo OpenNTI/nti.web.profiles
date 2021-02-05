@@ -7,18 +7,16 @@ import {Container, IconContainer, ExpandButton, ContactsButton} from './parts/co
 import Store from './Store';
 import UsersContainer from './parts/collapsed/UsersContainer';
 
-const styles = css`
-	.loading {
-		min-height: 100px;
-		overflow: hidden;
-	}
-	.expand-container {
-		position: absolute;
-		bottom: 55px;
-	}
-	.buttons-container {
-		height: 100px;
-	}
+const Spinner = styled(Loading.Spinner)`
+	min-height: 100px;
+	overflow: hidden;
+`;
+const ExpandContainer = styled.div`
+	position: absolute;
+	bottom: 55px;
+`;
+const ButtonsContainer = styled.div`
+	height: 100px;
 `;
 
 CollapsedPanel.propTypes = {
@@ -45,7 +43,7 @@ export default function CollapsedPanel ( {toggle:expand, children} ) {
 				);}
 			)}
 
-			<Loading.Placeholder loading={loading} fallback={(<Loading.Spinner className={styles.loading}/>)}>
+			<Loading.Placeholder loading={loading} fallback={(<Spinner/>)}>
 				{error ? (
 					<Errors.Message error={error}/>
 				) : (
@@ -53,17 +51,17 @@ export default function CollapsedPanel ( {toggle:expand, children} ) {
 				)}
 			</Loading.Placeholder>
 
-			<div className={styles.buttonsContainer}>
-				<div className={styles.expandContainer}>
+			<ButtonsContainer>
+				<ExpandContainer>
 					<Badge badge={hiddenCountsSum} position={Badge.POSITIONS.TOP_LEFT} {...Badge.offset(12, 5)}>
 						<ExpandButton onClick={expand} />
 					</Badge>
-				</div>
+				</ExpandContainer>
 
 				<LinkTo.Path to="contacts">
 					<ContactsButton />
 				</LinkTo.Path>
-			</div>
+			</ButtonsContainer>
 
 		</Container>
 	);
