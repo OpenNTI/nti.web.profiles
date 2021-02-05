@@ -5,7 +5,7 @@ import {Hooks} from '@nti/web-commons';
 import Store from '../../Store';
 import BadgedAvatar from '../../BadgedAvatar';
 
-import { Icon } from '.';
+import IconContainer from './IconContainer';
 
 const Container = styled.div`
 	overflow: hidden;
