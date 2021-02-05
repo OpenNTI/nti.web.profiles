@@ -93,7 +93,6 @@ export default function ChannelSelect ({onChange, selected, community}) {
 				{[...community].map((channel) => (
 					<Channel
 						channel={channel}
-						community={community}
 						key={channel.getID()}
 						onClick={() => onChange?.(channel)}
 					/>
@@ -104,12 +103,12 @@ export default function ChannelSelect ({onChange, selected, community}) {
 }
 
 
-function Channel ({channel, community, ...props}) {
+function Channel ({channel, ...props}) {
 	return (
 		<ListItem {...props}>
 			<Text.Base>{channel.title}</Text.Base>
-			{community.hasCompoundList && (
-				<SubLabel>{community.displayName}</SubLabel>
+			{channel.section && (
+				<SubLabel>{channel.section}</SubLabel>
 			)}
 		</ListItem>
 	);
