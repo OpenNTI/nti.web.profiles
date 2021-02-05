@@ -8,9 +8,9 @@ export default class Store extends Stores.SimpleStore {
 	}
 
 	setActiveUsers(activeUsers) {
-		this.activeUsers = normalizeActiveUsers(activeUsers);
+		activeUsers = normalizeActiveUsers(activeUsers);
 
-		this.set({ activeUsers: this.activeUsers });
+		this.set({ activeUsers });
 	}
 
 	/**
@@ -27,12 +27,16 @@ export default class Store extends Stores.SimpleStore {
 			return;
 		}
 
-		this.activeUsers = {
-			...this.activeUsers,
+		const activeUsers = {
+			...this.get('activeUsers'),
 			[username]: presence,
 		};
 
-		this.set({ activeUsers: this.activeUsers });
+		if (presence === 'unavailable') {
+			delete activeUsers[username];
+		}
+
+		this.set({ activeUsers });
 	}
 
 	static removeContact(username) {
@@ -40,7 +44,7 @@ export default class Store extends Stores.SimpleStore {
 	}
 
 	removeContact(username) {
-		const activeUsers = this.get('activeUsers');
+		const activeUsers = { ...this.get('activeUsers') };
 
 		delete activeUsers[username];
 
@@ -72,9 +76,8 @@ export default class Store extends Stores.SimpleStore {
 	}
 
 	clearUnreadCount(username) {
-		let unreadCount = this.get('unreadCount');
-		unreadCount = {
-			...unreadCount,
+		const unreadCount = {
+			...this.get('unreadCount'),
 			[username]: 0,
 		};
 
@@ -86,7 +89,7 @@ export default class Store extends Stores.SimpleStore {
 	}
 
 	handleWindowNotify(username) {
-		let unreadCount = this.get('unreadCount') || {};
+		let unreadCount = { ...this.get('unreadCount') } || {};
 
 		const oldValue = unreadCount[username] || 0;
 
@@ -97,16 +100,26 @@ export default class Store extends Stores.SimpleStore {
 
 		this.set({ unreadCount });
 	}
+
+	setCalendarWindow(calendarWindow) {
+		this.set({ calendarWindow });
+		calendarWindow && this.set({ chatWindow: false });
+	}
+
+	setChatWindow(chatWindow) {
+		this.set({ chatWindow });
+		chatWindow && this.set({ calendarWindow: false });
+	}
 }
 
 function normalizeActiveUsers(activeUsers) {
 	return Array.isArray(activeUsers)
-		? Object.keys(...activeUsers.map(x => x.username)).reduce(
-				(ret, key) => {
-					ret[activeUsers[key]] = true;
-					return ret;
-				},
+		? activeUsers.reduce(
+				(ret, x) => ({
+					...ret,
+					[x.username]: true,
+				}),
 				{}
 		  )
-		: activeUsers;
+		: { ...activeUsers };
 }

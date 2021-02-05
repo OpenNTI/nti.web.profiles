@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { LinkTo } from '@nti/web-routing';
-import { Badge, Errors, Loading, Theme } from '@nti/web-commons';
+import { Badge, Errors, Loading, Tooltip } from '@nti/web-commons';
 
 import {
 	Container,
@@ -31,12 +31,10 @@ CollapsedPanel.propTypes = {
 export default function CollapsedPanel({ toggle: expand, children }) {
 	const { loading, error } = Store.useValue();
 
-	const theme = Theme.useThemeProperty('icon');
-
 	const [hiddenCountsSum, setHiddenCountsSum] = React.useState(0);
 
 	return (
-		<Container theme={theme}>
+		<Container data-testid="collapsed-container">
 			{React.Children.map(children, child => {
 				return (
 					<>
@@ -62,12 +60,19 @@ export default function CollapsedPanel({ toggle: expand, children }) {
 						position={Badge.POSITIONS.TOP_LEFT}
 						{...Badge.offset(12, 5)}
 					>
-						<ExpandButton onClick={expand} />
+						<Tooltip label="Expand Contacts">
+							<ExpandButton
+								onClick={expand}
+								data-testid="expand-button"
+							/>
+						</Tooltip>
 					</Badge>
 				</ExpandContainer>
 
 				<LinkTo.Path to="contacts">
-					<ContactsButton />
+					<Tooltip label="Show Contacts">
+						<ContactsButton />
+					</Tooltip>
 				</LinkTo.Path>
 			</ButtonsContainer>
 		</Container>

@@ -1,32 +1,9 @@
-export default styled('div')`
+import { User } from '@nti/web-commons';
+
+export default styled(User.Presence)`
 	position: absolute;
-	right: 0;
-	bottom: 0;
-	width: 11px;
-	height: 11px;
-	border-radius: 11px;
-
-	&:after {
-		width: 7px;
-		height: 7px;
-		border-radius: 90px;
-		content: '';
-		position: absolute;
-		display: block;
-		left: 2px;
-		top: 2px;
-		background: var(--presence-offline);
-	}
-
-	&.presence-available:after {
-		background: var(--presence-available);
-	}
-
-	&.presence-away:after {
-		background: var(--presence-away);
-	}
-
-	&.presence-dnd:after {
-		background: var(--presence-dnd);
-	}
+	right: 2px;
+	bottom: 2px;
+	width: 8px;
+	height: 8px;
 `;

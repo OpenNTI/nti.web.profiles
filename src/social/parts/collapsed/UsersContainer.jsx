@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Hooks } from '@nti/web-commons';
+import { DisplayName, Hooks, Tooltip } from '@nti/web-commons';
 
 import Store from '../../Store';
 import BadgedAvatar from '../../BadgedAvatar';
@@ -47,12 +47,17 @@ export default function UsersContainer({ updateExpandBadge }) {
 			{activeUsers &&
 				Object.keys(activeUsers).map((entity, index) => {
 					return (
-						<IconContainer key={index}>
-							<BadgedAvatar
-								entity={entity}
-								presence={activeUsers[entity]}
-							/>
-						</IconContainer>
+						<Tooltip
+							key={index}
+							label={<DisplayName entity={entity} />}
+						>
+							<IconContainer>
+								<BadgedAvatar
+									entity={entity}
+									presence={activeUsers[entity]}
+								/>
+							</IconContainer>
+						</Tooltip>
 					);
 				})}
 		</Container>

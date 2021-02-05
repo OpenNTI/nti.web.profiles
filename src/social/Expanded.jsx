@@ -1,4 +1,4 @@
-import { DisplayName, Errors, Loading, Theme } from '@nti/web-commons';
+import { DisplayName, Errors, Loading } from '@nti/web-commons';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -44,10 +44,8 @@ const UsersContainer = styled.div`
 export default function ExpandedPanel({ toggle: collapse }) {
 	const { activeUsers, loading, error } = Store.useValue();
 
-	const theme = Theme.useThemeProperty('icon');
-
 	return (
-		<Container theme={theme}>
+		<Container data-testid="expanded-container">
 			<Header onCollapseClick={collapse} />
 
 			<Loading.Placeholder loading={loading} fallback={<Spinner />}>
