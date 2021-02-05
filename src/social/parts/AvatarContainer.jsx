@@ -4,6 +4,7 @@ export default styled('div')`
 	position: absolute;
 	width: 42px;
 	height: 42px;
+	top: 5px;
 	cursor: pointer;
 
 	& img,
