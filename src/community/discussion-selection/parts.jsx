@@ -57,6 +57,10 @@ export const ListContainerBase = styled('div').attrs(useLayout())`
 
 		/* sigh. gap solved this so well... */
 		margin: 0 10px 10px 0;
+
+		&:nth-child(3n + 3) {
+			margin-right: 0;
+		}
 	}
 `;
 
