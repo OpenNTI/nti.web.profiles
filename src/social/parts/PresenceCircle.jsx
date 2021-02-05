@@ -15,9 +15,6 @@ export default styled('div')`
 		display: block;
 		left: 2px;
 		top: 2px;
-	}
-
-	&.presence-offline:after {
 		background: var(--presence-offline);
 	}
 
