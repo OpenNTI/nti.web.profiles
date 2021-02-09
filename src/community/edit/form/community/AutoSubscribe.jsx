@@ -8,12 +8,19 @@ import Styles from './Style.css';
 
 const cx = classnames.bind(Styles);
 
-export default
-@Store.monitor({'autoSubscribeRule': 'value', 'setAutoSubscribeRule': 'onChange', 'autoSubscribeRuleError': 'error'})
-class CommunityEditAutoSubscribe extends React.Component {
-	render () {
-		return (
-			<AutoSubscribe className={cx('community-edit-auto-subscribe')} {...this.props} />
-		);
-	}	
+export default function CommunityEditAutoSubscribe ({className, ...props}) {
+	const {
+		autoSubscribeRule: value,
+		setAutoSubscribeRule: onChange,
+		autoSubscribeRuleError: error
+	} = Store.useValue();
+	return (
+		<AutoSubscribe {...props}
+			className={cx('community-edit-auto-subscribe', className)}
+			error={error}
+			value={value}
+			onChange={onChange}
+		/>
+	);
 }
+

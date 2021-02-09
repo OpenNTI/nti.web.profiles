@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
+import {decorate} from '@nti/lib-commons';
 import {scoped} from '@nti/lib-locale';
 import {Input} from '@nti/web-commons';
 
@@ -13,8 +14,6 @@ const t = scoped('nti-profiles.community.view.members.components.header.Search',
 	search: 'Search'
 });
 
-export default
-@Store.monitor(['searchTerm', 'updateSearchTerm'])
 class CommunityMembersHeaderSearch extends React.Component {
 	static propTypes = {
 		searchTerm: PropTypes.string,
@@ -32,3 +31,7 @@ class CommunityMembersHeaderSearch extends React.Component {
 		);
 	}
 }
+
+export default decorate(CommunityMembersHeaderSearch, [
+	Store.monitor(['searchTerm', 'updateSearchTerm'])
+]);

@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
+import {decorate} from '@nti/lib-commons';
 import {scoped} from '@nti/lib-locale';
 import {Prompt, Layouts, Loading, Error as ErrorCmp} from '@nti/web-commons';
 
@@ -21,9 +22,7 @@ const t = scoped('nti-profiles.community.view.members.Modal', {
 	removing: 'Removing...'
 });
 
-export default
-@Store.connect(['loading', 'removing', 'items', 'error', 'hasMore', 'loadMore', 'searchTerm'])
-class CommunityMemebersModal extends React.Component {
+class CommunityMembersModal extends React.Component {
 	static deriveBindingFromProps (props) {
 		return {
 			community: props.community
@@ -69,3 +68,8 @@ class CommunityMemebersModal extends React.Component {
 		);
 	}
 }
+
+
+export default decorate(CommunityMembersModal, [
+	Store.connect(['loading', 'removing', 'items', 'error', 'hasMore', 'loadMore', 'searchTerm'])
+]);

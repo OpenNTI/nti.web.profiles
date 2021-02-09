@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import {Flyout, Prompt} from '@nti/web-commons';
+import {decorate} from '@nti/lib-commons';
 import {scoped} from '@nti/lib-locale';
 import {getService} from '@nti/web-client';
 
@@ -24,17 +25,6 @@ const t = scoped('nti-web-profile.transcripts.View', {
 	filterHeader: 'Filters'
 });
 
-export default
-@Store.connect({
-	loading: 'loading',
-	dateFilter: 'dateFilter',
-	typeFilter: 'typeFilter',
-	items: 'items',
-	aggregateItems: 'aggregateItems',
-	availableTypes: 'availableTypes',
-	csvLink: 'csvLink',
-	pdfLink: 'pdfLink'
-})
 class TranscriptsContentsContainer extends React.Component {
 	static propTypes = {
 		entity: PropTypes.object,
@@ -225,3 +215,17 @@ class TranscriptsContentsContainer extends React.Component {
 		);
 	}
 }
+
+
+export default decorate(TranscriptsContentsContainer, [
+	Store.connect({
+		loading: 'loading',
+		dateFilter: 'dateFilter',
+		typeFilter: 'typeFilter',
+		items: 'items',
+		aggregateItems: 'aggregateItems',
+		availableTypes: 'availableTypes',
+		csvLink: 'csvLink',
+		pdfLink: 'pdfLink'
+	})
+]);

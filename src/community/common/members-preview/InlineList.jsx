@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
+import {decorate} from '@nti/lib-commons';
 import {scoped} from '@nti/lib-locale';
 import {Loading, User, Text} from '@nti/web-commons';
 
@@ -12,8 +13,6 @@ const t = scoped('nti-profiles.community.common.members-preview.InlineList', {
 	remaining: '+%(remaining)s'
 });
 
-export default
-@Store.connect(['loading', 'error', 'members', 'remaining'])
 class MembersPreviewInlineList extends React.Component {
 	static deriveBindingFromProps (props) {
 		return {
@@ -69,3 +68,8 @@ class MembersPreviewInlineList extends React.Component {
 		);
 	}
 }
+
+
+export default decorate(MembersPreviewInlineList, [
+	Store.connect(['loading', 'error', 'members', 'remaining'])
+]);

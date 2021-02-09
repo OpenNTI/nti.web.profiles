@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
+import {decorate} from '@nti/lib-commons';
 import {scoped} from '@nti/lib-locale';
 import {DialogButtons} from '@nti/web-commons';
 
@@ -16,9 +17,7 @@ const t = scoped('nti-profiles.community.creation.form.Form', {
 	cancel: 'Cancel'
 });
 
-export default
-@Store.monitor(['save', 'cancel', 'saving', 'error'])
-class CommunitCreationForm extends React.Component {
+class CommunityCreationForm extends React.Component {
 	static propTypes = {
 		saving: PropTypes.bool,
 		save: PropTypes.func,
@@ -49,9 +48,14 @@ class CommunitCreationForm extends React.Component {
 				<div className={cx('form-body')}>
 					<DisplayName />
 					<AutoSubscribe />
-				</div>			
+				</div>
 				<DialogButtons buttons={buttons} />
 			</form>
 		);
 	}
 }
+
+
+export default decorate(CommunityCreationForm, [
+	Store.monitor(['save', 'cancel', 'saving', 'error'])
+]);

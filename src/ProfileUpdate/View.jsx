@@ -1,6 +1,7 @@
 import './View.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
+import {decorate} from '@nti/lib-commons';
 import {Loading, DialogButtons} from '@nti/web-commons';
 import {scoped} from '@nti/lib-locale';
 
@@ -15,18 +16,6 @@ const t = scoped('nti-web-profile.ProfileUpdate.View', {
 	unknownError: 'Unable to update profile.'
 });
 
-export default
-@Store.connect({
-	loading: 'loading',
-	saving: 'saving',
-	fields: 'fields',
-	type: 'type',
-	baseType: 'baseType',
-	error: 'error',
-	onFieldChange: 'onFieldChange',
-	values: 'values',
-	isValid: 'isValid'
-})
 class ProfileUpdate extends React.Component {
 	static profileNeedsUpdate (entity) {
 		return entity.hasLink('user_profile_update');
@@ -126,3 +115,17 @@ class ProfileUpdate extends React.Component {
 		);
 	}
 }
+
+export default decorate(ProfileUpdate, [
+	Store.connect({
+		loading: 'loading',
+		saving: 'saving',
+		fields: 'fields',
+		type: 'type',
+		baseType: 'baseType',
+		error: 'error',
+		onFieldChange: 'onFieldChange',
+		values: 'values',
+		isValid: 'isValid'
+	})
+]);

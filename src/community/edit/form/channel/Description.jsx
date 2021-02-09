@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
+import {decorate} from '@nti/lib-commons';
 import {scoped} from '@nti/lib-locale';
 import {Input} from '@nti/web-commons';
 
@@ -12,8 +13,6 @@ const t = scoped('nti-profile.community.edit.form.channel.Description', {
 	placeholder: 'Write a description (optional)'
 });
 
-export default
-@Store.monitor({description: 'value', 'setDescription': 'onChange', descriptionError: 'error', readOnly: 'readOnly'})
 class DescriptionInput extends React.Component {
 	static propTypes = {
 		value: PropTypes.string,
@@ -38,3 +37,7 @@ class DescriptionInput extends React.Component {
 		);
 	}
 }
+
+export default decorate(DescriptionInput, [
+	Store.monitor({description: 'value', 'setDescription': 'onChange', descriptionError: 'error', readOnly: 'readOnly'})
+]);

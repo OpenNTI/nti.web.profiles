@@ -1,6 +1,6 @@
 import {Stores, Interfaces} from '@nti/lib-store';
 import {getAppUserScopedStorage} from '@nti/web-client';
-import {Array as arr} from '@nti/lib-commons';
+import {Array as arr, decorate} from '@nti/lib-commons';
 
 import {Grid} from '../Constants';
 
@@ -53,8 +53,6 @@ function Storage () {
 	};
 }
 
-export default
-@Interfaces.Stateful('nti-community-activity-channel', ['sortOn', 'layout'], Storage())
 class CommunityActivityChannelStore extends Stores.BoundStore {
 	load () {
 		//if nothing changed, don't do anything
@@ -99,3 +97,7 @@ class CommunityActivityChannelStore extends Stores.BoundStore {
 		this.set({layout});
 	}
 }
+
+export default decorate(CommunityActivityChannelStore, [
+	Interfaces.Stateful('nti-community-activity-channel', ['sortOn', 'layout'], Storage()),
+]);

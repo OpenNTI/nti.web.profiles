@@ -1,17 +1,13 @@
 import './Messages.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
+import {decorate} from '@nti/lib-commons';
 
 import {ensureArray as a} from '../../../util';
 import {Store, ERROR, FIELD_ERRORS} from '../Store';
 
 import getMessages from './factories';
 
-export default
-@Store.connect({
-	[ERROR]: 'error',
-	[FIELD_ERRORS]: 'fieldErrors'
-})
 class Messages extends React.Component {
 
 	static propTypes = {
@@ -34,3 +30,10 @@ class Messages extends React.Component {
 			);
 	}
 }
+
+export default decorate(Messages, [
+	Store.connect({
+		[ERROR]: 'error',
+		[FIELD_ERRORS]: 'fieldErrors'
+	})
+]);

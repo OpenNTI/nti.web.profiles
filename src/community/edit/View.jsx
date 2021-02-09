@@ -1,13 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+import {decorate} from '@nti/lib-commons';
 import {Loading, Error} from '@nti/web-commons';
 
 import Store from './Store';
 import Form from './form';
 
-export default
-@Store.connect(['loading', 'error'])
 class CommunityEditor extends React.Component {
 	static deriveBindingFromProps (props) {
 		return {
@@ -41,3 +40,8 @@ class CommunityEditor extends React.Component {
 	}
 
 }
+
+
+export default decorate(CommunityEditor, [
+	Store.connect(['loading', 'error'])
+]);

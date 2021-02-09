@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {decorate} from '@nti/lib-commons';
 
 import ConfirmExit from './ConfirmExit';
 import Form from './Form';
@@ -10,11 +11,6 @@ import {
 	FIELD_GROUPS,
 } from './Store';
 
-export default
-@Store.connect({
-	[LOADED]: 'loaded',
-	[FIELD_GROUPS]: 'fieldGroups',
-})
 class View extends React.PureComponent {
 
 	static propTypes = {
@@ -52,3 +48,10 @@ class View extends React.PureComponent {
 		);
 	}
 }
+
+export default decorate(View, [
+	Store.connect({
+		[LOADED]: 'loaded',
+		[FIELD_GROUPS]: 'fieldGroups',
+	})
+]);

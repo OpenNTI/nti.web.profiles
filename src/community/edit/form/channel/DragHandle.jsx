@@ -1,14 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
+import {decorate} from '@nti/lib-commons';
 
 import Styles from './Style.css';
 import Store from './Store';
 
 const cx = classnames.bind(Styles);
 
-export default
-@Store.monitor(['pinned'])
 class DragHandle extends React.Component {
 	static propTypes = {
 		connect: PropTypes.func.isRequired,
@@ -26,3 +25,7 @@ class DragHandle extends React.Component {
 		);
 	}
 }
+
+export default decorate(DragHandle, [
+	Store.monitor(['pinned'])
+]);

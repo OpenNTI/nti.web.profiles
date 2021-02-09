@@ -1,6 +1,4 @@
-import './ConfirmSchemaChanges.scss';
 import React from 'react';
-import PropTypes from 'prop-types';
 import {scoped} from '@nti/lib-locale';
 import {DialogButtons, Prompt} from '@nti/web-commons';
 
@@ -10,6 +8,22 @@ import {
 	FIELD_GROUPS,
 	SCHEMA_CHANGES
 } from './Store';
+
+const styles = css`
+	.dialog :global(.modal-content) {
+		width: 100%;
+	}
+
+	.confirmation {
+		width: 100%;
+		max-width: 640px;
+		background: white;
+
+		> header {
+			padding: 2rem;
+		}
+	}
+`;
 
 const t = scoped('nti-profiles.user.edit.schema-change-confirmation', {
 	message: {
@@ -40,46 +54,38 @@ export default function confirm (store = Store.getStore()) {
 					onContinue={dismiss(resolve)}
 					onCancel={dismiss(reject)}
 				/>,
-				{className: 'nti-profile-schema-change-confirmation-dialog'}
+				{className: styles.dialog}
 			);
 		});
 }
 
 
-@Store.connect({
-	[FIELD_GROUPS]: 'fieldGroups',
-})
-class FieldChangesDialog extends React.Component {
 
-	static propTypes = {
-		fieldGroups: PropTypes.object.isRequired,
-		onContinue: PropTypes.func.isRequired,
-		onCancel: PropTypes.func.isRequired
-	}
+function FieldChangesDialog ({onContinue, onCancel}) {
+	const {
+		[FIELD_GROUPS]: fieldGroups,
+	} = Store.useValue();
 
-	render () {
-		const {fieldGroups, onContinue, onCancel} = this.props;
-		const count = Object.entries(fieldGroups).reduce((total, [group, fields]) => total + Object.keys(fields || {}).length, 0);
+	const count = Object.entries(fieldGroups).reduce((total, [group, fields]) => total + Object.keys(fields || {}).length, 0);
 
-		return (
-			<div className="schema-change-confirmation">
-				<header>
-					<h3>{t('message', {count})}</h3>
-				</header>
-				<Form formId="schema-change-confirmation-form" fieldGroups={fieldGroups}/>
-				<DialogButtons
-					buttons={[
-						{
-							label: 'Cancel',
-							onClick: onCancel,
-						},
-						{
-							label: 'Continue',
-							onClick: onContinue,
-						}
-					]}
-				/>
-			</div>
-		);
-	}
+	return (
+		<div className={styles.confirmation}>
+			<header>
+				<h3>{t('message', {count})}</h3>
+			</header>
+			<Form formId="schema-change-confirmation-form" fieldGroups={fieldGroups}/>
+			<DialogButtons
+				buttons={[
+					{
+						label: 'Cancel',
+						onClick: onCancel,
+					},
+					{
+						label: 'Continue',
+						onClick: onContinue,
+					}
+				]}
+			/>
+		</div>
+	);
 }

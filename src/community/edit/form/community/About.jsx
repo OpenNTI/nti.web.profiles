@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
+import {decorate} from '@nti/lib-commons';
 import {scoped} from '@nti/lib-locale';
 import {Input} from '@nti/web-commons';
 
@@ -15,8 +16,6 @@ const t = scoped('nti-profiles.community.edit.form.community.about', {
 	placeholder: 'Community Description...'
 });
 
-export default
-@Store.monitor({about: 'value', setAbout: 'onChange', aboutError: 'error'})
 class AboutInput extends React.Component {
 	static propTypes = {
 		value: PropTypes.string,
@@ -49,3 +48,7 @@ class AboutInput extends React.Component {
 		);
 	}
 }
+
+export default decorate(AboutInput, [
+	Store.monitor({about: 'value', setAbout: 'onChange', aboutError: 'error'})
+]);

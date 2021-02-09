@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
+import {decorate} from '@nti/lib-commons';
 import {scoped} from '@nti/lib-locale';
 import {Text, DialogButtons, Loading, Prompt} from '@nti/web-commons';
 
@@ -29,8 +30,6 @@ function getButtonLabel (toAdd) {
 	return t('addMembers', {memberCount: (toAdd || []).length});
 }
 
-export default
-@Store.monitor(['community', 'pending', 'canAddMembers', 'addPendingMembers', 'setPendingMembers', 'adding'])
 class AddMembers extends React.Component {
 	static propTypes = {
 		adding: PropTypes.bool,
@@ -67,7 +66,7 @@ class AddMembers extends React.Component {
 		if (setPendingMembers) {
 			setPendingMembers([]);
 		}
-	} 
+	}
 
 	render () {
 		const {canAddMembers, adding, pending, setPendingMembers} = this.props;
@@ -90,3 +89,8 @@ class AddMembers extends React.Component {
 		);
 	}
 }
+
+
+export default decorate(AddMembers, [
+	Store.monitor(['community', 'pending', 'canAddMembers', 'addPendingMembers', 'setPendingMembers', 'adding'])
+]);

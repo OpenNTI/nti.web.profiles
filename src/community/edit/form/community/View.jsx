@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
+import {decorate} from '@nti/lib-commons';
 
 import FormStore from '../../Store.js';
 import {Delete} from '../../inputs';
@@ -13,9 +14,6 @@ import AutoSubscribe from './AutoSubscribe';
 
 const cx = classnames.bind(Styles);
 
-export default
-@FormStore.monitor(['register', 'unregister'])
-@CommunityStore.connect()
 class CommunityEditFormCommunityFields extends React.Component {
 	static deriveBindingFromProps (props) {
 		return {
@@ -43,3 +41,8 @@ class CommunityEditFormCommunityFields extends React.Component {
 		);
 	}
 }
+
+export default decorate(CommunityEditFormCommunityFields, [
+	FormStore.monitor(['register', 'unregister']),
+	CommunityStore.connect(),
+]);

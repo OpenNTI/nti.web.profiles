@@ -2,6 +2,7 @@ import './FilterMenu.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Prompt, Checkbox} from '@nti/web-commons';
+import {decorate} from '@nti/lib-commons';
 import {scoped} from '@nti/lib-locale';
 import cx from 'classnames';
 
@@ -25,13 +26,7 @@ const DATE_FILTERS = {
 	CUSTOM_RANGE: 'customRange'
 };
 
-export default
-@Store.connect({
-	loading: 'loading',
-	dateFilter: 'dateFilter',
-	typeFilter: 'typeFilter',
-	availableTypes: 'availableTypes'
-}) class FilterMenu extends React.Component {
+class FilterMenu extends React.Component {
 	static propTypes = {
 		store: PropTypes.object.isRequired,
 		dateFilter: PropTypes.object,
@@ -132,3 +127,13 @@ export default
 		);
 	}
 }
+
+
+export default decorate(FilterMenu, [
+	Store.connect({
+		loading: 'loading',
+		dateFilter: 'dateFilter',
+		typeFilter: 'typeFilter',
+		availableTypes: 'availableTypes'
+	})
+]);

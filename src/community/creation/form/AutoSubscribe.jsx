@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
+import {decorate} from '@nti/lib-commons';
 import {scoped} from '@nti/lib-locale';
 import {Input, Text, Errors} from '@nti/web-commons';
 
@@ -14,8 +15,6 @@ const t = scoped('nti-profiles.community.edit.form.AutoSubscribe', {
 	description: 'When a new user creates an account, automatically add them to this community.'
 });
 
-export default
-@Store.monitor({autoSubscribe: 'value', setAutoSubscribe: 'onChange', autoSubscribeError: 'error'})
 class AutoSubscribe extends React.Component {
 	static propTypes = {
 		value: PropTypes.bool,
@@ -42,3 +41,8 @@ class AutoSubscribe extends React.Component {
 		);
 	}
 }
+
+
+export default decorate(AutoSubscribe, [
+	Store.monitor({autoSubscribe: 'value', setAutoSubscribe: 'onChange', autoSubscribeError: 'error'})
+]);

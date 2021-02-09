@@ -2,14 +2,10 @@ import './View.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+import {decorate} from '@nti/lib-commons';
 
 import Store from '../../Store';
 
-export default
-@Store.connect({
-	loading: 'loading',
-	aggregateItems: 'aggregateItems'
-})
 class AggregateTranscriptTable extends React.Component {
 	static propTypes = {
 		entity: PropTypes.object,
@@ -61,3 +57,10 @@ class AggregateTranscriptTable extends React.Component {
 		);
 	}
 }
+
+export default decorate(AggregateTranscriptTable, [
+	Store.connect({
+		loading: 'loading',
+		aggregateItems: 'aggregateItems'
+	})
+]);

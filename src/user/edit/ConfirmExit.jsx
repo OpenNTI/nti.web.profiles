@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Prompt as RoutePrompt} from '@nti/web-routing';
+import {decorate} from '@nti/lib-commons';
 import {Prompt} from '@nti/web-commons';
 import {scoped} from '@nti/lib-locale';
 
@@ -12,10 +13,6 @@ const t = scoped('nti-profiles.user.edit.confirm-exit', {
 	stay: 'Stay'
 });
 
-export default
-@Store.connect({
-	[HAS_UNSAVED_CHANGES]: 'hasUnsavedChanges',
-})
 class ConfirmExit extends React.PureComponent {
 
 	static propTypes = {
@@ -44,3 +41,9 @@ class ConfirmExit extends React.PureComponent {
 		);
 	}
 }
+
+export default decorate(ConfirmExit, [
+	Store.connect({
+		[HAS_UNSAVED_CHANGES]: 'hasUnsavedChanges',
+	})
+]);

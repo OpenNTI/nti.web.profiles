@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
+import {decorate} from '@nti/lib-commons';
 import {scoped} from '@nti/lib-locale';
 import {Text, Button, Flyout} from '@nti/web-commons';
 
@@ -22,8 +23,6 @@ const t = scoped('nti-profiles.community.view.members.components.header.Label', 
 	removeAllMembers: 'Remove All Members'
 });
 
-export default
-@Store.monitor(['selected', 'community', 'canRemoveMembers', 'removeAllMembers', 'searchTerm'])
 class CommunityMembersHeaderLabel extends React.Component {
 	static propTypes = {
 		selected: PropTypes.object,
@@ -103,3 +102,7 @@ class CommunityMembersHeaderLabel extends React.Component {
 	}
 }
 
+
+export default decorate(CommunityMembersHeaderLabel, [
+	Store.monitor(['selected', 'community', 'canRemoveMembers', 'removeAllMembers', 'searchTerm'])
+]);

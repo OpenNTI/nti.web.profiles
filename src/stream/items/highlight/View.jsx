@@ -8,8 +8,7 @@ import { LinkTo } from '@nti/web-routing';
 import Registry from '../Registry';
 import Breadcrumb from '../../breadcrumb';
 
-@Registry.register('application/vnd.nextthought.highlight')
-class Highlight extends React.Component {
+export default class Highlight extends React.Component {
 	static propTypes = {
 		item: PropTypes.shape({
 			getCreatedTime: PropTypes.func.isRequired,
@@ -61,4 +60,4 @@ class Highlight extends React.Component {
 	}
 }
 
-export default Highlight;
+Registry.register('application/vnd.nextthought.highlight')(Highlight);

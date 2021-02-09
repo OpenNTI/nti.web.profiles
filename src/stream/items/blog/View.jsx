@@ -9,9 +9,7 @@ import Registry from '../Registry';
 
 import Meta from './Meta';
 
-export default
-@Registry.register('application/vnd.nextthought.forums.personalblogentry')
-class BlogItem extends React.Component {
+export default class BlogItem extends React.Component {
 
 	static propTypes = {
 		item: PropTypes.object
@@ -31,3 +29,5 @@ class BlogItem extends React.Component {
 		);
 	}
 }
+
+Registry.register('application/vnd.nextthought.forums.personalblogentry')(BlogItem);

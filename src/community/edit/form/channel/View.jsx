@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
+import {decorate} from '@nti/lib-commons';
 
 import ChannelListStore from '../channel-list/Store';
 
@@ -14,9 +15,6 @@ import Delete from './Delete';
 const cx = classnames.bind(Styles);
 const block = e => e.stopPropagation();
 
-export default
-@ChannelListStore.monitor(['register', 'unregister'])
-@ChannelStore.connect(['deleted', 'readOnly'])
 class ChannelFields extends React.Component {
 	static deriveBindingFromProps (props) {
 		return {
@@ -72,3 +70,9 @@ class ChannelFields extends React.Component {
 		);
 	}
 }
+
+
+export default decorate(ChannelFields, [
+	ChannelListStore.monitor(['register', 'unregister']),
+	ChannelStore.connect(['deleted', 'readOnly']),
+]);

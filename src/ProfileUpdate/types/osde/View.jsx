@@ -58,8 +58,8 @@ function getFieldOrder (fields, type) {
 	];
 }
 
-@Registry.register(types)
-class ProfileUpdateOSDEProfile extends React.Component {
+
+export default class ProfileUpdateOSDEProfile extends React.Component {
 	static propTypes = {
 		fields: PropTypes.array,
 		values: PropTypes.object,
@@ -95,4 +95,5 @@ class ProfileUpdateOSDEProfile extends React.Component {
 	}
 }
 
-export default ProfileUpdateOSDEProfile;
+Registry.register(types)(ProfileUpdateOSDEProfile);
+

@@ -7,8 +7,7 @@ import Registry from '../Registry';
 
 import Detail from './Detail';
 
-@Registry.register('application/vnd.nextthought.note')
-class Note extends React.Component {
+export default class Note extends React.Component {
 	static propTypes = {
 		item: PropTypes.object.isRequired,
 		context: PropTypes.object
@@ -26,4 +25,4 @@ class Note extends React.Component {
 	}
 }
 
-export default Note;
+Registry.register('application/vnd.nextthought.note')(Note);

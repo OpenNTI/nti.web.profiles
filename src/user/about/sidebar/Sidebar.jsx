@@ -1,16 +1,13 @@
 import './Sidebar.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
+import {decorate} from '@nti/lib-commons';
 import {Connectors} from '@nti/lib-store';
 
 import Memberships from '../../memberships';
 
 import SuggestedContacts from './suggestedcontacts';
 
-export default
-@Connectors.Any.connect({
-	user: 'user'
-})
 class Sidebar extends React.Component {
 
 	static propTypes = {
@@ -28,3 +25,10 @@ class Sidebar extends React.Component {
 		);
 	}
 }
+
+
+export default decorate(Sidebar, [
+	Connectors.Any.connect({
+		user: 'user'
+	})
+]);

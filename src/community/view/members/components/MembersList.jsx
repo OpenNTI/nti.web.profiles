@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
+import {decorate} from '@nti/lib-commons';
 import {scoped} from '@nti/lib-locale';
 import {Errors, EmptyState, Loading} from '@nti/web-commons';
 
@@ -17,8 +18,6 @@ const t = scoped('nti-profiles.community.view.members.components.MembersList', {
 	}
 });
 
-export default
-@Store.monitor(['loading', 'items', 'error', 'searchTerm', 'searching'])
 class CommunityMemberShipList extends React.Component {
 	static propTypes = {
 		loading: PropTypes.bool,
@@ -72,3 +71,7 @@ class CommunityMemberShipList extends React.Component {
 		);
 	}
 }
+
+export default decorate(CommunityMemberShipList, [
+	Store.monitor(['loading', 'items', 'error', 'searchTerm', 'searching'])
+]);

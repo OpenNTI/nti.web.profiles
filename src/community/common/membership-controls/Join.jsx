@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
+import {decorate} from '@nti/lib-commons';
 import {scoped} from '@nti/lib-locale';
 import {Button, Flyout, Text, Loading, Errors} from '@nti/web-commons';
 
@@ -13,8 +14,6 @@ const t = scoped('nti-profiles.commuunity.common.membership-controls.Join', {
 	leave: 'Leave Community'
 });
 
-export default
-@Store.connect(['joined', 'canJoin', 'canLeave', 'join', 'leave', 'joining', 'leaving', 'error'])
 class CommunityJoinButton extends React.Component {
 	static deriveBindingFromProps (props) {
 		return {
@@ -91,7 +90,7 @@ class CommunityJoinButton extends React.Component {
 			>
 				{this.renderBody()}
 			</Flyout.Triggered>
-		);	
+		);
 	}
 
 
@@ -135,3 +134,7 @@ class CommunityJoinButton extends React.Component {
 		}
 	}
 }
+
+export default decorate(CommunityJoinButton, [
+	Store.connect(['joined', 'canJoin', 'canLeave', 'join', 'leave', 'joining', 'leaving', 'error'])
+]);

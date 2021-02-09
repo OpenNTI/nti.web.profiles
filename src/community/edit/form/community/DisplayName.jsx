@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
+import {decorate} from '@nti/lib-commons';
 import {scoped} from '@nti/lib-locale';
 import {Input} from '@nti/web-commons';
 
@@ -13,8 +14,6 @@ const t = scoped('nti-profiles.community.edit.form.community.DisplayName', {
 	placeholder: 'Community Title...'
 });
 
-export default
-@Store.monitor({'displayName': 'value', 'setDisplayName': 'onChange', 'displayNameError': 'error'})
 class DisplayNameInput extends React.Component {
 	static propTypes = {
 		title: PropTypes.string,
@@ -36,6 +35,11 @@ class DisplayNameInput extends React.Component {
 					readOnly={!!title}
 				/>
 			</Input.Label>
-		); 
+		);
 	}
 }
+
+
+export default decorate(DisplayNameInput, [
+	Store.monitor({'displayName': 'value', 'setDisplayName': 'onChange', 'displayNameError': 'error'})
+]);

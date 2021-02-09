@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
+import {decorate} from '@nti/lib-commons';
 import {scoped} from '@nti/lib-locale';
 import {Text, Loading, EmptyState, Errors } from '@nti/web-commons';
 
@@ -15,8 +16,6 @@ const t = scoped('nti-profiles.community.creation.Modal', {
 	saving: 'Saving...'
 });
 
-export default
-@Store.connect(['loading', 'available', 'cancel', 'saving', 'error'])
 class CommunityCreationModal extends React.Component {
 	static deriveBindingFromProps (props) {
 		return {
@@ -79,8 +78,13 @@ class CommunityCreationModal extends React.Component {
 						<Text.Base className={cx('message')}>{t('saving')}</Text.Base>
 						<Loading.Spinner />
 					</div>
-				)}	
+				)}
 			</div>
 		);
 	}
 }
+
+
+export default decorate(CommunityCreationModal, [
+	Store.connect(['loading', 'available', 'cancel', 'saving', 'error'])
+]);

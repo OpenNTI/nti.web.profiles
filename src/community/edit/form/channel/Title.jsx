@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
+import {decorate} from '@nti/lib-commons';
 import {scoped} from '@nti/lib-locale';
 import {Input} from '@nti/web-commons';
 
@@ -12,8 +13,6 @@ const t = scoped('nti-profiles.community.edit.form.channel.title', {
 	placeholder: 'Channel Title...'
 });
 
-export default
-@Store.monitor({title: 'value', 'setTitle': 'onChange', 'titleError': 'error', readOnly: 'readOnly'})
 class TitleInput extends React.Component {
 	static propTypes = {
 		value: PropTypes.string,
@@ -40,3 +39,8 @@ class TitleInput extends React.Component {
 		);
 	}
 }
+
+
+export default decorate(TitleInput, [
+	Store.monitor({title: 'value', 'setTitle': 'onChange', 'titleError': 'error', readOnly: 'readOnly'})
+]);

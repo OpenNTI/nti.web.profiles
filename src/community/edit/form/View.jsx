@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
+import {decorate} from '@nti/lib-commons';
 import {scoped} from '@nti/lib-locale';
 import {DialogButtons, Text, Loading} from '@nti/web-commons';
 
@@ -19,8 +20,6 @@ const t = scoped('nti-profiles.community.edit.form.View', {
 	deleting: 'Deleting...'
 });
 
-export default
-@Store.monitor(['save', 'deleting', 'cancel', 'channelList', 'saving'])
 class CommunityEditForm extends React.Component {
 	static propTypes = {
 		saving: PropTypes.bool,
@@ -77,3 +76,7 @@ class CommunityEditForm extends React.Component {
 		);
 	}
 }
+
+export default decorate(CommunityEditForm, [
+	Store.monitor(['save', 'deleting', 'cancel', 'channelList', 'saving'])
+]);

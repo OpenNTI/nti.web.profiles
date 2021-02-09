@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
+import {decorate} from '@nti/lib-commons';
 import {scoped} from '@nti/lib-locale';
 import {Text, DnD} from '@nti/web-commons';
 
@@ -16,13 +17,6 @@ const t = scoped('nti-profiles.community.edit.form.channel-list.View', {
 	channels: 'Channels'
 });
 
-export default
-@FormStore.monitor(['register', 'unregister'])
-@ChannelListStore.connect([
-	'pinnedChannels',
-	'sortableChannels',
-	'moveChannel'
-])
 class ChannelListField extends React.Component {
 	static deriveBindingFromProps (props) {
 		return {
@@ -108,3 +102,12 @@ class ChannelListField extends React.Component {
 		);
 	}
 }
+
+export default decorate(ChannelListField, [
+	FormStore.monitor(['register', 'unregister']),
+	ChannelListStore.connect([
+		'pinnedChannels',
+		'sortableChannels',
+		'moveChannel'
+	])
+]);

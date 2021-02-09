@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
+import {decorate} from '@nti/lib-commons';
 import {scoped} from '@nti/lib-locale';
 import {Prompt} from '@nti/web-commons';
 
@@ -15,8 +16,6 @@ const t = scoped('nti-profiles.community.edit.forum.channel.Delete', {
 	}
 });
 
-export default
-@Store.monitor(['delete', 'canDelete', 'doNotPromptOnDelete'])
 class DeleteChannel extends React.Component {
 	static propTypes = {
 		delete: PropTypes.func,
@@ -49,3 +48,8 @@ class DeleteChannel extends React.Component {
 		);
 	}
 }
+
+
+export default decorate(DeleteChannel, [
+	Store.monitor(['delete', 'canDelete', 'doNotPromptOnDelete'])
+]);

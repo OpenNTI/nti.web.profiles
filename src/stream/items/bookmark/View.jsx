@@ -11,8 +11,7 @@ import Breadcrumb from '../../breadcrumb';
 
 const logger = Logger.get('content:stream:items:Bookmark');
 
-@Registry.register('application/vnd.nextthought.bookmark')
-class Bookmark extends React.Component {
+export default class Bookmark extends React.Component {
 	static propTypes = {
 		item: PropTypes.shape({
 			creator: PropTypes.string.isRequired,
@@ -76,4 +75,4 @@ class Bookmark extends React.Component {
 	}
 }
 
-export default Bookmark;
+Registry.register('application/vnd.nextthought.bookmark')(Bookmark);

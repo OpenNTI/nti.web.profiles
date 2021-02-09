@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {scoped} from '@nti/lib-locale';
+import {decorate} from '@nti/lib-commons';
 
 import {slugify} from '../../util';
 import {Card} from '../../common';
@@ -18,12 +19,6 @@ const t = scoped('nti-profiles.user.edit.section-titles', {
 });
 
 
-export default
-@Store.connect({
-	[FIELD_GROUPS]: 'fieldGroups',
-	[FORM_ID]: 'formId',
-	[SET_FIELD_ERROR]: 'setError',
-})
 class Form extends React.Component {
 
 	static propTypes = {
@@ -68,3 +63,11 @@ class Form extends React.Component {
 		);
 	}
 }
+
+export default decorate(Form, [
+	Store.connect({
+		[FIELD_GROUPS]: 'fieldGroups',
+		[FORM_ID]: 'formId',
+		[SET_FIELD_ERROR]: 'setError',
+	})
+]);

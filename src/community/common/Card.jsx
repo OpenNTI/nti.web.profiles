@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
+import {decorate} from '@nti/lib-commons';
 import {LinkTo} from '@nti/web-routing';
 import {Text, Image} from '@nti/web-commons';
 
@@ -12,8 +13,6 @@ import Avatar from './Avatar';
 const cx = classnames.bind(Styles);
 const getBackgroundImage = (src) => ({style: {'backgroundImage': `url(${src})`}});
 
-export default
-@ResolveEntityProp('community')
 class CommunityCard extends React.Component {
 	static propTypes = {
 		className: PropTypes.string,
@@ -40,3 +39,7 @@ class CommunityCard extends React.Component {
 		);
 	}
 }
+
+export default decorate(CommunityCard, [
+	ResolveEntityProp('community')
+]);

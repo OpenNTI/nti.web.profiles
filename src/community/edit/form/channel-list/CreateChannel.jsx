@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
+import {decorate} from '@nti/lib-commons';
 import {scoped} from '@nti/lib-locale';
 import {Text} from '@nti/web-commons';
 
@@ -9,11 +10,9 @@ import Store from './Store';
 
 const cx = classnames.bind(Styles);
 const t = scoped('nti-profiles.community.edit.form.channel-list.CreateChannel', {
-	createChannel: 'Create a New Channel'	
+	createChannel: 'Create a New Channel'
 });
 
-export default
-@Store.monitor(['canCreateChannel', 'createChannel'])
 class CreateChannel extends React.Component {
 	static propTypes = {
 		canCreateChannel: PropTypes.bool,
@@ -49,3 +48,8 @@ class CreateChannel extends React.Component {
 		);
 	}
 }
+
+
+export default decorate(CreateChannel, [
+	Store.monitor(['canCreateChannel', 'createChannel'])
+]);

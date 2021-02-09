@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 import {decodeFromURI} from '@nti/lib-ntiids';
+import {decorate} from '@nti/lib-commons';
 import {Layouts, Prompt} from '@nti/web-commons';
 import {RedirectTo} from '@nti/web-routing';
 
@@ -19,8 +20,6 @@ function isValidTopicId (topicId) {
 	return topicId && topicId !== 'object';
 }
 
-export default
-@Store.connect(['notFound', 'channel', 'sortOn', 'setSortOn', 'layout', 'setLayout', 'availableSorts'])
 class CommunityChannel extends React.Component {
 	static deriveBindingFromProps (props) {
 		return {
@@ -110,3 +109,8 @@ class CommunityChannel extends React.Component {
 		);
 	}
 }
+
+
+export default decorate(CommunityChannel, [
+	Store.connect(['notFound', 'channel', 'sortOn', 'setSortOn', 'layout', 'setLayout', 'availableSorts'])
+]);

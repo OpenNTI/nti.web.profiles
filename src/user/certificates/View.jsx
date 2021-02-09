@@ -1,6 +1,7 @@
 import './View.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
+import {decorate} from '@nti/lib-commons';
 import {scoped} from '@nti/lib-locale';
 import {Loading} from '@nti/web-commons';
 
@@ -19,12 +20,7 @@ const t = scoped('nti-web-profile.certificates.View', {
 	noneCompleted: 'No completed courses'
 });
 
-export default
-@Store.connect({
-	loading: 'loading',
-	inProgressCourses: 'inProgressCourses',
-	completedCourses: 'completedCourses'
-})
+
 class ProfileCertificatesView extends React.Component {
 	static hasData (user) { return user.hasLink('Certificate'); }
 
@@ -90,3 +86,11 @@ class ProfileCertificatesView extends React.Component {
 		);
 	}
 }
+
+export default decorate(ProfileCertificatesView, [
+	Store.connect({
+		loading: 'loading',
+		inProgressCourses: 'inProgressCourses',
+		completedCourses: 'completedCourses'
+	})
+]);

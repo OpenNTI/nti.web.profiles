@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
+import {decorate} from '@nti/lib-commons';
 import {scoped} from '@nti/lib-locale';
 import {Checkbox, Text, Flyout, Button} from '@nti/web-commons';
 import {LinkTo} from '@nti/web-routing';
@@ -16,8 +17,6 @@ const t = scoped('nti-profiles.community.view.members.components.Member', {
 	remove: 'Remove'
 });
 
-export default
-@Store.monitor(['selected', 'toggleMemberSelected', 'removeMember', 'canRemoveMembers'])
 class CommunityMember extends React.Component {
 	static propTypes = {
 		member: PropTypes.object,
@@ -97,3 +96,7 @@ class CommunityMember extends React.Component {
 		);
 	}
 }
+
+export default decorate(CommunityMember, [
+	Store.monitor(['selected', 'toggleMemberSelected', 'removeMember', 'canRemoveMembers'])
+]);

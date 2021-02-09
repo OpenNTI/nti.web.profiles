@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Logger from '@nti/util-logger';
 import {Connectors} from '@nti/lib-store';
 import {scoped} from '@nti/lib-locale';
+import {decorate} from '@nti/lib-commons';
 
 import {SET_FIELD_VALUE} from '../Store';
 
@@ -72,10 +73,6 @@ export default function getWidget (schema) {
 		return CACHE[key];
 	}
 
-	@Connectors.Any.connect({
-		[SET_FIELD_VALUE]: 'setValue',
-		[name]: 'value',
-	})
 	class Input extends React.Component {
 		static propTypes = {
 			input: PropTypes.object,
@@ -117,5 +114,10 @@ export default function getWidget (schema) {
 		}
 	}
 
-	return CACHE[key] = Input;
+	return CACHE[key] = decorate(Input, [
+		Connectors.Any.connect({
+			[SET_FIELD_VALUE]: 'setValue',
+			[name]: 'value',
+		})
+	]);
 }

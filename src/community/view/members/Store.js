@@ -1,5 +1,6 @@
 import {Stores, Mixins} from '@nti/lib-store';
 import {mixin} from '@nti/lib-decorators';
+import {decorate} from '@nti/lib-commons';
 
 const BatchSize = 20;
 
@@ -27,8 +28,6 @@ function dedup (items) {
 	return unique;
 }
 
-export default
-@mixin(Mixins.Searchable)
 class CommunityMembersStore extends Stores.BoundStore {
 	constructor () {
 		super();
@@ -157,11 +156,11 @@ class CommunityMembersStore extends Stores.BoundStore {
 				this.loadNextPage();
 				return;
 			}
-			
+
 			const items = this.get('items');
 			const {Removed} = resp;
 			const removedMap = Removed.reduce((acc, id) => ({...acc, [id]: true}), {});
-			
+
 			this.setImmediate({
 				items: items.filter(item => !removedMap[item.getID()]),
 				selected: {},
@@ -186,7 +185,7 @@ class CommunityMembersStore extends Stores.BoundStore {
 	}
 
 	removeMember (member) {
-		return this.removeMemberIds(member.getID ? member.getID() : member);	
+		return this.removeMemberIds(member.getID ? member.getID() : member);
 	}
 
 	setPendingMembers (pending) {
@@ -255,3 +254,7 @@ class CommunityMembersStore extends Stores.BoundStore {
 
 	}
 }
+
+export default decorate(CommunityMembersStore, [
+	mixin(Mixins.Searchable),
+]);

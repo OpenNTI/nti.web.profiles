@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
+import {decorate} from '@nti/lib-commons';
 import {scoped} from '@nti/lib-locale';
 import {User, Text} from '@nti/web-commons';
 
@@ -13,8 +14,6 @@ const t = scoped('nti-profiles.community.view.members.components.Selection', {
 	clear: 'Clear Selection'
 });
 
-export default
-@Store.monitor(['selected', 'clearSelected'])
 class CommunityMembersHeaderSelection extends React.Component {
 	static propTypes = {
 		selected: PropTypes.object,
@@ -46,3 +45,7 @@ class CommunityMembersHeaderSelection extends React.Component {
 		);
 	}
 }
+
+export default decorate(CommunityMembersHeaderSelection, [
+	Store.monitor(['selected', 'clearSelected'])
+]);

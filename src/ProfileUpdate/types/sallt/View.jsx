@@ -21,8 +21,7 @@ const FIELD_TO_GROUP = {
 	'five_q_response': 'personality'
 };
 
-@Registry.register(type)
-class ProfileUpdateSalltProfile extends React.Component {
+export default class ProfileUpdateSalltProfile extends React.Component {
 	static propTypes = {
 		fields: PropTypes.array,
 	}
@@ -48,4 +47,4 @@ class ProfileUpdateSalltProfile extends React.Component {
 	}
 }
 
-export default ProfileUpdateSalltProfile;
+Registry.register(type)(ProfileUpdateSalltProfile);

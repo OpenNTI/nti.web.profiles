@@ -2,6 +2,7 @@ import './View.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+import {decorate} from '@nti/lib-commons';
 import {Loading, Input, EmptyState} from '@nti/web-commons';
 import {scoped} from '@nti/lib-locale';
 
@@ -19,18 +20,6 @@ const t = scoped('nti-web-profiles.Selector', {
 	loadMore: 'Load More'
 });
 
-export default
-@Store.connect([
-	'loading',
-	'error',
-	'profiles',
-	'searchTerm',
-	'updateSearchTerm',
-	'hasMore',
-	'loadingMore',
-	'loadMore',
-	'errorLoadingMore'
-])
 class ProfileSelector extends React.Component {
 	static deriveBindingFromProps (props) {
 		return props.collection || 'user';
@@ -167,3 +156,17 @@ class ProfileSelector extends React.Component {
 		);
 	}
 }
+
+export default decorate(ProfileSelector, [
+	Store.connect([
+		'loading',
+		'error',
+		'profiles',
+		'searchTerm',
+		'updateSearchTerm',
+		'hasMore',
+		'loadingMore',
+		'loadMore',
+		'errorLoadingMore'
+	])
+]);

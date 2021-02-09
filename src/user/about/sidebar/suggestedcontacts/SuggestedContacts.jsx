@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {decorate} from '@nti/lib-commons';
 import {scoped} from '@nti/lib-locale';
 
 import {EntityList} from '../../../../common';
@@ -12,11 +13,6 @@ const t = scoped(`${LOCALE_PATHS.ROOT}.suggestedContacts`, {
 	title: 'You May Know…'
 });
 
-export default
-@Store.connect({
-	[LOADING]: 'loading',
-	[SUGGESTIONS]: 'suggestions'
-})
 class SuggestedContacts extends React.Component {
 
 	static propTypes = {
@@ -35,3 +31,10 @@ class SuggestedContacts extends React.Component {
 		);
 	}
 }
+
+export default decorate(SuggestedContacts, [
+	Store.connect({
+		[LOADING]: 'loading',
+		[SUGGESTIONS]: 'suggestions'
+	})
+]);

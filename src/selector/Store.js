@@ -1,6 +1,7 @@
 import {Stores, Mixins} from '@nti/lib-store';
 import {getService} from '@nti/web-client';
 import {mixin} from '@nti/lib-decorators';
+import {decorate} from '@nti/lib-commons';
 
 const BATCH_SIZE = 20;
 
@@ -23,8 +24,6 @@ async function loadSearch (term) {
 	return service.getBatch(workspace.getLink('SiteUsers'), {batchSize: BATCH_SIZE, batchStart: 0, searchTerm: term});
 }
 
-export default
-@mixin(Mixins.Searchable)
 class ProfileSelectorStore extends Stores.BoundStore {
 	constructor () {
 		super();
@@ -116,3 +115,7 @@ class ProfileSelectorStore extends Stores.BoundStore {
 		}
 	}
 }
+
+export default decorate(ProfileSelectorStore, [
+	mixin(Mixins.Searchable),
+]);
