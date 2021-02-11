@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { LinkTo } from '@nti/web-routing';
-import { Badge, Errors, Loading, Theme } from '@nti/web-commons';
+import { Badge, Errors, Loading } from '@nti/web-commons';
 
 import {Container, IconContainer, ExpandButton, ContactsButton} from './parts/collapsed';
 import Store from './Store';
@@ -29,12 +29,10 @@ export default function CollapsedPanel ( {toggle:expand, children} ) {
 		error,
 	} = Store.useValue();
 
-	const theme = Theme.useThemeProperty('icon');
-
 	const [hiddenCountsSum, setHiddenCountsSum] = React.useState(0);
 
 	return (
-		<Container theme={theme}>
+		<Container>
 			{React.Children.map(children, child => {
 				return (
 					<>
