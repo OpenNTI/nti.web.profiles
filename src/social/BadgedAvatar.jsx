@@ -6,16 +6,16 @@ import Store from './Store';
 import { AvatarContainer, PresenceCircle } from './parts';
 import ChatWindowView from './ChatWindow';
 
-const MaskedAvatar = styled(Avatar)`
-	-webkit-mask-image: radial-gradient( circle, transparent 0, transparent 5px, black 6px );
-   	-webkit-mask-position: right calc(-15px - var(--badge-offset-x, 0px)) bottom calc(-15px - var(--badge-offset-y, 0px));
-	.presence-available {
+const BorderedAvatar = styled(Avatar)`
+	&.presence-available {
 		border: 2px solid var(--presence-available);
 	}
-	.presence-away {
+
+	&.presence-away {
 		border: 2px solid var(--presence-away);
 	}
-	.presence-dnd {
+
+	&.presence-dnd {
 		border: 2px solid var(--presence-dnd);
 	}
 `;
@@ -40,33 +40,34 @@ export default function BadgedAvatar ( { entity, presence, expanded } ) {
 		clearUnreadCount,
 		selectedUser,
 		deselectUser,
-		selectUser
+		selectUser,
+		setChatWindow,
+		chatWindow,
 	} = Store.useValue();
-
-	const [window, setWindow] = React.useState(false);
 
 	const ChatWindow = ChatWindowView.getChatWindow();
 
 	const selected = selectedUser === entity;
 
 	const handleClick = () => {
-		setWindow(!window);
+		setChatWindow(!chatWindow);
+
 		clearUnreadCount(entity);
 		selected ? deselectUser() : selectUser(entity);
 	};
 
 	const handleClose = () => {
-		setWindow(false);
-		selectedUser === entity && deselectUser();
+		setChatWindow(false);
+		selected && deselectUser();
 	};
 
 	return (
 		<AvatarContainer onClick={handleClick}>
-			<Badge badge={unreadCount ? unreadCount[entity] : 0} position={Badge.POSITIONS.TOP_LEFT} {...Badge.offset(5, 4)}>
-				<MaskedAvatar entity={entity} presence={selected ? presence : ''}/>
+			<Badge badge={unreadCount ? unreadCount[entity] : 0} position={Badge.POSITIONS.TOP_LEFT} {...Badge.offset(5, 4)} >
+				<BorderedAvatar entity={entity} presence={selected ? presence : ''}/>
 			</Badge>
 			<PresenceCircle presence={presence}/>
-			{ window && <ChatWindow onClose={handleClose} entity={entity} visible={window} expanded={expanded}/> }
+			{ chatWindow && <ChatWindow onClose={handleClose} entity={entity} expanded={expanded}/> }
 		</AvatarContainer>
 	);
 }
