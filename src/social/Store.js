@@ -92,6 +92,16 @@ export default class Store extends Stores.SimpleStore {
 
 		this.set({ unreadCount });
 	}
+
+	setCalendarWindow (calendarWindow) {
+		this.set({ calendarWindow });
+		calendarWindow && this.set({ chatWindow: false });
+	}
+
+	setChatWindow (chatWindow) {
+		this.set({ chatWindow });
+		chatWindow && this.set({ calendarWindow: false });
+	}
 }
 
 function normalizeActiveUsers (activeUsers) {
