@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
-import {DateIcon} from '@nti/web-calendar';
 
 import Store from './Store';
 import ExpandedPanel from './Expanded';
 import CollapsedPanel from './Collapsed';
+import DateIconContainer from './DateIconContainer';
 
 function View () {
 	const [expanded, setExpanded] = useState(false);
@@ -14,7 +14,7 @@ function View () {
 
 	return (
 		<Cmp toggle={toggleExpanded}>
-			<DateIcon label={'Calendar'}/>
+			<DateIconContainer />
 		</Cmp>
 	);
 }
