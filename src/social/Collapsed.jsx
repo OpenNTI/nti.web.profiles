@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { LinkTo } from '@nti/web-routing';
-import { Badge, Errors, Loading } from '@nti/web-commons';
+import { Badge, Errors, Loading, Tooltip } from '@nti/web-commons';
 
 import {Container, IconContainer, ExpandButton, ContactsButton} from './parts/collapsed';
 import Store from './Store';
@@ -52,12 +52,16 @@ export default function CollapsedPanel ( {toggle:expand, children} ) {
 			<ButtonsContainer>
 				<ExpandContainer>
 					<Badge badge={hiddenCountsSum} position={Badge.POSITIONS.TOP_LEFT} {...Badge.offset(12, 5)}>
-						<ExpandButton onClick={expand} />
+						<Tooltip label="Expand Contacts">
+							<ExpandButton onClick={expand} />
+						</Tooltip>
 					</Badge>
 				</ExpandContainer>
 
 				<LinkTo.Path to="contacts">
-					<ContactsButton />
+					<Tooltip label="Show Contacts">
+						<ContactsButton />
+					</Tooltip>
 				</LinkTo.Path>
 			</ButtonsContainer>
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import {DateIcon} from '@nti/web-calendar';
+import {Tooltip} from '@nti/web-commons';
 
 import CalendarWindowView from './CalendarWindow';
 import Store from './Store';
@@ -24,11 +25,19 @@ export default function DateIconContainer () {
 
 	return (
 		<>
-			<div onClick={handleDateIconClick}>
-				<DateIcon />
-			</div>
-			<div ref={iconRef}/>
-			{calendarWindow && <CalendarWindow onClose={handleCalendarClose} target={iconRef.current} />}
+			<Tooltip label="Calendar">
+				<div onClick={handleDateIconClick}>
+					<DateIcon />
+				</div>
+			</Tooltip>
+
+			<div ref={iconRef} />
+			{calendarWindow && (
+				<CalendarWindow
+					onClose={handleCalendarClose}
+					target={iconRef.current}
+				/>
+			)}
 		</>
 	);
 }
