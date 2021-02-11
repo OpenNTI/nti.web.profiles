@@ -9,7 +9,7 @@ export default styled(User.Presence)`
 	border-radius: 11px;
 	background-color: rgba(49, 49, 49);
 
-	&:after {
+	&::after {
 		width: 7px;
 		height: 7px;
 		border-radius: 90px;
