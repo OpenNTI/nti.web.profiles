@@ -1,4 +1,6 @@
-export default styled('div')`
+import {User} from '@nti/web-commons';
+
+export default styled(User.Presence)`
 	position: absolute;
 	right: 0;
 	bottom: 0;
@@ -17,17 +19,5 @@ export default styled('div')`
 		left: 2px;
 		top: 2px;
 		background: var(--presence-offline);
-	}
-
-	&.presence-available:after {
-		background: var(--presence-available);
-	}
-
-	&.presence-away:after {
-		background: var(--presence-away);
-	}
-
-	&.presence-dnd:after {
-		background: var(--presence-dnd);
 	}
 `;
