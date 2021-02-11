@@ -5,6 +5,7 @@ export default styled('div')`
 	width: 11px;
 	height: 11px;
 	border-radius: 11px;
+	background-color: rgba(49, 49, 49);
 
 	&:after {
 		width: 7px;
