@@ -26,9 +26,7 @@ export default function DateIconContainer () {
 	return (
 		<>
 			<Tooltip label="Calendar">
-				<div onClick={handleDateIconClick}>
-					<DateIcon />
-				</div>
+				<DateIcon onClick={handleDateIconClick}/>
 			</Tooltip>
 
 			<div ref={iconRef} />
