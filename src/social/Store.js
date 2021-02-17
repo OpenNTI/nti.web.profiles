@@ -25,10 +25,14 @@ export default class Store extends Stores.SimpleStore {
 	updatePresence (username, presence) {
 		if (!presence || !username) { return; }
 
-		this.activeUsers = {
-			...this.activeUsers,
-			[username]: presence,
-		};
+		if (presence === 'unavailable') {
+			delete this.activeUsers[username];
+		} else {
+			this.activeUsers = {
+				...this.activeUsers,
+				[username]: presence,
+			};
+		}
 
 		this.set({ activeUsers: this.activeUsers });
 	}
