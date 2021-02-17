@@ -40,7 +40,7 @@ export default class Store extends Stores.SimpleStore {
 	removeContact (username) {
 		const activeUsers = this.get('activeUsers');
 
-		delete activeUsers[username];
+		activeUsers && delete activeUsers[username];
 
 		this.set({ activeUsers });
 	}
