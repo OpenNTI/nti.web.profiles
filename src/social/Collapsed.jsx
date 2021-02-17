@@ -32,7 +32,7 @@ export default function CollapsedPanel ( {toggle:expand, children} ) {
 	const [hiddenCountsSum, setHiddenCountsSum] = React.useState(0);
 
 	return (
-		<Container>
+		<Container data-testid="collapsed-container">
 			{React.Children.map(children, child => {
 				return (
 					<>
@@ -53,7 +53,7 @@ export default function CollapsedPanel ( {toggle:expand, children} ) {
 				<ExpandContainer>
 					<Badge badge={hiddenCountsSum} position={Badge.POSITIONS.TOP_LEFT} {...Badge.offset(12, 5)}>
 						<Tooltip label="Expand Contacts">
-							<ExpandButton onClick={expand} />
+							<ExpandButton onClick={expand} data-testid="expand-button"/>
 						</Tooltip>
 					</Badge>
 				</ExpandContainer>

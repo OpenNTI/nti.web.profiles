@@ -43,7 +43,7 @@ export default function ExpandedPanel ( { toggle:collapse } ) {
 	} = Store.useValue();
 
 	return (
-		<Container>
+		<Container data-testid="expanded-container">
 			<Header onCollapseClick={collapse} />
 
 			<Loading.Placeholder loading={loading} fallback={(<Spinner/>)}>

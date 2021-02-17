@@ -32,7 +32,7 @@ export default function PanelHeader ({ onCollapseClick }) {
 	return (
 		<div className={styles.header}>
 			<Text className={styles.title}>Messenger</Text>
-			<div className={styles.close} onClick={onCollapseClick}><i className="icon-light-x" /></div>
+			<div className={styles.close} onClick={onCollapseClick} data-testid="collapse-button"><i className="icon-light-x" /></div>
 		</div>
 	);
 }
