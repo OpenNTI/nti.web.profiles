@@ -42,6 +42,7 @@ exports[`Bookmark renders correctly 1`] = `
       </div>
       <img
         className="bookmark-icon"
+        onError={[Function]}
         src=""
       />
       <div
