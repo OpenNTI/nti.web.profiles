@@ -1,6 +1,5 @@
 import React from 'react';
-import {DateIcon} from '@nti/web-calendar';
-import {Tooltip} from '@nti/web-commons';
+import {Tooltip, DateIcon} from '@nti/web-commons';
 
 import CalendarWindowView from './CalendarWindow';
 import Store from './Store';
