@@ -1,3 +1,4 @@
+
 import React from 'react';
 import {scoped} from '@nti/lib-locale';
 import {DialogButtons, Prompt} from '@nti/web-commons';
@@ -34,34 +35,8 @@ const t = scoped('nti-profiles.user.edit.schema-change-confirmation', {
 
 const changesWeCareAbout = ['description'];
 
-export default function confirm (store = Store.getStore()) {
-	const getSchemaChanges = store.get(SCHEMA_CHANGES);
-	const changed = getSchemaChanges(changesWeCareAbout);
 
-	return Object.keys(changed).length === 0
-		? Promise.resolve('no changes')
-		: new Promise((resolve, reject) => {
-			let modal;
-
-			const dismiss = fn => () => {
-				modal.dismiss();
-				fn();
-			};
-
-			modal = Prompt.modal(
-				<FieldChangesDialog
-					fieldGroups={changed}
-					onContinue={dismiss(resolve)}
-					onCancel={dismiss(reject)}
-				/>,
-				{className: styles.dialog}
-			);
-		});
-}
-
-
-
-function FieldChangesDialog ({onContinue, onCancel}) {
+function FieldChangesDialogInner ({onContinue, onCancel}) {
 	const {
 		[FIELD_GROUPS]: fieldGroups,
 	} = Store.useValue();
@@ -88,4 +63,31 @@ function FieldChangesDialog ({onContinue, onCancel}) {
 			/>
 		</div>
 	);
+}
+
+const FieldChangesDialog = Store.compose(FieldChangesDialogInner);
+
+export default function confirm (store = Store.getStore()) {
+	const getSchemaChanges = store.get(SCHEMA_CHANGES);
+	const changed = getSchemaChanges(changesWeCareAbout);
+
+	return Object.keys(changed).length === 0
+		? Promise.resolve('no changes')
+		: new Promise((resolve, reject) => {
+			let modal;
+
+			const dismiss = fn => () => {
+				modal.dismiss();
+				fn();
+			};
+
+			modal = Prompt.modal(
+				<FieldChangesDialog
+					fieldGroups={changed}
+					onContinue={dismiss(resolve)}
+					onCancel={dismiss(reject)}
+				/>,
+				{className: styles.dialog}
+			);
+		});
 }
