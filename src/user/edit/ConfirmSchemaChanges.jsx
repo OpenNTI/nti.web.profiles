@@ -7,7 +7,6 @@ import {DialogButtons, Prompt} from '@nti/web-commons';
 import Form from './Form';
 import {
 	Store,
-	FIELD_GROUPS,
 	SCHEMA_CHANGES
 } from './Store';
 
