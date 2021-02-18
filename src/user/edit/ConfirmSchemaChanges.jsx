@@ -1,5 +1,6 @@
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import {scoped} from '@nti/lib-locale';
 import {DialogButtons, Prompt} from '@nti/web-commons';
 
@@ -36,11 +37,12 @@ const t = scoped('nti-profiles.user.edit.schema-change-confirmation', {
 const changesWeCareAbout = ['description'];
 
 
-function FieldChangesDialogInner ({onContinue, onCancel}) {
-	const {
-		[FIELD_GROUPS]: fieldGroups,
-	} = Store.useValue();
-
+FieldChangesDialogInner.propTypes = {
+	fieldGroups: PropTypes.object,
+	onContinue: PropTypes.func,
+	onCancel: PropTypes.func
+};
+function FieldChangesDialogInner ({fieldGroups, onContinue, onCancel}) {
 	const count = Object.entries(fieldGroups).reduce((total, [group, fields]) => total + Object.keys(fields || {}).length, 0);
 
 	return (
