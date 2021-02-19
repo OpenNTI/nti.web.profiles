@@ -57,6 +57,6 @@
     "uuid": "^8.3.0"
   },
   "devDependencies": {
-    "@nti/cmp-scripts": "^2.31.8"
+    "@nti/cmp-scripts": "2.33.4"
   }
 }
