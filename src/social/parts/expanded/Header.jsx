@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import {Text} from '@nti/web-commons';
+import { Text } from '@nti/web-commons';
 
-const styles = css`
+const styles = stylesheet`
 	.header {
 		border-bottom: 1px solid var(--primary-grey);
 		padding: 5px 10px;
@@ -28,11 +28,13 @@ PanelHeader.propTypes = {
 	onCollapseClick: PropTypes.func.isRequired,
 };
 
-export default function PanelHeader ({ onCollapseClick }) {
+export default function PanelHeader({ onCollapseClick }) {
 	return (
 		<div className={styles.header}>
 			<Text className={styles.title}>Messenger</Text>
-			<div className={styles.close} onClick={onCollapseClick}><i className="icon-light-x" /></div>
+			<div className={styles.close} onClick={onCollapseClick}>
+				<i className="icon-light-x" />
+			</div>
 		</div>
 	);
 }
