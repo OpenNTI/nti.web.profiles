@@ -1,9 +1,8 @@
 /* eslint-env jest */
 jest.mock('@nti/util-logger', () => {
-
-	const logger = ({
-		warn: jest.fn(() => {})
-	});
+	const logger = {
+		warn: jest.fn(() => {}),
+	};
 
 	return { get: () => logger };
 });
@@ -14,14 +13,12 @@ import Logger from '@nti/util-logger';
 
 import Messages from '../Messages';
 
-
 describe('Messages', () => {
-
 	const error = {
 		name: 'mock error',
 		validity: {
-			valueMissing: true
-		}
+			valueMissing: true,
+		},
 	};
 
 	const testRender = props => TestRenderer.create(<Messages {...props} />);
@@ -35,10 +32,10 @@ describe('Messages', () => {
 		const wheres = ['about', 'education', 'professional'];
 		const fieldErrors = wheres.map(where => ({
 			where,
-			error
+			error,
 		}));
 
-		const instance = testRender({fieldErrors});
+		const instance = testRender({ fieldErrors });
 		expect(instance.root.findAllByType('li')).toHaveLength(wheres.length);
 	});
 
@@ -46,25 +43,27 @@ describe('Messages', () => {
 		const wheres = ['about', 'about', 'about', 'education'];
 		const fieldErrors = wheres.map(where => ({
 			where,
-			error
+			error,
 		}));
 
-		const instance = testRender({fieldErrors});
+		const instance = testRender({ fieldErrors });
 		expect(instance.root.findAllByType('li')).toHaveLength(2);
 	});
 
 	test('handles null entries in the errors array', () => {
 		const fieldErrors = [null];
-		const render = () => testRender({fieldErrors});
+		const render = () => testRender({ fieldErrors });
 		expect(render).not.toThrow();
 	});
 
 	test('ignores unrecognized errors and logs a warning', () => {
-		const fieldErrors = [{
-			foo: 'unknown error type'
-		}];
+		const fieldErrors = [
+			{
+				foo: 'unknown error type',
+			},
+		];
 
-		const render = () => testRender({fieldErrors});
+		const render = () => testRender({ fieldErrors });
 		expect(render).not.toThrow();
 		expect(Logger.get().warn).toHaveBeenCalled();
 	});
@@ -72,9 +71,8 @@ describe('Messages', () => {
 	test('handles non-object errors and logs a warning', () => {
 		const fieldErrors = ['string', 123, true];
 
-		const render = () => testRender({fieldErrors});
+		const render = () => testRender({ fieldErrors });
 		expect(render).not.toThrow();
 		expect(Logger.get().warn).toHaveBeenCalled();
 	});
-
 });

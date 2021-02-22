@@ -9,9 +9,8 @@ const { Dialog } = Prompt;
 
 const t = scoped('nti-web-content.stream.sidebar', {
 	filterHeader: 'Filters',
-	done: 'Done'
+	done: 'Done',
 });
-
 
 class Sidebar extends React.Component {
 	static propTypes = {
@@ -19,17 +18,17 @@ class Sidebar extends React.Component {
 		params: PropTypes.shape({
 			types: PropTypes.object,
 			sortOn: PropTypes.string,
-			batchAfter: PropTypes.string
+			batchAfter: PropTypes.string,
 		}),
 		type: PropTypes.oneOf(['dialog', 'flyout']),
-		onDialogVisibilityChange: PropTypes.func
+		onDialogVisibilityChange: PropTypes.func,
 	};
 
 	state = {
-		showDialog: false
+		showDialog: false,
 	};
 
-	attachFilterRef = x => this.filterFlyout = x;
+	attachFilterRef = x => (this.filterFlyout = x);
 
 	onDateChange = option => {
 		this.props.onChange({ ...this.props.params, batchAfter: option.value });
@@ -40,8 +39,8 @@ class Sidebar extends React.Component {
 			...this.props.params,
 			types: {
 				...this.props.params.types,
-				[option.value]: selected
-			}
+				[option.value]: selected,
+			},
 		});
 	};
 
@@ -64,20 +63,23 @@ class Sidebar extends React.Component {
 
 	toggleFilterMenu = () => {
 		this.setState({ showDialog: !this.state.showDialog }, () => {
-			const {onDialogVisibilityChange} = this.props;
+			const { onDialogVisibilityChange } = this.props;
 
-			if(onDialogVisibilityChange) {
+			if (onDialogVisibilityChange) {
 				onDialogVisibilityChange(this.state.showDialog);
 			}
 		});
 	};
 
-	renderDialog () {
+	renderDialog() {
 		const { showDialog } = this.state;
 		return (
 			<React.Fragment>
 				<div className="stream-dialog-container">
-					<div className="filter-trigger" onClick={this.toggleFilterMenu}>
+					<div
+						className="filter-trigger"
+						onClick={this.toggleFilterMenu}
+					>
 						Filters
 					</div>
 				</div>
@@ -104,7 +106,7 @@ class Sidebar extends React.Component {
 		);
 	}
 
-	renderTrigger () {
+	renderTrigger() {
 		return (
 			<div className="stream-filter-trigger-container">
 				<div className="stream-filter-trigger">Filters</div>
@@ -122,14 +124,12 @@ class Sidebar extends React.Component {
 				ref={this.attachFilterRef}
 				arrow
 			>
-				<div>
-					{this.renderFilter()}
-				</div>
+				<div>{this.renderFilter()}</div>
 			</Flyout.Triggered>
 		);
-	}
+	};
 
-	render () {
+	render() {
 		const { type } = this.props;
 		return (
 			<React.Fragment>

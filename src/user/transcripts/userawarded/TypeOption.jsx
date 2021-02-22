@@ -4,19 +4,19 @@ import PropTypes from 'prop-types';
 export default class TranscriptsView extends React.Component {
 	static propTypes = {
 		option: PropTypes.object,
-		onClick: PropTypes.func
-	}
+		onClick: PropTypes.func,
+	};
 
 	onClick = () => {
-		const {option, onClick} = this.props;
+		const { option, onClick } = this.props;
 
-		if(onClick) {
+		if (onClick) {
 			onClick(option);
 		}
-	}
+	};
 
-	render () {
-		const {option} = this.props;
+	render() {
+		const { option } = this.props;
 
 		return (
 			<div className="award-type-option" onClick={this.onClick}>

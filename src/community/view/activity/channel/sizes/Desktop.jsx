@@ -1,5 +1,5 @@
 import React from 'react';
-import {Layouts} from '@nti/web-commons';
+import { Layouts } from '@nti/web-commons';
 
 import Sidebar from '../../components/Sidebar';
 import ChannelStreamHeader from '../../components/channel-stream-header';
@@ -10,12 +10,12 @@ import ChannelNotFound from '../../components/ChannelNotFound';
 import styles from './Desktop.css';
 import propTypes from './prop-types';
 
-const {Aside} = Layouts;
+const { Aside } = Layouts;
 
 const BatchSize = 20;
 
 ChannelDesktopLayout.propTypes = propTypes;
-export default function ChannelDesktopLayout (props) {
+export default function ChannelDesktopLayout(props) {
 	const {
 		community,
 		channels,
@@ -26,14 +26,25 @@ export default function ChannelDesktopLayout (props) {
 		availableSorts,
 		sortOn,
 		setSortOn,
-		title
+		title,
 	} = props;
 
 	return (
-		<Aside.Container className={styles.communityDesktop} asideClassName={styles.communityDesktopSidebar}>
-			<Aside side="left" component={Sidebar} community={community} channels={channels} channel={channel} title={title} showJoin />
+		<Aside.Container
+			className={styles.communityDesktop}
+			asideClassName={styles.communityDesktopSidebar}
+		>
+			<Aside
+				side="left"
+				component={Sidebar}
+				community={community}
+				channels={channels}
+				channel={channel}
+				title={title}
+				showJoin
+			/>
 			<div className={styles.communityDesktopBody}>
-				{notFound && (<ChannelNotFound {...props} />)}
+				{notFound && <ChannelNotFound {...props} />}
 				{channel && (
 					<ChannelStreamHeader
 						channel={channel}
@@ -44,7 +55,7 @@ export default function ChannelDesktopLayout (props) {
 						setSortOn={setSortOn}
 					/>
 				)}
-				{channel && (<ChannelDescription channel={channel} />)}
+				{channel && <ChannelDescription channel={channel} />}
 				{channel && (
 					<ChannelStream
 						searchContext={community.getID()}

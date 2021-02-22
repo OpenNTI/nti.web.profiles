@@ -1,15 +1,15 @@
 import './Social.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
-import {scoped} from '@nti/lib-locale';
+import { scoped } from '@nti/lib-locale';
 import cx from 'classnames';
 
 const t = scoped('profile.about.social', {
-	'facebook': 'Facebook',
-	'linkedIn': 'LinkedIn',
-	'twitter': 'Twitter',
-	'googlePlus': 'Google+',
-	'instagram': 'Instagram'
+	facebook: 'Facebook',
+	linkedIn: 'LinkedIn',
+	twitter: 'Twitter',
+	googlePlus: 'Google+',
+	instagram: 'Instagram',
 });
 
 const socialPropNames = [
@@ -17,34 +17,33 @@ const socialPropNames = [
 	'linkedIn',
 	'twitter',
 	'googlePlus',
-	'instagram'
+	'instagram',
 ];
 
 export default class Social extends React.Component {
 	static propTypes = {
-		entity: PropTypes.object
-	}
+		entity: PropTypes.object,
+	};
 
-	render () {
-		let {entity = {}} = this.props;
-		let items = socialPropNames.map(prop => {
-			return entity[prop]
-				? (
+	render() {
+		let { entity = {} } = this.props;
+		let items = socialPropNames
+			.map(prop => {
+				return entity[prop] ? (
 					<li key={prop}>
-						<a target="_blank" rel="noopener noreferrer" className={cx('social', prop.toLowerCase())} href={entity[prop]}>
+						<a
+							target="_blank"
+							rel="noopener noreferrer"
+							className={cx('social', prop.toLowerCase())}
+							href={entity[prop]}
+						>
 							<span>{t(prop)}</span>
 						</a>
 					</li>
-				)
-				: null;
-		}).filter(x=>x);
+				) : null;
+			})
+			.filter(x => x);
 
-		return (
-			items.length > 0 && (
-				<ul className="social-links">
-					{items}
-				</ul>
-			)
-		);
+		return items.length > 0 && <ul className="social-links">{items}</ul>;
 	}
 }

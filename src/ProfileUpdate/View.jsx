@@ -1,11 +1,11 @@
 import './View.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
-import {decorate} from '@nti/lib-commons';
-import {Loading, DialogButtons} from '@nti/web-commons';
-import {scoped} from '@nti/lib-locale';
+import { decorate } from '@nti/lib-commons';
+import { Loading, DialogButtons } from '@nti/web-commons';
+import { scoped } from '@nti/lib-locale';
 
-import {getCmpForType} from './types';
+import { getCmpForType } from './types';
 import Store from './Store';
 
 const t = scoped('nti-web-profile.ProfileUpdate.View', {
@@ -13,11 +13,11 @@ const t = scoped('nti-web-profile.ProfileUpdate.View', {
 	error: 'Unable to load profile.',
 	save: 'Save',
 	saving: 'Saving',
-	unknownError: 'Unable to update profile.'
+	unknownError: 'Unable to update profile.',
 });
 
 class ProfileUpdate extends React.Component {
-	static profileNeedsUpdate (entity) {
+	static profileNeedsUpdate(entity) {
 		return entity.hasLink('user_profile_update');
 	}
 
@@ -35,28 +35,25 @@ class ProfileUpdate extends React.Component {
 		type: PropTypes.string,
 		baseType: PropTypes.string,
 		values: PropTypes.object,
-		onFieldChange: PropTypes.func
-	}
+		onFieldChange: PropTypes.func,
+	};
 
-
-	componentDidMount () {
-		const {entity, store} = this.props;
+	componentDidMount() {
+		const { entity, store } = this.props;
 
 		store.setEntity(entity);
 	}
 
-
 	onFieldChange = (field, value) => {
-		const {onFieldChange} = this.props;
+		const { onFieldChange } = this.props;
 
 		if (onFieldChange) {
 			onFieldChange(field, value);
 		}
-	}
-
+	};
 
 	onSave = async () => {
-		const {store, onDismiss} = this.props;
+		const { store, onDismiss } = this.props;
 
 		try {
 			await store.saveValues();
@@ -67,21 +64,28 @@ class ProfileUpdate extends React.Component {
 		} catch (e) {
 			//The store is handling the error, so we don't need to do anything
 		}
-	}
+	};
 
-
-	render () {
-		const {entity, loading, saving, error, fields, type, baseType, values, isValid} = this.props;
+	render() {
+		const {
+			entity,
+			loading,
+			saving,
+			error,
+			fields,
+			type,
+			baseType,
+			values,
+			isValid,
+		} = this.props;
 		const Cmp = getCmpForType(type, baseType);
 
 		return (
 			<div className="nti-profile-update">
-				<div className="header">
-					{t('title')}
-				</div>
+				<div className="header">{t('title')}</div>
 				<div className="contents">
-					{loading && (<Loading.Mask />)}
-					{saving && (<Loading.Mask message={t('saving')}/>)}
+					{loading && <Loading.Mask />}
+					{saving && <Loading.Mask message={t('saving')} />}
 					{!loading && !saving && error && this.renderError(error)}
 					{!loading && !saving && Cmp && (
 						<Cmp
@@ -98,19 +102,19 @@ class ProfileUpdate extends React.Component {
 						{
 							label: t('save'),
 							onClick: this.onSave,
-							className: isValid && !error ? null : 'disabled'
-						}
+							className: isValid && !error ? null : 'disabled',
+						},
 					]}
 				/>
 			</div>
 		);
 	}
 
-
-	renderError (error) {
+	renderError(error) {
 		return (
 			<div className="error">
-				{(error && (error.message || error.Message)) || t('unknownError')}
+				{(error && (error.message || error.Message)) ||
+					t('unknownError')}
 			</div>
 		);
 	}
@@ -126,6 +130,6 @@ export default decorate(ProfileUpdate, [
 		error: 'error',
 		onFieldChange: 'onFieldChange',
 		values: 'values',
-		isValid: 'isValid'
-	})
+		isValid: 'isValid',
+	}),
 ]);

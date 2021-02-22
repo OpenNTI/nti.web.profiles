@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {scoped} from '@nti/lib-locale';
+import { scoped } from '@nti/lib-locale';
 
-import {Card} from '../../../common';
-import {LOCALE_PATHS} from '../../constants';
+import { Card } from '../../../common';
+import { LOCALE_PATHS } from '../../constants';
 
 import LabelValueList from './LabelValueList';
 
@@ -12,67 +12,79 @@ const t = scoped(LOCALE_PATHS.COMMUNITY, {
 	culture: 'Sectors Of Culture',
 	cityInterest: 'Passionate About',
 	initiatives: 'Organizations/Initiatives',
-	churchCommunity: 'Church or Community'
-
+	churchCommunity: 'Church or Community',
 });
 
 const FIELDS = [
-	(user) => {
-		const {cultures} = user;
+	user => {
+		const { cultures } = user;
 
-		if (!cultures) { return null; }
+		if (!cultures) {
+			return null;
+		}
 
 		return {
 			label: t('culture'),
-			value: cultures
+			value: cultures,
 		};
 	},
-	(user) => {
+	user => {
 		const interest = user['city_interest'];
 
-		if (!interest) { return null; }
+		if (!interest) {
+			return null;
+		}
 
 		return {
 			label: t('cityInterest'),
-			value: interest
+			value: interest,
 		};
 	},
-	(user) => {
-		const {initiatives} = user;
+	user => {
+		const { initiatives } = user;
 
-		if (!initiatives) { return null; }
+		if (!initiatives) {
+			return null;
+		}
 
 		return {
 			label: t('initiatives'),
-			value: initiatives
+			value: initiatives,
 		};
 	},
-	(user) => {
+	user => {
 		const community = user['church_community'];
 
-		if (!community) { return null; }
+		if (!community) {
+			return null;
+		}
 
 		return {
 			label: t('churchCommunity'),
-			value: community
+			value: community,
 		};
-	}
+	},
 ];
 
-
 export default class ProfileCommunityInfo extends React.Component {
-	static shouldShow (user) {
-		return user['cultures'] || user['city_interest'] || user['initiatives'] || user['church_community'];
+	static shouldShow(user) {
+		return (
+			user['cultures'] ||
+			user['city_interest'] ||
+			user['initiatives'] ||
+			user['church_community']
+		);
 	}
 
 	static propTypes = {
-		user: PropTypes.object.isRequired
-	}
+		user: PropTypes.object.isRequired,
+	};
 
-
-	render () {
-		const {user} = this.props;
-		const fields = FIELDS.map(field => field(user)).filter(field => !!field);
+	render() {
+		const { user } = this.props;
+		const fields = FIELDS.map(field => field(user)).filter(
+			field => !!field
+		);
 
 		return (
 			<Card className="user-profile-about-community" title={t('title')}>

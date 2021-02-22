@@ -2,9 +2,9 @@ import './View.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import {decorate} from '@nti/lib-commons';
-import {Loading, Input, EmptyState} from '@nti/web-commons';
-import {scoped} from '@nti/lib-locale';
+import { decorate } from '@nti/lib-commons';
+import { Loading, Input, EmptyState } from '@nti/web-commons';
+import { scoped } from '@nti/lib-locale';
 
 import Store from './Store';
 import ListItem from './ListItem';
@@ -15,13 +15,13 @@ const t = scoped('nti-web-profiles.Selector', {
 	searchPlaceholder: 'Search',
 	empty: {
 		searchTerm: 'There are no users. Please update your query.',
-		noSearchTerm: 'Add a user name to search for users.'
+		noSearchTerm: 'Add a user name to search for users.',
 	},
-	loadMore: 'Load More'
+	loadMore: 'Load More',
 });
 
 class ProfileSelector extends React.Component {
-	static deriveBindingFromProps (props) {
+	static deriveBindingFromProps(props) {
 		return props.collection || 'user';
 	}
 
@@ -40,104 +40,111 @@ class ProfileSelector extends React.Component {
 		errorLoadingMore: PropTypes.any,
 
 		searchTerm: PropTypes.string,
-		updateSearchTerm: PropTypes.func
-	}
-
+		updateSearchTerm: PropTypes.func,
+	};
 
 	static defaultProps = {
-		collection: 'users'
-	}
+		collection: 'users',
+	};
 
+	isSelected(profile) {
+		const { selected } = this.props;
 
-	isSelected (profile) {
-		const {selected} = this.props;
-
-		if (!selected || !selected.length) { return false; }
+		if (!selected || !selected.length) {
+			return false;
+		}
 
 		return selected.filter(p => profile === p).length > 0;
 	}
 
-	onSelect = (profile) => {
-		const {onSelect} = this.props;
+	onSelect = profile => {
+		const { onSelect } = this.props;
 
 		if (onSelect) {
 			onSelect(profile);
 		}
-	}
+	};
 
-
-	onSearchChange = (value) => {
-		const {updateSearchTerm} = this.props;
+	onSearchChange = value => {
+		const { updateSearchTerm } = this.props;
 
 		if (updateSearchTerm) {
 			updateSearchTerm(value);
 		}
-	}
-
+	};
 
 	loadMore = () => {
-		const {loadMore} = this.props;
+		const { loadMore } = this.props;
 
 		if (loadMore) {
 			loadMore();
 		}
-	}
+	};
 
-
-	render () {
-		const {loading, error} = this.props;
+	render() {
+		const { loading, error } = this.props;
 
 		return (
 			<div className="nti-profile-selector">
 				{this.renderSearch()}
-				{loading && (<Loading.Mask />)}
+				{loading && <Loading.Mask />}
 				{!loading && error && this.renderError()}
 				{!loading && !error && this.renderProfiles()}
 			</div>
 		);
 	}
 
-
-	renderSearch () {
-		const {searchTerm} = this.props;
+	renderSearch() {
+		const { searchTerm } = this.props;
 
 		return (
 			<div className="search">
-				<Input.Text value={searchTerm || ''} placeholder={t('searchPlaceholder')} onChange={this.onSearchChange} />
+				<Input.Text
+					value={searchTerm || ''}
+					placeholder={t('searchPlaceholder')}
+					onChange={this.onSearchChange}
+				/>
 				<i className="icon-search" />
 			</div>
 		);
 	}
 
-
-	renderError () {
-		return (
-			<span className="error">
-				{t('error')}
-			</span>
-		);
+	renderError() {
+		return <span className="error">{t('error')}</span>;
 	}
 
+	renderProfiles() {
+		const { profiles, hasMore, loadingMore, errorLoadingMore } = this.props;
 
-	renderProfiles () {
-		const {profiles, hasMore, loadingMore, errorLoadingMore} = this.props;
-
-		if (!profiles || !profiles.length) { return this.renderEmpty(); }
+		if (!profiles || !profiles.length) {
+			return this.renderEmpty();
+		}
 
 		return (
 			<div className="profiles">
 				<ul>
-					{profiles.map((profile) => {
+					{profiles.map(profile => {
 						return (
 							<li key={profile.getID()}>
-								<ListItem profile={profile} onSelect={this.onSelect} selected={this.isSelected(profile)} />
+								<ListItem
+									profile={profile}
+									onSelect={this.onSelect}
+									selected={this.isSelected(profile)}
+								/>
 							</li>
 						);
 					})}
 				</ul>
 				{(hasMore || loadingMore) && !errorLoadingMore && (
-					<div className={cx('load-more', {loading: loadingMore})} onClick={this.loadMore}>
-						{loadingMore ? (<Loading.Spinner white />) : t('loadMore')}
+					<div
+						className={cx('load-more', { loading: loadingMore })}
+						onClick={this.loadMore}
+					>
+						{loadingMore ? (
+							<Loading.Spinner white />
+						) : (
+							t('loadMore')
+						)}
 					</div>
 				)}
 				{errorLoadingMore && (
@@ -147,12 +154,15 @@ class ProfileSelector extends React.Component {
 		);
 	}
 
-
-	renderEmpty () {
-		const {searchTerm} = this.props;
+	renderEmpty() {
+		const { searchTerm } = this.props;
 
 		return (
-			<EmptyState header={searchTerm ? t('empty.searchTerm') : t('empty.noSearchTerm')} />
+			<EmptyState
+				header={
+					searchTerm ? t('empty.searchTerm') : t('empty.noSearchTerm')
+				}
+			/>
 		);
 	}
 }
@@ -167,6 +177,6 @@ export default decorate(ProfileSelector, [
 		'hasMore',
 		'loadingMore',
 		'loadMore',
-		'errorLoadingMore'
-	])
+		'errorLoadingMore',
+	]),
 ]);

@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
-import {decorate} from '@nti/lib-commons';
-import {scoped} from '@nti/lib-locale';
-import {Text, DialogButtons, Loading, Prompt} from '@nti/web-commons';
+import { decorate } from '@nti/lib-commons';
+import { scoped } from '@nti/lib-locale';
+import { Text, DialogButtons, Loading, Prompt } from '@nti/web-commons';
 
 import Store from '../Store';
-import {Token} from '../../../../selector';
+import { Token } from '../../../../selector';
 
 import Styles from './AddMembers.css';
 
@@ -18,16 +18,21 @@ const t = scoped('nti-profiles.community.view.members.components.AddMembers', {
 	cancel: 'Cancel',
 	confirm: {
 		title: 'Are you sure?',
-		message: 'Adding everyone will add every user in the site to "%(community)s". Undoing this action will require manually removing each person.'
-	}
+		message:
+			'Adding everyone will add every user in the site to "%(community)s". Undoing this action will require manually removing each person.',
+	},
 });
 
-function getButtonLabel (toAdd) {
-	const hasEveryone = (toAdd || []).some((add) => add.value.getID() === 'everyone');
+function getButtonLabel(toAdd) {
+	const hasEveryone = (toAdd || []).some(
+		add => add.value.getID() === 'everyone'
+	);
 
-	if (hasEveryone) { return t('addEveryone'); }
+	if (hasEveryone) {
+		return t('addEveryone');
+	}
 
-	return t('addMembers', {memberCount: (toAdd || []).length});
+	return t('addMembers', { memberCount: (toAdd || []).length });
 }
 
 class AddMembers extends React.Component {
@@ -38,51 +43,80 @@ class AddMembers extends React.Component {
 		addPendingMembers: PropTypes.func,
 		setPendingMembers: PropTypes.func,
 		community: PropTypes.shape({
-			displayName: PropTypes.string
-		})
-	}
+			displayName: PropTypes.string,
+		}),
+	};
 
 	addMembers = async () => {
-		const {pending, addPendingMembers, community} = this.props;
+		const { pending, addPendingMembers, community } = this.props;
 
-		if (!addPendingMembers) { return; }
+		if (!addPendingMembers) {
+			return;
+		}
 
-		const hasEveryone = (pending || []).some(p => p.value.getID() === 'everyone');
+		const hasEveryone = (pending || []).some(
+			p => p.value.getID() === 'everyone'
+		);
 
-		if (!hasEveryone) { return addPendingMembers(); }
+		if (!hasEveryone) {
+			return addPendingMembers();
+		}
 
 		try {
-			await Prompt.areYouSure(t('confirm.message', {community: community.displayName}), t('confirm.title'));
+			await Prompt.areYouSure(
+				t('confirm.message', { community: community.displayName }),
+				t('confirm.title')
+			);
 
 			addPendingMembers();
 		} catch (e) {
 			//swallow
 		}
-	}
+	};
 
 	clearSelected = () => {
-		const {setPendingMembers} = this.props;
+		const { setPendingMembers } = this.props;
 
 		if (setPendingMembers) {
 			setPendingMembers([]);
 		}
-	}
+	};
 
-	render () {
-		const {canAddMembers, adding, pending, setPendingMembers} = this.props;
+	render() {
+		const {
+			canAddMembers,
+			adding,
+			pending,
+			setPendingMembers,
+		} = this.props;
 
-		if (!canAddMembers) { return null; }
+		if (!canAddMembers) {
+			return null;
+		}
 
 		const buttons = [
-			{label: t('cancel'), onClick: this.clearSelected},
-			{label: getButtonLabel(pending), onClick: this.addMembers}
+			{ label: t('cancel'), onClick: this.clearSelected },
+			{ label: getButtonLabel(pending), onClick: this.addMembers },
 		];
 
 		return (
-			<div className={cx('add-members', {'has-selection': pending && pending.length > 0})}>
+			<div
+				className={cx('add-members', {
+					'has-selection': pending && pending.length > 0,
+				})}
+			>
 				<Text.Base className={cx('label')}>{t('label')}</Text.Base>
-				<Loading.Placeholder loading={adding} delay={0} fallback={(<Loading.Spinner />)}>
-					<Token className={cx('user-input')} value={pending} onChange={setPendingMembers} allowEveryone />
+				<Loading.Placeholder
+					loading={adding}
+					delay={0}
+					fallback={<Loading.Spinner />}
+				>
+					<Token
+						className={cx('user-input')}
+						value={pending}
+						onChange={setPendingMembers}
+						allowEveryone
+					/>
 					<DialogButtons buttons={buttons} flat />
 				</Loading.Placeholder>
 			</div>
@@ -90,7 +124,13 @@ class AddMembers extends React.Component {
 	}
 }
 
-
 export default decorate(AddMembers, [
-	Store.monitor(['community', 'pending', 'canAddMembers', 'addPendingMembers', 'setPendingMembers', 'adding'])
+	Store.monitor([
+		'community',
+		'pending',
+		'canAddMembers',
+		'addPendingMembers',
+		'setPendingMembers',
+		'adding',
+	]),
 ]);

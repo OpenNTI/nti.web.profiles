@@ -1,11 +1,16 @@
 import React from 'react';
-import {Icons, Text} from '@nti/web-commons';
+import { Icons, Text } from '@nti/web-commons';
 import { scoped } from '@nti/lib-locale';
 
-import {Container as BaseContainer, Icon as BaseIcon, Spacer, useLayout} from './parts';
+import {
+	Container as BaseContainer,
+	Icon as BaseIcon,
+	Spacer,
+	useLayout,
+} from './parts';
 
 const t = scoped('nti.web.discussion-selection.NewTopic', {
-	label: 'Start a new discussion\nin this channel'
+	label: 'Start a new discussion\nin this channel',
 });
 
 const Container = styled(BaseContainer).attrs(useLayout())`
@@ -75,7 +80,7 @@ const Icon = styled(BaseIcon).attrs(useLayout())`
 	}
 `;
 
-const Glyph = styled('i').attrs(useLayout({className: 'icon-discuss'}))`
+const Glyph = styled('i').attrs(useLayout({ className: 'icon-discuss' }))`
 	font-size: 24px;
 	color: currentColor;
 
@@ -93,15 +98,15 @@ const PlusSign = styled(Icons.Add.Circled).attrs(useLayout())`
 	}
 `;
 
-export default function NewTopic (props) {
+export default function NewTopic(props) {
 	return (
 		<Container {...props}>
 			<Icon>
-				<Glyph/>
+				<Glyph />
 			</Icon>
-			<Label localeKey="label"/>
-			<Spacer/>
-			<PlusSign/>
+			<Label localeKey="label" />
+			<Spacer />
+			<PlusSign />
 		</Container>
 	);
 }

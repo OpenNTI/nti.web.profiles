@@ -15,13 +15,13 @@ describe('slugify', () => {
 	});
 
 	test('returns input when already an array', () => {
-		const a = [1,2,3];
+		const a = [1, 2, 3];
 		expect(ensureArray(a)).toEqual(a);
 	});
 
 	test('returns array from non-array input', () => {
 		const string = 'x';
-		const obj = {test: 12345};
+		const obj = { test: 12345 };
 		const num = 12;
 		expect(ensureArray(string)).toEqual(expect.arrayContaining([string]));
 		expect(ensureArray(obj)).toEqual(expect.arrayContaining([obj]));

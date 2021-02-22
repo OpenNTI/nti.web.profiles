@@ -1,8 +1,8 @@
 import './Experience.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Parsers} from '@nti/web-editor';
-import {scoped} from '@nti/lib-locale';
+import { Parsers } from '@nti/web-editor';
+import { scoped } from '@nti/lib-locale';
 import cx from 'classnames';
 
 import FieldContainer from './FieldContainer';
@@ -12,27 +12,21 @@ import Text from './Text';
 const t2 = scoped('nti-web-profile.user-profile.edit.experience.fields', {
 	startYear: 'Start Year',
 	endYear: 'End Year',
-	description: 'Description'
+	description: 'Description',
 });
 
-const fields = [
-	'organization',
-	'role',
-	'startYear',
-	'endYear'
-];
+const fields = ['organization', 'role', 'startYear', 'endYear'];
 
 const fieldMetaDefaults = {
 	startYear: {
 		className: 'year',
 	},
 	endYear: {
-		className: 'year'
+		className: 'year',
 	},
 };
 
 export default class Experience extends React.PureComponent {
-
 	static propTypes = {
 		localizer: PropTypes.func,
 
@@ -56,53 +50,50 @@ export default class Experience extends React.PureComponent {
 		fieldMeta: PropTypes.object,
 		value: PropTypes.object,
 		onChange: PropTypes.func,
-		schema: PropTypes.object
-	}
+		schema: PropTypes.object,
+	};
 
 	onChange = (name, value) => {
-		const {value: previous, onChange} = this.props;
+		const { value: previous, onChange } = this.props;
 
 		const newValue = {
 			...(previous || {}),
-			[name]: value
+			[name]: value,
 		};
 
 		onChange(newValue);
-	}
+	};
 
-	onDescriptionChange = (value) => {
+	onDescriptionChange = value => {
 		value.toJSON = () => Parsers.PlainText.fromDraftState(value)[0];
 		this.onChange('description', value);
-	}
+	};
 
 	fieldMeta = f => {
-		const {fieldMeta = {}} = this.props;
+		const { fieldMeta = {} } = this.props;
 
 		return {
 			...(fieldMetaDefaults[f] || {}),
-			...(fieldMeta[f] || {})
+			...(fieldMeta[f] || {}),
 		};
-	}
+	};
 
-	css = (field) => {
-		const {required, className} = this.fieldMeta(field);
-		return cx(field, className, {required});
-	}
+	css = field => {
+		const { required, className } = this.fieldMeta(field);
+		return cx(field, className, { required });
+	};
 
-	render () {
+	render() {
 		const {
-			props: {
-				localizer,
-				value = {},
-				schema
-			},
-			css
+			props: { localizer, value = {}, schema },
+			css,
 		} = this;
 
 		// use our localizer (t2) only when it has the given entry and this.props.localizer doesn't
-		const t = x => localizer && (!localizer.isMissing(x) || t2.isMissing(x))
-			? localizer(x)
-			: t2(x);
+		const t = x =>
+			localizer && (!localizer.isMissing(x) || t2.isMissing(x))
+				? localizer(x)
+				: t2(x);
 
 		// get mapped field name
 		const n = f => this.fieldMeta(f).name || f;
@@ -115,12 +106,27 @@ export default class Experience extends React.PureComponent {
 		return (
 			<div className="nti-profile-experience-item">
 				{fields.map(field => (
-					<FieldContainer key={field} className={css(field)} required={(schema[n(field)] || {}).required} label={t(n(field))}>
-						<In schema={schema[n(field)]} name={n(field)} value={v(field)} onChange={this.onChange} />
+					<FieldContainer
+						key={field}
+						className={css(field)}
+						required={(schema[n(field)] || {}).required}
+						label={t(n(field))}
+					>
+						<In
+							schema={schema[n(field)]}
+							name={n(field)}
+							value={v(field)}
+							onChange={this.onChange}
+						/>
 					</FieldContainer>
 				))}
-				<FieldContainer className={css('description')} required={(schema[n('description')] || {}).required} label={t(n('description'))}>
-					<Editor editorState={editorState}
+				<FieldContainer
+					className={css('description')}
+					required={(schema[n('description')] || {}).required}
+					label={t(n('description'))}
+				>
+					<Editor
+						editorState={editorState}
 						onContentChange={this.onDescriptionChange}
 						readOnly={(schema[n('description')] || {}).readonly}
 					/>
@@ -132,19 +138,18 @@ export default class Experience extends React.PureComponent {
 
 // dumb wrapper on commons inputs to feed the name back to the onChange handler
 class In extends React.Component {
-
 	static propTypes = {
 		name: PropTypes.string,
 		schema: PropTypes.object,
-		onChange: PropTypes.func
-	}
+		onChange: PropTypes.func,
+	};
 
-	onChange = (value) => {
-		const {name, onChange} = this.props;
+	onChange = value => {
+		const { name, onChange } = this.props;
 		onChange(name, value);
-	}
+	};
 
-	render () {
+	render() {
 		return <Text {...this.props} onChange={this.onChange} />;
 	}
 }

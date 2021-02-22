@@ -1,42 +1,33 @@
-import {scoped} from '@nti/lib-locale';
+import { scoped } from '@nti/lib-locale';
 
 const t = scoped('nti-profiles.ProfileUpdate.types.default.Config', {
 	opsrc: {
 		adminLabel: 'Administrator',
-		teacherLabel: 'Teacher Certification'
-	}
+		teacherLabel: 'Teacher Certification',
+	},
 });
 
 const TYPE_TO_CONFIG = {
-	'IOPSRCUserProfile': {
+	IOPSRCUserProfile: {
 		groups: [
 			{
-				fields: [
-					'email',
-					'role',
-					'affiliation',
-					'district_school'
-				]
+				fields: ['email', 'role', 'affiliation', 'district_school'],
 			},
 			{
 				getLabel: () => t('opsrc.teacherLabel'),
 				fields: [
 					'teacher_certification',
-					'teacher_certification_number'
-				]
+					'teacher_certification_number',
+				],
 			},
 			{
 				getLabel: () => t('opsrc.adminLabel'),
-				fields: [
-					'is_district_admin',
-					'admin_district_names'
-				]
-			}
-		]
-	}
+				fields: ['is_district_admin', 'admin_district_names'],
+			},
+		],
+	},
 };
 
-
-export function getConfigForType (type) {
+export function getConfigForType(type) {
 	return TYPE_TO_CONFIG[type];
 }

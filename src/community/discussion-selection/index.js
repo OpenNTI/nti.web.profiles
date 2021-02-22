@@ -1,1 +1,1 @@
-export {default as DiscussionPicker} from './Picker';
+export { default as DiscussionPicker } from './Picker';

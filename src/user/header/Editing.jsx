@@ -9,39 +9,31 @@ import { Store, Constants, confirmSchemaChanges } from '../edit/';
 import { t } from './EditControls';
 
 class Editing extends React.Component {
-
 	static propTypes = {
 		clearErrors: PropTypes.func.isRequired,
 		formId: PropTypes.string,
 		saveProfile: PropTypes.func.isRequired,
 		unsaved: PropTypes.bool,
 		entity: PropTypes.object.isRequired,
-		store: PropTypes.object.isRequired
+		store: PropTypes.object.isRequired,
 	};
 
 	static contextTypes = {
-		router: PropTypes.object
+		router: PropTypes.object,
 	};
 
-	componentDidMount () {
+	componentDidMount() {
 		this.props.store.load(this.props.entity);
 	}
 
-	componentWillUnmount () {
+	componentWillUnmount() {
 		this.props.clearErrors();
 	}
 
-	onSave = async (e) => {
+	onSave = async e => {
 		const {
-			props: {
-				clearErrors,
-				saveProfile,
-				store,
-				entity
-			},
-			context: {
-				router
-			}
+			props: { clearErrors, saveProfile, store, entity },
+			context: { router },
 		} = this;
 		const { target } = e;
 		const formId = target.getAttribute('form');
@@ -50,27 +42,38 @@ class Editing extends React.Component {
 		clearErrors();
 
 		if (!form || form.checkValidity()) {
-
 			try {
 				await confirmSchemaChanges(store);
 				await saveProfile();
 				router.routeTo.object(entity, 'about');
-			}
-			catch (err) {
+			} catch (err) {
 				//
 			}
 		}
 	};
 
-	render () {
+	render() {
 		const { formId, entity, unsaved } = this.props;
 
 		return (
 			<div className="editing">
-				<LinkTo.Object className="cancel" object={entity} context="about">
-					<Button as="span" secondary>{t('cancel')}</Button>
+				<LinkTo.Object
+					className="cancel"
+					object={entity}
+					context="about"
+				>
+					<Button as="span" secondary>
+						{t('cancel')}
+					</Button>
 				</LinkTo.Object>
-				<Button form={formId} className="save" disabled={!unsaved} onClick={this.onSave}>{t('save')}</Button>
+				<Button
+					form={formId}
+					className="save"
+					disabled={!unsaved}
+					onClick={this.onSave}
+				>
+					{t('save')}
+				</Button>
 			</div>
 		);
 	}
@@ -80,6 +83,6 @@ export default decorate(Editing, [
 		[Constants.CLEAR_ERRORS]: 'clearErrors',
 		[Constants.FORM_ID]: 'formId',
 		[Constants.HAS_UNSAVED_CHANGES]: 'unsaved',
-		[Constants.SAVE_PROFILE]: 'saveProfile'
-	})
+		[Constants.SAVE_PROFILE]: 'saveProfile',
+	}),
 ]);

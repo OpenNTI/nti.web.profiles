@@ -1,38 +1,46 @@
-import {Stores, Interfaces} from '@nti/lib-store';
-import {getAppUserScopedStorage} from '@nti/web-client';
-import {Array as arr, decorate} from '@nti/lib-commons';
+import { Stores, Interfaces } from '@nti/lib-store';
+import { getAppUserScopedStorage } from '@nti/web-client';
+import { Array as arr, decorate } from '@nti/lib-commons';
 
-import {Grid} from '../Constants';
+import { Grid } from '../Constants';
 
-
-
-function findChannel (channelLists, channelId) {
+function findChannel(channelLists, channelId) {
 	const channel = channelLists.reduce((acc, channelList) => {
-		if (acc) { return acc; }
+		if (acc) {
+			return acc;
+		}
 
 		return channelList.findChannel(channelId);
 	}, null);
 
-	if (channel) { return channel; }
+	if (channel) {
+		return channel;
+	}
 
 	//Hack to work around react router mangling the paths
 	return channelLists.reduce((acc, channelList) => {
-		if (acc) { return acc; }
+		if (acc) {
+			return acc;
+		}
 
 		return (channelList.channels || []).reduce((found, searching) => {
-			if (found) { return found; }
-			if (decodeURIComponent(searching.getID()) === channelId) { return searching; }
+			if (found) {
+				return found;
+			}
+			if (decodeURIComponent(searching.getID()) === channelId) {
+				return searching;
+			}
 
 			return found;
 		}, null);
 	}, null);
 }
 
-function Storage () {
+function Storage() {
 	let storage;
 
 	return {
-		read: (key) => {
+		read: key => {
 			storage = storage || getAppUserScopedStorage();
 
 			const value = storage.getItem(key);
@@ -49,17 +57,22 @@ function Storage () {
 			storage = storage || getAppUserScopedStorage();
 
 			return storage.setItem(key, JSON.stringify(value));
-		}
+		},
 	};
 }
 
 class CommunityActivityChannelStore extends Stores.BoundStore {
-	load () {
+	load() {
 		//if nothing changed, don't do anything
-		if (this.binding.channels === this.channels && this.binding.channelId === this.channelId) {	return;	}
+		if (
+			this.binding.channels === this.channels &&
+			this.binding.channelId === this.channelId
+		) {
+			return;
+		}
 
-		const channels = this.channels = this.binding.channels;
-		const channelId = this.channelId = this.binding.channelId;
+		const channels = (this.channels = this.binding.channels);
+		const channelId = (this.channelId = this.binding.channelId);
 
 		const channelLists = arr.ensure(channels);
 
@@ -68,36 +81,44 @@ class CommunityActivityChannelStore extends Stores.BoundStore {
 		if (!channel) {
 			this.set({
 				notFound: true,
-				channel: null
+				channel: null,
 			});
 			return;
 		}
 
 		const oldSort = this.get('sortOn');
-		const knownSorts = channel && channel.contentsDataSource && channel.contentsDataSource.getKnownParam('sortOn');
+		const knownSorts =
+			channel &&
+			channel.contentsDataSource &&
+			channel.contentsDataSource.getKnownParam('sortOn');
 
-		const sortOn = oldSort && knownSorts.indexOf(oldSort) >= 0 ? oldSort : knownSorts[0];
+		const sortOn =
+			oldSort && knownSorts.indexOf(oldSort) >= 0
+				? oldSort
+				: knownSorts[0];
 
 		this.set({
 			notFound: false,
 			channel,
 			sortOn,
 			layout: this.get('layout') || Grid,
-			availableSorts: knownSorts
+			availableSorts: knownSorts,
 		});
 	}
 
-
-	setSortOn (sortOn) {
-		this.set({sortOn});
+	setSortOn(sortOn) {
+		this.set({ sortOn });
 	}
 
-
-	setLayout (layout) {
-		this.set({layout});
+	setLayout(layout) {
+		this.set({ layout });
 	}
 }
 
 export default decorate(CommunityActivityChannelStore, [
-	Interfaces.Stateful('nti-community-activity-channel', ['sortOn', 'layout'], Storage()),
+	Interfaces.Stateful(
+		'nti-community-activity-channel',
+		['sortOn', 'layout'],
+		Storage()
+	),
 ]);

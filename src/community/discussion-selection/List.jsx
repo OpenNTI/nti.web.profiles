@@ -11,7 +11,6 @@ const Container = styled(ListContainerBase)`
 	margin-top: 30px;
 `;
 
-
 List.propTypes = {
 	items: PropTypes.shape({
 		hasMore: PropTypes.bool,
@@ -24,20 +23,23 @@ List.propTypes = {
 	onSelect: PropTypes.func,
 };
 
-
-export default function List ({ items, onCreate, onSelect, searchTerm, selected, ...props}) {
+export default function List({
+	items,
+	onCreate,
+	onSelect,
+	searchTerm,
+	selected,
+	...props
+}) {
 	const filteredItems = filterItemsBySearchTerm(items, searchTerm);
 
 	return (
 		<Container data-testid="discussion-selection-list" {...props}>
-
-			{(!filteredItems?.length) && (
-				<Empty data-testid="no-results">
-					No discussions found
-				</Empty>
+			{!filteredItems?.length && (
+				<Empty data-testid="no-results">No discussions found</Empty>
 			)}
 
-			<NewTopic onClick={onCreate}/>
+			<NewTopic onClick={onCreate} />
 
 			{filteredItems.map((item, i) => (
 				<Topic
@@ -47,13 +49,11 @@ export default function List ({ items, onCreate, onSelect, searchTerm, selected,
 					searchTerm={searchTerm}
 					selected={selected?.has(item)}
 				/>
-			)
-			)}
+			))}
 
 			{items.hasMore && (
-				<Placeholder key={filteredItems.length} load={items.more}/>
+				<Placeholder key={filteredItems.length} load={items.more} />
 			)}
 		</Container>
 	);
 }
-

@@ -12,11 +12,13 @@ import Sort from './Sort';
 const cx = classnames.bind(Styles);
 
 CommunityChannelStreamHeader.propTypes = {
-	className: PropTypes.string
+	className: PropTypes.string,
 };
-export default function CommunityChannelStreamHeader (props) {
+export default function CommunityChannelStreamHeader(props) {
 	return (
-		<Card className={cx('community-channel-stream-header', props.className)}>
+		<Card
+			className={cx('community-channel-stream-header', props.className)}
+		>
 			<NewPost {...props} />
 			<Sort {...props} />
 			<Layout {...props} />

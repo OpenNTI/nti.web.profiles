@@ -1,11 +1,15 @@
-import {Stores} from '@nti/lib-store';
+import { Stores } from '@nti/lib-store';
 
 export default class ChannelFieldStore extends Stores.BoundStore {
-	load () {
-		if (this.binding.register) { this.binding.register(this); }
-		if (this.channel && this.binding.channel === this.channel) { return; }
+	load() {
+		if (this.binding.register) {
+			this.binding.register(this);
+		}
+		if (this.channel && this.binding.channel === this.channel) {
+			return;
+		}
 
-		const channel = this.channel = this.binding.channel;
+		const channel = (this.channel = this.binding.channel);
 
 		this.set({
 			pinned: channel.pinned,
@@ -13,36 +17,38 @@ export default class ChannelFieldStore extends Stores.BoundStore {
 
 			title: channel.title,
 			titleError: null,
-			
+
 			description: channel.description,
 			descriptionError: null,
-			
+
 			canDelete: channel.canDelete,
 			doNotPromptOnDelete: channel.doNotPromptOnDelete,
 			deleted: false,
 		});
 	}
 
-	cleanup () {
-		if (this.binding.unregister) { this.binding.unregister(this); }
+	cleanup() {
+		if (this.binding.unregister) {
+			this.binding.unregister(this);
+		}
 	}
 
-	setTitle (title) {
-		this.setImmediate({title, titleError: null});
+	setTitle(title) {
+		this.setImmediate({ title, titleError: null });
 	}
 
-	setDescription (description) {
-		this.setImmediate({description, descriptionError: null});
+	setDescription(description) {
+		this.setImmediate({ description, descriptionError: null });
 	}
 
-	delete () {
+	delete() {
 		this.setImmediate({
-			deleted: true
+			deleted: true,
 		});
 	}
 
-	async save () {
-		const {channel} = this;
+	async save() {
+		const { channel } = this;
 		const deleted = this.get('deleted');
 
 		if (deleted) {
@@ -56,7 +62,7 @@ export default class ChannelFieldStore extends Stores.BoundStore {
 
 		if (title !== channel.title) {
 			toSave = toSave || {};
-			toSave.title = title; 
+			toSave.title = title;
 		}
 
 		if (description !== channel.description) {
@@ -64,28 +70,35 @@ export default class ChannelFieldStore extends Stores.BoundStore {
 			toSave.description = description;
 		}
 
-		if (!toSave) { return; }
+		if (!toSave) {
+			return;
+		}
 
 		try {
 			await channel.save(toSave);
 		} catch (e) {
-			if (e.field === 'title') { this.set({titleError: e}); }
-			if (e.field === 'description') { this.set({descriptionError: e}); }
+			if (e.field === 'title') {
+				this.set({ titleError: e });
+			}
+			if (e.field === 'description') {
+				this.set({ descriptionError: e });
+			}
 
 			throw e;
 		}
 	}
 
+	async deleteChannel() {
+		const { channel } = this;
 
-	async deleteChannel () {
-		const {channel} = this;
-
-		if (channel.wasDeleted) { return; }
+		if (channel.wasDeleted) {
+			return;
+		}
 
 		try {
 			await channel.delete();
 		} catch (e) {
-			this.set({titleError: e});
+			this.set({ titleError: e });
 			throw e;
 		}
 	}

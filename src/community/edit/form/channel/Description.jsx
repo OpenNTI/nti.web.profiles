@@ -1,16 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
-import {decorate} from '@nti/lib-commons';
-import {scoped} from '@nti/lib-locale';
-import {Input} from '@nti/web-commons';
+import { decorate } from '@nti/lib-commons';
+import { scoped } from '@nti/lib-locale';
+import { Input } from '@nti/web-commons';
 
 import Styles from './Style.css';
 import Store from './Store';
 
 const cx = classnames.bind(Styles);
 const t = scoped('nti-profile.community.edit.form.channel.Description', {
-	placeholder: 'Write a description (optional)'
+	placeholder: 'Write a description (optional)',
 });
 
 class DescriptionInput extends React.Component {
@@ -18,11 +18,11 @@ class DescriptionInput extends React.Component {
 		value: PropTypes.string,
 		onChange: PropTypes.func,
 		error: PropTypes.any,
-		readOnly: PropTypes.bool
-	}
+		readOnly: PropTypes.bool,
+	};
 
-	render () {
-		const {value, onChange, error, readOnly} = this.props;
+	render() {
+		const { value, onChange, error, readOnly } = this.props;
 
 		return (
 			<Input.Label error={error}>
@@ -39,5 +39,10 @@ class DescriptionInput extends React.Component {
 }
 
 export default decorate(DescriptionInput, [
-	Store.monitor({description: 'value', 'setDescription': 'onChange', descriptionError: 'error', readOnly: 'readOnly'})
+	Store.monitor({
+		description: 'value',
+		setDescription: 'onChange',
+		descriptionError: 'error',
+		readOnly: 'readOnly',
+	}),
 ]);

@@ -26,14 +26,20 @@ describe('User profile message button test', () => {
 
 	test('Test not present', async () => {
 		const user = {
-			Username: 'testUser'
+			Username: 'testUser',
 		};
 
 		const presence = {
-			status: null
+			status: null,
 		};
 
-		const cmp = renderer.create(<MessageButton entity={user} displayName="TEST USER" presence={presence}/>);
+		const cmp = renderer.create(
+			<MessageButton
+				entity={user}
+				displayName="TEST USER"
+				presence={presence}
+			/>
+		);
 
 		const tree = cmp.toJSON();
 
@@ -42,14 +48,20 @@ describe('User profile message button test', () => {
 
 	test('Test present', async () => {
 		const user = {
-			Username: 'testUser'
+			Username: 'testUser',
 		};
 
 		const presence = {
-			status: ''
+			status: '',
 		};
 
-		const cmp = renderer.create(<MessageButton entity={user} displayName="TEST USER" presence={presence}/>);
+		const cmp = renderer.create(
+			<MessageButton
+				entity={user}
+				displayName="TEST USER"
+				presence={presence}
+			/>
+		);
 
 		const tree = cmp.toJSON();
 

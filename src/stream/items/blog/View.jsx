@@ -1,26 +1,32 @@
 import './View.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Avatar} from '@nti/web-commons';
-import {LinkTo} from '@nti/web-routing';
+import { Avatar } from '@nti/web-commons';
+import { LinkTo } from '@nti/web-routing';
 
-import {Panel} from '../common';
+import { Panel } from '../common';
 import Registry from '../Registry';
 
 import Meta from './Meta';
 
 export default class BlogItem extends React.Component {
-
 	static propTypes = {
-		item: PropTypes.object
-	}
+		item: PropTypes.object,
+	};
 
-	render () {
-		const {item, item: {title, creator: user}} = this.props;
+	render() {
+		const {
+			item,
+			item: { title, creator: user },
+		} = this.props;
 
 		return (
 			<Panel className="blog-item">
-				<LinkTo.Object className="object-link" object={item} context="stream-blog">
+				<LinkTo.Object
+					className="object-link"
+					object={item}
+					context="stream-blog"
+				>
 					<Avatar entity={user} />
 					<div className="title">{title}</div>
 					<Meta item={item} />
@@ -30,4 +36,6 @@ export default class BlogItem extends React.Component {
 	}
 }
 
-Registry.register('application/vnd.nextthought.forums.personalblogentry')(BlogItem);
+Registry.register('application/vnd.nextthought.forums.personalblogentry')(
+	BlogItem
+);

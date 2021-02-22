@@ -7,8 +7,14 @@ import { AvatarContainer, PresenceCircle } from './parts';
 import ChatWindowView from './ChatWindow';
 
 const MaskedAvatar = styled(Avatar)`
-	-webkit-mask-image: radial-gradient( circle, transparent 0, transparent 5px, black 6px );
-   	-webkit-mask-position: right calc(-15px - var(--badge-offset-x, 0px)) bottom calc(-15px - var(--badge-offset-y, 0px));
+	-webkit-mask-image: radial-gradient(
+		circle,
+		transparent 0,
+		transparent 5px,
+		black 6px
+	);
+	-webkit-mask-position: right calc(-15px - var(--badge-offset-x, 0px)) bottom
+		calc(-15px - var(--badge-offset-y, 0px));
 	.presence-available {
 		border: 2px solid var(--presence-available);
 	}
@@ -21,26 +27,22 @@ const MaskedAvatar = styled(Avatar)`
 `;
 
 BadgedAvatar.propTypes = {
-	entity: PropTypes.oneOfType([
-		PropTypes.object,
-		PropTypes.string
-	]).isRequired,
+	entity: PropTypes.oneOfType([PropTypes.object, PropTypes.string])
+		.isRequired,
 
-	presence: PropTypes.oneOfType([
-		PropTypes.object,
-		PropTypes.string
-	]).isRequired,
+	presence: PropTypes.oneOfType([PropTypes.object, PropTypes.string])
+		.isRequired,
 
 	expanded: PropTypes.bool,
 };
 
-export default function BadgedAvatar ( { entity, presence, expanded } ) {
+export default function BadgedAvatar({ entity, presence, expanded }) {
 	const {
 		unreadCount,
 		clearUnreadCount,
 		selectedUser,
 		deselectUser,
-		selectUser
+		selectUser,
 	} = Store.useValue();
 
 	const [window, setWindow] = React.useState(false);
@@ -62,11 +64,25 @@ export default function BadgedAvatar ( { entity, presence, expanded } ) {
 
 	return (
 		<AvatarContainer onClick={handleClick}>
-			<Badge badge={unreadCount ? unreadCount[entity] : 0} position={Badge.POSITIONS.TOP_LEFT} {...Badge.offset(5, 4)}>
-				<MaskedAvatar entity={entity} presence={selected ? presence : ''}/>
+			<Badge
+				badge={unreadCount ? unreadCount[entity] : 0}
+				position={Badge.POSITIONS.TOP_LEFT}
+				{...Badge.offset(5, 4)}
+			>
+				<MaskedAvatar
+					entity={entity}
+					presence={selected ? presence : ''}
+				/>
 			</Badge>
-			<PresenceCircle presence={presence}/>
-			{ window && <ChatWindow onClose={handleClose} entity={entity} visible={window} expanded={expanded}/> }
+			<PresenceCircle presence={presence} />
+			{window && (
+				<ChatWindow
+					onClose={handleClose}
+					entity={entity}
+					visible={window}
+					expanded={expanded}
+				/>
+			)}
 		</AvatarContainer>
 	);
 }

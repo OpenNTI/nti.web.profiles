@@ -18,10 +18,10 @@ const TYPE_TO_INPUT = {
 	int: IntegerInput,
 	list: ListInput,
 	'nti.dataserver.users.interfaces.EmailAddress': EmailInput,
-	datetime: DateTimeInput
+	datetime: DateTimeInput,
 };
 
-function getInputForField (field) {
+function getInputForField(field) {
 	return TYPE_TO_INPUT[field.schema.type] || TYPE_TO_INPUT.string;
 }
 
@@ -30,12 +30,11 @@ export default class ProfileUpdateSalltProfileCommunity extends React.Component 
 		order: PropTypes.array,
 		title: PropTypes.string,
 		fields: PropTypes.array,
-		values: PropTypes.object
-	}
+		values: PropTypes.object,
+	};
 
-
-	render () {
-		const {order, title, fields, values, ...otherProps} = this.props;
+	render() {
+		const { order, title, fields, values, ...otherProps } = this.props;
 		const fieldMap = fields.reduce((acc, field) => {
 			acc[field.schema.name] = field;
 
@@ -43,25 +42,36 @@ export default class ProfileUpdateSalltProfileCommunity extends React.Component 
 		}, {});
 
 		const fieldCmps = order
-			.map((type) => {
+			.map(type => {
 				const field = fieldMap[type];
 				const value = values[type];
 
-				if (!field) { return null; }
+				if (!field) {
+					return null;
+				}
 
 				const Cmp = getInputForField(field);
 
-				if (field.hidden) { return null;}
+				if (field.hidden) {
+					return null;
+				}
 
 				return (
-					<div className={cx('field', field.schema.type, {'has-truthy-value': value})} key={type}>
+					<div
+						className={cx('field', field.schema.type, {
+							'has-truthy-value': value,
+						})}
+						key={type}
+					>
 						<Cmp field={field} value={value} {...otherProps} />
 					</div>
 				);
 			})
 			.filter(Boolean);
 
-		if (!fieldCmps || fieldCmps.length === 0) { return null; }
+		if (!fieldCmps || fieldCmps.length === 0) {
+			return null;
+		}
 
 		return (
 			<div className="profile-update-sallt-profile-field-group">

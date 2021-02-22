@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import {Flyout, Prompt} from '@nti/web-commons';
-import {decorate} from '@nti/lib-commons';
-import {scoped} from '@nti/lib-locale';
-import {getService} from '@nti/web-client';
+import { Flyout, Prompt } from '@nti/web-commons';
+import { decorate } from '@nti/lib-commons';
+import { scoped } from '@nti/lib-locale';
+import { getService } from '@nti/web-client';
 
 import Store from './Store';
 import Table from './table/View';
@@ -22,7 +22,7 @@ const t = scoped('nti-web-profile.transcripts.View', {
 	credits: 'Credits',
 	confirm: 'Done',
 	reset: 'Reset',
-	filterHeader: 'Filters'
+	filterHeader: 'Filters',
 });
 
 class TranscriptsContentsContainer extends React.Component {
@@ -36,69 +36,79 @@ class TranscriptsContentsContainer extends React.Component {
 		csvLink: PropTypes.string,
 		pdfLink: PropTypes.string,
 		showSidePanel: PropTypes.bool,
-		showFiltersAsModal: PropTypes.bool
-	}
+		showFiltersAsModal: PropTypes.bool,
+	};
 
-	state = {}
+	state = {};
 
-	attachFlyoutRef = x => this.flyout = x
+	attachFlyoutRef = x => (this.flyout = x);
 
-	attachFilterRef = x => this.filterFlyout = x
+	attachFilterRef = x => (this.filterFlyout = x);
 
-	componentDidMount () {
-		const {entity, store} = this.props;
+	componentDidMount() {
+		const { entity, store } = this.props;
 
 		store.loadTranscript(entity);
 
 		getService().then(service => {
 			if (entity.hasLink('add_credit')) {
-				this.setState({canAddCredit: true});
+				this.setState({ canAddCredit: true });
 			}
 		});
 	}
 
-	componentDidUpdate (oldProps) {
-		const {entity:oldEntity} = oldProps;
-		const {entity:newEntity} = this.props;
+	componentDidUpdate(oldProps) {
+		const { entity: oldEntity } = oldProps;
+		const { entity: newEntity } = this.props;
 
-		if(oldEntity === null || oldEntity.Username !== newEntity.Username) {
+		if (oldEntity === null || oldEntity.Username !== newEntity.Username) {
 			this.props.store.loadTranscript(newEntity);
 		}
 	}
 
-	renderDownloadTrigger () {
+	renderDownloadTrigger() {
 		let cls = 'download';
 		const realData = this.getRealData();
 
-		if(realData == null || realData.length === 0) {
+		if (realData == null || realData.length === 0) {
 			cls += ' disabled';
 		}
 
-		return <div className={cls}><i className="icon-download"/><span>{t('download')}</span></div>;
+		return (
+			<div className={cls}>
+				<i className="icon-download" />
+				<span>{t('download')}</span>
+			</div>
+		);
 	}
 
 	launchUserAwardedEditor = () => {
 		UserAwardedCredit.show(this.state.entity, null, this.props.store);
-	}
+	};
 
-	renderEmptyMessage () {
-		const {dateFilter, typeFilter} = this.props;
+	renderEmptyMessage() {
+		const { dateFilter, typeFilter } = this.props;
 
-		if(dateFilter || typeFilter) {
-			return <div className="empty-message">No credits match your filter</div>;
+		if (dateFilter || typeFilter) {
+			return (
+				<div className="empty-message">
+					No credits match your filter
+				</div>
+			);
 		}
 
 		return <div className="empty-message">No credits received yet</div>;
 	}
 
-	renderContent () {
-		const {items} = this.props;
+	renderContent() {
+		const { items } = this.props;
 
-		if(items && items.length > 0) {
+		if (items && items.length > 0) {
 			return (
 				<div className="table-container">
-					<Table {...this.props}/>
-					{this.getRealData().length === 0 && this.renderEmptyMessage()}
+					<Table {...this.props} />
+					{this.getRealData().length === 0 &&
+						this.renderEmptyMessage()}
 				</div>
 			);
 		}
@@ -108,10 +118,10 @@ class TranscriptsContentsContainer extends React.Component {
 
 	dismissDownloadFlyout = () => {
 		this.flyout.dismiss();
-	}
+	};
 
-	renderDownloadButton () {
-		const {csvLink, pdfLink} = this.props;
+	renderDownloadButton() {
+		const { csvLink, pdfLink } = this.props;
 
 		return (
 			<Flyout.Triggered
@@ -122,14 +132,42 @@ class TranscriptsContentsContainer extends React.Component {
 				ref={this.attachFlyoutRef}
 			>
 				<div>
-					<div className={cx('download-option', {disabled: !csvLink})} onClick={this.dismissDownloadFlyout}><a target="_blank" rel="noopener noreferrer" download href={csvLink}>{t('csv')}</a></div>
-					<div className={cx('download-option', {disabled: !pdfLink})} onClick={this.dismissDownloadFlyout}><a target="_blank" rel="noopener noreferrer" download href={pdfLink}>{t('pdf')}</a></div>
+					<div
+						className={cx('download-option', {
+							disabled: !csvLink,
+						})}
+						onClick={this.dismissDownloadFlyout}
+					>
+						<a
+							target="_blank"
+							rel="noopener noreferrer"
+							download
+							href={csvLink}
+						>
+							{t('csv')}
+						</a>
+					</div>
+					<div
+						className={cx('download-option', {
+							disabled: !pdfLink,
+						})}
+						onClick={this.dismissDownloadFlyout}
+					>
+						<a
+							target="_blank"
+							rel="noopener noreferrer"
+							download
+							href={pdfLink}
+						>
+							{t('pdf')}
+						</a>
+					</div>
 				</div>
 			</Flyout.Triggered>
 		);
 	}
 
-	renderFilterTrigger () {
+	renderFilterTrigger() {
 		return <div className="filter-trigger">Filters</div>;
 	}
 
@@ -145,23 +183,32 @@ class TranscriptsContentsContainer extends React.Component {
 			dialog = Prompt.modal(
 				<div className="filter-menu-container">
 					<div className="controls">
-						<div className="reset" onClick={doReset}>{t('reset')}</div>
+						<div className="reset" onClick={doReset}>
+							{t('reset')}
+						</div>
 						<div className="header">{t('filterHeader')}</div>
-						<div className="confirm" onClick={fulfill}>{t('confirm')}</div>
+						<div className="confirm" onClick={fulfill}>
+							{t('confirm')}
+						</div>
 					</div>
-					<FilterMenu fullScreenDatePicker/>
+					<FilterMenu fullScreenDatePicker />
 				</div>,
-				{className: 'transcript-filter-modal'});
-		}).then((savedEntry) => {
+				{ className: 'transcript-filter-modal' }
+			);
+		}).then(savedEntry => {
 			dialog && dialog.dismiss();
 		});
+	};
+
+	renderFilterDialog() {
+		return (
+			<div className="filter-trigger" onClick={this.launchFilterMenu}>
+				Filters
+			</div>
+		);
 	}
 
-	renderFilterDialog () {
-		return <div className="filter-trigger" onClick={this.launchFilterMenu}>Filters</div>;
-	}
-
-	renderFilterFlyout () {
+	renderFilterFlyout() {
 		return (
 			<Flyout.Triggered
 				className="transcript-filter"
@@ -172,37 +219,56 @@ class TranscriptsContentsContainer extends React.Component {
 				ref={this.attachFilterRef}
 			>
 				<div>
-					<FilterMenu canReset/>
+					<FilterMenu canReset />
 				</div>
 			</Flyout.Triggered>
 		);
 	}
 
-	getRealData () {
-		const {items} = this.props;
+	getRealData() {
+		const { items } = this.props;
 
 		return (items || []).filter(x => !x.isAddRow);
 	}
 
-	render () {
-		const {canAddCredit} = this.state;
-		const {dateFilter, typeFilter, showSidePanel, showFiltersAsModal} = this.props;
+	render() {
+		const { canAddCredit } = this.state;
+		const {
+			dateFilter,
+			typeFilter,
+			showSidePanel,
+			showFiltersAsModal,
+		} = this.props;
 		const realData = this.getRealData();
 		const noData = realData.length === 0 && !dateFilter && !typeFilter;
-		const cls = cx('nti-profile-transcripts-container', {'has-side-panel': showSidePanel});
+		const cls = cx('nti-profile-transcripts-container', {
+			'has-side-panel': showSidePanel,
+		});
 
 		return (
 			<div className={cls}>
 				<div className="nti-profile-transcripts">
-					<AggreggateTable {...this.props}/>
+					<AggreggateTable {...this.props} />
 					<div className="credit-details">
-						<div className={cx('top-controls', {'can-add-credit': canAddCredit})}>
+						<div
+							className={cx('top-controls', {
+								'can-add-credit': canAddCredit,
+							})}
+						>
 							<div className="transcript-actions">
 								{/* {this.state.canAddCredit && <Button className="award-credit" onClick={this.launchUserAwardedEditor} rounded>{t('addCredit')}</Button>} */}
-								<div className="section-title">{t('credits')}</div>
+								<div className="section-title">
+									{t('credits')}
+								</div>
 								<div className="controls">
-									{!noData && !showSidePanel && showFiltersAsModal && this.renderFilterDialog()}
-									{!noData && !showSidePanel && !showFiltersAsModal && this.renderFilterFlyout()}
+									{!noData &&
+										!showSidePanel &&
+										showFiltersAsModal &&
+										this.renderFilterDialog()}
+									{!noData &&
+										!showSidePanel &&
+										!showFiltersAsModal &&
+										this.renderFilterFlyout()}
 									{this.renderDownloadButton()}
 								</div>
 							</div>
@@ -210,12 +276,11 @@ class TranscriptsContentsContainer extends React.Component {
 						{this.renderContent()}
 					</div>
 				</div>
-				{showSidePanel && <FilterMenu canReset/>}
+				{showSidePanel && <FilterMenu canReset />}
 			</div>
 		);
 	}
 }
-
 
 export default decorate(TranscriptsContentsContainer, [
 	Store.connect({
@@ -226,6 +291,6 @@ export default decorate(TranscriptsContentsContainer, [
 		aggregateItems: 'aggregateItems',
 		availableTypes: 'availableTypes',
 		csvLink: 'csvLink',
-		pdfLink: 'pdfLink'
-	})
+		pdfLink: 'pdfLink',
+	}),
 ]);

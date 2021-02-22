@@ -1,11 +1,11 @@
-import {Router, Route} from '@nti/web-routing';
-import {encodeForURI} from '@nti/lib-ntiids';
+import { Router, Route } from '@nti/web-routing';
+import { encodeForURI } from '@nti/lib-ntiids';
 
 import View from './View';
 
 const ContextToHash = {
 	comment: '#comment',
-	edit: '#edit'
+	edit: '#edit',
 };
 
 export default Router.for([
@@ -24,12 +24,16 @@ export default Router.for([
 			}
 
 			if (obj.isComment) {
-				return `./${encodeForURI(obj.ContainerId)}/#${encodeForURI(obj.getID())}`;
+				return `./${encodeForURI(obj.ContainerId)}/#${encodeForURI(
+					obj.getID()
+				)}`;
 			}
 
 			if (obj.isNote && obj.inReplyTo) {
-				return `./${encodeForURI(obj.inReplyTo)}/#${encodeForURI(obj.getID())}`;
+				return `./${encodeForURI(obj.inReplyTo)}/#${encodeForURI(
+					obj.getID()
+				)}`;
 			}
-		}
-	})
+		},
+	}),
 ]);

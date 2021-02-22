@@ -1,4 +1,4 @@
-@import "~@nti/style-common";
+@import '~@nti/style-common';
 
 .token-editor.nti-profile-interest-list {
 	padding: 0;
@@ -21,7 +21,7 @@
 		text-overflow: ellipsis;
 		overflow: hidden;
 
-		[class^=icon] {
+		[class^='icon'] {
 			position: absolute;
 			right: 0.625em;
 			top: 50%;

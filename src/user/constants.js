@@ -8,10 +8,13 @@ const LOCALE_KEYS = [
 	'INTERESTS',
 	'COMMUNITY',
 	'PERSONALITY',
-	'DISTRICT'
+	'DISTRICT',
 ];
 
 export const LOCALE_PATHS = {
 	ROOT: LOCALE_ROOT,
-	...LOCALE_KEYS.reduce((result, key) => ({...result, [key]: [LOCALE_ROOT, key].join('.')}), {})
+	...LOCALE_KEYS.reduce(
+		(result, key) => ({ ...result, [key]: [LOCALE_ROOT, key].join('.') }),
+		{}
+	),
 };

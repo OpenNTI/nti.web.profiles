@@ -1,8 +1,14 @@
 @import '~@nti/style-common';
 
 $header-ranges: (
-	one-column: (null, 600px),
-	two-column: (600px, null)
+	one-column: (
+		null,
+		600px,
+	),
+	two-column: (
+		600px,
+		null,
+	),
 );
 
 .user-awarded-view-container {
@@ -73,7 +79,8 @@ $header-ranges: (
 				}
 			}
 
-			.panel-title-bar, .dialog-buttons {
+			.panel-title-bar,
+			.dialog-buttons {
 				display: none;
 			}
 

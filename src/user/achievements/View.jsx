@@ -1,28 +1,27 @@
 import './View.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
-import {scoped} from '@nti/lib-locale';
+import { scoped } from '@nti/lib-locale';
 
-import {MaybeEmpty} from '../../common';
+import { MaybeEmpty } from '../../common';
 import Badges from '../badges';
 import Certificates from '../certificates';
 
 const t = scoped('nti-web-profile.achievements', {
-	empty: 'This user doesn’t have any visible badges or certificates.'
+	empty: 'This user doesn’t have any visible badges or certificates.',
 });
 
-
 export default class View extends React.Component {
-	static hasData (user) {
+	static hasData(user) {
 		return Badges.hasData(user) || Certificates.hasData(user);
 	}
 
 	static propTypes = {
-		entity: PropTypes.object.isRequired
-	}
+		entity: PropTypes.object.isRequired,
+	};
 
-	render () {
-		const {entity} = this.props;
+	render() {
+		const { entity } = this.props;
 
 		return !entity ? null : (
 			<MaybeEmpty message={t('empty')}>

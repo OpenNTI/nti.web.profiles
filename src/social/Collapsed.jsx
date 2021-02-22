@@ -3,7 +3,12 @@ import PropTypes from 'prop-types';
 import { LinkTo } from '@nti/web-routing';
 import { Badge, Errors, Loading, Theme } from '@nti/web-commons';
 
-import {Container, IconContainer, ExpandButton, ContactsButton} from './parts/collapsed';
+import {
+	Container,
+	IconContainer,
+	ExpandButton,
+	ContactsButton,
+} from './parts/collapsed';
 import Store from './Store';
 import UsersContainer from './parts/collapsed/UsersContainer';
 
@@ -23,11 +28,8 @@ CollapsedPanel.propTypes = {
 	toggle: PropTypes.func.isRequired,
 };
 
-export default function CollapsedPanel ( {toggle:expand, children} ) {
-	const {
-		loading,
-		error,
-	} = Store.useValue();
+export default function CollapsedPanel({ toggle: expand, children }) {
+	const { loading, error } = Store.useValue();
 
 	const theme = Theme.useThemeProperty('icon');
 
@@ -40,20 +42,26 @@ export default function CollapsedPanel ( {toggle:expand, children} ) {
 					<>
 						<IconContainer>{child}</IconContainer>
 					</>
-				);}
-			)}
+				);
+			})}
 
-			<Loading.Placeholder loading={loading} fallback={(<Spinner/>)}>
+			<Loading.Placeholder loading={loading} fallback={<Spinner />}>
 				{error ? (
-					<Errors.Message error={error}/>
+					<Errors.Message error={error} />
 				) : (
-					<UsersContainer updateExpandBadge={(x) => setHiddenCountsSum(x)}/>
+					<UsersContainer
+						updateExpandBadge={x => setHiddenCountsSum(x)}
+					/>
 				)}
 			</Loading.Placeholder>
 
 			<ButtonsContainer>
 				<ExpandContainer>
-					<Badge badge={hiddenCountsSum} position={Badge.POSITIONS.TOP_LEFT} {...Badge.offset(12, 5)}>
+					<Badge
+						badge={hiddenCountsSum}
+						position={Badge.POSITIONS.TOP_LEFT}
+						{...Badge.offset(12, 5)}
+					>
 						<ExpandButton onClick={expand} />
 					</Badge>
 				</ExpandContainer>
@@ -62,7 +70,6 @@ export default function CollapsedPanel ( {toggle:expand, children} ) {
 					<ContactsButton />
 				</LinkTo.Path>
 			</ButtonsContainer>
-
 		</Container>
 	);
 }

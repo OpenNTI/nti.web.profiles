@@ -10,15 +10,19 @@ import Detail from './Detail';
 export default class Note extends React.Component {
 	static propTypes = {
 		item: PropTypes.object.isRequired,
-		context: PropTypes.object
-	}
+		context: PropTypes.object,
+	};
 
-	render () {
+	render() {
 		const { item, context } = this.props;
 
 		return (
 			<div className="nti-content-stream-note">
-				<Breadcrumb className="note-breadcrumb" item={item} context={context} />
+				<Breadcrumb
+					className="note-breadcrumb"
+					item={item}
+					context={context}
+				/>
 				<Detail item={item} />
 			</div>
 		);

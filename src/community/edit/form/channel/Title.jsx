@@ -1,16 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
-import {decorate} from '@nti/lib-commons';
-import {scoped} from '@nti/lib-locale';
-import {Input} from '@nti/web-commons';
+import { decorate } from '@nti/lib-commons';
+import { scoped } from '@nti/lib-locale';
+import { Input } from '@nti/web-commons';
 
 import Styles from './Style.css';
 import Store from './Store';
 
 const cx = classnames.bind(Styles);
 const t = scoped('nti-profiles.community.edit.form.channel.title', {
-	placeholder: 'Channel Title...'
+	placeholder: 'Channel Title...',
 });
 
 class TitleInput extends React.Component {
@@ -19,11 +19,11 @@ class TitleInput extends React.Component {
 		onChange: PropTypes.func,
 		error: PropTypes.any,
 		autoFocus: PropTypes.bool,
-		readOnly: PropTypes.bool
-	}
+		readOnly: PropTypes.bool,
+	};
 
-	render () {
-		const {value, onChange, error, autoFocus, readOnly} = this.props;
+	render() {
+		const { value, onChange, error, autoFocus, readOnly } = this.props;
 
 		return (
 			<Input.Label className={cx('title-input')} error={error}>
@@ -40,7 +40,11 @@ class TitleInput extends React.Component {
 	}
 }
 
-
 export default decorate(TitleInput, [
-	Store.monitor({title: 'value', 'setTitle': 'onChange', 'titleError': 'error', readOnly: 'readOnly'})
+	Store.monitor({
+		title: 'value',
+		setTitle: 'onChange',
+		titleError: 'error',
+		readOnly: 'readOnly',
+	}),
 ]);

@@ -1,20 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Router, Route, View} from '@nti/web-routing';
-import {Prompt, Background} from '@nti/web-commons';
+import { Router, Route, View } from '@nti/web-routing';
+import { Prompt, Background } from '@nti/web-commons';
 
-import {Modal as EditModal} from '../edit';
-import {Background as CommunityBackground} from '../common';
+import { Modal as EditModal } from '../edit';
+import { Background as CommunityBackground } from '../common';
 
-import {Modal as MembersModal} from './members';
+import { Modal as MembersModal } from './members';
 
 export default class CommunityFrame extends React.Component {
 	static propTypes = {
 		children: PropTypes.element,
 		community: PropTypes.object,
 		title: PropTypes.string,
-		noBackground: PropTypes.bool
-	}
+		noBackground: PropTypes.bool,
+	};
 
 	getCommunityEditRoute = (obj, context) => {
 		if (obj.isCommunity && context === 'edit') {
@@ -24,11 +24,10 @@ export default class CommunityFrame extends React.Component {
 		if (obj.isCommunity && context === 'members') {
 			return '#members';
 		}
-	}
-
+	};
 
 	renderCommunityEdit = (_, setHash) => {
-		const {community, title} = this.props;
+		const { community, title } = this.props;
 		const close = () => setHash('');
 
 		return (
@@ -41,10 +40,10 @@ export default class CommunityFrame extends React.Component {
 				/>
 			</Prompt.Dialog>
 		);
-	}
+	};
 
 	renderMembers = (_, setHash) => {
-		const {community} = this.props;
+		const { community } = this.props;
 		const close = () => setHash('');
 
 		return (
@@ -52,20 +51,21 @@ export default class CommunityFrame extends React.Component {
 				<MembersModal community={community} doClose={close} />
 			</Prompt.Dialog>
 		);
-	}
+	};
 
-	getTitle () {
-		const {community, title} = this.props;
+	getTitle() {
+		const { community, title } = this.props;
 
 		return title || (community ? community.displayName : '');
 	}
 
-
-	render () {
-		const {community, noBackground} = this.props;
+	render() {
+		const { community, noBackground } = this.props;
 		const routes = this.renderRoutes();
 
-		if (noBackground) { return routes; }
+		if (noBackground) {
+			return routes;
+		}
 
 		return (
 			<CommunityBackground community={community} childProp="imgUrl">
@@ -76,17 +76,25 @@ export default class CommunityFrame extends React.Component {
 		);
 	}
 
-	renderRoutes () {
-		const {children, community} = this.props;
+	renderRoutes() {
+		const { children, community } = this.props;
 
 		return (
 			<View.WithTitle title={this.getTitle()}>
-				<Router.RouteForProvider getRouteFor={this.getCommunityEditRoute}>
-					{React.Children.map(children, (item) =>
-						React.cloneElement(item, {community})
+				<Router.RouteForProvider
+					getRouteFor={this.getCommunityEditRoute}
+				>
+					{React.Children.map(children, item =>
+						React.cloneElement(item, { community })
 					)}
-					<Route.Hash matches="#community-edit" render={this.renderCommunityEdit} />
-					<Route.Hash matches="#members" render={this.renderMembers} />
+					<Route.Hash
+						matches="#community-edit"
+						render={this.renderCommunityEdit}
+					/>
+					<Route.Hash
+						matches="#members"
+						render={this.renderMembers}
+					/>
 				</Router.RouteForProvider>
 			</View.WithTitle>
 		);

@@ -26,8 +26,14 @@ const Switch = styled(Layouts.Switches.GridList)`
 	margin-right: 30px;
 `;
 
-export default function Toolbar ({onChangeChannel, currentChannel, community, onSearch, ...props}) {
-	const {layout, setLayout} = useContext(LayoutContext);
+export default function Toolbar({
+	onChangeChannel,
+	currentChannel,
+	community,
+	onSearch,
+	...props
+}) {
+	const { layout, setLayout } = useContext(LayoutContext);
 	const [search, setSearch] = useState('');
 
 	const prev = useRef(search);
@@ -40,11 +46,14 @@ export default function Toolbar ({onChangeChannel, currentChannel, community, on
 
 	return (
 		<TopControls data-testid="discussion-selection-top-controls" {...props}>
-			<ChannelSelect onChange={onChangeChannel} selected={currentChannel} community={community}/>
-			<Spacer/>
+			<ChannelSelect
+				onChange={onChangeChannel}
+				selected={currentChannel}
+				community={community}
+			/>
+			<Spacer />
 			<Search onChange={setSearch} value={search} />
 			<Switch onChange={setLayout} value={layout} />
 		</TopControls>
 	);
 }
-

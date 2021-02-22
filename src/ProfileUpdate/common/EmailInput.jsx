@@ -1,13 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import {scoped} from '@nti/lib-locale';
-import {Input} from '@nti/web-commons';
+import { scoped } from '@nti/lib-locale';
+import { Input } from '@nti/web-commons';
 
 const t = scoped('nti-profiles.ProfileUpdate.common.EmailInput', {
-	description: 'Please provide an email.'
+	description: 'Please provide an email.',
 });
-
 
 export default class ProfileUpdateEmailInput extends React.Component {
 	static propTypes = {
@@ -16,74 +15,83 @@ export default class ProfileUpdateEmailInput extends React.Component {
 				name: PropTypes.string,
 				description: PropTypes.string,
 				title: PropTypes.string,
-				choices: PropTypes.array
+				choices: PropTypes.array,
 			}),
 			error: PropTypes.shape({
 				message: PropTypes.string,
-				code: PropTypes.string
-			})
+				code: PropTypes.string,
+			}),
 		}).isRequired,
 		value: PropTypes.string,
-		onChange: PropTypes.func
-	}
+		onChange: PropTypes.func,
+	};
 
-	state = {}
+	state = {};
 
-	componentDidMount () {
+	componentDidMount() {
 		this.setupFor(this.props);
 	}
 
-
-	componentDidUpdate (prevProps) {
-		const {value} = this.props;
-		const {value:oldValue} = prevProps;
+	componentDidUpdate(prevProps) {
+		const { value } = this.props;
+		const { value: oldValue } = prevProps;
 
 		if (oldValue !== value) {
 			this.setupFor(this.props);
 		}
 	}
 
+	setupFor(props) {
+		const { value } = props;
 
-	setupFor (props) {
-		const {value} = props;
-
-		this.setState({value});
+		this.setState({ value });
 	}
 
-
-	onChange = (value) => {
+	onChange = value => {
 		value = value || null;
 
 		this.setState({
-			value
+			value,
 		});
 
 		clearTimeout(this.onChangeTimeout);
 
 		this.onChangeTimeout = setTimeout(() => {
-			const {onChange, field, value:oldValue} = this.props;
-			const {value: newValue} = this.state;
+			const { onChange, field, value: oldValue } = this.props;
+			const { value: newValue } = this.state;
 
 			if (onChange && oldValue !== newValue) {
 				onChange(field, newValue);
 			}
 		}, 500);
-	}
+	};
 
-	render () {
-		const {field: {schema, error}} = this.props;
-		const {value} = this.state;
-		const {message, code} = error ?? {};
+	render() {
+		const {
+			field: { schema, error },
+		} = this.props;
+		const { value } = this.state;
+		const { message, code } = error ?? {};
 		const showMessage = message && code !== 'RequiredMissing';
 
 		return (
-			<div className={cx('profile-update-sallt-profile-email-input', schema.name)}>
+			<div
+				className={cx(
+					'profile-update-sallt-profile-email-input',
+					schema.name
+				)}
+			>
 				<Input.Label label={t('description')}>
-					<Input.Email placeholder={schema.title} value={value} onChange={this.onChange} />
+					<Input.Email
+						placeholder={schema.title}
+						value={value}
+						onChange={this.onChange}
+					/>
 				</Input.Label>
-				{showMessage ? (<div className="profile-update-warning">{message}</div>) : null}
+				{showMessage ? (
+					<div className="profile-update-warning">{message}</div>
+				) : null}
 			</div>
 		);
 	}
-
 }

@@ -1,5 +1,5 @@
 export default styled.div`
-	background: url("../../assets/contacts.png");
+	background: url('../../assets/contacts.png');
 	overflow: hidden;
 	top: 1px;
 	left: 1px;

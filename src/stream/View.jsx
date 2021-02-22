@@ -1,7 +1,13 @@
 import './View.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Loading, Layouts, Stream, StickyContainer, StickyElement } from '@nti/web-commons';
+import {
+	Loading,
+	Layouts,
+	Stream,
+	StickyContainer,
+	StickyElement,
+} from '@nti/web-commons';
 
 import Store from './Store';
 import Sidebar from './sidebar';
@@ -14,11 +20,11 @@ const SORT = {
 	CREATED_TIME: 'CreatedTime',
 	RECENT_ACTIVITY: 'LastModified',
 	MOST_COMMENTED: 'ReferencedByCount',
-	MOST_LIKED: 'RecursiveLikeCount'
+	MOST_LIKED: 'RecursiveLikeCount',
 };
 const SORT_ORDER = {
 	ASCENDING: 'ascending',
-	DESCENDING: 'descending'
+	DESCENDING: 'descending',
 };
 
 const isLargeView = ({ containerWidth }) => {
@@ -36,7 +42,7 @@ const isSmallView = ({ containerWidth }) => {
 class View extends React.Component {
 	static propTypes = {
 		context: PropTypes.shape({
-			getStreamDataSource: PropTypes.func.isRequired
+			getStreamDataSource: PropTypes.func.isRequired,
 		}).isRequired,
 	};
 
@@ -52,65 +58,77 @@ class View extends React.Component {
 			},
 			batchAfter: DATE_FILTER_VALUES.ANYTIME,
 			sortOn: SORT.CREATED_TIME,
-			sortOrder: SORT_ORDER.DESCENDING
-		}
+			sortOrder: SORT_ORDER.DESCENDING,
+		},
 	};
 
-	componentDidMount () {
-		const { context} = this.props;
+	componentDidMount() {
+		const { context } = this.props;
 
 		if (context) {
 			this.setState({
-				store: new Store(context, this.state.params)
+				store: new Store(context, this.state.params),
 			});
 		}
 	}
 
-	componentDidUpdate (prevProps) {
+	componentDidUpdate(prevProps) {
 		const { context: newContext } = this.props;
 		const { context: oldContext } = prevProps;
 
 		if (oldContext !== newContext) {
-			this.setState({
-				store: null
-			}, () => {
-				this.setState({
-					store: new Store(newContext, this.state.params)
-				});
-			});
+			this.setState(
+				{
+					store: null,
+				},
+				() => {
+					this.setState({
+						store: new Store(newContext, this.state.params),
+					});
+				}
+			);
 		}
 	}
 
-	onChange = (params) => {
-		this.setState({
-			params,
-			store: null
-		}, () => {
-			this.setState({ store: new Store(this.props.context, this.state.params)});
-		});
-	}
+	onChange = params => {
+		this.setState(
+			{
+				params,
+				store: null,
+			},
+			() => {
+				this.setState({
+					store: new Store(this.props.context, this.state.params),
+				});
+			}
+		);
+	};
 
-	renderPage = (props) => {
+	renderPage = props => {
 		const { context } = this.props;
 
-		return (
-			<Page {...props} context={context} />
-		);
-	}
+		return <Page {...props} context={context} />;
+	};
 
 	renderEmpty = () => {
 		const { openSearch } = this.state;
 		return (
 			<div className="stream-content-empty">
 				<div className="stream-empty-container">
-					<div className="stream-empty-header">{openSearch ? 'Your notebook is empty.' : 'No Results'}</div>
-					<div className="stream-empty-text">{openSearch ? 'Your notes, bookmarks, and other \n actvity will be collected here.' : 'Try expanding your filters to view more items.'}</div>
+					<div className="stream-empty-header">
+						{openSearch ? 'Your notebook is empty.' : 'No Results'}
+					</div>
+					<div className="stream-empty-text">
+						{openSearch
+							? 'Your notes, bookmarks, and other \n actvity will be collected here.'
+							: 'Try expanding your filters to view more items.'}
+					</div>
 				</div>
 			</div>
 		);
-	}
+	};
 
-	renderLoading () {
+	renderLoading() {
 		return (
 			<div className="loading-container">
 				<Loading.Mask />
@@ -134,17 +152,24 @@ class View extends React.Component {
 				)}
 			</div>
 		);
-	}
+	};
 
 	renderCompact = ({ type }) => {
 		const { params, showDialog } = this.state;
 		return (
 			<div className="compact">
-				<Sidebar type={type} onChange={this.onChange} params={params} onDialogVisibilityChange={newVisibility => this.setState({showDialog: newVisibility})} />
+				<Sidebar
+					type={type}
+					onChange={this.onChange}
+					params={params}
+					onDialogVisibilityChange={newVisibility =>
+						this.setState({ showDialog: newVisibility })
+					}
+				/>
 				{!showDialog && this.renderStream()}
 			</div>
 		);
-	}
+	};
 
 	renderFull = () => {
 		const { params } = this.state;
@@ -163,14 +188,22 @@ class View extends React.Component {
 				</Layouts.NavContent.Container>
 			</StickyContainer>
 		);
-	}
+	};
 
-	render () {
+	render() {
 		return (
 			<Responsive.Container>
-				<Responsive.Item query={isLargeView} render={this.renderFull}  />
-				<Responsive.Item query={isMediumView} render={this.renderCompact} type="flyout"  />
-				<Responsive.Item query={isSmallView} render={this.renderCompact} type="dialog"  />
+				<Responsive.Item query={isLargeView} render={this.renderFull} />
+				<Responsive.Item
+					query={isMediumView}
+					render={this.renderCompact}
+					type="flyout"
+				/>
+				<Responsive.Item
+					query={isSmallView}
+					render={this.renderCompact}
+					type="dialog"
+				/>
 			</Responsive.Container>
 		);
 	}

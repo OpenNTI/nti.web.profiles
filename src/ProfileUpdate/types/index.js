@@ -6,6 +6,8 @@ import './sallt';
 
 const registry = Registry.getInstance();
 
-export function getCmpForType (type, baseType) {
-	return registry.getItemFor(type) || registry.getItemFor(baseType) || Default;
+export function getCmpForType(type, baseType) {
+	return (
+		registry.getItemFor(type) || registry.getItemFor(baseType) || Default
+	);
 }

@@ -17,5 +17,5 @@ export default {
 	size: PropTypes.string,
 
 	title: PropTypes.string,
-	topicWindowClassName: PropTypes.string
+	topicWindowClassName: PropTypes.string,
 };

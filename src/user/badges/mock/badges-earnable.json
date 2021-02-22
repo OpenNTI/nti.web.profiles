@@ -28,10 +28,7 @@
 				"url": "https://ou-alpha.nextthought.com"
 			},
 			"name": "Power and Elegance of Computational Thinking",
-			"tags": [
-				"computer",
-				"power"
-			]
+			"tags": ["computer", "power"]
 		},
 		{
 			"Class": "Badge",
@@ -53,10 +50,7 @@
 				"url": "https://ou-alpha.nextthought.com"
 			},
 			"name": "Power and Elegance of Computational Thinking",
-			"tags": [
-				"computer",
-				"power"
-			]
+			"tags": ["computer", "power"]
 		}
 	],
 	"Last Modified": 0,

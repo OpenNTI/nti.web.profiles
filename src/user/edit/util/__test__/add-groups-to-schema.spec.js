@@ -5,26 +5,26 @@ const schema = {
 	Username: {},
 	about: {},
 	alias: {},
-	role: {}
+	role: {},
 };
 
 const groups = {
 	role: 'role',
-	about: [
-		'about',
-		'alias'
-	]
+	about: ['about', 'alias'],
 };
 
 describe('add-groups-to-schema', () => {
-
 	test('adds groups to schema entries', () => {
 		const s = addGroups(schema, groups);
-		expect(groups.about.every(field => (s[field] || {}).group === 'about')).toBe(true);
+		expect(
+			groups.about.every(field => (s[field] || {}).group === 'about')
+		).toBe(true);
 	});
 
 	test('output includes all input schema fields', () => {
 		const s = addGroups(schema, groups);
-		expect(Object.keys(s)).toEqual(expect.arrayContaining(Object.keys(schema)));
+		expect(Object.keys(s)).toEqual(
+			expect.arrayContaining(Object.keys(schema))
+		);
 	});
 });

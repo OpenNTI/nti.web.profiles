@@ -4,38 +4,37 @@ import PropTypes from 'prop-types';
 import getParts from './parts';
 import Frame from './Frame';
 
-const safeId = user => user && user.getID ? user.getID() : undefined;
+const safeId = user => (user && user.getID ? user.getID() : undefined);
 
 export default class About extends React.Component {
-
 	static propTypes = {
-		user: PropTypes.object.isRequired
-	}
+		user: PropTypes.object.isRequired,
+	};
 
-	state = {}
+	state = {};
 
-	componentDidMount () {
+	componentDidMount() {
 		this.setUp();
 	}
 
-	componentDidUpdate ({user}) {
+	componentDidUpdate({ user }) {
 		if (safeId(user) !== safeId(this.props.user)) {
 			this.setUp();
 		}
 	}
 
-	setUp () {
-		const {user} = this.props;
+	setUp() {
+		const { user } = this.props;
 
 		this.setState({
-			parts: getParts(user)
+			parts: getParts(user),
 		});
 	}
 
-	render () {
+	render() {
 		const {
-			props: {user},
-			state: {parts = []}
+			props: { user },
+			state: { parts = [] },
 		} = this;
 
 		return (

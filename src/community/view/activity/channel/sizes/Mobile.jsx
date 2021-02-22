@@ -1,8 +1,8 @@
 import React from 'react';
 import classnames from 'classnames/bind';
-import {Prompt} from '@nti/web-commons';
+import { Prompt } from '@nti/web-commons';
 
-import {Sizes} from '../../Constants';
+import { Sizes } from '../../Constants';
 import Identity from '../../components/Identity';
 import OptionsWindow from '../../components/OptionsWindow';
 import ChannelStreamHeader from '../../components/channel-stream-header';
@@ -19,35 +19,40 @@ const cx = classnames.bind(Styles);
 export default class ChannelMobileLayout extends React.Component {
 	static propTypes = propTypes;
 
-	state = {showOptions: false}
+	state = { showOptions: false };
 
 	showOptions = () => {
 		this.setState({
-			showOptions: true
+			showOptions: true,
 		});
-	}
+	};
 
 	hideOptions = () => {
 		this.setState({
-			showOptions: false
+			showOptions: false,
 		});
-	}
+	};
 
 	setLayout = (...args) => {
 		//NOTE: Since the Dialog is setting scroll-lock on the page
 		//we need to wait for it to be gone before we change the layout
-		const {setLayout} = this.props;
+		const { setLayout } = this.props;
 
-		this.setState({
-			showOptions: false
-		}, () => {
-			setImmediate(() => {
-				if (setLayout) { setLayout(...args); }
-			});
-		});
-	}
+		this.setState(
+			{
+				showOptions: false,
+			},
+			() => {
+				setImmediate(() => {
+					if (setLayout) {
+						setLayout(...args);
+					}
+				});
+			}
+		);
+	};
 
-	render () {
+	render() {
 		const {
 			community,
 			channels,
@@ -58,9 +63,9 @@ export default class ChannelMobileLayout extends React.Component {
 			sortOn,
 			setSortOn,
 			size,
-			title
+			title,
 		} = this.props;
-		const {showOptions} = this.state;
+		const { showOptions } = this.state;
 
 		return (
 			<div className={cx('community-mobile')}>
@@ -78,12 +83,21 @@ export default class ChannelMobileLayout extends React.Component {
 					</Prompt.Dialog>
 				)}
 				<div className={cx('header')}>
-					<Identity community={community} showOptions={this.showOptions} title={title} />
+					<Identity
+						community={community}
+						showOptions={this.showOptions}
+						title={title}
+					/>
 					<ChannelList channels={channels} channel={channel} row />
-					{channel && (<ChannelStreamHeader className={cx('mobile-channel-header')} channel={channel} />)}
+					{channel && (
+						<ChannelStreamHeader
+							className={cx('mobile-channel-header')}
+							channel={channel}
+						/>
+					)}
 				</div>
-				{notFound && (<ChannelNotFound {...this.props} />)}
-				{channel && (<ChannelDescription channel={channel} />)}
+				{notFound && <ChannelNotFound {...this.props} />}
+				{channel && <ChannelDescription channel={channel} />}
 				{channel && (
 					<ChannelStream
 						searchContext={community.getID()}

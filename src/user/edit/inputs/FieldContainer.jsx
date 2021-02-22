@@ -11,66 +11,64 @@ import ValidationError from './ValidationError';
 const noop = () => {};
 
 export default class FieldContainer extends React.PureComponent {
-
-	render () {
+	render() {
 		return (
 			<ErrorContext.Consumer>
-				{
-					({onError}) => (
-						<ErrorReporter {...this.props} onError={onError} />
-					)
-				}
+				{({ onError }) => (
+					<ErrorReporter {...this.props} onError={onError} />
+				)}
 			</ErrorContext.Consumer>
 		);
 	}
 }
 
 class ErrorReporter extends React.PureComponent {
-
 	static propTypes = {
 		label: PropTypes.string,
 		className: PropTypes.string,
 		children: PropTypes.any,
 		required: PropTypes.bool,
-		onError: PropTypes.func
-	}
+		onError: PropTypes.func,
+	};
 
-	state = {}
+	state = {};
 
 	onInvalid = e => {
-		const {onError = noop} = this.props;
-		const {target, target: {name, validity, validationMessage: message}} = e;
+		const { onError = noop } = this.props;
+		const {
+			target,
+			target: { name, validity, validationMessage: message },
+		} = e;
 		const error = {
 			name,
 			validity,
 			message,
-			target
+			target,
 		};
 
 		this.setState({
-			error
+			error,
 		});
 
 		onError(error);
-	}
+	};
 
-	render () {
+	render() {
 		const {
-			props: {
-				label,
-				className,
-				children,
-				required
-			},
-			state: {error}
+			props: { label, className, children, required },
+			state: { error },
 		} = this;
 
 		return (
-			<div className={cx('nti-profile-field-container', className, {required})}>
+			<div
+				className={cx('nti-profile-field-container', className, {
+					required,
+				})}
+			>
 				{label && <FieldLabel>{label}</FieldLabel>}
 				{error && <ValidationError error={error} />}
 				{React.cloneElement(React.Children.only(children), {
-					onInvalid: this.onInvalid
+					onInvalid: this.onInvalid,
 				})}
 			</div>
 		);

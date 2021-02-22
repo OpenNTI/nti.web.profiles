@@ -1,12 +1,17 @@
-import {Stores} from '@nti/lib-store';
+import { Stores } from '@nti/lib-store';
 import Logger from '@nti/util-logger';
 
 const logger = Logger.get('profile-update');
 
-import {getFieldGroup, mergeFieldGroups, shouldKeepValue, updateFieldGroups} from './utils';
+import {
+	getFieldGroup,
+	mergeFieldGroups,
+	shouldKeepValue,
+	updateFieldGroups,
+} from './utils';
 
 export default class ProfileUpdateStore extends Stores.SimpleStore {
-	constructor () {
+	constructor() {
 		super();
 
 		this.set('entity', null);
@@ -20,32 +25,32 @@ export default class ProfileUpdateStore extends Stores.SimpleStore {
 		this.set('isValid', false);
 	}
 
-	get fields () {
+	get fields() {
 		const groups = this.get('fieldGroups');
 
-		if (!groups) { return groups; }
+		if (!groups) {
+			return groups;
+		}
 
 		return groups.reduce((acc, group) => {
 			return acc.concat(group);
 		}, []);
 	}
 
-
-	getValueFor (name) {
+	getValueFor(name) {
 		const values = this.get('values');
 		const value = values[name];
 
 		return value && value.serialize ? value.serialize() : value;
 	}
 
-
-	setFieldGroups (groups) {
+	setFieldGroups(groups) {
 		const values = this.get('values');
 		const newValues = {};
 
 		for (let group of groups) {
 			for (let field of group) {
-				const {name} = field.schema;
+				const { name } = field.schema;
 				const value = values[name];
 
 				if (shouldKeepValue(value, field)) {
@@ -59,8 +64,7 @@ export default class ProfileUpdateStore extends Stores.SimpleStore {
 		this.emitChange('values', 'fieldGroups');
 	}
 
-
-	async setEntity (entity) {
+	async setEntity(entity) {
 		this.set('entity', entity);
 		this.set('loading', true);
 		this.emitChange('loading', 'entity');
@@ -71,7 +75,7 @@ export default class ProfileUpdateStore extends Stores.SimpleStore {
 				ProfileSchema: schema,
 				ProfileType: type,
 				OriginalProfileType: baseType,
-				ValidationErrors: errors
+				ValidationErrors: errors,
 			} = profile;
 
 			this.set('loading', false);
@@ -80,23 +84,29 @@ export default class ProfileUpdateStore extends Stores.SimpleStore {
 			this.set('type', type);
 			this.set('baseType', baseType);
 			this.setFieldGroups(getFieldGroup(schema, errors, type, baseType));
-			this.emitChange('fields', 'fieldGroups', 'schema', 'errors', 'loading');
+			this.emitChange(
+				'fields',
+				'fieldGroups',
+				'schema',
+				'errors',
+				'loading'
+			);
 		} catch (e) {
 			this.set('error', e);
 			this.emitChange('error');
 		}
 	}
 
-	onFieldChange (field, value) {
+	onFieldChange(field, value) {
 		const baseType = this.get('baseType');
-		const {name} = field.schema;
-		let values = {...this.get('values'), [name]: value};
+		const { name } = field.schema;
+		let values = { ...this.get('values'), [name]: value };
 
 		//TODO: figure out how not to need this.
 		//for OSDE the parent role and the employer/community member role both need to fill
 		//out location, but we don't want to leave it filled in when they switch...
 		if (name === 'role' && baseType === 'IOSDEUserProfile') {
-			values = {role: value};
+			values = { role: value };
 		}
 
 		this.set('error', null);
@@ -106,13 +116,13 @@ export default class ProfileUpdateStore extends Stores.SimpleStore {
 		this.validateAfterFieldChange(field);
 	}
 
-	getDataToSend () {
+	getDataToSend() {
 		const groups = this.get('fieldGroups');
 		const dataToSend = {};
 
 		for (let group of groups) {
 			for (let f of group) {
-				const {name} = f.schema;
+				const { name } = f.schema;
 
 				dataToSend[name] = this.getValueFor(name);
 			}
@@ -121,29 +131,36 @@ export default class ProfileUpdateStore extends Stores.SimpleStore {
 		return dataToSend;
 	}
 
-
-	async validateAfterFieldChange (field) {
+	async validateAfterFieldChange(field) {
 		const oldType = this.get('type');
 		const entity = this.get('entity');
 		const groups = this.get('fieldGroups');
 		const dataToSend = this.getDataToSend();
 
 		try {
-			const {ProfileSchema: newSchema, ProfileType: type, OriginalProfileType: baseType} = await entity.putToLink('account.profile.preflight', dataToSend);
+			const {
+				ProfileSchema: newSchema,
+				ProfileType: type,
+				OriginalProfileType: baseType,
+			} = await entity.putToLink('account.profile.preflight', dataToSend);
 
 			this.set('isValid', true);
 			this.set('schema', newSchema);
 			this.set('type', type);
 			this.set('baseType', baseType);
-			this.setFieldGroups(mergeFieldGroups(...getFieldGroup(newSchema, [], type, baseType), ...updateFieldGroups(newSchema, groups, type, oldType)));
+			this.setFieldGroups(
+				mergeFieldGroups(
+					...getFieldGroup(newSchema, [], type, baseType),
+					...updateFieldGroups(newSchema, groups, type, oldType)
+				)
+			);
 			this.emitChange('isValid');
-		}
-		catch (e) {
+		} catch (e) {
 			const {
 				ValidationErrors,
 				ProfileSchema: newSchema,
 				ProfileType: type,
-				OriginalProfileType: baseType
+				OriginalProfileType: baseType,
 			} = e;
 
 			if (!newSchema) {
@@ -153,9 +170,12 @@ export default class ProfileUpdateStore extends Stores.SimpleStore {
 				return;
 			}
 
-			if (field.schema.name === 'role' && dataToSend.role === 'Employer/Community Member') {
+			if (
+				field.schema.name === 'role' &&
+				dataToSend.role === 'Employer/Community Member'
+			) {
 				ValidationErrors.push({
-					field: 'positions'
+					field: 'positions',
 				});
 			}
 
@@ -165,7 +185,12 @@ export default class ProfileUpdateStore extends Stores.SimpleStore {
 			this.set('baseType', baseType);
 			this.setFieldGroups(
 				mergeFieldGroups(
-					...getFieldGroup(newSchema, ValidationErrors, type, baseType),
+					...getFieldGroup(
+						newSchema,
+						ValidationErrors,
+						type,
+						baseType
+					),
 					...updateFieldGroups(newSchema, groups, type, oldType)
 				)
 			);
@@ -173,8 +198,7 @@ export default class ProfileUpdateStore extends Stores.SimpleStore {
 		}
 	}
 
-
-	async saveValues () {
+	async saveValues() {
 		const entity = this.get('entity');
 		const dataToSend = this.getDataToSend();
 

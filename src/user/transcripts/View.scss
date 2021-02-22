@@ -1,12 +1,24 @@
 @import '~@nti/style-common';
 
 $header-ranges: (
-	one-column: (null, 487px),// 455 + 16 padding * 2
-	two-column: (488px, 800px),
-	four-column: (801px, null)
+	one-column: (
+		null,
+		487px,
+	),
+	// 455 + 16 padding * 2
+	two-column:
+		(
+			488px,
+			800px,
+		),
+	four-column: (
+		801px,
+		null,
+	),
 );
 
-.user-awarded-view-container > .icon-close, .row-detail-container > .icon-close {
+.user-awarded-view-container > .icon-close,
+.row-detail-container > .icon-close {
 	display: none;
 }
 
@@ -123,7 +135,8 @@ $header-ranges: (
 			}
 
 			@include responsive-range(two-column, $header-ranges) {
-				.transcript-filters, .transcript-actions {
+				.transcript-filters,
+				.transcript-actions {
 					max-width: 460px;
 				}
 
@@ -149,12 +162,14 @@ $header-ranges: (
 			}
 
 			@include responsive-range(one-column, $header-ranges) {
-				.transcript-filters, .transcript-actions {
+				.transcript-filters,
+				.transcript-actions {
 					width: 224px;
 					display: flex;
 					flex-wrap: wrap;
 
-					.nti-button, .profile-transcript-filter-button {
+					.nti-button,
+					.profile-transcript-filter-button {
 						margin-bottom: 0.5rem;
 					}
 
@@ -183,7 +198,8 @@ $header-ranges: (
 				display: inline-block;
 			}
 
-			.download, .filter-trigger {
+			.download,
+			.filter-trigger {
 				cursor: pointer;
 				font-size: 14px;
 				display: inline-block;

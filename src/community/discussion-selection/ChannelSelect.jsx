@@ -1,15 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Button, Flyout, Icons, Text} from '@nti/web-commons';
+import { Button, Flyout, Icons, Text } from '@nti/web-commons';
 import { scoped } from '@nti/lib-locale';
 
 const t = scoped('nti.web.discussion-selection.ChannelSelect', {
-	label: 'Channel'
+	label: 'Channel',
 });
 
 const T = Text.Translator(t);
 
-const TriggerLabel = styled(T.Label).attrs({localeKey:'label'})`
+const TriggerLabel = styled(T.Label).attrs({ localeKey: 'label' })`
 	display: block;
 	color: var(--secondary-grey);
 `;
@@ -36,8 +36,9 @@ const Arrow = styled(Icons.DisclosureArrow)`
 	transform: translateY(-50%);
 `;
 
-
-const List = styled('ul').attrs(({dismissFlyout, onDismiss, ...props}) => props)`
+const List = styled('ul').attrs(
+	({ dismissFlyout, onDismiss, ...props }) => props
+)`
 	width: 280px;
 	padding: 10px;
 	margin: 0;
@@ -45,7 +46,7 @@ const List = styled('ul').attrs(({dismissFlyout, onDismiss, ...props}) => props)
 	max-height: calc(90vh - var(--flyout-top));
 `;
 
-const ListItem = styled(Button).attrs({as: 'li', plain: true})`
+const ListItem = styled(Button).attrs({ as: 'li', plain: true })`
 	display: flex;
 	flex-direction: column;
 	align-items: flex-start;
@@ -74,12 +75,12 @@ ChannelSelect.propTypes = {
 	community: PropTypes.any,
 };
 
-export default function ChannelSelect ({onChange, selected, community}) {
+export default function ChannelSelect({ onChange, selected, community }) {
 	const trigger = (
 		<Trigger>
-			<TriggerLabel/>
+			<TriggerLabel />
 			{selected?.title || 'Loading...'}
-			<Arrow/>
+			<Arrow />
 		</Trigger>
 	);
 
@@ -90,7 +91,7 @@ export default function ChannelSelect ({onChange, selected, community}) {
 			horizontalAlign={Flyout.ALIGNMENTS.LEFT}
 		>
 			<List>
-				{[...community].map((channel) => (
+				{[...community].map(channel => (
 					<Channel
 						channel={channel}
 						key={channel.getID()}
@@ -102,14 +103,11 @@ export default function ChannelSelect ({onChange, selected, community}) {
 	);
 }
 
-
-function Channel ({channel, ...props}) {
+function Channel({ channel, ...props }) {
 	return (
 		<ListItem {...props}>
 			<Text.Base>{channel.title}</Text.Base>
-			{channel.section && (
-				<SubLabel>{channel.section}</SubLabel>
-			)}
+			{channel.section && <SubLabel>{channel.section}</SubLabel>}
 		</ListItem>
 	);
 }

@@ -1,4 +1,4 @@
-@import "~@nti/style-common";
+@import '~@nti/style-common';
 
 .nti-profile-header {
 	$gap: 1.25rem;
@@ -71,7 +71,7 @@
 	}
 
 	nav {
-		grid-column: 2/end;
+		grid-column: 2 / end;
 		align-self: end;
 		margin-left: -$gap;
 

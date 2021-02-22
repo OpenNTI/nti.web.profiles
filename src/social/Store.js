@@ -3,11 +3,11 @@ import { Stores } from '@nti/lib-store';
 export default class Store extends Stores.SimpleStore {
 	static Singleton = true;
 
-	static setActiveUsers (activeUsers) {
+	static setActiveUsers(activeUsers) {
 		this.getStore().setActiveUsers(activeUsers);
 	}
 
-	setActiveUsers (activeUsers) {
+	setActiveUsers(activeUsers) {
 		this.activeUsers = normalizeActiveUsers(activeUsers);
 
 		this.set({ activeUsers: this.activeUsers });
@@ -18,12 +18,14 @@ export default class Store extends Stores.SimpleStore {
 	 * @param {string} presence - name of presence state
 	 * @returns {void}
 	 */
-	static updatePresence (username, presence) {
+	static updatePresence(username, presence) {
 		this.getStore().updatePresence(username, presence);
 	}
 
-	updatePresence (username, presence) {
-		if (!presence || !username) { return; }
+	updatePresence(username, presence) {
+		if (!presence || !username) {
+			return;
+		}
 
 		this.activeUsers = {
 			...this.activeUsers,
@@ -33,11 +35,11 @@ export default class Store extends Stores.SimpleStore {
 		this.set({ activeUsers: this.activeUsers });
 	}
 
-	static removeContact (username) {
+	static removeContact(username) {
 		this.getStore().removeContact(username);
 	}
 
-	removeContact (username) {
+	removeContact(username) {
 		const activeUsers = this.get('activeUsers');
 
 		delete activeUsers[username];
@@ -45,28 +47,31 @@ export default class Store extends Stores.SimpleStore {
 		this.set({ activeUsers });
 	}
 
-	static addContacts (users) {
+	static addContacts(users) {
 		this.getStore().addContacts(users);
 	}
 
-	addContacts (users) {
-		const activeUsers = users.reduce((acc, user) => ({ ...acc, [user.Username]: user }), {});
-		this.set({activeUsers});
+	addContacts(users) {
+		const activeUsers = users.reduce(
+			(acc, user) => ({ ...acc, [user.Username]: user }),
+			{}
+		);
+		this.set({ activeUsers });
 	}
 
-	selectUser (username) {
-		this.set({selectedUser: username});
+	selectUser(username) {
+		this.set({ selectedUser: username });
 	}
 
-	static deselectUser () {
+	static deselectUser() {
 		this.getStore().deselectUser();
 	}
 
-	deselectUser () {
+	deselectUser() {
 		this.set({ selectedUser: null });
 	}
 
-	clearUnreadCount (username) {
+	clearUnreadCount(username) {
 		let unreadCount = this.get('unreadCount');
 		unreadCount = {
 			...unreadCount,
@@ -76,11 +81,11 @@ export default class Store extends Stores.SimpleStore {
 		this.set({ unreadCount });
 	}
 
-	static handleWindowNotify (username) {
+	static handleWindowNotify(username) {
 		this.getStore().handleWindowNotify(username);
 	}
 
-	handleWindowNotify (username) {
+	handleWindowNotify(username) {
 		let unreadCount = this.get('unreadCount') || {};
 
 		const oldValue = unreadCount[username] || 0;
@@ -94,10 +99,14 @@ export default class Store extends Stores.SimpleStore {
 	}
 }
 
-function normalizeActiveUsers (activeUsers) {
-	return Array.isArray(activeUsers) ? Object.keys(...(activeUsers).map(x => x.username)).reduce((ret, key) => {
-		ret[activeUsers[key]] = true;
-		return ret;
-	}, {}) : activeUsers;
+function normalizeActiveUsers(activeUsers) {
+	return Array.isArray(activeUsers)
+		? Object.keys(...activeUsers.map(x => x.username)).reduce(
+				(ret, key) => {
+					ret[activeUsers[key]] = true;
+					return ret;
+				},
+				{}
+		  )
+		: activeUsers;
 }
-

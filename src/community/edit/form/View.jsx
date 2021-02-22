@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
-import {decorate} from '@nti/lib-commons';
-import {scoped} from '@nti/lib-locale';
-import {DialogButtons, Text, Loading} from '@nti/web-commons';
+import { decorate } from '@nti/lib-commons';
+import { scoped } from '@nti/lib-locale';
+import { DialogButtons, Text, Loading } from '@nti/web-commons';
 
 import Store from '../Store';
 
@@ -17,7 +17,7 @@ const t = scoped('nti-profiles.community.edit.form.View', {
 	save: 'Save',
 	cancel: 'Cancel',
 	saving: 'Saving...',
-	deleting: 'Deleting...'
+	deleting: 'Deleting...',
 });
 
 class CommunityEditForm extends React.Component {
@@ -26,31 +26,41 @@ class CommunityEditForm extends React.Component {
 		deleting: PropTypes.bool,
 		save: PropTypes.func,
 		cancel: PropTypes.func,
-		channelList: PropTypes.array
-	}
+		channelList: PropTypes.array,
+	};
 
-	save = (e) => {
+	save = e => {
 		e.preventDefault();
 		e.stopPropagation();
 
-		const {save} = this.props;
+		const { save } = this.props;
 
 		if (save) {
 			save();
 		}
-	}
+	};
 
-	render () {
-		const {cancel, channelList, saving, deleting, ...otherProps} = this.props;
+	render() {
+		const {
+			cancel,
+			channelList,
+			saving,
+			deleting,
+			...otherProps
+		} = this.props;
 		const buttons = [
-			{label: t('cancel'), type: 'button', onClick: cancel, disabled: saving},
-			{label: t('save'), type: 'submit', disabled: saving}
+			{
+				label: t('cancel'),
+				type: 'button',
+				onClick: cancel,
+				disabled: saving,
+			},
+			{ label: t('save'), type: 'submit', disabled: saving },
 		];
 
 		const doMask = saving || deleting;
 
 		delete otherProps.save;
-
 
 		return (
 			<form className={cx('community-edit-form')} onSubmit={this.save}>
@@ -58,16 +68,22 @@ class CommunityEditForm extends React.Component {
 				<div className={cx('form-body')}>
 					<Community {...otherProps} />
 					<div className={cx('channel-lists')}>
-						{(channelList || []).map((list) => {
+						{(channelList || []).map(list => {
 							return (
-								<ChannelList key={list.getID()} channelList={list} only={channelList.length === 1} />
+								<ChannelList
+									key={list.getID()}
+									channelList={list}
+									only={channelList.length === 1}
+								/>
 							);
 						})}
 					</div>
 				</div>
 				{doMask && (
 					<div className={cx('saving-mask')}>
-						<Text.Base className={cx('message')}>{deleting ? t('deleting') : t('saving')}</Text.Base>
+						<Text.Base className={cx('message')}>
+							{deleting ? t('deleting') : t('saving')}
+						</Text.Base>
 						<Loading.Spinner />
 					</div>
 				)}
@@ -78,5 +94,5 @@ class CommunityEditForm extends React.Component {
 }
 
 export default decorate(CommunityEditForm, [
-	Store.monitor(['save', 'deleting', 'cancel', 'channelList', 'saving'])
+	Store.monitor(['save', 'deleting', 'cancel', 'channelList', 'saving']),
 ]);

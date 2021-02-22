@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
-import {decorate} from '@nti/lib-commons';
-import {scoped} from '@nti/lib-locale';
-import {DialogButtons} from '@nti/web-commons';
+import { decorate } from '@nti/lib-commons';
+import { scoped } from '@nti/lib-locale';
+import { DialogButtons } from '@nti/web-commons';
 
 import Store from '../Store';
 
@@ -14,7 +14,7 @@ import AutoSubscribe from './AutoSubscribe';
 const cx = classnames.bind(Styles);
 const t = scoped('nti-profiles.community.creation.form.Form', {
 	save: 'Create',
-	cancel: 'Cancel'
+	cancel: 'Cancel',
 });
 
 class CommunityCreationForm extends React.Component {
@@ -22,29 +22,37 @@ class CommunityCreationForm extends React.Component {
 		saving: PropTypes.bool,
 		save: PropTypes.func,
 		cancel: PropTypes.func,
-		error: PropTypes.object
-	}
+		error: PropTypes.object,
+	};
 
-	save = (e) => {
+	save = e => {
 		e.preventDefault();
 		e.stopPropagation();
 
-		const {save} = this.props;
+		const { save } = this.props;
 
 		if (save) {
 			save();
 		}
-	}
+	};
 
-	render () {
-		const {cancel, saving} = this.props;
+	render() {
+		const { cancel, saving } = this.props;
 		const buttons = [
-			{label: t('cancel'), type: 'button', onClick: cancel, disbaled: saving},
-			{label: t('save'), type: 'submit', disbaled: saving}
+			{
+				label: t('cancel'),
+				type: 'button',
+				onClick: cancel,
+				disbaled: saving,
+			},
+			{ label: t('save'), type: 'submit', disbaled: saving },
 		];
 
 		return (
-			<form className={cx('community-creation-form')} onSubmit={this.save}>
+			<form
+				className={cx('community-creation-form')}
+				onSubmit={this.save}
+			>
 				<div className={cx('form-body')}>
 					<DisplayName />
 					<AutoSubscribe />
@@ -55,7 +63,6 @@ class CommunityCreationForm extends React.Component {
 	}
 }
 
-
 export default decorate(CommunityCreationForm, [
-	Store.monitor(['save', 'cancel', 'saving', 'error'])
+	Store.monitor(['save', 'cancel', 'saving', 'error']),
 ]);

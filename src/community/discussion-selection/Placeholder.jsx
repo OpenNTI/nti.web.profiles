@@ -10,7 +10,9 @@ const Box = styled(Container)`
 	opacity: 0;
 
 	@keyframes show {
-		100% { opacity: 1; }
+		100% {
+			opacity: 1;
+		}
 	}
 `;
 
@@ -20,13 +22,16 @@ const Shimmer = styled.div`
 	background-size: 1000px 100%;
 
 	@keyframes shimmer {
-		0% { background-position: -1000px 0; }
-		100% { background-position: 1000px 0; }
+		0% {
+			background-position: -1000px 0;
+		}
+		100% {
+			background-position: 1000px 0;
+		}
 	}
 `;
 
 const Avatar = styled(Shimmer).attrs(useLayout())`
-
 	&.layout-grid {
 		margin: 2px;
 		height: 120px;
@@ -63,26 +68,27 @@ const Label = styled(Shimmer).attrs(useLayout())`
 	}
 `;
 
-export default function Placeholder ({load}) {
+export default function Placeholder({ load }) {
 	const trip = useRef(false);
 
-	const onScreen = useCallback((visible) => {
+	const onScreen = useCallback(
+		visible => {
+			if (!visible || trip.current) {
+				return;
+			}
 
-		if (!visible || trip.current) {
-			return;
-		}
-
-		// This component will only ever call this once. To make it call it again, mount a new instance. (change the key prop to a new value)
-		trip.current = true;
-		load();
-
-	}, [load]);
+			// This component will only ever call this once. To make it call it again, mount a new instance. (change the key prop to a new value)
+			trip.current = true;
+			load();
+		},
+		[load]
+	);
 
 	return (
 		<Monitor.OnScreen as={Box} onChange={onScreen}>
-			<Avatar/>
-			<Label title/>
-			<Spacer/>
+			<Avatar />
+			<Label title />
+			<Spacer />
 			<Label />
 		</Monitor.OnScreen>
 	);

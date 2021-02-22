@@ -1,5 +1,6 @@
 .nti-profile-memberships {
-	&.profile-tab-container { // applies when this is the main profile tab content
+	&.profile-tab-container {
+		// applies when this is the main profile tab content
 		.profiles-entity-list {
 			&.community {
 				.entity-list-items {
@@ -39,7 +40,8 @@
 				}
 			}
 
-			&.dynamicfriendslist { // aka groups
+			&.dynamicfriendslist {
+				// aka groups
 				.entity-list-items {
 					> * {
 						background: #f7f7f7;

@@ -1,6 +1,6 @@
 import Logger from '@nti/util-logger';
 
-import {ensureArray as arr} from '../../../util';
+import { ensureArray as arr } from '../../../util';
 
 import fixSchemaEntry from './fix-schema-entry';
 
@@ -13,7 +13,7 @@ const OTHER = 'other';
  * @param  {string|Array} fields - The fields of interest.
  * @returns {Object} a mapping of group name => schema fragments
  */
-export default function getGroupedSchemaFields (schema, fields) {
+export default function getGroupedSchemaFields(schema, fields) {
 	if (!schema || arr(fields).length === 0) {
 		return {};
 	}
@@ -23,7 +23,9 @@ export default function getGroupedSchemaFields (schema, fields) {
 		if (entry) {
 			const group = entry.group || OTHER;
 			if (group === OTHER) {
-				logger.warn(`Schema entry ${field} doesn't specify a group. Using '${OTHER}'.`);
+				logger.warn(
+					`Schema entry ${field} doesn't specify a group. Using '${OTHER}'.`
+				);
 			}
 			acc[group] = acc[group] || {};
 			acc[group][field] = fixSchemaEntry(entry);

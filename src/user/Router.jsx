@@ -1,4 +1,4 @@
-import {Router, Route} from '@nti/web-routing';
+import { Router, Route } from '@nti/web-routing';
 
 import About from './about/';
 import Activity from './activity';
@@ -7,7 +7,7 @@ import Edit from './edit';
 import Memberships from './memberships';
 import Transcripts from './transcripts';
 import Frame from './Frame';
-import {LOCALE_PATHS} from './constants';
+import { LOCALE_PATHS } from './constants';
 
 const ROUTES = [
 	{
@@ -18,7 +18,7 @@ const ROUTES = [
 				return '/about/edit';
 			}
 			return null;
-		}
+		},
 	},
 	{
 		path: '/about',
@@ -29,7 +29,7 @@ const ROUTES = [
 			}
 			return null;
 		},
-		visible: true // renders in the nav
+		visible: true, // renders in the nav
 	},
 	{
 		path: '/activity',
@@ -40,7 +40,7 @@ const ROUTES = [
 			}
 			return null;
 		},
-		visible: true
+		visible: true,
 	},
 	{
 		path: '/achievements',
@@ -51,8 +51,10 @@ const ROUTES = [
 			}
 			return null;
 		},
-		applicable: entity => entity && (entity.hasLink('Badges') || entity.hasLink('Certificate')),
-		visible: true
+		applicable: entity =>
+			entity &&
+			(entity.hasLink('Badges') || entity.hasLink('Certificate')),
+		visible: true,
 	},
 	{
 		path: '/memberships',
@@ -63,7 +65,7 @@ const ROUTES = [
 			}
 			return null;
 		},
-		visible: true
+		visible: true,
 	},
 	{
 		path: '/transcripts',
@@ -75,24 +77,23 @@ const ROUTES = [
 			return null;
 		},
 		visible: true,
-		applicable: entity => entity && entity.hasLink('transcript')
+		applicable: entity => entity && entity.hasLink('transcript'),
 	},
 	{
 		path: '/',
 		component: About,
-		name: `${LOCALE_PATHS}.root`
-	}
+		name: `${LOCALE_PATHS}.root`,
+	},
 ];
 
-export function getRoutes (entity) {
+export function getRoutes(entity) {
 	const applicable = r => !r.applicable || r.applicable(entity);
 	return ROUTES.filter(applicable);
 }
 
-export default function routerFor (entity) {
+export default function routerFor(entity) {
 	return Router.for(
-		getRoutes(entity)
-			.map(r => Route(r)),
-		{frame: Frame}
+		getRoutes(entity).map(r => Route(r)),
+		{ frame: Frame }
 	);
 }

@@ -16,7 +16,10 @@
 	margin-right: 25px;
 }
 
-.community-member :global(label.checkbox-component input[type=checkbox] + span.label::before) {
+.community-member
+	:global(label.checkbox-component
+		input[type='checkbox']
+		+ span.label::before) {
 	width: 20px;
 	height: 20px;
 }

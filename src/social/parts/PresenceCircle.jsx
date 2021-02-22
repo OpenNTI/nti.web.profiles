@@ -10,7 +10,7 @@ export default styled('div')`
 		width: 7px;
 		height: 7px;
 		border-radius: 90px;
-		content: "";
+		content: '';
 		position: absolute;
 		display: block;
 		left: 2px;

@@ -7,21 +7,20 @@ import { Loading } from '@nti/web-commons';
 export default class RecentReplies extends React.Component {
 	static propTypes = {
 		item: PropTypes.shape({
-			getRecentReplies: PropTypes.func
+			getRecentReplies: PropTypes.func,
 		}),
-		count: PropTypes.number
+		count: PropTypes.number,
 	};
 
 	state = {
-		loading: false
-	}
+		loading: false,
+	};
 
-	componentDidMount () {
+	componentDidMount() {
 		this.load();
 	}
 
 	load = (props = this.props) => {
-
 		const { item, count } = props;
 
 		if (!item || !item.getRecentReplies) {
@@ -29,17 +28,18 @@ export default class RecentReplies extends React.Component {
 		}
 
 		this.setState({
-			loading: true
+			loading: true,
 		});
 
-		item.getRecentReplies(count)
-			.then(replies => this.setState({
+		item.getRecentReplies(count).then(replies =>
+			this.setState({
 				replies,
-				loading: false
-			}));
+				loading: false,
+			})
+		);
 	};
 
-	render () {
+	render() {
 		const { loading } = this.state;
 
 		if (loading) {

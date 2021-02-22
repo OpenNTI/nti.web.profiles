@@ -1,4 +1,4 @@
-@import "~@nti/style-common";
+@import '~@nti/style-common';
 
 .profile-about-frame {
 	display: grid;
@@ -13,7 +13,7 @@
 		overflow: hidden;
 
 		.user-profile-card {
-			@mixin cardBorder ($color: transparent) {
+			@mixin cardBorder($color: transparent) {
 				box-shadow: inset 5px 0 0 0 $color;
 			}
 
@@ -23,12 +23,7 @@
 				word-break: break-word;
 			}
 
-			$colors: (
-				#fc9f77,
-				#fdcf61,
-				#7ecfc8,
-				#c671c1
-			);
+			$colors: (#fc9f77, #fdcf61, #7ecfc8, #c671c1);
 
 			$length: length($colors);
 

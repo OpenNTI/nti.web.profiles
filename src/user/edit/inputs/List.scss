@@ -1,4 +1,4 @@
-@import "~@nti/style-common";
+@import '~@nti/style-common';
 
 .nti-profile-field-list {
 	.nti-profile-field-list-values {
@@ -24,7 +24,8 @@
 
 				&:hover + * {
 					background-color: var(--quad-grey);
-					box-shadow: 20px 0 0 6px var(--quad-grey), -10px 0 0 6px var(--quad-grey);
+					box-shadow: 20px 0 0 6px var(--quad-grey),
+						-10px 0 0 6px var(--quad-grey);
 				}
 			}
 		}

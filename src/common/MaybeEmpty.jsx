@@ -7,30 +7,22 @@ import cx from 'classnames';
 // The empty message is hidden via CSS by default and displayed via selector:
 // .maybe-empty:empty + maybe-empty-message
 export default class MaybeEmpty extends React.Component {
-
 	static propTypes = {
 		children: PropTypes.element.isRequired,
-		message: PropTypes.oneOfType([
-			PropTypes.element,
-			PropTypes.string
-		]).isRequired
-	}
+		message: PropTypes.oneOfType([PropTypes.element, PropTypes.string])
+			.isRequired,
+	};
 
-	render () {
-		const {message, children} = this.props;
+	render() {
+		const { message, children } = this.props;
 		const child = React.Children.only(children);
-		const Child = React.cloneElement(
-			child,
-			{
-				className: cx('maybe-empty', child.props.className)
-			}
-		);
+		const Child = React.cloneElement(child, {
+			className: cx('maybe-empty', child.props.className),
+		});
 		return (
 			<>
 				{Child}
-				<div className="maybe-empty-message">
-					{message}
-				</div>
+				<div className="maybe-empty-message">{message}</div>
 			</>
 		);
 	}

@@ -6,7 +6,7 @@ const BATCH_AFTER = {
 	PAST_MONTH: 'pastmonth',
 	PAST_THREE_MONTHS: 'pastthreemonths',
 	PAST_SIX_MONTHS: 'pastsixmonths',
-	PAST_YEAR: 'pastyear'
+	PAST_YEAR: 'pastyear',
 };
 
 const HIGHLIGHTS = 'application/vnd.nextthought.highlight';
@@ -15,8 +15,7 @@ const BOOKMARKS = 'Bookmarks';
 const LIKES = 'Like';
 
 export default class StreamStore {
-	constructor (context, params = {}) {
-
+	constructor(context, params = {}) {
 		this.loadDataSource = context.getStreamDataSource();
 		this.cache = {};
 
@@ -42,21 +41,27 @@ export default class StreamStore {
 
 		this.params = {
 			batchSize: 20,
-			batchAfter: Stream.getDate(params.batchAfter || BATCH_AFTER.ANYTIME),
+			batchAfter: Stream.getDate(
+				params.batchAfter || BATCH_AFTER.ANYTIME
+			),
 			sortOn: params.sortOn,
 			sortOrder: params.sortOrder,
 			accept: accepts.join(','),
-			...(filters.length > 0 && { filter: filters.join(','), filterOperator: 'union' }),
+			...(filters.length > 0 && {
+				filter: filters.join(','),
+				filterOperator: 'union',
+			}),
 		};
 	}
 
-	async getTotalCount () {
+	async getTotalCount() {
 		const dataSource = await this.loadDataSource;
 
-		const hasFilters = (this.params.filter && this.params.filter.length > 0)
-			|| (this.params.accept && this.params.accept !== '');
+		const hasFilters =
+			(this.params.filter && this.params.filter.length > 0) ||
+			(this.params.accept && this.params.accept !== '');
 
-		if(!hasFilters) {
+		if (!hasFilters) {
 			return 0;
 		}
 
@@ -64,14 +69,12 @@ export default class StreamStore {
 			const page = await dataSource.loadPage(0, this.params);
 
 			return page.Items.length === 0 ? 0 : page.TotalPageCount;
-		}
-		catch (e) {
+		} catch (e) {
 			return 0;
 		}
 	}
 
-
-	async loadPage (pageNumber) {
+	async loadPage(pageNumber) {
 		if (this.cache[pageNumber]) {
 			return this.cache[pageNumber];
 		}

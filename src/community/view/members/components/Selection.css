@@ -3,8 +3,7 @@
 	top: 0;
 	z-index: 1; /* ewww */
 	background: var(--panel-background);
-	box-shadow:
-		0 1px 0 0 var(--border-grey-light),
+	box-shadow: 0 1px 0 0 var(--border-grey-light),
 		0 -1px 0 0 var(--border-grey-light);
 	padding: 0.5rem var(--side-padding, 1.5rem);
 	display: flex;

@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
-import {decorate} from '@nti/lib-commons';
-import {scoped} from '@nti/lib-locale';
-import {Errors, EmptyState, Loading} from '@nti/web-commons';
+import { decorate } from '@nti/lib-commons';
+import { scoped } from '@nti/lib-locale';
+import { Errors, EmptyState, Loading } from '@nti/web-commons';
 
 import Store from '../Store';
 
@@ -14,8 +14,8 @@ const cx = classnames.bind(Styles);
 const t = scoped('nti-profiles.community.view.members.components.MembersList', {
 	empty: {
 		noSearch: 'There are no members in this community.',
-		search: 'There are no members matching "%(searchTerm)s".'
-	}
+		search: 'There are no members matching "%(searchTerm)s".',
+	},
 });
 
 class CommunityMemberShipList extends React.Component {
@@ -25,12 +25,11 @@ class CommunityMemberShipList extends React.Component {
 		selected: PropTypes.object,
 		error: PropTypes.any,
 		searchTerm: PropTypes.string,
-		searching: PropTypes.bool
-	}
+		searching: PropTypes.bool,
+	};
 
-
-	render () {
-		const {items, loading, error, searchTerm, searching} = this.props;
+	render() {
+		const { items, loading, error, searchTerm, searching } = this.props;
 
 		if (!items && searching) {
 			return (
@@ -42,13 +41,19 @@ class CommunityMemberShipList extends React.Component {
 
 		if (!items || !items.length) {
 			return (
-				<EmptyState header={searchTerm ? t('empty.search', {searchTerm}) : t('empty.noSearch')} />
+				<EmptyState
+					header={
+						searchTerm
+							? t('empty.search', { searchTerm })
+							: t('empty.noSearch')
+					}
+				/>
 			);
 		}
 
 		return (
 			<ul className={cx('community-member-list')}>
-				{items.map((item) => {
+				{items.map(item => {
 					const id = item.getID();
 
 					return (
@@ -73,5 +78,5 @@ class CommunityMemberShipList extends React.Component {
 }
 
 export default decorate(CommunityMemberShipList, [
-	Store.monitor(['loading', 'items', 'error', 'searchTerm', 'searching'])
+	Store.monitor(['loading', 'items', 'error', 'searchTerm', 'searching']),
 ]);

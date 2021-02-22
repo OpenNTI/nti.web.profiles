@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
-import {decorate} from '@nti/lib-commons';
-import {scoped} from '@nti/lib-locale';
-import {User, Text} from '@nti/web-commons';
+import { decorate } from '@nti/lib-commons';
+import { scoped } from '@nti/lib-locale';
+import { User, Text } from '@nti/web-commons';
 
 import Store from '../Store';
 
@@ -11,26 +11,28 @@ import Styles from './Selection.css';
 
 const cx = classnames.bind(Styles);
 const t = scoped('nti-profiles.community.view.members.components.Selection', {
-	clear: 'Clear Selection'
+	clear: 'Clear Selection',
 });
 
 class CommunityMembersHeaderSelection extends React.Component {
 	static propTypes = {
 		selected: PropTypes.object,
-		clearSelected: PropTypes.func
-	}
+		clearSelected: PropTypes.func,
+	};
 
-	render () {
-		const {selected, clearSelected} = this.props;
+	render() {
+		const { selected, clearSelected } = this.props;
 
-		if (!selected || !Object.keys(selected).length) { return null; }
+		if (!selected || !Object.keys(selected).length) {
+			return null;
+		}
 
 		const users = Object.values(selected);
 
 		return (
 			<div className={cx('members-selection')}>
 				<ul className={cx('selected')}>
-					{users.map((u) => {
+					{users.map(u => {
 						return (
 							<li key={u.getID()}>
 								<User.DisplayName user={u} />
@@ -47,5 +49,5 @@ class CommunityMembersHeaderSelection extends React.Component {
 }
 
 export default decorate(CommunityMembersHeaderSelection, [
-	Store.monitor(['selected', 'clearSelected'])
+	Store.monitor(['selected', 'clearSelected']),
 ]);

@@ -7,16 +7,17 @@ export default class UserProfileLabelValueList extends React.Component {
 		values: PropTypes.arrayOf(
 			PropTypes.shape({
 				label: PropTypes.string,
-				value: PropTypes.string
+				value: PropTypes.string,
 			})
-		)
-	}
+		),
+	};
 
+	render() {
+		const { values } = this.props;
 
-	render () {
-		const {values} = this.props;
-
-		if (!values || !values.length) { return null; }
+		if (!values || !values.length) {
+			return null;
+		}
 
 		return (
 			<ul className="user-profile-label-value-list">

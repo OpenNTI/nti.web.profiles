@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
-import {decorate} from '@nti/lib-commons';
+import { decorate } from '@nti/lib-commons';
 
 import ChannelListStore from '../channel-list/Store';
 
@@ -16,11 +16,11 @@ const cx = classnames.bind(Styles);
 const block = e => e.stopPropagation();
 
 class ChannelFields extends React.Component {
-	static deriveBindingFromProps (props) {
+	static deriveBindingFromProps(props) {
 		return {
 			channel: props.channel,
 			register: props.register,
-			unregister: props.unregister
+			unregister: props.unregister,
 		};
 	}
 
@@ -29,9 +29,9 @@ class ChannelFields extends React.Component {
 		deleted: PropTypes.bool,
 		connectDragSource: PropTypes.func,
 		readOnly: PropTypes.bool,
-	}
+	};
 
-	noTouchy = (el) => {
+	noTouchy = el => {
 		if (this.cleanupTouchBlocker) {
 			this.cleanupTouchBlocker();
 		}
@@ -48,20 +48,22 @@ class ChannelFields extends React.Component {
 				el.removeEventListener('touchend', block);
 			};
 		}
-	}
+	};
 
-	render () {
-		const {connectDragSource, deleted, readOnly, channel} = this.props;
+	render() {
+		const { connectDragSource, deleted, readOnly, channel } = this.props;
 
-		if (deleted) { return null; }
+		if (deleted) {
+			return null;
+		}
 		const newish = channel[Symbol.for('New Channel')];
 
 		return (
-			<div className={cx('channel-fields', {'read-only': readOnly})}>
-				<DragHandle connect={connectDragSource}/>
+			<div className={cx('channel-fields', { 'read-only': readOnly })}>
+				<DragHandle connect={connectDragSource} />
 				<div className={cx('no-drag', 'meta')} ref={this.noTouchy}>
 					<div className={cx('contents')}>
-						<Title autoFocus={newish}/>
+						<Title autoFocus={newish} />
 						<Description />
 					</div>
 					<Delete />
@@ -70,7 +72,6 @@ class ChannelFields extends React.Component {
 		);
 	}
 }
-
 
 export default decorate(ChannelFields, [
 	ChannelListStore.monitor(['register', 'unregister']),

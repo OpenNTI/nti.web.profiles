@@ -1,20 +1,20 @@
-import React, {useCallback} from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 
 import { Avatar, Container, Spacer, Title, Time } from './parts';
 
-const Topic = React.forwardRef(function Topic ({onClick, item, selected, searchTerm}, ref) {
+const Topic = React.forwardRef(function Topic(
+	{ onClick, item, selected, searchTerm },
+	ref
+) {
 	const handleClick = useCallback(() => onClick(item), [onClick, item]);
 
 	return (
 		<Container selected={selected} onClick={handleClick} ref={ref}>
-			<Avatar src={item.icon}/>
-			<Title
-				content={item.title}
-				term={searchTerm}
-			/>
-			<Spacer/>
-			<Time date={item.getCreatedTime()}/>
+			<Avatar src={item.icon} />
+			<Title content={item.title} term={searchTerm} />
+			<Spacer />
+			<Time date={item.getCreatedTime()} />
 		</Container>
 	);
 });

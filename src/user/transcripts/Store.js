@@ -1,5 +1,5 @@
-import {Stores} from '@nti/lib-store';
-import {getService} from '@nti/web-client';
+import { Stores } from '@nti/lib-store';
+import { getService } from '@nti/web-client';
 
 // const AGG_KEY = 'agg';
 const DEFAULT_KEY = 'defaultKey';
@@ -7,13 +7,13 @@ const DEFAULT_KEY = 'defaultKey';
 const FIELD_MAP = {
 	value: 'amount',
 	date: 'awarded_date',
-	type: 'credit_definition'
+	type: 'credit_definition',
 };
 
 export default class TranscriptTableStore extends Stores.SimpleStore {
-	static Singleton = true
+	static Singleton = true;
 
-	constructor () {
+	constructor() {
 		super();
 
 		this.sortOn = {};
@@ -28,47 +28,50 @@ export default class TranscriptTableStore extends Stores.SimpleStore {
 		this.set('pdfLink', null);
 	}
 
-	getSortOn (sortKey) {
+	getSortOn(sortKey) {
 		return this.sortOn[sortKey || DEFAULT_KEY];
 	}
 
-	setSortOn (sortOn, sortKey) {
+	setSortOn(sortOn, sortKey) {
 		const effectiveSortKey = sortKey || DEFAULT_KEY;
 
 		if (this.sortOn[effectiveSortKey] === sortOn) {
-			this.sortOrder[effectiveSortKey] = this.getSortOrder(sortKey) === 'ascending' ? 'descending' : 'ascending';
+			this.sortOrder[effectiveSortKey] =
+				this.getSortOrder(sortKey) === 'ascending'
+					? 'descending'
+					: 'ascending';
 		}
 		this.sortOn[effectiveSortKey] = sortOn;
 
 		this.loadTranscript();
 	}
 
-	getSortOrder (sortKey) {
+	getSortOrder(sortKey) {
 		const effectiveSortKey = sortKey || DEFAULT_KEY;
 
 		return this.sortOrder[effectiveSortKey] || 'ascending';
 	}
 
-	setDateFilter (newDateFilter) {
+	setDateFilter(newDateFilter) {
 		this.set('dateFilter', newDateFilter);
 
 		this.loadTranscript();
 	}
 
-	resetAllFilters () {
+	resetAllFilters() {
 		this.set('dateFilter', null);
 		this.set('typeFilter', []);
 
 		this.loadTranscript();
 	}
 
-	resetTypeFilters () {
+	resetTypeFilters() {
 		this.set('typeFilter', []);
 
 		this.loadTranscript();
 	}
 
-	addTypeFilter (newTypeFilter) {
+	addTypeFilter(newTypeFilter) {
 		let newTypes = this.get('typeFilter') || [];
 		newTypes.push(newTypeFilter);
 		this.set('typeFilter', newTypes);
@@ -76,14 +79,14 @@ export default class TranscriptTableStore extends Stores.SimpleStore {
 		this.loadTranscript();
 	}
 
-	removeTypeFilter (type) {
+	removeTypeFilter(type) {
 		let newTypes = (this.get('typeFilter') || []).filter(x => x !== type);
 		this.set('typeFilter', newTypes);
 
 		this.loadTranscript();
 	}
 
-	getEndOfDay (endDate) {
+	getEndOfDay(endDate) {
 		const endOfDay = new Date(endDate);
 		endOfDay.setHours(23);
 		endOfDay.setMinutes(59);
@@ -93,79 +96,90 @@ export default class TranscriptTableStore extends Stores.SimpleStore {
 		return endOfDay;
 	}
 
-	makeFilterParams () {
+	makeFilterParams() {
 		const typeFilter = this.get('typeFilter');
 		const dateFilter = this.get('dateFilter');
 
 		let params = '';
 
-		if(typeFilter) {
+		if (typeFilter) {
 			typeFilter.forEach(type => {
 				params += '&definitionType=' + type;
 			});
 		}
 
-		if(dateFilter) {
-			if(dateFilter.startDate) {
+		if (dateFilter) {
+			if (dateFilter.startDate) {
 				params += '&notBefore=' + dateFilter.startDate.getTime() / 1000;
 			}
 
-			if(dateFilter.endDate) {
-				params += '&notAfter=' + this.getEndOfDay(dateFilter.endDate).getTime() / 1000;
+			if (dateFilter.endDate) {
+				params +=
+					'&notAfter=' +
+					this.getEndOfDay(dateFilter.endDate).getTime() / 1000;
 			}
 		}
 
 		return params;
 	}
 
-	makeSortParams () {
+	makeSortParams() {
 		let params = '';
 
-		if(this.getSortOn()) {
+		if (this.getSortOn()) {
 			params += '&sortOn=' + FIELD_MAP[this.getSortOn()];
 		}
 
-		if(this.getSortOrder()) {
+		if (this.getSortOrder()) {
 			params += '&sortOrder=' + this.getSortOrder();
 		}
 
 		return params;
 	}
 
-	getReport (rel, type) {
-		const report = this.entity && this.entity.Reports && this.entity.Reports.filter(x => x.rel === rel)[0];
+	getReport(rel, type) {
+		const report =
+			this.entity &&
+			this.entity.Reports &&
+			this.entity.Reports.filter(x => x.rel === rel)[0];
 
-		if(!report || !report.supportedTypes.includes(type)) {
+		if (!report || !report.supportedTypes.includes(type)) {
 			return null;
 		}
 
-		return report.href + '?format=' + type + this.makeFilterParams() + this.makeSortParams();
+		return (
+			report.href +
+			'?format=' +
+			type +
+			this.makeFilterParams() +
+			this.makeSortParams()
+		);
 	}
 
-	getCSVReport () {
+	getCSVReport() {
 		return this.getReport('report-UserTranscriptReport', 'text/csv');
 	}
 
-	getPDFReport () {
+	getPDFReport() {
 		return this.getReport('report-UserTranscriptReport', 'application/pdf');
 	}
 
 	// TODO: let server do this
-	buildAggregates (items) {
+	buildAggregates(items) {
 		let agg = [];
 		let aggMap = {};
 		let defMap = {};
 
 		items.forEach(item => {
-			if(!item.creditDefinition) {
+			if (!item.creditDefinition) {
 				return;
 			}
 
-			let key = item.creditDefinition.type + ' ' + item.creditDefinition.unit;
-			if(aggMap[key]) {
+			let key =
+				item.creditDefinition.type + ' ' + item.creditDefinition.unit;
+			if (aggMap[key]) {
 				aggMap[key] += item.amount;
-			}
-			else {
+			} else {
 				aggMap[key] = item.amount;
 			}
 
@@ -174,7 +188,7 @@ export default class TranscriptTableStore extends Stores.SimpleStore {
 
 		Object.keys(aggMap).forEach(k => {
 			const def = defMap[k];
-			agg.push({creditDefinition: def, amount: aggMap[k]});
+			agg.push({ creditDefinition: def, amount: aggMap[k] });
 		});
 
 		agg.sort(function (a, b) {
@@ -187,30 +201,33 @@ export default class TranscriptTableStore extends Stores.SimpleStore {
 		return agg;
 	}
 
-	getAggregateValues () {
+	getAggregateValues() {
 		const items = this.get('items') || [];
 
 		return this.buildAggregates(items);
 	}
 
-	getAvailableTypes () {
+	getAvailableTypes() {
 		return this._availableTypes || [];
 	}
 
-	getEntity () {
+	getEntity() {
 		return this.entity;
 	}
 
-	maybeAddToAvailableTypes (creditDefinition) {
+	maybeAddToAvailableTypes(creditDefinition) {
 		// TODO: it'd be nice to not have to add this manually (what happens when user awarded credit is removed?)
 		// But the only way we could do that is, after successful add/edit/removal, query the server for the unfiltered
 		// list of credits for this entity and gather up all of the aggregate the available types
-		if(this._availableTypes && !this._availableTypes.includes(creditDefinition.type)) {
+		if (
+			this._availableTypes &&
+			!this._availableTypes.includes(creditDefinition.type)
+		) {
 			this._availableTypes.push(creditDefinition.type);
 		}
 	}
 
-	async addUserAwardedCredit (data, creditDefinition) {
+	async addUserAwardedCredit(data, creditDefinition) {
 		const transcriptLink = this.entity.getLink('transcript');
 		const service = await getService();
 
@@ -221,7 +238,7 @@ export default class TranscriptTableStore extends Stores.SimpleStore {
 		await this.loadTranscript();
 	}
 
-	async editUserAwardedCredit (credit, data, creditDefinition) {
+	async editUserAwardedCredit(credit, data, creditDefinition) {
 		const itemLink = credit.getLink('edit');
 		const service = await getService();
 
@@ -232,7 +249,7 @@ export default class TranscriptTableStore extends Stores.SimpleStore {
 		await this.loadTranscript();
 	}
 
-	async deleteUserAwardedCredit (credit) {
+	async deleteUserAwardedCredit(credit) {
 		const deleteLink = credit.getLink('delete');
 		const service = await getService();
 
@@ -241,8 +258,8 @@ export default class TranscriptTableStore extends Stores.SimpleStore {
 		await this.loadTranscript();
 	}
 
-	async loadTranscript (entity) {
-		if(entity) {
+	async loadTranscript(entity) {
+		if (entity) {
 			this.entity = entity;
 			this._availableTypes = null;
 		}
@@ -255,43 +272,63 @@ export default class TranscriptTableStore extends Stores.SimpleStore {
 
 		let params = {};
 
-		if(typeFilter) {
+		if (typeFilter) {
 			params.definitionType = typeFilter;
 		}
 
-		if(dateFilter) {
-			if(dateFilter.startDate) {
+		if (dateFilter) {
+			if (dateFilter.startDate) {
 				params.notBefore = dateFilter.startDate.getTime() / 1000;
 			}
 
-			if(dateFilter.endDate) {
-				params.notAfter = this.getEndOfDay(dateFilter.endDate).getTime() / 1000;
+			if (dateFilter.endDate) {
+				params.notAfter =
+					this.getEndOfDay(dateFilter.endDate).getTime() / 1000;
 			}
 		}
 
-		if(this.getSortOn()) {
+		if (this.getSortOn()) {
 			params.sortOn = FIELD_MAP[this.getSortOn()];
 		}
 
-		if(this.getSortOrder()) {
+		if (this.getSortOrder()) {
 			params.sortOrder = this.getSortOrder();
 		}
 
 		const service = await getService();
-		const results = await service.getBatch(this.entity.getLink('transcript'), params);
-		const items = results && results.Items || [];
+		const results = await service.getBatch(
+			this.entity.getLink('transcript'),
+			params
+		);
+		const items = (results && results.Items) || [];
 
-		if(!this._availableTypes) {
-			this._availableTypes = Array.from(new Set(items.map(x => x.creditDefinition.type)));
+		if (!this._availableTypes) {
+			this._availableTypes = Array.from(
+				new Set(items.map(x => x.creditDefinition.type))
+			);
 		}
 
 		this.set('csvLink', this.getCSVReport());
 		this.set('pdfLink', this.getPDFReport());
 		this.set('loading', false);
-		this.set('items', this.entity.hasLink('add_credit') ? [{isAddRow: true}, ...items] : items);
+		this.set(
+			'items',
+			this.entity.hasLink('add_credit')
+				? [{ isAddRow: true }, ...items]
+				: items
+		);
 		this.set('availableTypes', this._availableTypes);
 		this.set('aggregateItems', this.getAggregateValues());
 
-		this.emitChange('loading', 'items', 'aggregateItems', 'dateFilter', 'typeFilter', 'availableTypes', 'csvLink', 'pdfLink');
+		this.emitChange(
+			'loading',
+			'items',
+			'aggregateItems',
+			'dateFilter',
+			'typeFilter',
+			'availableTypes',
+			'csvLink',
+			'pdfLink'
+		);
 	}
 }

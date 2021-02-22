@@ -8,12 +8,10 @@ const cx = classnames.bind(Styles);
 
 Card.propTypes = {
 	className: PropTypes.string,
-	as: PropTypes.string
+	as: PropTypes.string,
 };
-export default function Card ({className, as:tag, ...otherProps}) {
+export default function Card({ className, as: tag, ...otherProps }) {
 	const Cmp = tag || 'div';
 
-	return (
-		<Cmp className={cx(className, 'community-card')} {...otherProps} />
-	);
+	return <Cmp className={cx(className, 'community-card')} {...otherProps} />;
 }

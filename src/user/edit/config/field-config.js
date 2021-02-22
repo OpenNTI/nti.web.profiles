@@ -1,4 +1,4 @@
-import {ensureArray as arr} from '../../../util';
+import { ensureArray as arr } from '../../../util';
 
 const OSDEBase = {
 	about: [
@@ -11,11 +11,11 @@ const OSDEBase = {
 		'facebook',
 		'instagram',
 		'linkedIn',
-		'twitter'
+		'twitter',
 	],
 	education: 'education',
 	positions: 'positions',
-	interests: 'interests'
+	interests: 'interests',
 };
 
 const DEFAULT = Symbol('Default');
@@ -32,13 +32,13 @@ const FIELD_GROUPS = {
 			'facebook',
 			'instagram',
 			'linkedIn',
-			'twitter'
+			'twitter',
 		],
 		education: 'education',
 		positions: 'positions',
-		interests: 'interests'
+		interests: 'interests',
 	},
-	'ISALLTUserProfile': {
+	ISALLTUserProfile: {
 		about: [
 			'about',
 			'realname',
@@ -50,13 +50,13 @@ const FIELD_GROUPS = {
 			'facebook',
 			'instagram',
 			'linkedIn',
-			'twitter'
+			'twitter',
 		],
 		community: [
 			'cultures',
 			'city_interest',
 			'initiatives',
-			'church_community'
+			'church_community',
 		],
 		'Personality and Gifting': [
 			'myers_briggs',
@@ -64,13 +64,13 @@ const FIELD_GROUPS = {
 			'giant_5_voices',
 			'giant_5_voices_response',
 			'five_q',
-			'five_q_response'
+			'five_q_response',
 		],
 		education: 'education',
 		positions: 'positions',
-		interests: 'interests'
+		interests: 'interests',
 	},
-	'IOPSRCUserProfile': {
+	IOPSRCUserProfile: {
 		about: [
 			'about',
 			'realname',
@@ -81,7 +81,7 @@ const FIELD_GROUPS = {
 			'facebook',
 			'instagram',
 			'linkedIn',
-			'twitter'
+			'twitter',
 		],
 		information: [
 			'role',
@@ -90,38 +90,42 @@ const FIELD_GROUPS = {
 			'affiliation',
 			'district_school',
 			'is_district_admin',
-			'admin_district_names'
+			'admin_district_names',
 		],
 		education: 'education',
 		positions: 'positions',
-		interests: 'interests'
+		interests: 'interests',
 	},
-	'IOSDEStudentProfile': {
+	IOSDEStudentProfile: {
 		information: ['role', 'expected_graduation', 'affiliation'],
-		...OSDEBase
+		...OSDEBase,
 	},
-	'IOSDEOtherProfile': {
+	IOSDEOtherProfile: {
 		information: ['role', 'other_role', 'work'],
-		...OSDEBase
+		...OSDEBase,
 	},
-	'IOSDEEmployerProfile': {
-		information: ['role', 'company_name', 'company_mailing_address', 'work_email'],
-		...OSDEBase
+	IOSDEEmployerProfile: {
+		information: [
+			'role',
+			'company_name',
+			'company_mailing_address',
+			'work_email',
+		],
+		...OSDEBase,
 	},
-	'IOSDENurseProfile': {
+	IOSDENurseProfile: {
 		information: ['role', 'affiliation', 'work_email'],
-		...OSDEBase
+		...OSDEBase,
 	},
-	'IOSDEStaffProfile': {
+	IOSDEStaffProfile: {
 		information: ['role', 'affiliation', 'job_title', 'work_email'],
-		...OSDEBase
+		...OSDEBase,
 	},
-	'IOSDEAdminProfile': 'IOSDEStaffProfile',
-	'IOSDEEducatorProfile': 'IOSDEStaffProfile'
+	IOSDEAdminProfile: 'IOSDEStaffProfile',
+	IOSDEEducatorProfile: 'IOSDEStaffProfile',
 };
 
-
-export function getFieldGroups (schema, type) {
+export function getFieldGroups(schema, type) {
 	const fieldGroups = FIELD_GROUPS[type] || FIELD_GROUPS[DEFAULT];
 
 	if (typeof fieldGroups === 'string') {
@@ -132,8 +136,11 @@ export function getFieldGroups (schema, type) {
 }
 
 //flat array of all fields in the groups for a schema
-export function getFields (schema, type) {
+export function getFields(schema, type) {
 	const groups = getFieldGroups(schema, type);
 
-	return Object.values(groups).reduce((acc, value) => [...acc, ...arr(value)], []);
+	return Object.values(groups).reduce(
+		(acc, value) => [...acc, ...arr(value)],
+		[]
+	);
 }

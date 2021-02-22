@@ -15,34 +15,45 @@ const types = [
 	'IOSDENurseProfile',
 	'IOSDEStaffProfile',
 	'IOSDEAdminProfile',
-	'IOSDEEducatorProfile'
+	'IOSDEEducatorProfile',
 ];
 
 const CmpOverrides = {
-	'role': Role
+	role: Role,
 };
 
 const FieldOrders = {
-	'IOSDEEducatorProfile': ['role', 'affiliation', 'job_title', 'work_email'],
-	'IOSDEAdminProfile': ['role', 'affiliation', 'job_title', 'work_email'],
-	'IOSDEStaffProfile': ['role', 'affiliation', 'job_title', 'work_email'],
-	'IOSDENurseProfile': ['role', 'affiliation', 'work_email'],
-	'IOSDEEmployerProfile': ['role', 'location', 'company_name', 'company_mailing_address', 'work_email'],
-	'IOSDEStudentProfile': ['role', 'expected_graduation', 'affiliation'],
-	'IOSDEOtherProfile': ['role', 'other_role', 'work']
+	IOSDEEducatorProfile: ['role', 'affiliation', 'job_title', 'work_email'],
+	IOSDEAdminProfile: ['role', 'affiliation', 'job_title', 'work_email'],
+	IOSDEStaffProfile: ['role', 'affiliation', 'job_title', 'work_email'],
+	IOSDENurseProfile: ['role', 'affiliation', 'work_email'],
+	IOSDEEmployerProfile: [
+		'role',
+		'location',
+		'company_name',
+		'company_mailing_address',
+		'work_email',
+	],
+	IOSDEStudentProfile: ['role', 'expected_graduation', 'affiliation'],
+	IOSDEOtherProfile: ['role', 'other_role', 'work'],
 };
 
-function getFieldOrder (fields, type) {
+function getFieldOrder(fields, type) {
 	const fieldOrder = FieldOrders[type];
 
-	if (!fieldOrder) { return fields; }
+	if (!fieldOrder) {
+		return fields;
+	}
 
-	const fieldMap = fields.reduce((acc, field) => ({...acc, [field.schema.name]: field}), {});
+	const fieldMap = fields.reduce(
+		(acc, field) => ({ ...acc, [field.schema.name]: field }),
+		{}
+	);
 	const allFields = Object.keys(fieldMap);
 	const seenFields = {};
 
 	const order = fieldOrder
-		.map((field) => {
+		.map(field => {
 			seenFields[field] = true;
 			return fieldMap[field];
 		})
@@ -50,27 +61,25 @@ function getFieldOrder (fields, type) {
 
 	return [
 		...order,
-		...(
-			allFields
-				.filter(field => !seenFields[field])
-				.map(field => fieldMap[field])
-		)
+		...allFields
+			.filter(field => !seenFields[field])
+			.map(field => fieldMap[field]),
 	];
 }
-
 
 export default class ProfileUpdateOSDEProfile extends React.Component {
 	static propTypes = {
 		fields: PropTypes.array,
 		values: PropTypes.object,
-		type: PropTypes.string
-	}
+		type: PropTypes.string,
+	};
 
+	render() {
+		const { fields, type, values, ...otherProps } = this.props;
 
-	render () {
-		const {fields, type, values, ...otherProps} = this.props;
-
-		if (!fields) { return null; }
+		if (!fields) {
+			return null;
+		}
 
 		const ordered = getFieldOrder(fields, type);
 
@@ -80,15 +89,23 @@ export default class ProfileUpdateOSDEProfile extends React.Component {
 					const value = values[field.schema.name];
 					const Cmp = CmpOverrides[field.schema.name];
 
-					const fieldRender = Cmp ?
-						(<Cmp field={field} value={value} index={index} {...otherProps} />) :
-						(<FieldGroup fields={[field]} order={[field.schema.name]} values={values} {...otherProps} />);
-
-					return (
-						<li key={index}>
-							{fieldRender}
-						</li>
+					const fieldRender = Cmp ? (
+						<Cmp
+							field={field}
+							value={value}
+							index={index}
+							{...otherProps}
+						/>
+					) : (
+						<FieldGroup
+							fields={[field]}
+							order={[field.schema.name]}
+							values={values}
+							{...otherProps}
+						/>
 					);
+
+					return <li key={index}>{fieldRender}</li>;
 				})}
 			</ul>
 		);
@@ -96,4 +113,3 @@ export default class ProfileUpdateOSDEProfile extends React.Component {
 }
 
 Registry.register(types)(ProfileUpdateOSDEProfile);
-

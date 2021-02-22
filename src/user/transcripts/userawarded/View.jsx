@@ -1,16 +1,24 @@
 import './View.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Input, Flyout, DateTime, DayPicker, Prompt, DialogButtons, Panels} from '@nti/web-commons';
-import {scoped} from '@nti/lib-locale';
-import {getService} from '@nti/web-client';
+import {
+	Input,
+	Flyout,
+	DateTime,
+	DayPicker,
+	Prompt,
+	DialogButtons,
+	Panels,
+} from '@nti/web-commons';
+import { scoped } from '@nti/lib-locale';
+import { getService } from '@nti/web-client';
 
 import TypeOption from './TypeOption';
 
 const FIELD_MAP = {
-	'title': 'Title',
-	'amount': 'Credit amount',
-	'credit_definition': 'Credit type'
+	title: 'Title',
+	amount: 'Credit amount',
+	credit_definition: 'Credit type',
 };
 
 const t = scoped('nti-web-profile.transcripts.userawarded.View', {
@@ -22,13 +30,15 @@ const t = scoped('nti-web-profile.transcripts.userawarded.View', {
 	description: 'Description',
 	awardedDate: 'Awarded Date',
 	save: 'Add',
-	cancel: 'Cancel'
+	cancel: 'Cancel',
 });
 
 const ERROR_MESSAGES = {
-	RequiredMissing: e => 'Missing value: ' + (FIELD_MAP[e.message] || e.message),
+	RequiredMissing: e =>
+		'Missing value: ' + (FIELD_MAP[e.message] || e.message),
 	TooSmall: e => (FIELD_MAP[e.field] || e.field) + ' must be greater than 0.',
-	InvalidFloatLiteral: e => `${FIELD_MAP[e.field] || e.field} value is invalid.`
+	InvalidFloatLiteral: e =>
+		`${FIELD_MAP[e.field] || e.field} value is invalid.`,
 };
 
 export default class UserAwardedCreditView extends React.Component {
@@ -36,10 +46,10 @@ export default class UserAwardedCreditView extends React.Component {
 		entity: PropTypes.object.isRequired,
 		credit: PropTypes.object,
 		store: PropTypes.object.isRequired,
-		onDismiss: PropTypes.func
-	}
+		onDismiss: PropTypes.func,
+	};
 
-	static show (entity, credit, store) {
+	static show(entity, credit, store) {
 		return new Promise((fulfill, reject) => {
 			Prompt.modal(
 				<UserAwardedCreditView
@@ -55,31 +65,37 @@ export default class UserAwardedCreditView extends React.Component {
 	}
 
 	state = {
-		types: []
-	}
+		types: [],
+	};
 
-	attachInputRef = x => this.input = x;
+	attachInputRef = x => (this.input = x);
 
-	attachFlyoutRef = x => this.flyout = x
+	attachFlyoutRef = x => (this.flyout = x);
 
-	attachDateFlyoutRef = x => this.dateFlyout = x
+	attachDateFlyoutRef = x => (this.dateFlyout = x);
 
-	componentDidMount () {
+	componentDidMount() {
 		this.init();
 	}
 
-	async init () {
-		const {credit} = this.props;
+	async init() {
+		const { credit } = this.props;
 
 		const service = await getService();
 
 		let initState = {};
 
-		const defsCollection = service.getCollection('CreditDefinitions', 'Global');
+		const defsCollection = service.getCollection(
+			'CreditDefinitions',
+			'Global'
+		);
 		const allDefs = await service.getBatch(defsCollection.href);
 
-		if(credit) {
-			const def = typeof credit === 'string' ? await service.getObject(credit) : credit;
+		if (credit) {
+			const def =
+				typeof credit === 'string'
+					? await service.getObject(credit)
+					: credit;
 
 			initState.item = def;
 			initState.title = def.title;
@@ -88,60 +104,76 @@ export default class UserAwardedCreditView extends React.Component {
 			initState.date = def.getAwardedDate();
 			initState.amount = def.amount;
 			initState.selectedType = def.creditDefinition;
-		}
-		else {
+		} else {
 			initState.date = new Date();
 			initState.selectedType = allDefs.Items && allDefs.Items[0];
 		}
 
-		this.setState({...initState, types: allDefs.Items});
+		this.setState({ ...initState, types: allDefs.Items });
 	}
 
-	updateIssuer = (val) => {
-		this.setState({issuer: val});
+	updateIssuer = val => {
+		this.setState({ issuer: val });
+	};
+
+	renderIssuerInput() {
+		return (
+			<Input.Text
+				value={this.state.issuer}
+				onChange={this.updateIssuer}
+				placeholder="Name or organization"
+			/>
+		);
 	}
 
-	renderIssuerInput () {
-		return <Input.Text value={this.state.issuer} onChange={this.updateIssuer} placeholder="Name or organization"/>;
+	updateAmount = val => {
+		this.setState({ amount: val });
+	};
+
+	renderAmountInput() {
+		return (
+			<Input.Text
+				value={this.state.amount}
+				maxLength="6"
+				onChange={this.updateAmount}
+				pattern="[0-9]+([.,][0-9]+)?"
+				ref={this.attachInputRef}
+				placeholder="1.00"
+			/>
+		);
 	}
 
-	updateAmount = (val) => {
-		this.setState({amount: val});
-	}
-
-	renderAmountInput () {
-		return <Input.Text value={this.state.amount} maxLength="6" onChange={this.updateAmount} pattern="[0-9]+([.,][0-9]+)?" ref={this.attachInputRef} placeholder="1.00"/>;
-	}
-
-	renderDateIcon () {
+	renderDateIcon() {
 		return (
 			<div className="calendar-icon">
-				<div className="calendar-hanger"/>
-				<div className="calendar-top"/>
-				<div className="calendar-bottom"/>
+				<div className="calendar-hanger" />
+				<div className="calendar-top" />
+				<div className="calendar-bottom" />
 			</div>
 		);
 	}
 
-	renderDateTrigger () {
-		const {date} = this.state;
+	renderDateTrigger() {
+		const { date } = this.state;
 
 		return (
 			<div className="award-credit-date-value">
 				{this.renderDateIcon()}
-				<div className="date-value">{date && DateTime.format(date)}</div>
-				<i className="icon-chevron-down"/>
+				<div className="date-value">
+					{date && DateTime.format(date)}
+				</div>
+				<i className="icon-chevron-down" />
 			</div>
 		);
 	}
 
-	updateDate = (val) => {
-		this.setState({date: val});
+	updateDate = val => {
+		this.setState({ date: val });
 
 		this.dateFlyout.dismiss();
-	}
+	};
 
-	renderAwardedDateInput () {
+	renderAwardedDateInput() {
 		return (
 			<Flyout.Triggered
 				className="award-credit-date"
@@ -151,28 +183,45 @@ export default class UserAwardedCreditView extends React.Component {
 				ref={this.attachDateFlyoutRef}
 			>
 				<div>
-					<DayPicker value={this.state.date} onChange={this.updateDate}/>
+					<DayPicker
+						value={this.state.date}
+						onChange={this.updateDate}
+					/>
 				</div>
 			</Flyout.Triggered>
 		);
 	}
 
-	onTypeSelected = (option) => {
+	onTypeSelected = option => {
 		this.flyout.dismiss();
 
-		this.setState({selectedType: option});
+		this.setState({ selectedType: option });
+	};
+
+	renderTrigger() {
+		const { selectedType } = this.state;
+		return (
+			<div className="selected-credit-type">
+				<div className="type-value">
+					{selectedType &&
+						selectedType.type + ' ' + selectedType.unit}
+				</div>
+				<i className="icon-chevron-down" />
+			</div>
+		);
 	}
 
-	renderTrigger () {
-		const {selectedType} = this.state;
-		return <div className="selected-credit-type"><div className="type-value">{selectedType && (selectedType.type + ' ' + selectedType.unit)}</div><i className="icon-chevron-down"/></div>;
-	}
+	renderOption = type => {
+		return (
+			<TypeOption
+				key={type.type + ' ' + type.unit}
+				option={type}
+				onClick={this.onTypeSelected}
+			/>
+		);
+	};
 
-	renderOption = (type) => {
-		return <TypeOption key={type.type + ' ' + type.unit} option={type} onClick={this.onTypeSelected}/>;
-	}
-
-	renderCreditTypeInput () {
+	renderCreditTypeInput() {
 		return (
 			<Flyout.Triggered
 				className="award-credit-type"
@@ -180,90 +229,116 @@ export default class UserAwardedCreditView extends React.Component {
 				ref={this.attachFlyoutRef}
 				horizontalAlign={Flyout.ALIGNMENTS.LEFT}
 			>
-				<div>
-					{(this.state.types || []).map(this.renderOption)}
-				</div>
+				<div>{(this.state.types || []).map(this.renderOption)}</div>
 			</Flyout.Triggered>
 		);
 	}
 
-	updateTitle = (val) => {
-		this.setState({title: val});
+	updateTitle = val => {
+		this.setState({ title: val });
+	};
+
+	renderTitleInput() {
+		return (
+			<Input.Text
+				value={this.state.title}
+				onChange={this.updateTitle}
+				placeholder={t('titlePlaceholder')}
+			/>
+		);
 	}
 
-	renderTitleInput () {
-		return <Input.Text value={this.state.title} onChange={this.updateTitle} placeholder={t('titlePlaceholder')}/>;
-	}
+	updateDescription = val => {
+		this.setState({ description: val });
+	};
 
-	updateDescription = (val) => {
-		this.setState({description: val});
-	}
-
-	renderDescriptionInput () {
-		return <Input.TextArea value={this.state.description} onChange={this.updateDescription} placeholder="Write Something..."/>;
+	renderDescriptionInput() {
+		return (
+			<Input.TextArea
+				value={this.state.description}
+				onChange={this.updateDescription}
+				placeholder="Write Something..."
+			/>
+		);
 	}
 
 	onSave = async () => {
-		const {onDismiss, store} = this.props;
-		const {item} = this.state;
+		const { onDismiss, store } = this.props;
+		const { item } = this.state;
 
 		let payload = {
 			description: this.state.description,
 			title: this.state.title && this.state.title.trim(),
 			amount: this.state.amount || 1,
-			'credit_definition': this.state.selectedType && this.state.selectedType.NTIID,
+			credit_definition:
+				this.state.selectedType && this.state.selectedType.NTIID,
 			issuer: this.state.issuer,
-			'awarded_date': this.state.date && this.state.date.getTime() / 1000
+			awarded_date: this.state.date && this.state.date.getTime() / 1000,
 		};
 
 		try {
-			if(item) {
+			if (item) {
 				// saving an existing object
-				await store.editUserAwardedCredit(item, payload, this.state.selectedType);
-			}
-			else {
-			// adding a new object
-				payload.MimeType = 'application/vnd.nextthought.credit.userawardedcredit';
+				await store.editUserAwardedCredit(
+					item,
+					payload,
+					this.state.selectedType
+				);
+			} else {
+				// adding a new object
+				payload.MimeType =
+					'application/vnd.nextthought.credit.userawardedcredit';
 
-				await store.addUserAwardedCredit(payload, this.state.selectedType);
+				await store.addUserAwardedCredit(
+					payload,
+					this.state.selectedType
+				);
 			}
 
-			if(onDismiss) {
+			if (onDismiss) {
 				onDismiss();
 			}
+		} catch (e) {
+			const error = (
+				ERROR_MESSAGES[e.code] || (err => err.message || err)
+			)(e);
+			this.setState({ error });
 		}
-		catch (e) {
-			const error = (ERROR_MESSAGES[e.code] || (err => err.message || err))(e);
-			this.setState({error});
-		}
-	}
+	};
 
 	onCancel = () => {
-		const {onDismiss} = this.props;
+		const { onDismiss } = this.props;
 
-		if(onDismiss) {
+		if (onDismiss) {
 			onDismiss();
 		}
-	}
-	renderShortHeader () {
+	};
+	renderShortHeader() {
 		return (
 			<div className="short-header">
 				<div className="controls">
-					<div className="cancel" onClick={this.onCancel}>{t('cancel')}</div>
+					<div className="cancel" onClick={this.onCancel}>
+						{t('cancel')}
+					</div>
 					<div className="header">{t('awardCredit')}</div>
-					<div className="save" onClick={this.onSave}>{t('save')}</div>
+					<div className="save" onClick={this.onSave}>
+						{t('save')}
+					</div>
 				</div>
 			</div>
 		);
 	}
 
-	render () {
-		const {error} = this.state;
+	render() {
+		const { error } = this.state;
 
 		return (
 			<div className="user-awarded-credits">
 				<div className="content">
-					<Panels.TitleBar title={(t('awardCredit'))} iconAction={this.onCancel} />
+					<Panels.TitleBar
+						title={t('awardCredit')}
+						iconAction={this.onCancel}
+					/>
 					{this.renderShortHeader()}
 					<div className="error">{error}</div>
 					<div className="credit-fields">
@@ -300,8 +375,8 @@ export default class UserAwardedCreditView extends React.Component {
 						},
 						{
 							label: t('save'),
-							onClick: this.onSave
-						}
+							onClick: this.onSave,
+						},
 					]}
 				/>
 			</div>

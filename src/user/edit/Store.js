@@ -1,11 +1,16 @@
-import {diff} from 'deep-object-diff';
-import {Stores} from '@nti/lib-store';
-import {buffer} from '@nti/lib-commons';
+import { diff } from 'deep-object-diff';
+import { Stores } from '@nti/lib-store';
+import { buffer } from '@nti/lib-commons';
 
-import {ensureArray as arr, slugify} from '../../util';
+import { ensureArray as arr, slugify } from '../../util';
 
-import {FieldConfig} from './config';
-import {addGroupsToSchema, getGroupedSchemaFields, trimValue, getAffectedValues} from './util';
+import { FieldConfig } from './config';
+import {
+	addGroupsToSchema,
+	getGroupedSchemaFields,
+	trimValue,
+	getAffectedValues,
+} from './util';
 
 const hasProperty = (x, k) => Object.prototype.hasOwnProperty.call(x, k);
 const PREFIX = 'nti-profile-edit-store';
@@ -29,43 +34,45 @@ const DATA_MARKER = Symbol('data marker');
 const DATA = Symbol('data');
 
 export class Store extends Stores.SimpleStore {
-	static Singleton = true
+	static Singleton = true;
 
 	/**
 	 * The schema we're currently operating with; used to render the form, validate, etc.
 	 * Preflight may change this value
 	 * @type {Object}
 	 */
-	#schema
+	#schema;
 
 	/**
 	 * The user's original profile schema. We diff this against the 'current' schema to identify changes
 	 * @type {Object}
 	 */
-	#initialSchema
+	#initialSchema;
 
 	/**
 	 * The type of profile we're currently operating with; used to determine groupings.
 	 * Preflight may change this value
 	 * @type {string}
 	 */
-	#profileType
+	#profileType;
 
-	constructor () {
+	constructor() {
 		super();
 		this.setMaxListeners(100);
 
 		// locate the data in the superclass
 		this.set(DATA_MARKER, true);
-		const dataKey = Object.getOwnPropertySymbols(this).find(symbol => (this[symbol] || {})[DATA_MARKER]);
+		const dataKey = Object.getOwnPropertySymbols(this).find(
+			symbol => (this[symbol] || {})[DATA_MARKER]
+		);
 		delete this[dataKey][DATA_MARKER];
 
 		Object.defineProperty(this, DATA, {
-			get: () => this[dataKey]
+			get: () => this[dataKey],
 		});
 	}
 
-	get (key) {
+	get(key) {
 		// fall back to entity's value if we don't have it.
 		const value = super.get(key);
 		return value !== undefined // explicit check to allow empty strings (falsy) through
@@ -74,29 +81,29 @@ export class Store extends Stores.SimpleStore {
 	}
 
 	#getEntityValue = key => {
-		const {entity} = this;
+		const { entity } = this;
 		const value = (entity || {})[key];
 		return Array.isArray(value)
 			? [...value] // don't modify the array on the user
 			: value;
-	}
+	};
 
-	set (name, value) {
+	set(name, value) {
 		// we need immediate feedback during editing
 		// because input values are controlled by the store.
 		return super.setImmediate(name, value);
 	}
 
-	clear () {
+	clear() {
 		super.clear(true);
 	}
 
-	clearEdits () {
+	clearEdits() {
 		if (!this[DATA] || !this.#schema) {
 			return;
 		}
 
-		const inSchema = key => hasProperty(this.#schema,key);
+		const inSchema = key => hasProperty(this.#schema, key);
 		Object.keys(this[DATA])
 			.filter(inSchema)
 			.forEach(k => delete this[DATA][k]);
@@ -104,26 +111,25 @@ export class Store extends Stores.SimpleStore {
 		this.set(HAS_UNSAVED_CHANGES, false);
 	}
 
-	async busy (work) {
+	async busy(work) {
 		const inner = async (resolve, reject) => {
 			let error, result;
 
 			this.set({
 				[LOADING]: true,
-				[ERROR]: error
+				[ERROR]: error,
 			});
 
 			try {
 				result = await (typeof work === 'function' ? work() : work);
-			}
-			catch (e) {
+			} catch (e) {
 				error = e;
 			}
 
 			this.set({
 				[LOADED]: true,
 				[LOADING]: false,
-				[ERROR]: error
+				[ERROR]: error,
 			});
 
 			error ? reject(error) : resolve(result);
@@ -133,51 +139,63 @@ export class Store extends Stores.SimpleStore {
 	}
 
 	[SET_FIELD_VALUE] = (name, value) => {
-		const changed = {[name]: value};
-		const affected = getAffectedValues(this.entity, changed, this.#profileType, this.#schema);
+		const changed = { [name]: value };
+		const affected = getAffectedValues(
+			this.entity,
+			changed,
+			this.#profileType,
+			this.#schema
+		);
 
 		this.set({
 			...affected,
 			...changed,
-			[HAS_UNSAVED_CHANGES]: true
+			[HAS_UNSAVED_CHANGES]: true,
 		});
 
 		try {
 			return this.#preflight();
-		}
-		catch (e) {
+		} catch (e) {
 			//
 		}
-	}
+	};
 
 	[SET_FIELD_ERROR] = (error, where) => {
 		const existing = arr(this.get(FIELD_ERRORS) || []);
-		const {name} = (error || {});
-		const isDuplicate = name && existing.some(({name: n, where: w}) => (n === name && w === where));
+		const { name } = error || {};
+		const isDuplicate =
+			name &&
+			existing.some(({ name: n, where: w }) => n === name && w === where);
 
 		if (!isDuplicate) {
-			const errors = [...existing, {error, where}];
+			const errors = [...existing, { error, where }];
 			super.set(FIELD_ERRORS, errors); // we don't need immediate updates for validation errors; could be multiple
 		}
-	}
+	};
 
 	#getPayload = () => {
-		const inSchema = ([key]) => hasProperty(this.#schema,key);
-		const reassemble = (acc, [key, value]) => ({...acc, [key]: trimValue(value)});
+		const inSchema = ([key]) => hasProperty(this.#schema, key);
+		const reassemble = (acc, [key, value]) => ({
+			...acc,
+			[key]: trimValue(value),
+		});
 		return Object.entries(this[DATA])
 			.filter(inSchema)
 			.reduce(reassemble, {});
-	}
+	};
 
 	#preflight = buffer(500, async (payload = this.#getPayload()) => {
 		try {
-			const result = await this.entity.preflightProfile(payload).then(r => r, r => r);
+			const result = await this.entity.preflightProfile(payload).then(
+				r => r,
+				r => r
+			);
 
 			const {
 				ProfileType: newType,
 				ProfileSchema: schema,
 				// ValidationErrors: errors,
-				statusCode
+				statusCode,
 			} = result;
 
 			this.#profileType = newType;
@@ -189,7 +207,7 @@ export class Store extends Stores.SimpleStore {
 
 			return result;
 		} catch (e) {
-			const {ProfileSchema: schema, ProfileType: newType} = e;
+			const { ProfileSchema: schema, ProfileType: newType } = e;
 
 			this.#profileType = newType;
 			this.#setSchema(schema);
@@ -198,10 +216,10 @@ export class Store extends Stores.SimpleStore {
 
 	[SAVE_PROFILE] = async () => {
 		return this.busy(this.#preflightAndSave);
-	}
+	};
 
 	#preflightAndSave = async () => {
-		const {entity} = this;
+		const { entity } = this;
 		const payload = this.#getPayload();
 
 		if (Object.keys(payload || {}).length === 0) {
@@ -219,18 +237,21 @@ export class Store extends Stores.SimpleStore {
 		this.#initialSchema = this.#schema;
 
 		return result;
-	}
+	};
 
 	[CLEAR_ERRORS] = () => {
 		this.set({
 			[ERROR]: undefined,
-			[FIELD_ERRORS]: undefined
+			[FIELD_ERRORS]: undefined,
 		});
-	}
+	};
 
 	#preprocessSchema = schema => {
-		return addGroupsToSchema(schema, FieldConfig.getFieldGroups(schema, this.#profileType));
-	}
+		return addGroupsToSchema(
+			schema,
+			FieldConfig.getFieldGroups(schema, this.#profileType)
+		);
+	};
 
 	#setSchema = schema => {
 		const initial = this.#initialSchema;
@@ -239,17 +260,22 @@ export class Store extends Stores.SimpleStore {
 		this.#initialSchema = initial || processed;
 		this.#schema = processed;
 
-		const canEdit = Object.values(this.#schema).some(v => (v || {}).readonly === false);
+		const canEdit = Object.values(this.#schema).some(
+			v => (v || {}).readonly === false
+		);
 
 		this.set({
-			[FIELD_GROUPS]: getGroupedSchemaFields(processed, FieldConfig.getFields(schema, this.#profileType)),
-			[CAN_EDIT]: canEdit
+			[FIELD_GROUPS]: getGroupedSchemaFields(
+				processed,
+				FieldConfig.getFields(schema, this.#profileType)
+			),
+			[CAN_EDIT]: canEdit,
 		});
 	};
 
 	#setProfileType = type => {
 		this.#profileType = type;
-	}
+	};
 
 	/**
 	 * Computes the difference between the initial and current schema, optionally filtering for specific property changes
@@ -257,16 +283,19 @@ export class Store extends Stores.SimpleStore {
 	 * @returns {Object} - The portion of the schema that changed, grouped according to field.group
 	 */
 	// [SCHEMA_CHANGES] = (...properties) => { // would be nice to accept either an array or varargs, but…
-	[SCHEMA_CHANGES] = (props) => {
+	[SCHEMA_CHANGES] = props => {
 		// const props = properties.flat(); // …ie doesn't support array.flat and we're only invoking this from one place anyway.
 
 		// filter function for the changes
-		const interested = props.length === 0
-			? x => true // passthrough if no specific properties were specified
-			: ([field, changed]) => ( // filter out items whose changes don't include the specified properties
-				Object.keys(changed || {})
-					.some(prop => props.includes(prop))
-			);
+		const interested =
+			props.length === 0
+				? x => true // passthrough if no specific properties were specified
+				: (
+						[field, changed] // filter out items whose changes don't include the specified properties
+				  ) =>
+						Object.keys(changed || {}).some(prop =>
+							props.includes(prop)
+						);
 
 		// const {#initialSchema: initial, #schema: current} = this;
 		const delta = diff(this.#initialSchema, this.#schema);
@@ -276,20 +305,30 @@ export class Store extends Stores.SimpleStore {
 			.map(([field]) => field);
 
 		return getGroupedSchemaFields(this.#schema, fields);
-	}
+	};
 
 	load = async (entity, force) => {
-		if (this.entity === entity && (this.get(LOADED) || this.get(LOADING)) && !force) {
+		if (
+			this.entity === entity &&
+			(this.get(LOADED) || this.get(LOADING)) &&
+			!force
+		) {
 			return;
 		}
 
-		if(entity && (!this.entity || this.entity.getID() !== entity.getID())) {
+		if (
+			entity &&
+			(!this.entity || this.entity.getID() !== entity.getID())
+		) {
 			this.entity = entity;
 		}
 
 		this.clear();
 
-		const formId = entity && entity.getID ? slugify(`form-${entity.getID()}`) : 'unknown-id';
+		const formId =
+			entity && entity.getID
+				? slugify(`form-${entity.getID()}`)
+				: 'unknown-id';
 		this.set(FORM_ID, formId);
 
 		if (entity && entity.getProfileSchema) {
@@ -297,17 +336,16 @@ export class Store extends Stores.SimpleStore {
 			return this.busy(
 				Promise.all([
 					entity.getProfileSchema(),
-					entity.getProfileType()
+					entity.getProfileType(),
 				])
 					.then(([schema, type]) => {
 						this.#setProfileType(type);
 						this.#setSchema(schema);
 					})
-					.catch(() => this.#schema = null)
+					.catch(() => (this.#schema = null))
 			);
-		}
-		else {
+		} else {
 			this.#schema = null;
 		}
-	}
+	};
 }

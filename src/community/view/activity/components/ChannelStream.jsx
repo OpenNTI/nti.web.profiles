@@ -1,26 +1,30 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
-import {scoped} from '@nti/lib-locale';
-import {Stream} from '@nti/web-discussions';
-import {EmptyState} from '@nti/web-commons';
+import { scoped } from '@nti/lib-locale';
+import { Stream } from '@nti/web-discussions';
+import { EmptyState } from '@nti/web-commons';
 
 import Styles from './ChannelStream.css';
-import  Card from './Card';
-import {getGrouperForSort} from './Groupers';
+import Card from './Card';
+import { getGrouperForSort } from './Groupers';
 
 const cx = classnames.bind(Styles);
 const t = scoped('nti-profile.community.activity.components.ChannelStream', {
-	empty: 'There are no active discussions. Be the first to start one.'
+	empty: 'There are no active discussions. Be the first to start one.',
 });
 
-const renderEmpty = () => (<Card className={cx('channel-stream-empty')}><EmptyState header={t('empty')} /></Card>);
+const renderEmpty = () => (
+	<Card className={cx('channel-stream-empty')}>
+		<EmptyState header={t('empty')} />
+	</Card>
+);
 
 const SortOrders = {
-	'createdTime': 'descending',
-	'NewestDescendantCreatedTime': 'descending',
-	'PostCount': 'descending',
-	'LikeCount': 'descending'
+	createdTime: 'descending',
+	NewestDescendantCreatedTime: 'descending',
+	PostCount: 'descending',
+	LikeCount: 'descending',
 };
 
 ChannelStream.propTypes = {
@@ -31,7 +35,14 @@ ChannelStream.propTypes = {
 	batchSize: PropTypes.number,
 	searchContext: PropTypes.string,
 };
-export default function ChannelStream ({channel, sortOn, layout, batchSize, columns, searchContext}) {
+export default function ChannelStream({
+	channel,
+	sortOn,
+	layout,
+	batchSize,
+	columns,
+	searchContext,
+}) {
 	const grouperProps = getGrouperForSort(sortOn);
 
 	return (

@@ -1,40 +1,40 @@
 /* eslint-env jest */
-import {getLocale, registerTranslations} from '@nti/lib-locale';
+import { getLocale, registerTranslations } from '@nti/lib-locale';
 
 import getMessages from '../factory';
 
 const INVALID_START_YEAR = 'Invalid position start year.';
 const INVALID_END_YEAR = 'Invalid position end year.';
-const GENERIC_INVALID_VALUE_SINGULAR = 'Unable to save. Your submission included an invalid value.';
-const GENERIC_INVALID_VALUE_PLURAL = 'Unable to save. Your submission included invalid values.';
+const GENERIC_INVALID_VALUE_SINGULAR =
+	'Unable to save. Your submission included an invalid value.';
+const GENERIC_INVALID_VALUE_PLURAL =
+	'Unable to save. Your submission included invalid values.';
 
 const localeStrings = {
 	'nti-profile-edit': {
 		'server-error-messages': {
 			RequiredMissing: {
 				one: '---The %(fields)s field is required.---',
-				other: '---These fields are required: %(fields)s---'
+				other: '---These fields are required: %(fields)s---',
 			},
 			UnspecifiedValidationError: {
 				one: GENERIC_INVALID_VALUE_SINGULAR,
-				other: GENERIC_INVALID_VALUE_PLURAL
-			}
-		}
-	}
+				other: GENERIC_INVALID_VALUE_PLURAL,
+			},
+		},
+	},
 };
 
 registerTranslations(getLocale(), localeStrings);
 
-
 describe('server message factory test', () => {
-
 	test('Test single validation error', () => {
 		const error = {
 			ValidationErrors: [
 				{
 					code: 'InvalidStartYear',
-					message: INVALID_START_YEAR
-				}
+					message: INVALID_START_YEAR,
+				},
 			],
 		};
 
@@ -49,12 +49,12 @@ describe('server message factory test', () => {
 			ValidationErrors: [
 				{
 					code: 'InvalidStartYear',
-					message: INVALID_START_YEAR
+					message: INVALID_START_YEAR,
 				},
 				{
 					code: 'InvalidEndYear',
-					message: INVALID_END_YEAR
-				}
+					message: INVALID_END_YEAR,
+				},
 			],
 		};
 
@@ -68,8 +68,8 @@ describe('server message factory test', () => {
 		const error = {
 			ValidationErrors: [
 				{
-					code: 'InvalidStartYear'
-				}
+					code: 'InvalidStartYear',
+				},
 			],
 		};
 
@@ -83,11 +83,11 @@ describe('server message factory test', () => {
 		const error = {
 			ValidationErrors: [
 				{
-					code: 'InvalidStartYear'
+					code: 'InvalidStartYear',
 				},
 				{
-					code: 'InvalidEndYear'
-				}
+					code: 'InvalidEndYear',
+				},
 			],
 		};
 
@@ -102,19 +102,21 @@ describe('server message factory test', () => {
 			ValidationErrors: [
 				{
 					code: 'RequiredMissing',
-					field: 'school'
+					field: 'school',
 				},
 				{
 					code: 'RequiredMissing',
-					field: 'name'
-				}
+					field: 'name',
+				},
 			],
 		};
 
 		const results = getMessages(error);
 
 		expect(results.length).toEqual(1);
-		expect(results[0]).toEqual('---These fields are required: school, name---');
+		expect(results[0]).toEqual(
+			'---These fields are required: school, name---'
+		);
 	});
 
 	test('error is itself a validation error', () => {
@@ -122,7 +124,7 @@ describe('server message factory test', () => {
 		const error = {
 			statusCode: 422,
 			code: 'RequiredMissing',
-			field
+			field,
 		};
 
 		const messages = getMessages(error);

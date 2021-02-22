@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {scoped} from '@nti/lib-locale';
-import {DateTime} from '@nti/web-commons';
+import { scoped } from '@nti/lib-locale';
+import { DateTime } from '@nti/web-commons';
 
-import {Card} from '../../../common';
-import {LOCALE_PATHS} from '../../constants';
+import { Card } from '../../../common';
+import { LOCALE_PATHS } from '../../constants';
 
 import LabelValueList from './LabelValueList';
 
@@ -21,58 +21,74 @@ const t = scoped(LOCALE_PATHS.DISTRICT, {
 	otherRole: 'Other Role',
 	companyName: 'Company Name',
 	companyMailingAddress: 'Company Mailing Address',
-	expectedGraduation: 'Expected Graduation Date'
+	expectedGraduation: 'Expected Graduation Date',
 });
 
 const propertyGetter = (property, label) => {
-	return (user) => {
+	return user => {
 		const value = user[property];
 
-		if (!value) { return null; }
+		if (!value) {
+			return null;
+		}
 
-		return {label, value};
+		return { label, value };
 	};
 };
 
 const FIELDS = [
-	(user) => {
-		const {affiliation}  = user;
+	user => {
+		const { affiliation } = user;
 
-		if (!affiliation) { return null; }
+		if (!affiliation) {
+			return null;
+		}
 
 		return {
 			label: t('district'),
-			value: affiliation
+			value: affiliation,
 		};
 	},
-	(user) => {
-		const {teacher_certification_number:cert, teacher_certification:hasCert} = user;
+	user => {
+		const {
+			teacher_certification_number: cert,
+			teacher_certification: hasCert,
+		} = user;
 
-		if (!cert || !hasCert) { return null; }
+		if (!cert || !hasCert) {
+			return null;
+		}
 
 		return {
 			label: t('teacherCertNumber'),
-			value: cert
+			value: cert,
 		};
 	},
-	(user) => {
-		const {admin_district_names:names, is_district_admin:isAdmin} = user;
+	user => {
+		const {
+			admin_district_names: names,
+			is_district_admin: isAdmin,
+		} = user;
 
-		if (!isAdmin || !names || !names.length) { return null; }
+		if (!isAdmin || !names || !names.length) {
+			return null;
+		}
 
 		return {
 			label: t('adminDistricts'),
-			value: names.join(', ')
+			value: names.join(', '),
 		};
 	},
-	(user) => {
-		const {district_school:site} = user;
+	user => {
+		const { district_school: site } = user;
 
-		if (!site) { return null; }
+		if (!site) {
+			return null;
+		}
 
 		return {
 			label: t('districtSite'),
-			value: site
+			value: site,
 		};
 	},
 	propertyGetter('job_title', t('jobTitle')),
@@ -81,31 +97,36 @@ const FIELDS = [
 	propertyGetter('company_name', t('companyName')),
 	propertyGetter('company_mailing_address', t('companyMailingAddress')),
 	propertyGetter('work', t('companyName')),
-	(user) => {
-		const {expected_graduation: date} = user;
+	user => {
+		const { expected_graduation: date } = user;
 
-		if (!date) { return null; }
+		if (!date) {
+			return null;
+		}
 
 		return {
 			label: t('expectedGraduation'),
-			value: DateTime.format(date, DateTime.MONTH_NAME_YEAR)
+			value: DateTime.format(date, DateTime.MONTH_NAME_YEAR),
 		};
-	}
+	},
 ];
 
-
 export default class ProfileDistrictInfo extends React.Component {
-	static shouldShow (user) {
-		return FIELDS.map(field => field(user)).filter(field => !!field).length > 0;
+	static shouldShow(user) {
+		return (
+			FIELDS.map(field => field(user)).filter(field => !!field).length > 0
+		);
 	}
 
 	static propTypes = {
-		user: PropTypes.object.isRequired
-	}
+		user: PropTypes.object.isRequired,
+	};
 
-	render () {
-		const {user} = this.props;
-		const fields = FIELDS.map(field => field(user)).filter(field => !!field);
+	render() {
+		const { user } = this.props;
+		const fields = FIELDS.map(field => field(user)).filter(
+			field => !!field
+		);
 
 		return (
 			<Card className="user-profile-about-district" title={t('title')}>

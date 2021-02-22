@@ -4,7 +4,7 @@ import { Hooks, Prompt } from '@nti/web-commons';
 import { Models } from '@nti/lib-interfaces';
 import { Create } from '@nti/web-discussions';
 
-import {composeLayoutProvider} from './parts';
+import { composeLayoutProvider } from './parts';
 import List from './List';
 import Toolbar from './Toolbar';
 
@@ -24,13 +24,15 @@ const RecessedToolbar = styled(Toolbar)`
 	margin: -20px -20px 20px;
 `;
 
-function reducer ({selected = new Set(), ...state}, {selected: selection,...action}) {
+function reducer(
+	{ selected = new Set(), ...state },
+	{ selected: selection, ...action }
+) {
 	if (selection) {
 		selected = new Set(selected);
 		if (selected.has(selection)) {
 			selected.delete(selection);
-		}
-		else {
+		} else {
 			if (!action.multiSelect) {
 				selected.clear();
 			}
@@ -40,40 +42,37 @@ function reducer ({selected = new Set(), ...state}, {selected: selection,...acti
 	return {
 		selected,
 		...state,
-		...action
+		...action,
 	};
 }
 
 // Fake page that indicates it has more data so that our loading placeholder shows while we are typing.
-const LOADING = Object.assign([], {hasMore: true});
+const LOADING = Object.assign([], { hasMore: true });
 
-function DiscussionPicker ({course, onSelect}) {
+function DiscussionPicker({ course, onSelect }) {
 	const community = course.getCommunity();
 	Hooks.useChanges(community);
 	const [firstChannel] = community;
-	const [{
-		create,
-		newTopic,
-		selected,
-		selectedChannel = firstChannel,
-		search,
-	}, dispatch] = useReducer(reducer, {});
+	const [
+		{ create, newTopic, selected, selectedChannel = firstChannel, search },
+		dispatch,
+	] = useReducer(reducer, {});
 
-	const {searchChanging, searchTerm} = useSearching(search);
+	const { searchChanging, searchTerm } = useSearching(search);
 
 	const list = useMemo(
-		() => create ? null : searchChanging ? LOADING : selectedChannel?.getIterable({
-			accept: Models.forums.Topic.MimeTypes.join(','),
-			sortOn: 'createdTime',
-			sortOrder: 'descending',
-			searchTerm
-		}),
-		[
-			create,
-			selectedChannel,
-			searchChanging,
-			searchTerm,
-		]
+		() =>
+			create
+				? null
+				: searchChanging
+				? LOADING
+				: selectedChannel?.getIterable({
+						accept: Models.forums.Topic.MimeTypes.join(','),
+						sortOn: 'createdTime',
+						sortOrder: 'descending',
+						searchTerm,
+				  }),
+		[create, selectedChannel, searchChanging, searchTerm]
 	);
 
 	Hooks.useChanges(list);
@@ -81,13 +80,13 @@ function DiscussionPicker ({course, onSelect}) {
 	moveNewTopicIntoSelection(dispatch, newTopic, list);
 	fireOnSelect(selected, onSelect);
 
-	return(
+	return (
 		<>
 			<RecessedToolbar
 				community={community}
 				currentChannel={selectedChannel}
-				onChangeChannel={x => dispatch({selectedChannel: x})}
-				onSearch={x => dispatch({search: x})}
+				onChangeChannel={x => dispatch({ selectedChannel: x })}
+				onSearch={x => dispatch({ search: x })}
 			/>
 
 			{list && (
@@ -95,22 +94,21 @@ function DiscussionPicker ({course, onSelect}) {
 					items={list}
 					selected={selected}
 					searchTerm={searchTerm}
-					onSelect={x => dispatch({selected: x})}
-					onCreate={() => dispatch({create: true})}
+					onSelect={x => dispatch({ selected: x })}
+					onCreate={() => dispatch({ create: true })}
 				/>
 			)}
 
 			{create && (
 				<>
-					<HideLegacyPrompt/>
+					<HideLegacyPrompt />
 					<Prompt.Dialog>
 						<Create
 							dialog
 							initialContainer={[community, selectedChannel]}
-
-							onClose={() => dispatch({create: false})}
-							afterSave={(topic) => {
-								dispatch({create: false, newTopic: topic});
+							onClose={() => dispatch({ create: false })}
+							afterSave={topic => {
+								dispatch({ create: false, newTopic: topic });
 							}}
 						/>
 					</Prompt.Dialog>
@@ -118,18 +116,16 @@ function DiscussionPicker ({course, onSelect}) {
 			)}
 		</>
 	);
-
 }
 
 DiscussionPicker.propTypes = {
 	course: PropTypes.object,
-	onSelect: PropTypes.func
+	onSelect: PropTypes.func,
 };
 
 export default composeLayoutProvider(DiscussionPicker);
 
-
-function HideLegacyPrompt () {
+function HideLegacyPrompt() {
 	useEffect(() => {
 		const prompt = document.querySelector('.prompt-container');
 		prompt?.classList.add('x-hidden');
@@ -140,8 +136,7 @@ function HideLegacyPrompt () {
 	return null;
 }
 
-
-function fireOnSelect (selected, onSelect) {
+function fireOnSelect(selected, onSelect) {
 	useEffect(() => {
 		if (selected) {
 			onSelect([...selected]);
@@ -149,23 +144,23 @@ function fireOnSelect (selected, onSelect) {
 	}, [selected]);
 }
 
-
-function moveNewTopicIntoSelection (dispatch, newTopic, items) {
+function moveNewTopicIntoSelection(dispatch, newTopic, items) {
 	useEffect(() => {
 		if (newTopic && items) {
-			const select = Array.from(items).find(x => x.getID() === newTopic.getID());
+			const select = Array.from(items).find(
+				x => x.getID() === newTopic.getID()
+			);
 			if (select) {
-				dispatch({newTopic: null, selected: select});
+				dispatch({ newTopic: null, selected: select });
 			}
 		}
 	}); // always run
 }
 
-
-function useSearching (searchInput) {
+function useSearching(searchInput) {
 	const searchTerm = Hooks.useDebounce(searchInput);
 	return {
 		searchTerm,
-		searchChanging: searchTerm !== searchInput
+		searchChanging: searchTerm !== searchInput,
 	};
 }

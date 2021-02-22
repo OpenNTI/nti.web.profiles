@@ -16,20 +16,20 @@ export default class Bookmark extends React.Component {
 		item: PropTypes.shape({
 			creator: PropTypes.string.isRequired,
 			getCreatedTime: PropTypes.func.isRequired,
-			NTIID: PropTypes.string.isRequired
+			NTIID: PropTypes.string.isRequired,
 		}).isRequired,
-		context: PropTypes.object.isRequired
-	}
+		context: PropTypes.object.isRequired,
+	};
 
 	state = {
-		page: null
-	}
+		page: null,
+	};
 
-	componentDidMount () {
+	componentDidMount() {
 		this.loadPage(this.props);
 	}
 
-	componentDidUpdate (prevProps) {
+	componentDidUpdate(prevProps) {
 		if (prevProps.item.NTIID !== this.props.item.NTIID) {
 			this.loadPage(this.props);
 		}
@@ -43,30 +43,41 @@ export default class Bookmark extends React.Component {
 		} catch (error) {
 			logger.error(error);
 		}
-	}
+	};
 
-	render () {
+	render() {
 		const { item, context } = this.props;
 		const { page } = this.state;
 
 		return (
 			<div className="stream-bookmark">
 				<div className="heading">
-					<LinkTo.Object object={{ Username: item.creator, isUser: true }} context="stream-profile">
+					<LinkTo.Object
+						object={{ Username: item.creator, isUser: true }}
+						context="stream-profile"
+					>
 						<DisplayName tag="a" entity={item.creator} />
-					</LinkTo.Object> created a bookmark on <DateTime date={item.getCreatedTime()} />
+					</LinkTo.Object>{' '}
+					created a bookmark on{' '}
+					<DateTime date={item.getCreatedTime()} />
 				</div>
 				<LinkTo.Object object={item} context="stream-bookmark">
 					<div className="bookmark-content">
 						<div className="bookmark-charms">
 							<div className="bookmark-favorite" />
 						</div>
-						<Presentation.Asset item={context} propName="src" type="thumb">
+						<Presentation.Asset
+							item={context}
+							propName="src"
+							type="thumb"
+						>
 							<img className="bookmark-icon" />
 						</Presentation.Asset>
 						<div className="bookmark-context">
 							<Breadcrumb context={context} item={item} />
-							<div className="page-title">{page && page.Title}</div>
+							<div className="page-title">
+								{page && page.Title}
+							</div>
 						</div>
 					</div>
 				</LinkTo.Object>

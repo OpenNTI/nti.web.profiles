@@ -1,10 +1,10 @@
 import './Nav.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
-import {scoped} from '@nti/lib-locale';
-import {List} from '@nti/web-commons';
+import { scoped } from '@nti/lib-locale';
+import { List } from '@nti/web-commons';
 
-import {LOCALE_PATHS} from '../constants';
+import { LOCALE_PATHS } from '../constants';
 import Achievements from '../achievements';
 
 import NavLink from './NavLink';
@@ -14,34 +14,55 @@ const t = scoped(LOCALE_PATHS.NAV, {
 	activity: 'Activity',
 	achievements: 'Achievements',
 	memberships: 'Memberships',
-	transcripts: 'Transcripts'
+	transcripts: 'Transcripts',
 });
-
 
 export default class ProfileHeaderNav extends React.Component {
 	static propTypes = {
-		entity: PropTypes.object.isRequired
-	}
+		entity: PropTypes.object.isRequired,
+	};
 
-
-	render () {
-		const {entity} = this.props;
+	render() {
+		const { entity } = this.props;
 
 		return (
 			<nav>
-				<List.ResponsiveInline className="profile-header-nav" flyoutProps={{dark: true}}>
-					<NavLink object={entity} context="about" title={t('about')} exact/>
+				<List.ResponsiveInline
+					className="profile-header-nav"
+					flyoutProps={{ dark: true }}
+				>
+					<NavLink
+						object={entity}
+						context="about"
+						title={t('about')}
+						exact
+					/>
 					{entity.hasLink('Activity') && (
-						<NavLink object={entity} context="activity" title={t('activity')} />
+						<NavLink
+							object={entity}
+							context="activity"
+							title={t('activity')}
+						/>
 					)}
 					{Achievements.hasData(entity) && (
-						<NavLink object={entity} context="achievements" title={t('achievements')} />
+						<NavLink
+							object={entity}
+							context="achievements"
+							title={t('achievements')}
+						/>
 					)}
-					<NavLink object={entity} context="memberships" title={t('memberships')} />
-					{entity.hasLink('transcript')
-						? (<NavLink object={entity} context="transcripts" title={t('transcripts')} />)
-						: null
-					}
+					<NavLink
+						object={entity}
+						context="memberships"
+						title={t('memberships')}
+					/>
+					{entity.hasLink('transcript') ? (
+						<NavLink
+							object={entity}
+							context="transcripts"
+							title={t('transcripts')}
+						/>
+					) : null}
 				</List.ResponsiveInline>
 			</nav>
 		);

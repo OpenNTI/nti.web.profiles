@@ -1,5 +1,5 @@
-import {Stores} from '@nti/lib-store';
-import {getService} from '@nti/web-client';
+import { Stores } from '@nti/lib-store';
+import { getService } from '@nti/web-client';
 
 export const LOADING = 'loading';
 export const SUGGESTIONS = 'suggestions';
@@ -7,16 +7,16 @@ export const SUGGESTIONS = 'suggestions';
 const REL = 'SuggestedContacts';
 
 export default class Store extends Stores.BoundStore {
-	static deriveBindingFromProps = ({user}) => user
+	static deriveBindingFromProps = ({ user }) => user;
 
-	async load () {
+	async load() {
 		const entity = this.binding;
 
-		if(!entity || !entity.hasLink(REL)) {
+		if (!entity || !entity.hasLink(REL)) {
 			// if a user doesn't have the link, treat it as the empty state
 			this.set({
 				[LOADING]: false,
-				[SUGGESTIONS]: []
+				[SUGGESTIONS]: [],
 			});
 
 			return;
@@ -32,8 +32,7 @@ export default class Store extends Stores.BoundStore {
 
 		this.set({
 			[LOADING]: false,
-			[SUGGESTIONS]: suggestions
+			[SUGGESTIONS]: suggestions,
 		});
 	}
-
 }

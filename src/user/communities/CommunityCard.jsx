@@ -2,26 +2,33 @@ import './CommunityCard.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import {LinkTo} from '@nti/web-routing';
-import {decorate} from '@nti/lib-commons';
-import {Avatar, Text} from '@nti/web-commons';
+import { LinkTo } from '@nti/web-routing';
+import { decorate } from '@nti/lib-commons';
+import { Avatar, Text } from '@nti/web-commons';
 
-import {ResolveEntityProp} from '../../decorators';
+import { ResolveEntityProp } from '../../decorators';
 
 class CommunityCard extends React.Component {
 	static propTypes = {
 		className: PropTypes.string,
-		community: PropTypes.object.isRequired
-	}
+		community: PropTypes.object.isRequired,
+	};
 
-	render () {
-		const {className, community, ...otherProps} = this.props;
+	render() {
+		const { className, community, ...otherProps } = this.props;
 
 		return (
 			<LinkTo.Object object={community}>
-				<div className={cx('user-community-card', className)} {...otherProps}>
+				<div
+					className={cx('user-community-card', className)}
+					{...otherProps}
+				>
 					<Avatar entity={community} />
-					<Text.Base className="title-container" limitLines={2} overflow={Text.Overflow.Ellipsis}>
+					<Text.Base
+						className="title-container"
+						limitLines={2}
+						overflow={Text.Overflow.Ellipsis}
+					>
 						{community.displayName}
 					</Text.Base>
 				</div>
@@ -30,7 +37,4 @@ class CommunityCard extends React.Component {
 	}
 }
 
-
-export default decorate(CommunityCard, [
-	ResolveEntityProp('community')
-]);
+export default decorate(CommunityCard, [ResolveEntityProp('community')]);

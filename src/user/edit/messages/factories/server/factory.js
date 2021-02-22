@@ -1,7 +1,7 @@
-import {scoped} from '@nti/lib-locale';
+import { scoped } from '@nti/lib-locale';
 import Logger from '@nti/util-logger';
 
-import {ensureArray as arr} from '../../../../../util';
+import { ensureArray as arr } from '../../../../../util';
 
 const noop = () => void 0;
 
@@ -20,87 +20,100 @@ const t = scoped('nti-profile-edit.server-error-messages', {
 	unknown: 'An error occurred processing your request.',
 	[CODE_REQUIRED]: {
 		one: 'The %(fields)s field is required.',
-		other: 'These fields are required: %(fields)s'
+		other: 'These fields are required: %(fields)s',
 	},
 	[CODE_INVALID]: {
 		one: 'The %(fields)s field is invalid.',
-		other: 'These fields are invalid: %(fields)s'
+		other: 'These fields are invalid: %(fields)s',
 	},
 	[BOTH]: 'These fields are required or invalid: %(fields)s',
 	[UNSPECIFIED_VALIDATION_ERROR]: {
 		one: 'Unable to save. Your submission included an invalid value.',
-		other: 'Unable to save. Your submission included invalid values.'
+		other: 'Unable to save. Your submission included invalid values.',
 	},
 	[UNKNOWN_ERROR]: 'Unable to save. An unknown error occurred.',
 	[LIST_DELIMITER]: ', ',
 	fieldNames: {
-		'myers_briggs_response': 'Myers-Briggs Response'
+		myers_briggs_response: 'Myers-Briggs Response',
 	},
 });
 
-const localizeFieldName = name => !name ? null : t(['fieldNames', name], {fallback: name});
+const localizeFieldName = name =>
+	!name ? null : t(['fieldNames', name], { fallback: name });
 
 const extractValidationErrors = x => {
 	// has ValidationErrors or is a validation error or bail
-	return arr(x.ValidationErrors || ((x.statusCode === 422 && x.field) ? x : null)).filter(Boolean);
+	return arr(
+		x.ValidationErrors || (x.statusCode === 422 && x.field ? x : null)
+	).filter(Boolean);
 };
 
-const categorize = errors => arr(errors).reduce((acc, error) => {
-	const validation = extractValidationErrors(error);
-	if (validation.length > 0) {
-		acc[VALIDATION_ERROR] = [...(acc[VALIDATION_ERROR] || []), ...validation];
-	}
-	else {
-		acc[UNKNOWN_ERROR] = [...(acc[UNKNOWN_ERROR] || []), error];
-	}
-	return acc;
-}, {});
+const categorize = errors =>
+	arr(errors).reduce((acc, error) => {
+		const validation = extractValidationErrors(error);
+		if (validation.length > 0) {
+			acc[VALIDATION_ERROR] = [
+				...(acc[VALIDATION_ERROR] || []),
+				...validation,
+			];
+		} else {
+			acc[UNKNOWN_ERROR] = [...(acc[UNKNOWN_ERROR] || []), error];
+		}
+		return acc;
+	}, {});
 
 const handlers = {
 	[VALIDATION_ERROR]: errors => {
 		// extract an array of field names (localized)
-		const fields = errors.map(({field}) => localizeFieldName(field)).filter(Boolean);
+		const fields = errors
+			.map(({ field }) => localizeFieldName(field))
+			.filter(Boolean);
 
 		// bail with a generic error message if we can't get the field names.
-		if (fields.length === 0) { // validation errors with unidentifiable fields?
-			logger.warn('Unable to identify fields in ValidationErrors. Using generic validation message.');
-			return t(UNSPECIFIED_VALIDATION_ERROR, {count: errors.length});
+		if (fields.length === 0) {
+			// validation errors with unidentifiable fields?
+			logger.warn(
+				'Unable to identify fields in ValidationErrors. Using generic validation message.'
+			);
+			return t(UNSPECIFIED_VALIDATION_ERROR, { count: errors.length });
 		}
 
-		const types = errors.reduce((result, {code} = {}) => {
+		const types = errors.reduce((result, { code } = {}) => {
 			result.add(code === CODE_REQUIRED ? CODE_REQUIRED : CODE_INVALID);
 			return result;
 		}, new Set());
 
-		const key = types.size > 1
-			? BOTH
-			: types.has(CODE_REQUIRED)
+		const key =
+			types.size > 1
+				? BOTH
+				: types.has(CODE_REQUIRED)
 				? CODE_REQUIRED
 				: CODE_INVALID;
 
 		return t(key, {
 			count: fields.length,
-			fields: fields.join(t(LIST_DELIMITER, {fallback: ', '}))
+			fields: fields.join(t(LIST_DELIMITER, { fallback: ', ' })),
 		});
 	},
 
 	[UNKNOWN_ERROR]: errors => {
 		return errors.map(e => {
-			const {Message, message = Message, code} = e;
-			return message || (code && !t.isMissing(code) && t(code)) || t('unknown');
+			const { Message, message = Message, code } = e;
+			return (
+				message ||
+				(code && !t.isMissing(code) && t(code)) ||
+				t('unknown')
+			);
 		});
-	}
+	},
 };
 
-
-export default function getMessages (errors) {
+export default function getMessages(errors) {
 	// validation error or unknown
 	const byType = categorize(errors);
 
 	return Object.entries(byType)
-		.map(([type, errs]) => (
-			arr((handlers[type] || noop)(errs))
-		))
+		.map(([type, errs]) => arr((handlers[type] || noop)(errs)))
 		.reduce((acc, chunk) => [...acc, ...chunk], [])
 		.filter(Boolean);
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Icons, Input } from '@nti/web-commons';
 
-const SearchIcon = styled('div').attrs({children: <Icons.Search/>})`
+const SearchIcon = styled('div').attrs({ children: <Icons.Search /> })`
 	width: 35px;
 	border-style: inherit;
 	border-color: inherit;
@@ -34,12 +34,11 @@ const SearchInput = styled(Input.Text)`
 	min-width: 0;
 `;
 
-export default function Search ({placeholder = 'Search', ...props}) {
-
+export default function Search({ placeholder = 'Search', ...props }) {
 	return (
 		<SearchContainer>
 			<SearchInput {...props} placeholder={placeholder} />
-			<SearchIcon/>
+			<SearchIcon />
 		</SearchContainer>
 	);
 }

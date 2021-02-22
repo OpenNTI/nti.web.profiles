@@ -1,8 +1,14 @@
 @import '~@nti/style-common';
 
 $header-ranges: (
-	narrow: (null, 340px),
-	wide: (340px, null)
+	narrow: (
+		null,
+		340px,
+	),
+	wide: (
+		340px,
+		null,
+	),
 );
 
 .transcript-date-range {

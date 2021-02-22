@@ -1,5 +1,5 @@
 import React from 'react';
-import {FakeStore} from '@nti/lib-store';
+import { FakeStore } from '@nti/lib-store';
 
 import View from '../View';
 import Store from '../Store';
@@ -9,8 +9,7 @@ export default {
 	component: View,
 };
 
-
-export function Panel ( ) {
+export function Panel() {
 	const store = new Store();
 
 	store.set({
@@ -18,7 +17,7 @@ export function Panel ( ) {
 			user1: 'available',
 			user2: 'dnd',
 			user3: 'away',
-		}
+		},
 	});
 
 	store.set({

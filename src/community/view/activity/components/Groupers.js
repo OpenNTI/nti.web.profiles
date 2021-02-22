@@ -1,26 +1,38 @@
 import classnames from 'classnames/bind';
-import {scoped} from '@nti/lib-locale';
-import {DateTime} from '@nti/web-commons';
+import { scoped } from '@nti/lib-locale';
+import { DateTime } from '@nti/web-commons';
 
 import Styles from './Groupers.css';
 
 const cx = classnames.bind(Styles);
 const t = scoped('nti-profiles.community.activity.components.Groupers', {
 	today: 'Today',
-	yesterday: 'Yesterday'
+	yesterday: 'Yesterday',
 });
 
-
 //Taken from webapp Time utils
-export function getTimeGroupHeader (time) {
+export function getTimeGroupHeader(time) {
 	const timestamp = time.getTime();
 	const now = new Date();
 
-	const oneDayAgo = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1);
-	const twoDaysAgo = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 2);
-	const oneWeekAgo = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 7);
+	const oneDayAgo = new Date(
+		now.getFullYear(),
+		now.getMonth(),
+		now.getDate() - 1
+	);
+	const twoDaysAgo = new Date(
+		now.getFullYear(),
+		now.getMonth(),
+		now.getDate() - 2
+	);
+	const oneWeekAgo = new Date(
+		now.getFullYear(),
+		now.getMonth(),
+		now.getDate() - 7
+	);
 
-	const between = (start, end) => start.getTime() < timestamp && timestamp <= end.getTime();
+	const between = (start, end) =>
+		start.getTime() < timestamp && timestamp <= end.getTime();
 
 	if (between(oneDayAgo, now)) {
 		return t('today');
@@ -40,34 +52,43 @@ export function getTimeGroupHeader (time) {
 
 const noGrouper = {
 	grouper: () => true,
-	getGroupInfo: () => ({label: '', className: cx('no-group'), itemListClassName: cx('no-group-item-list')})
+	getGroupInfo: () => ({
+		label: '',
+		className: cx('no-group'),
+		itemListClassName: cx('no-group-item-list'),
+	}),
 };
 
-const getGroupInfo = (label) => ({label, className: cx('group'), itemListClassName: cx('group-item-list'), labelClassName: cx('group-label')});
+const getGroupInfo = label => ({
+	label,
+	className: cx('group'),
+	itemListClassName: cx('group-item-list'),
+	labelClassName: cx('group-label'),
+});
 
 const SortToGrouper = {
 	createdTime: {
-		grouper: (obj) => {
+		grouper: obj => {
 			const created = new Date(obj.getCreatedTime());
 
 			created.setHours(0, 0, 0, 0);
 
 			return getTimeGroupHeader(created);
 		},
-		getGroupInfo
+		getGroupInfo,
 	},
 	NewestDescendantCreatedTime: {
-		grouper: (obj) => {
+		grouper: obj => {
 			const created = new Date(obj.getNewestDescendantCreatedTime());
 
 			created.setHours(0, 0, 0, 0);
 
 			return getTimeGroupHeader(created);
 		},
-		getGroupInfo
-	}
+		getGroupInfo,
+	},
 };
 
-export function getGrouperForSort (sort) {
+export function getGrouperForSort(sort) {
 	return SortToGrouper[sort] || noGrouper;
 }

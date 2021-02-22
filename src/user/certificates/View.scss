@@ -1,8 +1,16 @@
 @import '~@nti/style-common';
 
 $header-ranges: (
-	one-column: (null, 574px),// 455 + 16 padding * 2
-	two-column: (575px, null)
+	one-column: (
+		null,
+		574px,
+	),
+	// 455 + 16 padding * 2
+	two-column:
+		(
+			575px,
+			null,
+		),
 );
 
 .nti-profile-certificates {

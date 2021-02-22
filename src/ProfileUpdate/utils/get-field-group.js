@@ -1,17 +1,17 @@
 import fixSchema from './fix-schema';
 import shouldHideField from './should-hide-field';
 
-function getField (schema, error) {
+function getField(schema, error) {
 	schema = fixSchema(schema);
 
 	return {
 		schema,
 		error,
-		hidden: shouldHideField(schema)
+		hidden: shouldHideField(schema),
 	};
 }
 
-function hasError (name, errors) {
+function hasError(name, errors) {
 	return errors.some(error => error.field === name);
 }
 
@@ -19,21 +19,21 @@ const DEFAULT = Symbol('Default');
 
 const TYPE_HANDLERS = {
 	[DEFAULT]: (schema, validationErrors) => {
+		return [validationErrors.map(x => getField(schema[x.field], x))];
+	},
+	IOSDEUserProfile: (schema, validationErrors) => {
 		return [
-			validationErrors.map(x => getField(schema[x.field], x))
+			[
+				getField(schema['role'], null),
+				...validationErrors
+					.filter(x => x.field !== 'role')
+					.map(x => getField(schema[x.field], x)),
+			],
 		];
 	},
-	'IOSDEUserProfile': (schema, validationErrors) => {
-		return [[
-			getField(schema['role'], null),
-			...(validationErrors
-				.filter(x => x.field !== 'role')
-				.map(x => getField(schema[x.field], x)))
-		]];
-	},
-	'ISALLTUserProfile': (schema, validationErrors) => {
+	ISALLTUserProfile: (schema, validationErrors) => {
 		const fields = [
-			...validationErrors.map(x => getField(schema[x.field], x))
+			...validationErrors.map(x => getField(schema[x.field], x)),
 		];
 
 		if (hasError('myers_briggs', validationErrors)) {
@@ -50,9 +50,9 @@ const TYPE_HANDLERS = {
 
 		return [fields];
 	},
-	'IOPSRCUserProfile': (schema, validationErrors) => {
+	IOPSRCUserProfile: (schema, validationErrors) => {
 		const fields = [
-			...validationErrors.map(x => getField(schema[x.field], x))
+			...validationErrors.map(x => getField(schema[x.field], x)),
 		];
 
 		if (hasError('is_district_admin', validationErrors)) {
@@ -64,11 +64,19 @@ const TYPE_HANDLERS = {
 		}
 
 		return [fields];
-	}
+	},
 };
 
-export default function getFieldGroup (schema, validationErrors, type, baseType) {
-	const handler = TYPE_HANDLERS[type] || TYPE_HANDLERS[baseType] || TYPE_HANDLERS[DEFAULT];
+export default function getFieldGroup(
+	schema,
+	validationErrors,
+	type,
+	baseType
+) {
+	const handler =
+		TYPE_HANDLERS[type] ||
+		TYPE_HANDLERS[baseType] ||
+		TYPE_HANDLERS[DEFAULT];
 
 	return handler(schema, validationErrors);
 }

@@ -3,22 +3,23 @@ import PropTypes from 'prop-types';
 
 import FieldGroup from '../../common/FieldGroup';
 
-import {getConfigForType} from './Config';
+import { getConfigForType } from './Config';
 
-export default
-class ProfileUpdateDefault extends React.Component {
+export default class ProfileUpdateDefault extends React.Component {
 	static propTypes = {
 		fields: PropTypes.array,
-		type: PropTypes.string
-	}
+		type: PropTypes.string,
+	};
 
-	render () {
-		const {type} = this.props;
+	render() {
+		const { type } = this.props;
 		const config = getConfigForType(type);
 
-		if (!config) { return null; }
+		if (!config) {
+			return null;
+		}
 
-		const {groups} = config;
+		const { groups } = config;
 
 		return (
 			<div>
@@ -27,13 +28,17 @@ class ProfileUpdateDefault extends React.Component {
 		);
 	}
 
-
-	renderGroup (group, key) {
-		const {fields:fieldOrder, label, getLabel} = group;
+	renderGroup(group, key) {
+		const { fields: fieldOrder, label, getLabel } = group;
 		const title = getLabel ? getLabel() : label;
 
 		return (
-			<FieldGroup key={key} order={fieldOrder} title={title} {...this.props} />
+			<FieldGroup
+				key={key}
+				order={fieldOrder}
+				title={title}
+				{...this.props}
+			/>
 		);
 	}
 }

@@ -1,41 +1,41 @@
-import React, {useContext, useMemo, useState} from 'react';
-import {Utils, DateTime} from '@nti/web-commons';
+import React, { useContext, useMemo, useState } from 'react';
+import { Utils, DateTime } from '@nti/web-commons';
 
 import HighlightedContent from './HighlightedContent';
 
-export const LayoutContext = React.createContext({layout: 'grid'});
+export const LayoutContext = React.createContext({ layout: 'grid' });
 
-export const composeLayoutProvider = (Cmp) => {
+export const composeLayoutProvider = Cmp => {
 	return React.forwardRef((props, ref) => {
 		const [layout, setLayout] = useState('grid');
-		const value = useMemo(() => ({layout, setLayout}) , [layout, setLayout]);
+		const value = useMemo(() => ({ layout, setLayout }), [
+			layout,
+			setLayout,
+		]);
 
 		if (Utils.maybeSupportsRefs(Cmp)) {
 			props.ref = ref;
 		}
 		return (
 			<LayoutContext.Provider value={value}>
-				<Cmp {...props}/>
+				<Cmp {...props} />
 			</LayoutContext.Provider>
 		);
 	});
 };
 
-
-export const useLayout = (extra) => {
-	return (props) => {
-		const {layout} = useContext(LayoutContext);
+export const useLayout = extra => {
+	return props => {
+		const { layout } = useContext(LayoutContext);
 		return {
 			...props,
 			...(extra?.call?.(null, props) ?? extra),
-			layout
+			layout,
 		};
 	};
 };
 
-
 export const ListContainerBase = styled('div').attrs(useLayout())`
-
 	/* gap: 10px; */
 	--gap: 10px;
 
@@ -72,14 +72,15 @@ export const Spacer = styled('span').attrs(useLayout())`
 	}
 `;
 
-
 export const Empty = styled.div`
 	position: relative;
 	margin-bottom: 1em;
 	flex: 0 0 100%;
 `;
 
-export const Container = styled('div').attrs(useLayout({'data-testid': 'discussion-selection-item'}))`
+export const Container = styled('div').attrs(
+	useLayout({ 'data-testid': 'discussion-selection-item' })
+)`
 	cursor: pointer;
 	position: relative;
 
@@ -113,7 +114,6 @@ export const Container = styled('div').attrs(useLayout({'data-testid': 'discussi
 	}
 `;
 
-
 export const Icon = styled('div').attrs(useLayout())`
 	height: 120px;
 	flex: 0 0 auto;
@@ -124,12 +124,13 @@ export const Icon = styled('div').attrs(useLayout())`
 	}
 `;
 
-
-export const Avatar = styled(Icon).attrs(({src, style, ...props}) => ({
+export const Avatar = styled(Icon).attrs(({ src, style, ...props }) => ({
 	'data-testid': 'discussion-selection-avatar',
 	style: {
 		...style,
-		backgroundImage: `url("${src || '/app/resources/images/elements/discussion-icon.png'}")`
+		backgroundImage: `url("${
+			src || '/app/resources/images/elements/discussion-icon.png'
+		}")`,
 	},
 	...props,
 }))`
@@ -138,9 +139,11 @@ export const Avatar = styled(Icon).attrs(({src, style, ...props}) => ({
 	background-size: cover;
 `;
 
-export const Title = styled(HighlightedContent).attrs(useLayout({
-	'data-testid':'discussion-selection-topic-title'
-}))`
+export const Title = styled(HighlightedContent).attrs(
+	useLayout({
+		'data-testid': 'discussion-selection-topic-title',
+	})
+)`
 	color: var(--primary-grey);
 	letter-spacing: normal;
 	text-overflow: ellipsis;
@@ -170,7 +173,7 @@ export const Title = styled(HighlightedContent).attrs(useLayout({
 	}
 `;
 
-export const Time = styled(DateTime).attrs(useLayout({relative: true}))`
+export const Time = styled(DateTime).attrs(useLayout({ relative: true }))`
 	flex: 0 0 auto;
 	width: 115px;
 	color: var(--secondary-grey);

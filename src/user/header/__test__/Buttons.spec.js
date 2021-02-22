@@ -12,9 +12,9 @@ const getMockService = () => {
 			return {
 				addListener: () => {},
 				removeListener: () => {},
-				contains: () => true
+				contains: () => true,
 			};
-		}
+		},
 	};
 };
 
@@ -22,8 +22,8 @@ const onBefore = () => {
 	jest.useFakeTimers();
 	setupTestClient(getMockService());
 	global.$AppConfig = {
-		...(global.$AppConfig),
-		username: 'testUser'
+		...global.$AppConfig,
+		username: 'testUser',
 	};
 };
 
@@ -35,7 +35,7 @@ const onAfter = () => {
 const flushPromises = () => new Promise(resolve => setImmediate(resolve));
 
 /* eslint-env jest */
-describe ('User profile header buttons test', () => {
+describe('User profile header buttons test', () => {
 	beforeEach(() => {
 		onBefore();
 	});
@@ -44,12 +44,12 @@ describe ('User profile header buttons test', () => {
 		onAfter();
 	});
 
-	test ('Is not acting user', async () => {
+	test('Is not acting user', async () => {
 		const user = {
-			getID: () => 'NOTtestUser'
+			getID: () => 'NOTtestUser',
 		};
 
-		const cmp = renderer.create(<Buttons entity={user}/>);
+		const cmp = renderer.create(<Buttons entity={user} />);
 
 		jest.runAllTimers();
 		await flushPromises();

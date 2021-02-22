@@ -14,15 +14,17 @@ const PARTS = [
 	Personality,
 	Education,
 	Professional,
-	Interests
+	Interests,
 ];
 
-export default function getPartsFor (user) {
-	if (isProfileEmpty(user)) { return [Empty]; }
+export default function getPartsFor(user) {
+	if (isProfileEmpty(user)) {
+		return [Empty];
+	}
 
-	return PARTS.filter((part) => !part.shouldShow || part.shouldShow(user));
+	return PARTS.filter(part => !part.shouldShow || part.shouldShow(user));
 }
 
-function isProfileEmpty (user) {
+function isProfileEmpty(user) {
 	return false;
 }

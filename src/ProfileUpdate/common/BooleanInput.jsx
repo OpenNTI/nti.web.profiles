@@ -1,14 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import {scoped} from '@nti/lib-locale';
-import {Input} from '@nti/web-commons';
+import { scoped } from '@nti/lib-locale';
+import { Input } from '@nti/web-commons';
 
-const {Select, Select: {Option}} = Input;
+const {
+	Select,
+	Select: { Option },
+} = Input;
 
 const t = scoped('nti-profiles.ProfileUpdate.types.sallt.common.BooleanInput', {
 	yes: 'Yes',
-	no: 'No'
+	no: 'No',
 });
 
 export default class SalltProfileChoiceInput extends React.Component {
@@ -18,31 +21,37 @@ export default class SalltProfileChoiceInput extends React.Component {
 				description: PropTypes.string,
 				name: PropTypes.string,
 				title: PropTypes.string,
-				choices: PropTypes.array
-			})
+				choices: PropTypes.array,
+			}),
 		}).isRequired,
 		value: PropTypes.string,
-		onChange: PropTypes.func
-	}
+		onChange: PropTypes.func,
+	};
 
-
-	onChange = (value) => {
-		const {field, onChange} = this.props;
+	onChange = value => {
+		const { field, onChange } = this.props;
 
 		if (onChange) {
 			onChange(field, value === 'yes');
 		}
-	}
+	};
 
-
-	render () {
-		const {field: {schema}, value} = this.props;
+	render() {
+		const {
+			field: { schema },
+			value,
+		} = this.props;
 
 		return (
-			<div className={cx('profile-update-sallt-profile-boolean-input', schema.name)}>
+			<div
+				className={cx(
+					'profile-update-sallt-profile-boolean-input',
+					schema.name
+				)}
+			>
 				<Input.Label label={schema.description}>
 					<Select
-						value={value == null ? value : (value ? 'yes' : 'no')}
+						value={value == null ? value : value ? 'yes' : 'no'}
 						placeholder={schema.title}
 						onChange={this.onChange}
 					>

@@ -4,20 +4,24 @@ import PropTypes from 'prop-types';
 export default class TypeFilterOption extends React.Component {
 	static propTypes = {
 		option: PropTypes.string.isRequired,
-		onClick: PropTypes.func
-	}
+		onClick: PropTypes.func,
+	};
 
 	onClick = () => {
-		const {onClick, option} = this.props;
+		const { onClick, option } = this.props;
 
-		if(onClick) {
+		if (onClick) {
 			onClick(option);
 		}
-	}
+	};
 
-	render () {
-		const {option} = this.props;
+	render() {
+		const { option } = this.props;
 
-		return <div className="type-filter-option" onClick={this.onClick}>{option}</div>;
+		return (
+			<div className="type-filter-option" onClick={this.onClick}>
+				{option}
+			</div>
+		);
 	}
 }

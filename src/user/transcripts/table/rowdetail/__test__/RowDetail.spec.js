@@ -11,20 +11,21 @@ describe('RowDetail test', () => {
 		amount: 12.3434,
 		creditDefinition: {
 			type: 'test type',
-			unit: 'credits'
+			unit: 'credits',
 		},
 		issuer: 'test issuer',
-		getAwardedDate: () => {}
+		getAwardedDate: () => {},
 	};
 
 	test('NTI-5808: Test decimal place', () => {
-		const {container: root} = render(
-			<RowDetail
-				item={item}
-				onDismiss={() => {}}
-			/>
+		const { container: root } = render(
+			<RowDetail item={item} onDismiss={() => {}} />
 		);
-		const { creditDefinition: { type, unit }} = item;
-		expect(root.querySelector('.detail-info .value').textContent).toEqual(`${item.amount.toFixed(2)} ${type} ${unit}`);
+		const {
+			creditDefinition: { type, unit },
+		} = item;
+		expect(root.querySelector('.detail-info .value').textContent).toEqual(
+			`${item.amount.toFixed(2)} ${type} ${unit}`
+		);
 	});
 });

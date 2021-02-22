@@ -6,19 +6,19 @@ import ManageControls from '../ManageControls';
 
 const { tearDownTestClient, setupTestClient } = TestUtils;
 
-const getMockService = (isContact) => {
+const getMockService = isContact => {
 	return {
 		getContacts: () => {
 			return {
 				addListener: () => {},
 				removeListener: () => {},
-				contains: () => isContact
+				contains: () => isContact,
 			};
-		}
+		},
 	};
 };
 
-const onBefore = (isContact) => {
+const onBefore = isContact => {
 	jest.useFakeTimers();
 	setupTestClient(getMockService(isContact));
 };
@@ -37,10 +37,10 @@ describe('User profile manage controls test (is not a contact)', () => {
 	test('Basic render test', async () => {
 		const user = {
 			Username: 'testUser',
-			getID: () => 'testUser'
+			getID: () => 'testUser',
 		};
 
-		const cmp = renderer.create(<ManageControls entity={user}/>);
+		const cmp = renderer.create(<ManageControls entity={user} />);
 
 		jest.runAllTimers();
 		await flushPromises();
@@ -59,10 +59,10 @@ describe('User profile manage controls test (is a contact)', () => {
 	test('Basic render test', async () => {
 		const user = {
 			Username: 'testUser',
-			getID: () => 'testUser'
+			getID: () => 'testUser',
 		};
 
-		const cmp = renderer.create(<ManageControls entity={user}/>);
+		const cmp = renderer.create(<ManageControls entity={user} />);
 
 		jest.runAllTimers();
 		await flushPromises();

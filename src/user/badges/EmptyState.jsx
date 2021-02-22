@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {scoped} from '@nti/lib-locale';
-import {getAppUsername} from '@nti/web-client';
-import {Text, StandardUI, Button} from '@nti/web-commons';
+import { scoped } from '@nti/lib-locale';
+import { getAppUsername } from '@nti/web-client';
+import { Text, StandardUI, Button } from '@nti/web-commons';
 
 const t = scoped('nti-web-profile.badges.EmptyState', {
 	other: 'This user has not earned any badges.',
@@ -10,9 +10,10 @@ const t = scoped('nti-web-profile.badges.EmptyState', {
 	linkAccount: {
 		trigger: 'Not seeing your Credly badge?',
 		title: 'Not seeing your Credly badge?',
-		description: 'Ensure that the email address we have on file (%(email)s) is linked in your Credly account.',
-		action: 'Go to Credly'
-	}
+		description:
+			'Ensure that the email address we have on file (%(email)s) is linked in your Credly account.',
+		action: 'Go to Credly',
+	},
 });
 
 const isAppUser = e => e.Username === getAppUsername();
@@ -33,7 +34,7 @@ const Label = styled(Text.Base)`
 	margin-bottom: 2rem;
 `;
 
-const ConnectLink = styled(Button).attrs({plain: true})`
+const ConnectLink = styled(Button).attrs({ plain: true })`
 	font-size: 1rem;
 	color: var(--primary-blue);
 	cursor: pointer;
@@ -44,24 +45,26 @@ const Dialog = styled.div`
 	padding: 0 1rem 0 2rem;
 `;
 
-const Title = styled(Text.Base).attrs({as: 'h1'})`
+const Title = styled(Text.Base).attrs({ as: 'h1' })`
 	font-size: 1.5rem;
 	font-weight: 600;
 	margin: 0 0 1rem;
 	color: var(--primary-grey);
 `;
 
-const Description = styled(Text.Base).attrs({as: 'p'})`
+const Description = styled(Text.Base).attrs({ as: 'p' })`
 	color: var(--primary-grey);
 `;
 
 UserBadgeEmptyState.propTypes = {
-	entity: PropTypes.object
+	entity: PropTypes.object,
 };
-export default function UserBadgeEmptyState ({entity}) {
+export default function UserBadgeEmptyState({ entity }) {
 	const [connect, setConnect] = React.useState(false);
 	const showConnect = React.useCallback(() => setConnect(true), [setConnect]);
-	const hideConnect = React.useCallback(() => setConnect(false), [setConnect]);
+	const hideConnect = React.useCallback(() => setConnect(false), [
+		setConnect,
+	]);
 
 	const appUser = isAppUser(entity);
 
@@ -81,7 +84,11 @@ export default function UserBadgeEmptyState ({entity}) {
 				>
 					<Dialog>
 						<Title>{t('linkAccount.title')}</Title>
-						<Description>{t('linkAccount.description', {email: entity.email ?? ''})}</Description>
+						<Description>
+							{t('linkAccount.description', {
+								email: entity.email ?? '',
+							})}
+						</Description>
 					</Dialog>
 				</StandardUI.Prompt.Base>
 			)}

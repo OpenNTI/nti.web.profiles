@@ -4,30 +4,27 @@ import cx from 'classnames';
 
 class Favorite extends React.Component {
 	static propTypes = {
-		item: PropTypes.object.isRequired
-	}
+		item: PropTypes.object.isRequired,
+	};
 
-	onClick = (e) => {
+	onClick = e => {
 		e.preventDefault();
 		e.stopPropagation();
 
 		let { item } = this.props;
 
 		this.setState({ loading: true });
-		item.favorite()
-			.then(() => this.setState({ loading: false }));
-	}
+		item.favorite().then(() => this.setState({ loading: false }));
+	};
 
-	render () {
+	render() {
 		let { item } = this.props;
 
 		let cls = cx('favorite', {
-			active: item.hasLink('unfavorite')
+			active: item.hasLink('unfavorite'),
 		});
 
-		return (
-			<a className={cls} href="#" onClick={this.onClick} />
-		);
+		return <a className={cls} href="#" onClick={this.onClick} />;
 	}
 }
 

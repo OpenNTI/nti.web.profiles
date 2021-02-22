@@ -156,7 +156,8 @@
 				text-align: right;
 			}
 
-			&.value-col, &.type-col {
+			&.value-col,
+			&.type-col {
 				border-top: solid 1px #ddd;
 			}
 		}

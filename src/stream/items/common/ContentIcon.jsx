@@ -4,15 +4,18 @@ import { Array as ArrayUtils } from '@nti/lib-commons';
 import { getService } from '@nti/web-client';
 
 const { ensure: ensureArray } = ArrayUtils;
-const getID = (x) => x && x.getID && x.getID();
+const getID = x => x && x.getID && x.getID();
 
-async function getThumbnail (item) {
+async function getThumbnail(item) {
 	// walk up from the deep end of the path looking for an icon
 	const getIcon = x => {
 		const p = ensureArray(x).slice();
 		let part, result;
 		while (!result && (part = p.pop())) {
-			result = (part.getPresentationProperties && part.getPresentationProperties().thumb) || part.icon;
+			result =
+				(part.getPresentationProperties &&
+					part.getPresentationProperties().thumb) ||
+				part.icon;
 		}
 		return result;
 	};
@@ -29,7 +32,6 @@ async function getThumbnail (item) {
 			} catch (error) {
 				return Promise.reject(error);
 			}
-
 		} else {
 			//Really, the only error this should be is item is falsy, or item does not have a getContextPath method.
 			return Promise.reject(null);
@@ -37,23 +39,22 @@ async function getThumbnail (item) {
 	}
 }
 
-
 export default class extends React.Component {
 	static displayName = 'ContentIcon';
 
 	static propTypes = {
 		item: PropTypes.shape({
-			getContextPath: PropTypes.func
-		})
+			getContextPath: PropTypes.func,
+		}),
 	};
 
 	state = {};
 
-	componentDidMount () {
+	componentDidMount() {
 		this.load();
 	}
 
-	componentDidUpdate (prevProps, prevState) {
+	componentDidUpdate(prevProps, prevState) {
 		const { item } = this.props;
 		const { item: prevItem } = prevProps;
 		if (getID(item) !== getID(prevItem)) {
@@ -75,11 +76,9 @@ export default class extends React.Component {
 		}
 	};
 
-	render () {
+	render() {
 		let { src } = this.state;
 
-		return !src ? null : (
-			<img src={src} />
-		);
+		return !src ? null : <img src={src} />;
 	}
 }

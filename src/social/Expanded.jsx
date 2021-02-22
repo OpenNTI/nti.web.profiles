@@ -2,7 +2,13 @@ import { DisplayName, Errors, Loading, Theme } from '@nti/web-commons';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import {ContactsButton, Container, EntryContainer, Footer, Header} from './parts/expanded';
+import {
+	ContactsButton,
+	Container,
+	EntryContainer,
+	Footer,
+	Header,
+} from './parts/expanded';
 import Store from './Store';
 import BadgedAvatar from './BadgedAvatar';
 
@@ -35,12 +41,8 @@ const UsersContainer = styled.div`
 	overflow-x: hidden;
 `;
 
-export default function ExpandedPanel ( { toggle:collapse } ) {
-	const {
-		activeUsers,
-		loading,
-		error,
-	} = Store.useValue();
+export default function ExpandedPanel({ toggle: collapse }) {
+	const { activeUsers, loading, error } = Store.useValue();
 
 	const theme = Theme.useThemeProperty('icon');
 
@@ -48,19 +50,24 @@ export default function ExpandedPanel ( { toggle:collapse } ) {
 		<Container theme={theme}>
 			<Header onCollapseClick={collapse} />
 
-			<Loading.Placeholder loading={loading} fallback={(<Spinner/>)}>
+			<Loading.Placeholder loading={loading} fallback={<Spinner />}>
 				{error ? (
-					<Errors.Message error={error}/>
+					<Errors.Message error={error} />
 				) : (
-					<UsersContainer >
-						{activeUsers && Object.keys(activeUsers).map((entity, index) => {
-							return (
-								<EntryContainer key={index}>
-									<BadgedAvatar entity={entity} presence={activeUsers[entity]} expanded/>
-									<Name entity={entity} />
-								</EntryContainer>
-							);
-						})}
+					<UsersContainer>
+						{activeUsers &&
+							Object.keys(activeUsers).map((entity, index) => {
+								return (
+									<EntryContainer key={index}>
+										<BadgedAvatar
+											entity={entity}
+											presence={activeUsers[entity]}
+											expanded
+										/>
+										<Name entity={entity} />
+									</EntryContainer>
+								);
+							})}
 					</UsersContainer>
 				)}
 			</Loading.Placeholder>

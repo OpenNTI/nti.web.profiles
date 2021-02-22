@@ -1,4 +1,4 @@
-export default function mergeGroupFields (...groups) {
+export default function mergeGroupFields(...groups) {
 	let mergedGroups = [];
 	let seenFields = {};
 
@@ -6,7 +6,7 @@ export default function mergeGroupFields (...groups) {
 		let mergedGroup = [];
 
 		for (let field of group) {
-			const {name} = field.schema;
+			const { name } = field.schema;
 
 			if (!seenFields[name]) {
 				mergedGroup.push(field);

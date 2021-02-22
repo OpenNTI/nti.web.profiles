@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {scoped} from '@nti/lib-locale';
+import { scoped } from '@nti/lib-locale';
 import cx from 'classnames';
 
-import {Card} from '../../../common';
-import {LOCALE_PATHS} from '../../constants';
+import { Card } from '../../../common';
+import { LOCALE_PATHS } from '../../constants';
 
 import Experience from './ExperienceItem';
 
@@ -15,23 +15,28 @@ const t = scoped(LOCALE_PATHS.EDUCATION, {
 const fieldNames = ['school', 'degree'];
 
 export default class About extends React.Component {
-
 	static propTypes = {
-		user: PropTypes.object.isRequired
-	}
+		user: PropTypes.object.isRequired,
+	};
 
-	render () {
-		const {user: {education = []}} = this.props;
+	render() {
+		const {
+			user: { education = [] },
+		} = this.props;
 
 		return (
-			<Card className={cx('education', {empty: education.length === 0})}>
+			<Card
+				className={cx('education', { empty: education.length === 0 })}
+			>
 				<h2 className="title">{t('title')}</h2>
 				<div className="entries">
-					{
-						education.map((item, i) => (
-							<Experience key={i} item={item} fieldNames={fieldNames}/>
-						))
-					}
+					{education.map((item, i) => (
+						<Experience
+							key={i}
+							item={item}
+							fieldNames={fieldNames}
+						/>
+					))}
 				</div>
 			</Card>
 		);

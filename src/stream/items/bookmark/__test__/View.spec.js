@@ -31,32 +31,46 @@ describe('Bookmark', () => {
 		const item = {
 			creator: 'user4',
 			getCreatedTime: () => new Date('2018-08-31'),
-			getContextPath: () => Promise.resolve([[
-				{
-					NTIID: 'tag:nextthought.com,2011-10:IFSTA-Bundle-IFSTA_Book_Aircraft_Rescue_and_Fire_Fighting_Sixth_Edition',
-					getPresentationProperties: () => ({ title: 'Aircraft Rescue and Fire Fighting Sixth Edition' })
-				},
-				{
-					NTIID: 'tag:nextthought.com,2011-10:IFSTA-HTML-IFSTA_Book_Aircraft_Rescue_and_Fire_Fighting_Sixth_Edition.section:Engine_Types_and_Applications3',
-					Title: 'Engine Types adn Applications'
-				}
-			]]),
-			NTIID: 'tag:nextthought.com,2011-10:user4-OID-0x04e6fa:5573657273:nywS9Pjp8FE'
+			getContextPath: () =>
+				Promise.resolve([
+					[
+						{
+							NTIID:
+								'tag:nextthought.com,2011-10:IFSTA-Bundle-IFSTA_Book_Aircraft_Rescue_and_Fire_Fighting_Sixth_Edition',
+							getPresentationProperties: () => ({
+								title:
+									'Aircraft Rescue and Fire Fighting Sixth Edition',
+							}),
+						},
+						{
+							NTIID:
+								'tag:nextthought.com,2011-10:IFSTA-HTML-IFSTA_Book_Aircraft_Rescue_and_Fire_Fighting_Sixth_Edition.section:Engine_Types_and_Applications3',
+							Title: 'Engine Types adn Applications',
+						},
+					],
+				]),
+			NTIID:
+				'tag:nextthought.com,2011-10:user4-OID-0x04e6fa:5573657273:nywS9Pjp8FE',
 		};
 		const context = {
 			getDefaultAssetRoot: () => '',
-			NTIID: 'tag:nextthought.com,2011-10:IFSTA-Bundle-IFSTA_Book_Aircraft_Rescue_and_Fire_Fighting_Sixth_Edition',
-			PlatformPresentationResources: [{
-				'Class': 'DisplayablePlatformPresentationResources',
-				'CreatedTime': 1532453102,
-				'InheritPlatformName': null,
-				'Last Modified': 1527882586,
-				'PlatformName': 'webapp',
-				'Version': 1,
-				'href': ''
-			}]
+			NTIID:
+				'tag:nextthought.com,2011-10:IFSTA-Bundle-IFSTA_Book_Aircraft_Rescue_and_Fire_Fighting_Sixth_Edition',
+			PlatformPresentationResources: [
+				{
+					Class: 'DisplayablePlatformPresentationResources',
+					CreatedTime: 1532453102,
+					InheritPlatformName: null,
+					'Last Modified': 1527882586,
+					PlatformName: 'webapp',
+					Version: 1,
+					href: '',
+				},
+			],
 		};
-		const bookmarkCmp = renderer.create(<Bookmark item={item} context={context} />);
+		const bookmarkCmp = renderer.create(
+			<Bookmark item={item} context={context} />
+		);
 
 		jest.runAllTimers();
 		await flushPromises();
@@ -66,4 +80,3 @@ describe('Bookmark', () => {
 		expect(tree).toMatchSnapshot();
 	});
 });
-

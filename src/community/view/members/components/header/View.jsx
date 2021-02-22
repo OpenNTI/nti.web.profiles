@@ -8,7 +8,7 @@ import Search from './Search';
 
 const cx = classnames.bind(Styles);
 
-export default function CommunityMembersHeader () {
+export default function CommunityMembersHeader() {
 	return (
 		<div className={cx('community-members-header')}>
 			<Label />

@@ -1,16 +1,16 @@
 import './View.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
-import {scoped} from '@nti/lib-locale';
-import {Loading} from '@nti/web-commons';
+import { scoped } from '@nti/lib-locale';
+import { Loading } from '@nti/web-commons';
 import cx from 'classnames';
 
-import {Card, EntityList} from '../../common';
+import { Card, EntityList } from '../../common';
 
 const t = scoped('nti-web-profile.memberships', {
 	empty: 'Not currently a member of any groups.',
 	community: 'Communities',
-	dynamicfriendslist: 'Groups'
+	dynamicfriendslist: 'Groups',
 });
 
 const slugify = string => string.toLowerCase().replace(/\W/g, '-');
@@ -19,26 +19,25 @@ const groupTitle = mimeType => t(lastWord(mimeType));
 const cssClass = mimeType => slugify(lastWord(mimeType));
 
 export default class View extends React.Component {
-
 	static propTypes = {
 		className: PropTypes.string,
 		user: PropTypes.object.isRequired,
-	}
+	};
 
-	state = {}
+	state = {};
 
-	componentDidMount () {
-		const {user} = this.props;
+	componentDidMount() {
+		const { user } = this.props;
 		const stream = user && user.getMemberships();
 
 		if (stream) {
-			this.setState({stream});
+			this.setState({ stream });
 			stream.on('change', this.onStreamChange);
 		}
 	}
 
-	componentWillUnmount () {
-		const {stream} = this.state;
+	componentWillUnmount() {
+		const { stream } = this.state;
 
 		if (stream) {
 			stream.removeListener('change', this.onStreamChange);
@@ -47,15 +46,15 @@ export default class View extends React.Component {
 
 	onStreamChange = e => this.forceUpdate();
 
-	render () {
-		const {className} = this.props;
-		const {stream} = this.state;
+	render() {
+		const { className } = this.props;
+		const { stream } = this.state;
 
 		if (!stream) {
 			return null;
 		}
 
-		const {loading} = stream;
+		const { loading } = stream;
 		const memberships = Array.from(stream);
 
 		// group items by MimeType
@@ -67,15 +66,20 @@ export default class View extends React.Component {
 
 		return (
 			<div className={cx(className, 'nti-profile-memberships')}>
-				{ loading ? <Loading.Ellipsis /> : (
-					Object.keys(buckets).length === 0 ? (
-						<Card className="empty-state" title={t('empty')} />
-					) : (
-						Object.entries(buckets).map(([mimeType, items]) => (
-							<EntityList key={mimeType} className={cssClass(mimeType)} title={groupTitle(mimeType)} entities={items} />
-						))
-					)
-				) }
+				{loading ? (
+					<Loading.Ellipsis />
+				) : Object.keys(buckets).length === 0 ? (
+					<Card className="empty-state" title={t('empty')} />
+				) : (
+					Object.entries(buckets).map(([mimeType, items]) => (
+						<EntityList
+							key={mimeType}
+							className={cssClass(mimeType)}
+							title={groupTitle(mimeType)}
+							entities={items}
+						/>
+					))
+				)}
 			</div>
 		);
 	}

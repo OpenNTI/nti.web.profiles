@@ -1,7 +1,7 @@
 import './ValidationError.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
-import {scoped} from '@nti/lib-locale';
+import { scoped } from '@nti/lib-locale';
 
 const t = scoped('nti-web-profile.user-profile.edit.validation-error', {
 	badInput: 'Invalid',
@@ -12,14 +12,15 @@ const t = scoped('nti-web-profile.user-profile.edit.validation-error', {
 	tooLong: 'Too Long',
 	tooShort: 'Too Short',
 	typeMismatch: 'Invalid',
-	valueMissing: 'Required'
+	valueMissing: 'Required',
 });
 
 const omitted = ['valid', 'customError'];
-const getValidityStateReasons = () => Object.keys(ValidityState.prototype).filter(x => !omitted.includes(x));
-const getFirstValidationError = (v) => getValidityStateReasons().find(x => v[x]);
+const getValidityStateReasons = () =>
+	Object.keys(ValidityState.prototype).filter(x => !omitted.includes(x));
+const getFirstValidationError = v => getValidityStateReasons().find(x => v[x]);
 
-export default function ValidationError ({error: {validity, message} = {}}) {
+export default function ValidationError({ error: { validity, message } = {} }) {
 	const issue = getFirstValidationError(validity);
 
 	if (!issue || validity.valid) {
@@ -29,17 +30,15 @@ export default function ValidationError ({error: {validity, message} = {}}) {
 	const display = validity.customError
 		? message
 		: issue && !t.isMissing(issue)
-			? t(issue)
-			: message;
+		? t(issue)
+		: message;
 
-	return (
-		<div className="nti-profile-validation-error">{display}</div>
-	);
+	return <div className="nti-profile-validation-error">{display}</div>;
 }
 
 ValidationError.propTypes = {
 	error: PropTypes.shape({
 		validity: PropTypes.object,
-		message: PropTypes.string
-	})
+		message: PropTypes.string,
+	}),
 };

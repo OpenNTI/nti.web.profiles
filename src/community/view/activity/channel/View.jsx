@@ -1,54 +1,60 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
-import {decodeFromURI} from '@nti/lib-ntiids';
-import {decorate} from '@nti/lib-commons';
-import {Layouts, Prompt} from '@nti/web-commons';
-import {RedirectTo} from '@nti/web-routing';
+import { decodeFromURI } from '@nti/lib-ntiids';
+import { decorate } from '@nti/lib-commons';
+import { Layouts, Prompt } from '@nti/web-commons';
+import { RedirectTo } from '@nti/web-routing';
 
-import {getFirstChannel} from '../utils';
+import { getFirstChannel } from '../utils';
 import Topic from '../topic';
 
 import Styles from './View.css';
 import Store from './Store';
 import Sizes from './sizes';
 
-const {Responsive} = Layouts;
+const { Responsive } = Layouts;
 const cx = classnames.bind(Styles);
 
-function isValidTopicId (topicId) {
+function isValidTopicId(topicId) {
 	return topicId && topicId !== 'object';
 }
 
 class CommunityChannel extends React.Component {
-	static deriveBindingFromProps (props) {
+	static deriveBindingFromProps(props) {
 		return {
 			channels: props.channels,
-			channelId: decodeFromURI(props.channelId)
+			channelId: decodeFromURI(props.channelId),
 		};
 	}
 
 	static propTypes = {
 		channel: PropTypes.object,
-		channels: PropTypes.oneOfType([PropTypes.object, PropTypes.array]).isRequired,
+		channels: PropTypes.oneOfType([PropTypes.object, PropTypes.array])
+			.isRequired,
 		community: PropTypes.object,
 		channelId: PropTypes.string.isRequired,
 		topicId: PropTypes.string,
 		commentId: PropTypes.string,
-		size: PropTypes.string
-	}
+		size: PropTypes.string,
+	};
 
-	renderList () {
-		const {size, ...otherProps} = this.props;
+	renderList() {
+		const { size, ...otherProps } = this.props;
 		const Cmp = Sizes[size];
 
-		return (
-			<Cmp {...otherProps} size={size} />
-		);
+		return <Cmp {...otherProps} size={size} />;
 	}
 
 	renderWebApp = () => {
-		const {community, channels, channel, topicId, commentId, ...otherProps} = this.props;
+		const {
+			community,
+			channels,
+			channel,
+			topicId,
+			commentId,
+			...otherProps
+		} = this.props;
 
 		return (
 			<>
@@ -68,10 +74,17 @@ class CommunityChannel extends React.Component {
 				)}
 			</>
 		);
-	}
+	};
 
 	renderMobile = () => {
-		const {community, channels, channel, topicId, commentId, ...otherProps} = this.props;
+		const {
+			community,
+			channels,
+			channel,
+			topicId,
+			commentId,
+			...otherProps
+		} = this.props;
 
 		if (isValidTopicId(topicId) && channel) {
 			return (
@@ -90,27 +103,40 @@ class CommunityChannel extends React.Component {
 		}
 
 		return this.renderList();
-	}
+	};
 
-	render () {
-		const {channel, channels} = this.props;
+	render() {
+		const { channel, channels } = this.props;
 
 		if (channel && channel.wasDeleted) {
 			const first = channels && getFirstChannel(channels);
 
-			return first ? (<RedirectTo.Object object={first} />) : null;
+			return first ? <RedirectTo.Object object={first} /> : null;
 		}
 
 		return (
 			<>
-				<Responsive.Item query={Responsive.isWebappContext} render={this.renderWebApp} />
-				<Responsive.Item query={Responsive.isMobileContext} render={this.renderMobile} />
+				<Responsive.Item
+					query={Responsive.isWebappContext}
+					render={this.renderWebApp}
+				/>
+				<Responsive.Item
+					query={Responsive.isMobileContext}
+					render={this.renderMobile}
+				/>
 			</>
 		);
 	}
 }
 
-
 export default decorate(CommunityChannel, [
-	Store.connect(['notFound', 'channel', 'sortOn', 'setSortOn', 'layout', 'setLayout', 'availableSorts'])
+	Store.connect([
+		'notFound',
+		'channel',
+		'sortOn',
+		'setSortOn',
+		'layout',
+		'setLayout',
+		'availableSorts',
+	]),
 ]);

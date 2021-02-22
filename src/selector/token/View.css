@@ -2,14 +2,20 @@
 	padding: 0 0.625rem;
 }
 
-:global(.nti-token) .selector-token :global(.nti-profile-identity-list-item-avatar-container) {
+:global(.nti-token)
+	.selector-token
+	:global(.nti-profile-identity-list-item-avatar-container) {
 	display: none;
 }
 
-:global(.nti-token) .selector-token :global(.nti-profile-identity-list-item-name) {
+:global(.nti-token)
+	.selector-token
+	:global(.nti-profile-identity-list-item-name) {
 	padding: 0.25rem 0;
 }
 
-:global(.nti-token) .selector-token :global(.nti-profile-identity-list-item-meta) {
+:global(.nti-token)
+	.selector-token
+	:global(.nti-profile-identity-list-item-meta) {
 	display: none;
 }
