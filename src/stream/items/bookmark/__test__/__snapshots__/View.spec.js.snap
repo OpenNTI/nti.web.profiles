@@ -18,7 +18,9 @@ exports[`Bookmark renders correctly 1`] = `
         Tim Jones
       </a>
     </div>
-     created a bookmark on 
+     
+    created a bookmark on
+     
     <time
       className="ntiText"
       dateTime="2018-08-31T00:00:00Z"
