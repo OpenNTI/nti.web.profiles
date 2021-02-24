@@ -76,12 +76,12 @@ export default class Store extends Stores.SimpleStore {
 	}
 
 	clearUnreadCount(username) {
-		const unreadCount = {
-			...this.get('unreadCount'),
-			[username]: 0,
-		};
-
-		this.set({ unreadCount });
+		this.set({
+			unreadCount: {
+				...this.get('unreadCount'),
+				[username]: 0,
+			},
+		});
 	}
 
 	static handleWindowNotify(username) {
@@ -89,16 +89,14 @@ export default class Store extends Stores.SimpleStore {
 	}
 
 	handleWindowNotify(username) {
-		let unreadCount = { ...this.get('unreadCount') } || {};
+		const counts = this.get('unreadCount');
 
-		const oldValue = unreadCount[username] || 0;
-
-		unreadCount = {
-			...unreadCount,
-			[username]: oldValue + 1,
-		};
-
-		this.set({ unreadCount });
+		this.set({
+			unreadCount: {
+				...counts,
+				[username]: (counts?.[username] || 0) + 1,
+			},
+		});
 	}
 
 	setCalendarWindow(calendarWindow) {
