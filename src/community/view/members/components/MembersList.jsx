@@ -12,9 +12,9 @@ import Member from './Member';
 
 const cx = classnames.bind(Styles);
 const t = scoped('nti-profiles.community.view.members.components.MembersList', {
-	empty: {
-		noSearch: 'There are no members in this community.',
-		search: 'There are no members matching "%(searchTerm)s".',
+	empty: 'There are no members in this community.',
+	search: {
+		empty: 'There are no members matching "%(searchTerm)s".',
 	},
 });
 
@@ -44,8 +44,8 @@ class CommunityMemberShipList extends React.Component {
 				<EmptyState
 					header={
 						searchTerm
-							? t('empty.search', { searchTerm })
-							: t('empty.noSearch')
+							? t('search.empty', { searchTerm })
+							: t('empty')
 					}
 				/>
 			);
