@@ -13,9 +13,9 @@ const t = scoped('nti-web-profiles.Selector', {
 	error: 'Unable to load users.',
 	errorLoadingMore: 'Unable to load more users.',
 	searchPlaceholder: 'Search',
-	empty: {
-		searchTerm: 'There are no users. Please update your query.',
-		noSearchTerm: 'Add a user name to search for users.',
+	empty: 'Add a user name to search for users.',
+	search: {
+		empty: 'There are no users. Please update your query.',
 	},
 	loadMore: 'Load More',
 });
@@ -158,11 +158,7 @@ class ProfileSelector extends React.Component {
 		const { searchTerm } = this.props;
 
 		return (
-			<EmptyState
-				header={
-					searchTerm ? t('empty.searchTerm') : t('empty.noSearchTerm')
-				}
-			/>
+			<EmptyState header={searchTerm ? t('search.empty') : t('empty')} />
 		);
 	}
 }
