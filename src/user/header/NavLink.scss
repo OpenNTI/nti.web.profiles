@@ -16,6 +16,7 @@
 		background-color: var(--primary-blue);
 	}
 
+	.touch &,
 	&.active,
 	&:hover {
 		color: white;
