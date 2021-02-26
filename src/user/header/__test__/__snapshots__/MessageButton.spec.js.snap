@@ -29,7 +29,7 @@ exports[`User profile message button test Test not present 1`] = `
 
 exports[`User profile message button test Test present 1`] = `
 <div
-  className="nti-link-to-path"
+  className="pathLink nti-link-to-path"
   to="#"
 >
   <a
