@@ -42,11 +42,7 @@ class CommunityCard extends React.Component {
 						<div className={cx('avatar')} />
 					</Image>
 				)}
-				<Text.Condensed
-					className={cx('title')}
-					limitLines={2}
-					overflow={Text.Overflow.Ellipsis}
-				>
+				<Text.Condensed className={cx('title')} limitLines={2}>
 					{community.displayName}
 				</Text.Condensed>
 			</LinkTo.Object>

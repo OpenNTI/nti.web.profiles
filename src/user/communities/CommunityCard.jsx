@@ -24,11 +24,7 @@ class CommunityCard extends React.Component {
 					{...otherProps}
 				>
 					<Avatar entity={community} />
-					<Text.Base
-						className="title-container"
-						limitLines={2}
-						overflow={Text.Overflow.Ellipsis}
-					>
+					<Text.Base className="title-container" limitLines={2}>
 						{community.displayName}
 					</Text.Base>
 				</div>
