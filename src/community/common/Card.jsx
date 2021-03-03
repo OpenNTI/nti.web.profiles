@@ -29,6 +29,7 @@ class CommunityCard extends React.Component {
 
 		return (
 			<LinkTo.Object
+				data-testid="community-card"
 				object={community}
 				className={cx('community-card', className)}
 				{...otherProps}
