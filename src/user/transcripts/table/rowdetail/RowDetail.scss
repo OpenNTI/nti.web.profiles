@@ -49,7 +49,7 @@ $header-ranges: (
 		padding: 2rem;
 		max-width: 30rem;
 		max-height: calc(100vh - 90px);
-		overflow: scroll;
+		overflow: auto;
 
 		.detail-title {
 			font-size: 26px;
