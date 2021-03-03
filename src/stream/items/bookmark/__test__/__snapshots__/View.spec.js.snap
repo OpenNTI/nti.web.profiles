@@ -8,7 +8,7 @@ exports[`Bookmark renders correctly 1`] = `
     className="heading"
   >
     <div
-      className="pathLink nti-link-to-path"
+      className="nti-link-to-path"
       to="#"
     >
       <a
@@ -29,7 +29,7 @@ exports[`Bookmark renders correctly 1`] = `
     </time>
   </div>
   <div
-    className="pathLink nti-link-to-path"
+    className="nti-link-to-path"
     to="/id/user4-OID-0x04e6fa%3A5573657273%3AnywS9Pjp8FE"
   >
     <div
@@ -54,7 +54,7 @@ exports[`Bookmark renders correctly 1`] = `
           className="nti-content-breadcrumb"
         >
           <div
-            className="pathLink nti-link-to-path"
+            className="nti-link-to-path"
             to="/id/user4-OID-0x04e6fa%3A5573657273%3AnywS9Pjp8FE"
           >
             <ul
