@@ -15,13 +15,13 @@ const Translate = Text.Translator(translation);
 
 export default function ContactsButton() {
 	return (
-		<EntryContainer>
-			<ContactsIcon />
-			<ContactsText>
-				<LinkTo.Path to="contacts">
+		<LinkTo.Path to="contacts">
+			<EntryContainer>
+				<ContactsIcon />
+				<ContactsText>
 					<Translate localeKey="contacts" />
-				</LinkTo.Path>
-			</ContactsText>
-		</EntryContainer>
+				</ContactsText>
+			</EntryContainer>
+		</LinkTo.Path>
 	);
 }

@@ -1,27 +1,61 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Avatar, Badge } from '@nti/web-commons';
+import { Avatar, Badge, Hooks } from '@nti/web-commons';
 
 import Store from './Store';
 import { AvatarContainer, PresenceCircle } from './parts';
 import ChatWindowView from './ChatWindow';
 
-const MaskedAvatar = styled(Avatar)`
-	-webkit-mask-image: radial-gradient(
-		circle,
-		transparent 0,
-		transparent 5px,
-		black 6px
-	);
-	-webkit-mask-position: right calc(-15px - var(--badge-offset-x, 0px)) bottom
-		calc(-15px - var(--badge-offset-y, 0px));
-	.presence-available {
+const MASK_SPEC = {
+	tag: 'svg',
+	xmlns: 'http://www.w3.org/2000/svg',
+	style: {
+		position: 'absolute',
+		width: 0,
+		height: 0,
+	},
+	cn: {
+		tag: 'defs',
+		cn: {
+			tag: 'mask',
+			id: 'presence-mask',
+			maskUnits: 'objectBoundingBox',
+			maskContentUnits: 'objectBoundingBox',
+			cn: [
+				{
+					tag: 'circle',
+					cx: '.50',
+					cy: '.50',
+					r: '.47',
+					fill: 'white',
+				},
+				{
+					tag: 'circle',
+					cx: '.85',
+					cy: '.85',
+					r: '.15',
+					fill: 'black',
+				},
+			],
+		},
+	},
+};
+
+const BorderedAvatar = styled(Avatar)`
+	& rect,
+	& image {
+		mask: url(#presence-mask);
+	}
+
+	&.presence-available {
 		border: 2px solid var(--presence-available);
 	}
-	.presence-away {
+
+	&.presence-away {
 		border: 2px solid var(--presence-away);
 	}
-	.presence-dnd {
+
+	&.presence-dnd {
 		border: 2px solid var(--presence-dnd);
 	}
 `;
@@ -43,43 +77,55 @@ export default function BadgedAvatar({ entity, presence, expanded }) {
 		selectedUser,
 		deselectUser,
 		selectUser,
+		setChatWindow,
+		chatWindow,
 	} = Store.useValue();
-
-	const [window, setWindow] = React.useState(false);
 
 	const ChatWindow = ChatWindowView.getChatWindow();
 
 	const selected = selectedUser === entity;
 
+	Hooks.useSharedDOM(MASK_SPEC);
+
 	const handleClick = () => {
-		setWindow(!window);
+		setChatWindow(!chatWindow);
+
 		clearUnreadCount(entity);
-		selected ? deselectUser() : selectUser(entity);
+
+		if (selected) {
+			deselectUser();
+		} else {
+			selectUser(entity);
+		}
 	};
 
 	const handleClose = () => {
-		setWindow(false);
-		selectedUser === entity && deselectUser();
+		setChatWindow(false);
+
+		if (selected) {
+			deselectUser();
+		}
 	};
 
 	return (
-		<AvatarContainer onClick={handleClick}>
+		<AvatarContainer data-testid="avatar-container" onClick={handleClick}>
 			<Badge
 				badge={unreadCount ? unreadCount[entity] : 0}
 				position={Badge.POSITIONS.TOP_LEFT}
 				{...Badge.offset(5, 4)}
 			>
-				<MaskedAvatar
+				<BorderedAvatar
 					entity={entity}
 					presence={selected ? presence : ''}
+					svg
 				/>
 			</Badge>
-			<PresenceCircle presence={presence} />
-			{window && (
+			<PresenceCircle user={entity} />
+			{chatWindow && (
 				<ChatWindow
+					data-testid="chat-window"
 					onClose={handleClose}
 					entity={entity}
-					visible={window}
 					expanded={expanded}
 				/>
 			)}
