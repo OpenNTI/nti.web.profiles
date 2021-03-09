@@ -28,10 +28,10 @@ export default function DateIconContainer () {
 				<DateIcon onClick={handleDateIconClick} ref={iconRef} />
 			</Tooltip>
 
-			{calendarWindow && (
+			{calendarWindow && iconRef.current && (
 				<CalendarWindow
 					onClose={handleCalendarClose}
-					target={iconRef.current}
+					target={iconRef.current.parentElement}
 				/>
 			)}
 		</>

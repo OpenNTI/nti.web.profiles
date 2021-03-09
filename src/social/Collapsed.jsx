@@ -29,9 +29,19 @@ CollapsedPanel.propTypes = {
 };
 
 export default function CollapsedPanel({ toggle: expand, children }) {
-	const { loading, error } = Store.useValue();
+	const {
+		loading,
+		error,
+		setCalendarWindow,
+		calendarWindow,
+	} = Store.useValue();
 
 	const [hiddenCountsSum, setHiddenCountsSum] = React.useState(0);
+
+	const handleExpandButtonClick = () => {
+		calendarWindow && setCalendarWindow(false);
+		expand();
+	};
 
 	return (
 		<Container data-testid="collapsed-container">
@@ -62,7 +72,7 @@ export default function CollapsedPanel({ toggle: expand, children }) {
 					>
 						<Tooltip label="Expand Contacts">
 							<ExpandButton
-								onClick={expand}
+								onClick={handleExpandButtonClick}
 								data-testid="expand-button"
 							/>
 						</Tooltip>
