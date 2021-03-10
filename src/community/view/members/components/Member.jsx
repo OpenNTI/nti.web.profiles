@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
+
 import { decorate } from '@nti/lib-commons';
 import { scoped } from '@nti/lib-locale';
 import { Checkbox, Text, Flyout, Button } from '@nti/web-commons';

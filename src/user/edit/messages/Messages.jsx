@@ -1,6 +1,7 @@
 import './Messages.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { decorate } from '@nti/lib-commons';
 
 import { ensureArray as a } from '../../../util';

@@ -2,6 +2,7 @@ import './Detail.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+
 import { LuckyCharms, Avatar, DisplayName, DateTime } from '@nti/web-commons';
 import { Viewer as Body } from '@nti/web-modeled-content';
 import { scoped } from '@nti/lib-locale';

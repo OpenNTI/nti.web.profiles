@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { LinkTo } from '@nti/web-routing';
 import { Badge, Errors, Loading, Tooltip } from '@nti/web-commons';
 

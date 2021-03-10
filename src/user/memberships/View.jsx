@@ -1,9 +1,10 @@
 import './View.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
+import cx from 'classnames';
+
 import { scoped } from '@nti/lib-locale';
 import { Loading } from '@nti/web-commons';
-import cx from 'classnames';
 
 import { Card, EntityList } from '../../common';
 

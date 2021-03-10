@@ -2,6 +2,7 @@ import './View.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+
 import Logger from '@nti/util-logger';
 import { LinkTo } from '@nti/web-routing';
 

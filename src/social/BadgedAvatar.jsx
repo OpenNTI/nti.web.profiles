@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { Avatar, Badge, Hooks } from '@nti/web-commons';
 
 import Store from './Store';

@@ -1,9 +1,10 @@
 import './Experience.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
+import cx from 'classnames';
+
 import { Parsers } from '@nti/web-editor';
 import { scoped } from '@nti/lib-locale';
-import cx from 'classnames';
 
 import FieldContainer from './FieldContainer';
 import Editor from './Editor';

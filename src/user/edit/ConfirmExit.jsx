@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { Prompt as RoutePrompt } from '@nti/web-routing';
 import { decorate } from '@nti/lib-commons';
 import { Prompt } from '@nti/web-commons';

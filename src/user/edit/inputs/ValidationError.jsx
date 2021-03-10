@@ -1,6 +1,7 @@
 import './ValidationError.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { scoped } from '@nti/lib-locale';
 
 const t = scoped('nti-web-profile.user-profile.edit.validation-error', {

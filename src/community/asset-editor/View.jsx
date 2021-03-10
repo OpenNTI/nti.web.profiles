@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { AssetEditor } from '@nti/web-whiteboard';
 
 import { Avatar, Background } from '../common';

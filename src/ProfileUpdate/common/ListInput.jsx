@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+
 import { Input } from '@nti/web-commons';
 
 export default class ProfileUpdateListInput extends React.Component {
@@ -10,7 +11,7 @@ export default class ProfileUpdateListInput extends React.Component {
 				description: PropTypes.string,
 				name: PropTypes.string,
 				title: PropTypes.string,
-				value_type: PropTypes.object, //eslint-disable-line
+				value_type: PropTypes.object,
 			}),
 		}),
 		value: PropTypes.any,

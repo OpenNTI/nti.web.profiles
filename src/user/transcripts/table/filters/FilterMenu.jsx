@@ -1,10 +1,11 @@
 import './FilterMenu.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
+import cx from 'classnames';
+
 import { Prompt, Checkbox } from '@nti/web-commons';
 import { decorate } from '@nti/lib-commons';
 import { scoped } from '@nti/lib-locale';
-import cx from 'classnames';
 
 import Store from '../../Store';
 

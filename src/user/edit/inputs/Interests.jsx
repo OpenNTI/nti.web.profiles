@@ -2,6 +2,7 @@ import './Interests.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+
 import { TokenEditor } from '@nti/web-commons';
 
 Interests.propTypes = {

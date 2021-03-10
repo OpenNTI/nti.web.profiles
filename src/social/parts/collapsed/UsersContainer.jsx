@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+
 import { DisplayName, Hooks, Tooltip } from '@nti/web-commons';
 
 import Store from '../../Store';

@@ -1,9 +1,10 @@
 import './Summary.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
+import cx from 'classnames';
+
 import { Array as ArrayUtils } from '@nti/lib-commons';
 import { DisplayName, User } from '@nti/web-commons';
-import cx from 'classnames';
 
 export default class Summary extends React.Component {
 	static propTypes = {

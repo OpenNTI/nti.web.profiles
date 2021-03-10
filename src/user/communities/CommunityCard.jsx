@@ -2,6 +2,7 @@ import './CommunityCard.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+
 import { LinkTo } from '@nti/web-routing';
 import { decorate } from '@nti/lib-commons';
 import { Avatar, Text } from '@nti/web-commons';

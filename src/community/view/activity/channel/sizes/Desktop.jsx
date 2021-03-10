@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { Layouts } from '@nti/web-commons';
 
 import Sidebar from '../../components/Sidebar';

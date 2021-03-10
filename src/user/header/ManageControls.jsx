@@ -1,6 +1,7 @@
 import './ManageControls.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { getService, User as UserResolver } from '@nti/web-client';
 import { User, Layouts, Loading, Button } from '@nti/web-commons';
 import { scoped } from '@nti/lib-locale';

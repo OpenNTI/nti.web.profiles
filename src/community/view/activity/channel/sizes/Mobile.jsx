@@ -1,5 +1,6 @@
 import React from 'react';
 import classnames from 'classnames/bind';
+
 import { Prompt } from '@nti/web-commons';
 
 import { Sizes } from '../../Constants';

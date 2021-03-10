@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
+
 import { decodeFromURI } from '@nti/lib-ntiids';
 import { decorate } from '@nti/lib-commons';
 import { Layouts, Prompt } from '@nti/web-commons';

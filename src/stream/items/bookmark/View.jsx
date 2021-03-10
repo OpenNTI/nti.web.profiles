@@ -1,6 +1,7 @@
 import './View.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { DateTime, DisplayName, Presentation } from '@nti/web-commons';
 import { getService } from '@nti/web-client';
 import { LinkTo } from '@nti/web-routing';

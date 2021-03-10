@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { decodeFromURI } from '@nti/lib-ntiids';
 import { Viewer } from '@nti/web-discussions';
 import { Router } from '@nti/web-routing';

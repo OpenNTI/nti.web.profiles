@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import cx from 'classnames';
+
 import Logger from '@nti/util-logger';
 import { Input } from '@nti/web-commons';
-import cx from 'classnames';
 
 const logger = Logger.get('nti-profiles:edit:inputs:string');
 

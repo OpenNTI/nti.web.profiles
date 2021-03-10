@@ -1,6 +1,7 @@
 import './Sidebar.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { decorate } from '@nti/lib-commons';
 import { Connectors } from '@nti/lib-store';
 

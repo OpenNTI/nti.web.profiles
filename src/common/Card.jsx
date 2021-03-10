@@ -2,6 +2,7 @@ import './Card.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+
 import { Layouts } from '@nti/web-commons';
 
 const { Responsive } = Layouts;

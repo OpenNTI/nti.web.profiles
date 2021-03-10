@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { RedirectTo } from '@nti/web-routing';
 
 import { getFirstChannel } from '../utils';

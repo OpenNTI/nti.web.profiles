@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
+
 import { scoped } from '@nti/lib-locale';
 import { Stream } from '@nti/web-discussions';
 import { EmptyState } from '@nti/web-commons';

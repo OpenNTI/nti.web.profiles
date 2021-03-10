@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { Icons, Input } from '@nti/web-commons';
 
 const SearchIcon = styled('div').attrs({ children: <Icons.Search /> })`

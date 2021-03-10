@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+
 import { Text } from '@nti/web-commons';
 
 const Header = styled.div`

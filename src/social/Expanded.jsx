@@ -1,6 +1,7 @@
-import { DisplayName, Errors, Loading } from '@nti/web-commons';
 import PropTypes from 'prop-types';
 import React from 'react';
+
+import { DisplayName, Errors, Loading } from '@nti/web-commons';
 
 import {
 	ContactsButton,

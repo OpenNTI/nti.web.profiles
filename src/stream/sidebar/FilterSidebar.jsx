@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { Stream, Select } from '@nti/web-commons';
 
 const { DATE_FILTER_VALUES } = Stream;

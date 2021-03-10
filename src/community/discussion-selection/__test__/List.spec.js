@@ -1,8 +1,9 @@
 /* eslint-env jest */
 import React from 'react';
 import renderer from 'react-test-renderer';
-import { Date as DateUtils } from '@nti/lib-commons';
 import { render, waitFor, fireEvent } from '@testing-library/react';
+
+import { Date as DateUtils } from '@nti/lib-commons';
 
 import List from '../List';
 

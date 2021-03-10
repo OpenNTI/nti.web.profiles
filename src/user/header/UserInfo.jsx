@@ -1,6 +1,7 @@
 import './UserInfo.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { Avatar } from '@nti/web-commons';
 import { Matches } from '@nti/web-routing';
 

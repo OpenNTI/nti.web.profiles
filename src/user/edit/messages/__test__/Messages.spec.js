@@ -9,6 +9,7 @@ jest.mock('@nti/util-logger', () => {
 
 import React from 'react';
 import TestRenderer from 'react-test-renderer';
+
 import Logger from '@nti/util-logger';
 
 import Messages from '../Messages';

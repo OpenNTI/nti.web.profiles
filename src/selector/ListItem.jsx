@@ -2,6 +2,7 @@ import './ListItem.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+
 import { User } from '@nti/web-commons';
 
 export default class ProfileSelectListItem extends React.Component {

@@ -1,6 +1,7 @@
 import './View.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { Avatar } from '@nti/web-commons';
 import { LinkTo } from '@nti/web-routing';
 

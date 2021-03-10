@@ -1,6 +1,7 @@
 import './HTML.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import {
 	BoldButton,
 	ItalicButton,
