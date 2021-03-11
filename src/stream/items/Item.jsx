@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { Error } from '@nti/web-commons';
+import { reportError } from '@nti/web-client';
+
 import Registry from './Registry';
 
 const registry = Registry.getInstance();
@@ -19,6 +22,7 @@ export default class StreamItem extends React.Component {
 	state = {};
 
 	componentDidCatch(error) {
+		reportError(error);
 		this.setState({ error });
 	}
 
@@ -30,10 +34,10 @@ export default class StreamItem extends React.Component {
 
 		if (error) {
 			return (
-				<div>
+				<Error inline error={error}>
 					There was an error attempting to render:{' '}
 					{(item || {}).MimeType || 'Unknown Item'}
-				</div>
+				</Error>
 			);
 		}
 
