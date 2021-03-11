@@ -10,12 +10,6 @@ import { LinkTo } from '@nti/web-routing';
 
 const logger = Logger.get('content:stream:breadcrumb');
 
-function getBreadcrumb(item) {
-	return (item || {}).getContextPath
-		? item.getContextPath()
-		: Promise.reject("Item doesn't have a getContextPath method.");
-}
-
 function getTitle(item) {
 	const isString = typeof item === 'string';
 	const fallback = { title: isString ? item : null };
@@ -78,7 +72,7 @@ export default class Breadcrumb extends React.Component {
 		const { item, context, showPrompt } = props;
 
 		try {
-			const breadcrumbs = await getBreadcrumb(item);
+			const breadcrumbs = await item?.getContextPath?.();
 			const breadcrumb = (breadcrumbs || [])[0];
 			const indexOfContext = context
 				? breadcrumb.findIndex(b => b.NTIID === context.NTIID)

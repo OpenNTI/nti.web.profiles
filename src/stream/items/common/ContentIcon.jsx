@@ -26,16 +26,11 @@ async function getThumbnail(item) {
 		return getIcon(path[0]);
 	} catch (e) {
 		if (e && e.statusCode === 403 && e.Items) {
-			try {
-				const service = await getService();
-				const path = await service.getObject(e.Items);
-				return getIcon(path[0]);
-			} catch (error) {
-				return Promise.reject(error);
-			}
+			const service = await getService();
+			const path = await service.getObject(e.Items);
+			return getIcon(path[0]);
 		} else {
-			//Really, the only error this should be is item is falsy, or item does not have a getContextPath method.
-			return Promise.reject(null);
+			return null;
 		}
 	}
 }
