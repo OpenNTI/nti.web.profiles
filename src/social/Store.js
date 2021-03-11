@@ -44,11 +44,12 @@ export default class Store extends Stores.SimpleStore {
 	}
 
 	removeContact(username) {
-		const activeUsers = { ...this.get('activeUsers') };
-
-		delete activeUsers[username];
-
-		this.set({ activeUsers });
+		this.set({
+			activeUsers: {
+				...this.get('activeUsers'),
+				[username]: undefined,
+			}
+		});
 	}
 
 	static addContacts(users) {
@@ -56,11 +57,11 @@ export default class Store extends Stores.SimpleStore {
 	}
 
 	addContacts(users) {
-		const activeUsers = users.reduce(
-			(acc, user) => ({ ...acc, [user.Username]: user }),
-			{}
-		);
-		this.set({ activeUsers });
+		this.set({
+			activeUsers: users.reduce(
+				(acc, user) => ({ ...acc, [user.Username]: user }),
+				{}
+		)});
 	}
 
 	selectUser(username) {
@@ -89,12 +90,10 @@ export default class Store extends Stores.SimpleStore {
 	}
 
 	handleWindowNotify(username) {
-		const counts = this.get('unreadCount');
-
 		this.set({
 			unreadCount: {
-				...counts,
-				[username]: (counts?.[username] || 0) + 1,
+				...this.get('unreadCount'),
+				[username]: (this.get('unreadCount')?.[username] || 0) + 1,
 			},
 		});
 	}
