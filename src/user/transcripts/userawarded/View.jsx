@@ -137,7 +137,7 @@ export default class UserAwardedCreditView extends React.Component {
 				value={this.state.amount}
 				maxLength="6"
 				onChange={this.updateAmount}
-				pattern="[0-9]+([.,][0-9]+)?"
+				pattern="[0-9]*[.,]?[0-9]+"
 				ref={this.attachInputRef}
 				placeholder="1.00"
 			/>
