@@ -3,7 +3,7 @@
 import Store from '../Store';
 
 let store;
-const activeUsers = {user1: 'available', user2: 'away', user3: 'dnd'};
+const activeUsers = { user1: 'available', user2: 'away', user3: 'dnd' };
 
 beforeEach(() => {
 	store = new Store();
@@ -12,30 +12,29 @@ beforeEach(() => {
 
 describe('Test store methods', () => {
 	test('setActiveUsers', () => {
-
 		expect(store.get('activeUsers')).toEqual(activeUsers);
 	});
 
 	test('updatePresence', () => {
-
 		store.updatePresence('user1', 'dnd');
 
 		expect(store.get('activeUsers')['user1']).toEqual('dnd');
 	});
 
 	test('removeContact', () => {
-
 		store.removeContact('user1');
 
 		expect(store.get('activeUsers')['user1']).toBeFalsy();
 	});
 
 	test('addContacts', () => {
-		const contacts = [{Username: 'user1'}];
+		const contacts = [{ Username: 'user1' }];
 
 		store.addContacts(contacts);
 
-		expect(store.get('activeUsers')).toEqual({user1: {Username: 'user1'}});
+		expect(store.get('activeUsers')).toEqual({
+			user1: { Username: 'user1' },
+		});
 	});
 
 	test('selectUser', () => {
@@ -53,7 +52,9 @@ describe('Test store methods', () => {
 	});
 
 	test('clearUnreadCount and handleWindowNotify', () => {
-		for (let i = 0; i < 3; i++) {store.handleWindowNotify('user1');}
+		for (let i = 0; i < 3; i++) {
+			store.handleWindowNotify('user1');
+		}
 
 		expect(store.get('unreadCount')['user1']).toEqual(3);
 
@@ -85,5 +86,4 @@ describe('Test store methods', () => {
 
 		expect(store.get('chatWindow')).toBeTruthy();
 	});
-
 });

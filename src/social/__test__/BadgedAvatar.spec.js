@@ -1,8 +1,8 @@
 /* eslint-env jest */
 import React from 'react';
-import {fireEvent, render, waitFor} from '@testing-library/react';
+import { fireEvent, render, waitFor } from '@testing-library/react';
 
-import {FakeStore} from '@nti/lib-store';
+import { FakeStore } from '@nti/lib-store';
 
 import BadgedAvatar from '../BadgedAvatar';
 import Store from '../Store';
@@ -11,7 +11,7 @@ import Store from '../Store';
 jest.mock('../ChatWindow', () => {
 	const mockDefault = {};
 
-	mockDefault.getChatWindow = () => (props) => <div {...props}>ChatWindow</div>;
+	mockDefault.getChatWindow = () => props => <div {...props}>ChatWindow</div>;
 
 	return {
 		__esModule: true,
@@ -33,15 +33,18 @@ describe('BadgedAvatar Component', () => {
 
 		const component = render(
 			<FakeStore mock={store}>
-				<BadgedAvatar entity="selected_user" presence="away"/>
+				<BadgedAvatar entity="selected_user" presence="away" />
 			</FakeStore>
 		);
 
-		const click = () => fireEvent.click(component.getByTestId('avatar-container'));
+		const click = () =>
+			fireEvent.click(component.getByTestId('avatar-container'));
 
 		click();
 
-		expect(await waitFor(() => component.getByTestId('chat-window'))).toBeTruthy();
+		expect(
+			await waitFor(() => component.getByTestId('chat-window'))
+		).toBeTruthy();
 
 		expect(setChatWindow).toHaveBeenCalled();
 		expect(clearUnreadCount).toHaveBeenCalled();

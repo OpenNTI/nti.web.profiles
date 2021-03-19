@@ -1,5 +1,4 @@
 export default styled('div')`
-
 	--size: 42px;
 
 	position: absolute;

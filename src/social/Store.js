@@ -48,7 +48,7 @@ export default class Store extends Stores.SimpleStore {
 			activeUsers: {
 				...this.get('activeUsers'),
 				[username]: undefined,
-			}
+			},
 		});
 	}
 
@@ -61,7 +61,8 @@ export default class Store extends Stores.SimpleStore {
 			activeUsers: users.reduce(
 				(acc, user) => ({ ...acc, [user.Username]: user }),
 				{}
-		)});
+			),
+		});
 	}
 
 	selectUser(username) {
