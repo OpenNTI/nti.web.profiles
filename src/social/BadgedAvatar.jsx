@@ -5,7 +5,7 @@ import { Avatar, Badge, Hooks } from '@nti/web-commons';
 
 import Store from './Store';
 import { AvatarContainer, PresenceCircle } from './parts';
-import ChatWindowView from './ChatWindow';
+import { ChatWindowRef } from './ChatWindow';
 
 const MASK_SPEC = {
 	tag: 'svg',
@@ -82,7 +82,7 @@ export default function BadgedAvatar({ entity, presence, expanded }) {
 		chatWindow,
 	} = Store.useValue();
 
-	const ChatWindow = ChatWindowView.getChatWindow();
+	const ChatWindow = ChatWindowRef.getChatWindow();
 
 	const selected = selectedUser === entity;
 

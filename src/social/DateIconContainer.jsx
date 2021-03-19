@@ -1,19 +1,16 @@
 import React from 'react';
 
-import {Tooltip, DateIcon} from '@nti/web-commons';
+import { Tooltip, DateIcon } from '@nti/web-commons';
 
-import CalendarWindowView from './CalendarWindow';
+import { CalendarWindowRef } from './CalendarWindow';
 import Store from './Store';
 
-export default function DateIconContainer () {
-	const {
-		setCalendarWindow,
-		calendarWindow,
-	} = Store.useValue();
+export default function DateIconContainer() {
+	const { setCalendarWindow, calendarWindow } = Store.useValue();
 
 	const iconRef = React.useRef();
 
-	const CalendarWindow = CalendarWindowView.getCalendarWindow();
+	const CalendarWindow = CalendarWindowRef.getCalendarWindow();
 
 	const handleDateIconClick = () => {
 		setCalendarWindow(!calendarWindow);

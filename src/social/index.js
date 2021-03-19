@@ -1,4 +1,4 @@
-export { default as ChatSidebar } from './View';
-export { default as NewChatStore } from './Store';
-export { default as ChatWindowView } from './ChatWindow';
-export { default as CalendarWindowView } from './CalendarWindow';
+export * from './CalendarWindow';
+export * from './ChatBar';
+export * from './ChatWindow';
+export { default as Store } from './Store';

@@ -1,10 +1,10 @@
-import React from 'react';
+// import React from 'react';
 
-let ChatWindow = null;
+let ref = null;
 
-ChatWindowView.setChatWindow = window => (ChatWindow = window);
-ChatWindowView.getChatWindow = () => ChatWindow;
+ChatWindowRef.setChatWindow = window => (ref = window);
+ChatWindowRef.getChatWindow = () => ref;
 
-export default function ChatWindowView() {
-	return <></>;
+export function ChatWindowRef() {
+	return null;
 }

@@ -1,13 +1,10 @@
-import React from 'react';
+// import React from 'react';
 
-let CalendarWindow = null;
+let ref = null;
 
-CalendarWindowView.setCalendarWindow = (window) => (CalendarWindow = window);
-CalendarWindowView.getCalendarWindow = () => CalendarWindow;
+CalendarWindowRef.setCalendarWindow = window => (ref = window);
+CalendarWindowRef.getCalendarWindow = () => ref;
 
-export default function CalendarWindowView () {
-	return (
-		<>
-		</>
-	);
+export function CalendarWindowRef() {
+	return null;
 }
