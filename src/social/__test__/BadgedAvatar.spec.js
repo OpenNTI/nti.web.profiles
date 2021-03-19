@@ -15,7 +15,7 @@ jest.mock('../ChatWindow', () => {
 
 	return {
 		__esModule: true,
-		default: mockDefault,
+		ChatWindowRef: mockDefault,
 	};
 });
 

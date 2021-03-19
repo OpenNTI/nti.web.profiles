@@ -2,11 +2,11 @@
 import React from 'react';
 import { fireEvent, render } from '@testing-library/react';
 
-import View from '../View';
+import { ChatBar } from '../ChatBar';
 
 describe('Make sure gutter works', () => {
 	test('Gutter collapses and expands as expected', () => {
-		const view = render(<View />);
+		const view = render(<ChatBar />);
 
 		const expandButton = view.getByTestId('expand-button');
 
