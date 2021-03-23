@@ -58,23 +58,8 @@ export default class Store extends Stores.SimpleStore {
 
 	addContacts(users) {
 		this.set({
-			activeUsers: users.reduce(
-				(acc, user) => ({ ...acc, [user.Username]: user }),
-				{}
-			),
+			activeUsers: [...this.get('activeUsers'), ...users],
 		});
-	}
-
-	selectUser(username) {
-		this.set({ selectedUser: username });
-	}
-
-	static deselectUser() {
-		this.getStore().deselectUser();
-	}
-
-	deselectUser() {
-		this.set({ selectedUser: null });
 	}
 
 	clearUnreadCount(username) {
@@ -101,12 +86,12 @@ export default class Store extends Stores.SimpleStore {
 
 	setCalendarWindow(calendarWindow) {
 		this.set({ calendarWindow });
-		calendarWindow && this.set({ chatWindow: false });
+		calendarWindow && this.set({ selectedEntity: null });
 	}
 
-	setChatWindow(chatWindow) {
-		this.set({ chatWindow });
-		chatWindow && this.set({ calendarWindow: false });
+	setSelectedEntity(entity) {
+		this.set({ selectedEntity: entity });
+		entity && this.set({ calendarWindow: false });
 	}
 }
 

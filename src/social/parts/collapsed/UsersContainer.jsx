@@ -20,7 +20,11 @@ UsersContainer.propTypes = {
 };
 
 export default function UsersContainer({ updateExpandBadge }) {
-	const { activeUsers, unreadCount } = Store.useValue();
+	const {
+		activeUsers,
+		unreadCount,
+		selectedEntity
+	} = Store.useValue();
 
 	const containerRef = React.useRef(null);
 
@@ -56,11 +60,13 @@ export default function UsersContainer({ updateExpandBadge }) {
 								<BadgedAvatar
 									entity={entity}
 									presence={activeUsers[entity]}
+									selected={selectedEntity === entity}
 								/>
 							</IconContainer>
 						</Tooltip>
 					);
-				})}
+				})
+			}
 		</Container>
 	);
 }

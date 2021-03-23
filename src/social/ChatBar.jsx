@@ -4,19 +4,36 @@ import Store from './Store';
 import ExpandedPanel from './Expanded';
 import CollapsedPanel from './Collapsed';
 import DateIconContainer from './DateIconContainer';
+import { ChatWindowRef } from './ChatWindow';
 
-export const ChatBar = Store.compose(
-	React.forwardRef((props, ref) => {
-		const [expanded, setExpanded] = useState(false);
+function View() {
+	const { selectedEntity, setSelectedEntity } = Store.useValue();
 
-		const toggleExpanded = () => setExpanded(current => !current);
+	const [expanded, setExpanded] = useState(false);
 
-		const Cmp = expanded ? ExpandedPanel : CollapsedPanel;
+	const toggleExpanded = () => setExpanded(current => !current);
 
-		return (
+	const Cmp = expanded ? ExpandedPanel : CollapsedPanel;
+
+	const ChatWindow = ChatWindowRef.getChatWindow();
+
+	return (
+		<>
 			<Cmp toggle={toggleExpanded}>
 				<DateIconContainer />
 			</Cmp>
-		);
-	})
-);
+
+			{selectedEntity && (
+				<ChatWindow
+					key={String(selectedEntity)}
+					data-testid="chat-window"
+					onClose={() => setSelectedEntity(null)}
+					entity={selectedEntity}
+					expanded={expanded}
+				/>
+			)}
+		</>
+	);
+}
+
+export default Store.compose(View);

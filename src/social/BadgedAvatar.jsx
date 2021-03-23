@@ -5,7 +5,6 @@ import { Avatar, Badge, Hooks } from '@nti/web-commons';
 
 import Store from './Store';
 import { AvatarContainer, PresenceCircle } from './parts';
-import { ChatWindowRef } from './ChatWindow';
 
 const MASK_SPEC = {
 	tag: 'svg',
@@ -27,13 +26,13 @@ const MASK_SPEC = {
 					tag: 'circle',
 					cx: '.50',
 					cy: '.50',
-					r: '.47',
+					r: '.50',
 					fill: 'white',
 				},
 				{
 					tag: 'circle',
-					cx: '.85',
-					cy: '.85',
+					cx: '.90',
+					cy: '.90',
 					r: '.15',
 					fill: 'black',
 				},
@@ -43,6 +42,8 @@ const MASK_SPEC = {
 };
 
 const BorderedAvatar = styled(Avatar)`
+	border: 2px solid rgba(0, 0, 0, 0);
+
 	& rect,
 	& image {
 		mask: url(#presence-mask);
@@ -68,43 +69,25 @@ BadgedAvatar.propTypes = {
 	presence: PropTypes.oneOfType([PropTypes.object, PropTypes.string])
 		.isRequired,
 
-	expanded: PropTypes.bool,
+	selected: PropTypes.bool.isRequired,
 };
 
-export default function BadgedAvatar({ entity, presence, expanded }) {
+export default function BadgedAvatar({ selected, entity, presence }) {
 	const {
 		unreadCount,
 		clearUnreadCount,
-		selectedUser,
-		deselectUser,
-		selectUser,
-		setChatWindow,
-		chatWindow,
+		setSelectedEntity,
 	} = Store.useValue();
-
-	const ChatWindow = ChatWindowRef.getChatWindow();
-
-	const selected = selectedUser === entity;
 
 	Hooks.useSharedDOM(MASK_SPEC);
 
 	const handleClick = () => {
-		setChatWindow(!chatWindow);
-
 		clearUnreadCount(entity);
 
 		if (selected) {
-			deselectUser();
+			setSelectedEntity(null);
 		} else {
-			selectUser(entity);
-		}
-	};
-
-	const handleClose = () => {
-		setChatWindow(false);
-
-		if (selected) {
-			deselectUser();
+			setSelectedEntity(entity);
 		}
 	};
 
@@ -122,14 +105,6 @@ export default function BadgedAvatar({ entity, presence, expanded }) {
 				/>
 			</Badge>
 			<PresenceCircle user={entity} />
-			{chatWindow && (
-				<ChatWindow
-					data-testid="chat-window"
-					onClose={handleClose}
-					entity={entity}
-					expanded={expanded}
-				/>
-			)}
 		</AvatarContainer>
 	);
 }
