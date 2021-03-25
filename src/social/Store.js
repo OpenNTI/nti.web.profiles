@@ -62,6 +62,10 @@ export default class Store extends Stores.SimpleStore {
 		});
 	}
 
+	static deselectUser() {
+		this.getStore().setSelectedEntity();
+	}
+
 	clearUnreadCount(username) {
 		this.set({
 			unreadCount: {
@@ -86,13 +90,18 @@ export default class Store extends Stores.SimpleStore {
 
 	setCalendarWindow(calendarWindow) {
 		this.set({ calendarWindow });
-		calendarWindow && this.set({ selectedEntity: null });
+		if (calendarWindow) {
+			this.set({ selectedEntity: null });
+		}
 	}
 
 	setSelectedEntity(entity) {
 		this.set({ selectedEntity: entity });
-		entity && this.set({ calendarWindow: false });
+		if (entity) {
+			this.set({ calendarWindow: false });
+		}
 	}
+
 }
 
 function normalizeActiveUsers(activeUsers) {

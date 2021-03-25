@@ -22,16 +22,12 @@ function View() {
 			<Cmp toggle={toggleExpanded}>
 				<DateIconContainer />
 			</Cmp>
-
-			{selectedEntity && (
-				<ChatWindow
-					key={String(selectedEntity)}
-					data-testid="chat-window"
-					onClose={() => setSelectedEntity(null)}
-					entity={selectedEntity}
-					expanded={expanded}
-				/>
-			)}
+			<ChatWindow
+				data-testid="chat-window"
+				onClose={() => setSelectedEntity()}
+				entity={selectedEntity}
+				expanded={expanded}
+			/>
 		</>
 	);
 }
