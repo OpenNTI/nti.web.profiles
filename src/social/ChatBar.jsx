@@ -6,7 +6,7 @@ import CollapsedPanel from './Collapsed';
 import DateIconContainer from './DateIconContainer';
 import { ChatWindowRef } from './ChatWindow';
 
-function View() {
+function ChatBarImpl() {
 	const { selectedEntity, setSelectedEntity } = Store.useValue();
 
 	const [expanded, setExpanded] = useState(false);
@@ -22,14 +22,16 @@ function View() {
 			<Cmp toggle={toggleExpanded}>
 				<DateIconContainer />
 			</Cmp>
-			<ChatWindow
-				data-testid="chat-window"
-				onClose={() => setSelectedEntity()}
-				entity={selectedEntity}
-				expanded={expanded}
-			/>
+			{ChatWindow && (
+				<ChatWindow
+					data-testid="chat-window"
+					onClose={() => setSelectedEntity()}
+					entity={selectedEntity}
+					expanded={expanded}
+				/>
+			)}
 		</>
 	);
 }
 
-export default Store.compose(View);
+export const ChatBar = Store.compose(ChatBarImpl);
