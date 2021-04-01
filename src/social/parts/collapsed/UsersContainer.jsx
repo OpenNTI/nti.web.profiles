@@ -59,7 +59,7 @@ export default function UsersContainer({ updateExpandBadge }) {
 							<IconContainer>
 								<BadgedAvatar
 									entity={entity}
-									selected={selectedEntity ? selectedEntity.ID === entity.ID : false}
+									selected={selectedEntity?.ID === entity.ID }
 								/>
 							</IconContainer>
 						</Tooltip>

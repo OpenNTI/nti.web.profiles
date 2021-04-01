@@ -1,14 +1,35 @@
 import { Stores } from '@nti/lib-store';
+import { getService } from '@nti/web-client';
 
 export default class Store extends Stores.SimpleStore {
 	static Singleton = true;
+
+	cleanup() {
+		if (this.cleanupListeners) {
+			this.cleanupListeners();
+		}
+	}
+
+	cleanupListeners() {
+		this.contactStore.removeListener('remove', this.removeContact);
+		this.contactStore.removeListener('add', this.addContact);
+
+		delete this.cleanupListeners;
+	}
+
+	async load() {
+		const service = await getService();
+		this.contactStore = await service.getContacts();
+		this.contactStore.on('remove', (username) => this.removeContact(username));
+		this.contactStore.on('add', (username) => this.addContact(username));
+	}
 
 	static removeContact(username) {
 		this.getStore().removeContact(username);
 	}
 
 	removeContact(username) {
-		if (username === this.get('selectedEntity')) {
+		if (username === this.get('selectedEntity')?.ID) {
 			return;
 		}
 
@@ -78,3 +99,29 @@ export default class Store extends Stores.SimpleStore {
 	}
 
 }
+
+// TODO: use active chats
+/**
+function getSessionObject (key) {
+	let o = SessionStorage.getItem('chats') || {};
+	if (key) {
+		return o[key];
+	}
+	return o;
+}
+
+function getAllOccupantsKeyAccepted () {
+	let accepted = getSessionObject('roomIdsAccepted') || {},
+		pairs = [],
+		key;
+
+	for (key in accepted) {
+		if (accepted.hasOwnProperty(key)) {
+			pairs.push(key);
+		}
+	}
+
+	return pairs;
+}
+*/
+
