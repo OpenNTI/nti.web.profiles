@@ -3,24 +3,14 @@
 import Store from '../Store';
 
 let store;
-const activeUsers = { user1: 'available', user2: 'away', user3: 'dnd' };
+const activeUsers = [{ID: 'user1'}, {ID:'user2'},{ID:'user3'}];
 
 beforeEach(() => {
 	store = new Store();
-	store.setActiveUsers(activeUsers);
+	activeUsers.forEach(user => store.addContact(user));
 });
 
 describe('Test store methods', () => {
-	test('setActiveUsers', () => {
-		expect(store.get('activeUsers')).toEqual(activeUsers);
-	});
-
-	test('updatePresence', () => {
-		store.updatePresence('user1', 'dnd');
-
-		expect(store.get('activeUsers')['user1']).toEqual('dnd');
-	});
-
 	test('removeContact', () => {
 		store.removeContact('user1');
 
@@ -28,27 +18,23 @@ describe('Test store methods', () => {
 	});
 
 	test('addContacts', () => {
-		const contacts = [{ Username: 'user1' }];
+		store.addContact({ID: 'user4'});
 
-		store.addContacts(contacts);
-
-		expect(store.get('activeUsers')).toEqual({
-			user1: { Username: 'user1' },
-		});
+		expect(store.get('activeUsers')).toEqual([{ID: 'user1'}, {ID:'user2'},{ID:'user3'}, {ID:'user4'}]);
 	});
 
 	test('selectUser', () => {
-		store.selectUser('user1');
+		store.setSelectedEntity('user1');
 
-		expect(store.get('selectedUser')).toEqual('user1');
+		expect(store.get('selectedEntity')).toEqual('user1');
 	});
 
 	test('deselectUser', () => {
-		store.selectUser('user1');
+		store.setSelectedEntity('user1');
 
-		store.deselectUser();
+		store.setSelectedEntity();
 
-		expect(store.get('selectedUser')).toBeNull();
+		expect(store.get('selectedEntity')).toBeFalsy();
 	});
 
 	test('clearUnreadCount and handleWindowNotify', () => {
@@ -75,15 +61,15 @@ describe('Test store methods', () => {
 		expect(store.get('calendarWindow')).toBeTruthy();
 	});
 
-	test('setChatWindow', () => {
-		expect(store.get('chatWindow')).toBeFalsy();
+	test('setSelectedEntity', () => {
+		expect(store.get('selectedEntity')).toBeFalsy();
 
-		store.setChatWindow(false);
+		store.setSelectedEntity();
 
-		expect(store.get('chatWindow')).toBeFalsy();
+		expect(store.get('selectedEntity')).toBeFalsy();
 
-		store.setChatWindow(true);
+		store.setSelectedEntity('user1');
 
-		expect(store.get('chatWindow')).toBeTruthy();
+		expect(store.get('selectedEntity')).toBe('user1');
 	});
 });
