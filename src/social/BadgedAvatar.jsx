@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Avatar, Badge, Hooks } from '@nti/web-commons';
+import { Avatar, Badge, Hooks, User } from '@nti/web-commons';
 
 import Store from './Store';
 import { AvatarContainer, PresenceCircle } from './parts';
@@ -66,13 +66,10 @@ BadgedAvatar.propTypes = {
 	entity: PropTypes.oneOfType([PropTypes.object, PropTypes.string])
 		.isRequired,
 
-	presence: PropTypes.oneOfType([PropTypes.object, PropTypes.string])
-		.isRequired,
-
-	selected: PropTypes.bool.isRequired,
+	selected: PropTypes.bool,
 };
 
-export default function BadgedAvatar({ selected, entity, presence }) {
+export default function BadgedAvatar({ selected, entity }) {
 	const {
 		unreadCount,
 		clearUnreadCount,
@@ -91,6 +88,8 @@ export default function BadgedAvatar({ selected, entity, presence }) {
 		}
 	};
 
+	if (!entity) {return null;}
+
 	return (
 		<AvatarContainer data-testid="avatar-container" onClick={handleClick}>
 			<Badge
@@ -98,11 +97,22 @@ export default function BadgedAvatar({ selected, entity, presence }) {
 				position={Badge.POSITIONS.TOP_LEFT}
 				{...Badge.offset(5, 4)}
 			>
-				<BorderedAvatar
-					entity={entity}
-					presence={selected ? presence : ''}
-					svg
-				/>
+				<User.Presence user={entity}>
+					{({presence}) => {
+						if (presence && presence !== 'unavailable') {
+							return (
+								<BorderedAvatar
+									entity={entity}
+									presence={selected ? presence : ''}
+									svg
+								/>
+							);
+						} else {
+							return null;
+						}
+
+					}}
+				</User.Presence>
 			</Badge>
 			<PresenceCircle user={entity} />
 		</AvatarContainer>
