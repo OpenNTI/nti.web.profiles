@@ -26,7 +26,7 @@ function ChatBarImpl() {
 				<ChatWindow
 					data-testid="chat-window"
 					onClose={() => setSelectedEntity()}
-					entity={selectedEntity}
+					entity={selectedEntity?.ID}
 					expanded={expanded}
 				/>
 			)}
