@@ -99,11 +99,11 @@ export default function BadgedAvatar({ selected, entity }) {
 			>
 				<User.Presence user={entity}>
 					{({presence}) => {
-						if (presence && presence !== 'unavailable') {
+						if (presence && presence.status !== 'unavailable') {
 							return (
 								<BorderedAvatar
 									entity={entity}
-									presence={selected ? presence : ''}
+									presence={selected ? presence.status : ''}
 									svg
 								/>
 							);

@@ -55,12 +55,11 @@ export default function ExpandedPanel({ toggle: collapse }) {
 				) : (
 					<UsersContainer>
 						{activeUsers &&
-							Object.keys(activeUsers).map((entity, index) => {
+							activeUsers.map((entity, index) => {
 								return (
 									<EntryContainer key={index}>
 										<BadgedAvatar
 											entity={entity}
-											presence={activeUsers[entity]}
 											expanded
 										/>
 										<Name entity={entity} />

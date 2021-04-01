@@ -50,7 +50,7 @@ export default function UsersContainer({ updateExpandBadge }) {
 	return (
 		<Container ref={containerRef}>
 			{activeUsers &&
-				Object.keys(activeUsers).map((entity, index) => {
+				activeUsers.map((entity, index) => {
 					return (
 						<Tooltip
 							key={index}
@@ -59,8 +59,7 @@ export default function UsersContainer({ updateExpandBadge }) {
 							<IconContainer>
 								<BadgedAvatar
 									entity={entity}
-									presence={activeUsers[entity]}
-									selected={selectedEntity === entity}
+									selected={selectedEntity ? selectedEntity.ID === entity.ID : false}
 								/>
 							</IconContainer>
 						</Tooltip>
