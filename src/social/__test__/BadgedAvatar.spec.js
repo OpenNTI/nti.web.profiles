@@ -4,7 +4,7 @@ import { fireEvent, render, waitFor } from '@testing-library/react';
 
 import { FakeStore } from '@nti/lib-store';
 
-import BadgedAvatar from '../BadgedAvatar';
+import { ChatBar } from '../ChatBar';
 import Store from '../Store';
 
 // Mock ChatWindow override
@@ -23,17 +23,15 @@ describe('BadgedAvatar Component', () => {
 	test('BadgedAvatar Click', async () => {
 		const store = new Store();
 
-		const setChatWindow = jest.spyOn(store, 'setChatWindow');
+		const setSelectedEntity = jest.spyOn(store, 'setSelectedEntity');
 
 		const clearUnreadCount = jest.spyOn(store, 'clearUnreadCount');
 
-		const selectUser = jest.spyOn(store, 'selectUser');
-
-		const deselectUser = jest.spyOn(store, 'deselectUser');
+		store.addContact('user1');
 
 		const component = render(
 			<FakeStore mock={store}>
-				<BadgedAvatar entity="selected_user" presence="away" />
+				<ChatBar />
 			</FakeStore>
 		);
 
@@ -46,12 +44,11 @@ describe('BadgedAvatar Component', () => {
 			await waitFor(() => component.getByTestId('chat-window'))
 		).toBeTruthy();
 
-		expect(setChatWindow).toHaveBeenCalled();
+		expect(setSelectedEntity).toHaveBeenCalled();
 		expect(clearUnreadCount).toHaveBeenCalled();
-		expect(selectUser).toHaveBeenCalledWith('selected_user');
 
 		click();
 
-		expect(deselectUser).toHaveBeenCalled();
+		expect(setSelectedEntity).toHaveBeenCalled();
 	});
 });
