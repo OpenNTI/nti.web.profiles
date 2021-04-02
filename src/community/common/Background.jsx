@@ -2,9 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { scoped } from '@nti/lib-locale';
-import { Image } from '@nti/web-commons';
+import { Image, Hooks } from '@nti/web-commons';
 
 import DefaultCommunityBackground from './assets/default-community-background.png';
+
+const {useChanges} = Hooks;
 
 const t = scoped('nti-profiles.community.common.Background', {
 	alt: '%(displayName)s Background Image',
@@ -22,6 +24,8 @@ CommunityBackground.propTypes = {
 	}),
 };
 export default function CommunityBackground({ community, ...otherProps }) {
+	useChanges(community);
+
 	if (!community || community.noBackground) {
 		return null;
 	}

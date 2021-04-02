@@ -2,9 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { scoped } from '@nti/lib-locale';
-import { Image } from '@nti/web-commons';
+import { Image, Hooks } from '@nti/web-commons';
 
 import DefaultCommunityAvatar from './assets/default-community-avatar.png';
+
+const {useChanges} = Hooks;
 
 const aspectRatio = 334 / 175;
 const t = scoped('nti-profiles.community.common.Avatar', {
@@ -27,6 +29,8 @@ export default function CommunityAvatar({
 	className,
 	...otherProps
 }) {
+	useChanges(community);
+
 	if (!community || community.noAvatar) {
 		return null;
 	}
