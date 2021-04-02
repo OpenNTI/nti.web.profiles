@@ -33,8 +33,7 @@ CommunityAssetEditor.propTypes = {
 	community: PropTypes.shape({
 		avatarURL: PropTypes.string,
 		backgroundURL: PropTypes.string,
-		putToLink: PropTypes.func,
-		refresh: PropTypes.func,
+		save: PropTypes.func
 	}),
 	assetName: PropTypes.oneOf(['avatarURL', 'backgroundURL']),
 	afterSave: PropTypes.func,
@@ -63,8 +62,7 @@ export default function CommunityAssetEditor({
 			[assetName]: dataURL,
 		};
 
-		const resp = await community.putToLink('edit', data);
-		await community.refresh(resp);
+		await community.save(data);
 
 		afterSave();
 	};
