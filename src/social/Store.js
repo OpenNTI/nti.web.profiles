@@ -1,8 +1,36 @@
+import { SessionStorage } from '@nti/web-storage';
 import { Stores } from '@nti/lib-store';
 import { getService } from '@nti/web-client';
 
+const STATE_KEY = 'chats';
 export default class Store extends Stores.SimpleStore {
 	static Singleton = true;
+
+	async load() {
+		const service = await getService();
+		this.contactStore = await service.getContacts();
+
+		this.contactStore.addListener('change', (contacts) => this.loadContacts(contacts));
+
+		this.set({activeChatRoomParticipants: getAllOccupantsKeyAccepted()});
+
+		this.set({iterator: this[Symbol.iterator]});
+	}
+
+	loadContacts(contacts) {
+		this.set({contacts, iterator: this[Symbol.iterator]});
+	}
+
+	[Symbol.iterator]() {
+		this.snapshot =
+			new Set([...Array.from(this.get('contacts') || []).map(x => x.ID), ...this.activeChatRoomParticipants || []]) || [];
+
+		return [...this.snapshot];
+	}
+
+	static deselectUser() {
+		this.getStore().setSelectedEntity();
+	}
 
 	cleanup() {
 		if (this.cleanupListeners) {
@@ -11,56 +39,11 @@ export default class Store extends Stores.SimpleStore {
 	}
 
 	cleanupListeners() {
-		this.contactStore.removeListener('remove', this.removeContact);
-		this.contactStore.removeListener('add', this.addContact);
+		this.contactStore.removeListener('change', this.loadContacts);
 
 		delete this.cleanupListeners;
 	}
 
-	async load() {
-		const service = await getService();
-		this.contactStore = await service.getContacts();
-		this.contactStore.on('remove', (username) => this.removeContact(username));
-		this.contactStore.on('add', (username) => this.addContact(username));
-	}
-
-	static removeContact(username) {
-		this.getStore().removeContact(username);
-	}
-
-	removeContact(username) {
-		if (username === this.get('selectedEntity')?.ID) {
-			return;
-		}
-
-		this.set({
-			activeUsers: this.get('activeUsers').filter(user => user.ID !== username),
-		});
-	}
-
-	static addContact(user) {
-		this.getStore().addContact(user);
-	}
-
-	addContact(user) {
-		let duplicate = false;
-		const activeUsers = this.get('activeUsers') || [];
-
-		activeUsers.some((u) => {
-			duplicate = u.ID === user.ID;
-			return duplicate;
-		});
-
-		if (!duplicate) {
-			this.set({
-				activeUsers: [...(this.get('activeUsers') || []), user],
-			});
-		}
-	}
-
-	static deselectUser() {
-		this.getStore().setSelectedEntity();
-	}
 
 	clearUnreadCount(username) {
 		this.set({
@@ -101,9 +84,8 @@ export default class Store extends Stores.SimpleStore {
 }
 
 // TODO: use active chats
-/**
 function getSessionObject (key) {
-	let o = SessionStorage.getItem('chats') || {};
+	let o = SessionStorage.getItem(STATE_KEY) || {};
 	if (key) {
 		return o[key];
 	}
@@ -123,5 +105,5 @@ function getAllOccupantsKeyAccepted () {
 
 	return pairs;
 }
-*/
+
 
