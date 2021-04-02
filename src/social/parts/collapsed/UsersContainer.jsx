@@ -20,11 +20,7 @@ UsersContainer.propTypes = {
 };
 
 export default function UsersContainer({ updateExpandBadge }) {
-	const {
-		activeUsers,
-		unreadCount,
-		selectedEntity
-	} = Store.useValue();
+	const { unreadCount, selectedEntity, iterator } = Store.useValue();
 
 	const containerRef = React.useRef(null);
 
@@ -49,8 +45,7 @@ export default function UsersContainer({ updateExpandBadge }) {
 
 	return (
 		<Container ref={containerRef}>
-			{activeUsers &&
-				activeUsers.map((entity, index) => {
+			{iterator && iterator().map((entity, index) => {
 					return (
 						<Tooltip
 							key={index}
@@ -59,7 +54,7 @@ export default function UsersContainer({ updateExpandBadge }) {
 							<IconContainer>
 								<BadgedAvatar
 									entity={entity}
-									selected={selectedEntity?.ID === entity.ID }
+									selected={selectedEntity === entity }
 								/>
 							</IconContainer>
 						</Tooltip>

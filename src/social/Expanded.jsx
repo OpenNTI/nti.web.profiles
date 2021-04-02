@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-
 import { DisplayName, Errors, Loading } from '@nti/web-commons';
 
 import {
@@ -43,7 +42,7 @@ const UsersContainer = styled.div`
 `;
 
 export default function ExpandedPanel({ toggle: collapse }) {
-	const { activeUsers, loading, error } = Store.useValue();
+	const { loading, error, iterator } = Store.useValue();
 
 	return (
 		<Container data-testid="expanded-container">
@@ -54,8 +53,7 @@ export default function ExpandedPanel({ toggle: collapse }) {
 					<Errors.Message error={error} />
 				) : (
 					<UsersContainer>
-						{activeUsers &&
-							activeUsers.map((entity, index) => {
+						{iterator().map((entity, index) => {
 								return (
 									<EntryContainer key={index}>
 										<BadgedAvatar
