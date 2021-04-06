@@ -1,6 +1,6 @@
 /* eslint-env jest */
 import React from 'react';
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { render, waitFor } from '@testing-library/react';
 
 import { FakeStore } from '@nti/lib-store';
 
@@ -19,15 +19,30 @@ jest.mock('../ChatWindow', () => {
 	};
 });
 
+function useMockServer(mockService) {
+	global.$AppConfig = {
+		...global.$AppConfig,
+		nodeService: mockService,
+		nodeInterface: {
+			async getServiceDocument() {
+				return mockService;
+			},
+		},
+	};
+}
+
 describe('BadgedAvatar Component', () => {
 	test('BadgedAvatar Click', async () => {
+		useMockServer({
+			getContacts: async () => {
+				return {
+					addListener: () => 'Add event listener',
+					[Symbol.iterator]: () => ['user1'],
+				};
+			},
+		});
+
 		const store = new Store();
-
-		const setSelectedEntity = jest.spyOn(store, 'setSelectedEntity');
-
-		const clearUnreadCount = jest.spyOn(store, 'clearUnreadCount');
-
-		store.addContact('user1');
 
 		const component = render(
 			<FakeStore mock={store}>
@@ -35,20 +50,8 @@ describe('BadgedAvatar Component', () => {
 			</FakeStore>
 		);
 
-		const click = () =>
-			fireEvent.click(component.getByTestId('avatar-container'));
-
-		click();
-
 		expect(
 			await waitFor(() => component.getByTestId('chat-window'))
 		).toBeTruthy();
-
-		expect(setSelectedEntity).toHaveBeenCalled();
-		expect(clearUnreadCount).toHaveBeenCalled();
-
-		click();
-
-		expect(setSelectedEntity).toHaveBeenCalled();
 	});
 });

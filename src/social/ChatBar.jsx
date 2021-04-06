@@ -7,7 +7,7 @@ import DateIconContainer from './DateIconContainer';
 import { ChatWindowRef } from './ChatWindow';
 
 function ChatBarImpl() {
-	const { selectedEntity, setSelectedEntity, load } = Store.useValue();
+	const { selectedEntity, setSelectedEntity } = Store.useValue();
 
 	const [expanded, setExpanded] = useState(false);
 
@@ -16,8 +16,6 @@ function ChatBarImpl() {
 	const Cmp = expanded ? ExpandedPanel : CollapsedPanel;
 
 	const ChatWindow = ChatWindowRef.getChatWindow();
-
-	load();
 
 	return (
 		<>

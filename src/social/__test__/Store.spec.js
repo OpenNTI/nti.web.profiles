@@ -7,22 +7,10 @@ const activeUsers = [{ID: 'user1'}, {ID:'user2'},{ID:'user3'}];
 
 beforeEach(() => {
 	store = new Store();
-	activeUsers.forEach(user => store.addContact(user));
+	activeUsers.forEach(user => store.set({activeUsers: [...(store.get('activeUsers') || []), user]}));
 });
 
 describe('Test store methods', () => {
-	test('removeContact', () => {
-		store.removeContact('user1');
-
-		expect(store.get('activeUsers')['user1']).toBeFalsy();
-	});
-
-	test('addContacts', () => {
-		store.addContact({ID: 'user4'});
-
-		expect(store.get('activeUsers')).toEqual([{ID: 'user1'}, {ID:'user2'},{ID:'user3'}, {ID:'user4'}]);
-	});
-
 	test('selectUser', () => {
 		store.setSelectedEntity('user1');
 

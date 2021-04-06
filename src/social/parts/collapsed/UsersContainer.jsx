@@ -1,12 +1,17 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-
-import { DisplayName, Hooks, Tooltip } from '@nti/web-commons';
+import {
+	DisplayName,
+	Hooks,
+	Tooltip,
+	User
+} from '@nti/web-commons';
 
 import Store from '../../Store';
 import BadgedAvatar from '../../BadgedAvatar';
 
 import IconContainer from './IconContainer';
+
 
 const Container = styled.div`
 	overflow: hidden;
@@ -20,7 +25,11 @@ UsersContainer.propTypes = {
 };
 
 export default function UsersContainer({ updateExpandBadge }) {
-	const { unreadCount, selectedEntity, iterator } = Store.useValue();
+	const {
+		unreadCount,
+		selectedEntity,
+		iterator
+	} = Store.useValue();
 
 	const containerRef = React.useRef(null);
 
@@ -45,19 +54,28 @@ export default function UsersContainer({ updateExpandBadge }) {
 
 	return (
 		<Container ref={containerRef}>
-			{iterator && iterator().map((entity, index) => {
+			{iterator().map((entity, index) => {
 					return (
-						<Tooltip
-							key={index}
-							label={<DisplayName entity={entity} />}
-						>
-							<IconContainer>
-								<BadgedAvatar
-									entity={entity}
-									selected={selectedEntity === entity }
-								/>
-							</IconContainer>
-						</Tooltip>
+						<User.Presence user={entity} key={index}>
+							{({presence}) => {
+								const status = presence ? presence.status : 'unavailable';
+								if (status === 'unavailable') {
+									return null;
+								}
+								return (
+									<Tooltip
+										label={<DisplayName entity={entity} />}
+									>
+										<IconContainer>
+											<BadgedAvatar
+												entity={entity}
+												selected={selectedEntity === entity }
+											/>
+										</IconContainer>
+									</Tooltip>
+								);
+							}}
+						</User.Presence>
 					);
 				})
 			}

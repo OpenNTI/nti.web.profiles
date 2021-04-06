@@ -1,6 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { DisplayName, Errors, Loading } from '@nti/web-commons';
+import {
+	DisplayName,
+	Errors,
+	Loading,
+	User
+} from '@nti/web-commons';
 
 import {
 	ContactsButton,
@@ -55,13 +60,23 @@ export default function ExpandedPanel({ toggle: collapse }) {
 					<UsersContainer>
 						{iterator().map((entity, index) => {
 								return (
-									<EntryContainer key={index}>
-										<BadgedAvatar
-											entity={entity}
-											expanded
-										/>
-										<Name entity={entity} />
-									</EntryContainer>
+									<User.Presence user={entity} key={index}>
+										{({presence}) => {
+											const status = presence ? presence.status : 'unavailable';
+											if (status === 'unavailable') {
+												return null;
+											}
+											return (
+												<EntryContainer>
+													<BadgedAvatar
+														entity={entity}
+														expanded
+													/>
+													<Name entity={entity} />
+												</EntryContainer>
+											);
+										}}
+									</User.Presence>
 								);
 							})}
 					</UsersContainer>

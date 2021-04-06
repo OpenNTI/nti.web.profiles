@@ -6,26 +6,35 @@ const STATE_KEY = 'chats';
 export default class Store extends Stores.SimpleStore {
 	static Singleton = true;
 
-	async load() {
-		const service = await getService();
-		this.contactStore = await service.getContacts();
+	constructor(...args) {
+		super(...args);
 
-		this.contactStore.addListener('change', (contacts) => this.loadContacts(contacts));
+		(async () => {
+			const service = await getService();
+			this.contactStore = await service.getContacts();
 
-		this.set({activeChatRoomParticipants: getAllOccupantsKeyAccepted()});
+			this.contactStore.addListener('change', this.onContactChange);
 
-		this.set({iterator: this[Symbol.iterator]});
+			this.set({activeChatRoomParticipants: getAllOccupantsKeyAccepted()});
+		}) ();
 	}
 
-	loadContacts(contacts) {
-		this.set({contacts, iterator: this[Symbol.iterator]});
-	}
+	iterator = this[Symbol.iterator];
 
 	[Symbol.iterator]() {
 		this.snapshot =
-			new Set([...Array.from(this.get('contacts') || []).map(x => x.ID), ...this.activeChatRoomParticipants || []]) || [];
+		[...new Set([
+			// move active to the top
+			...this.activeChatRoomParticipants || [],
+			// inactive and duplicates at the bottom
+			...Array.from(this.contactStore || []).map(x => x.ID),
+		])];
 
 		return [...this.snapshot];
+	}
+
+	onContactChange = () => {
+		this.emitChange(['contactStore', 'iterator', Symbol.iterator]);
 	}
 
 	static deselectUser() {
@@ -39,7 +48,7 @@ export default class Store extends Stores.SimpleStore {
 	}
 
 	cleanupListeners() {
-		this.contactStore.removeListener('change', this.loadContacts);
+		this.contactStore.removeListener('change', this.onContactsChange);
 
 		delete this.cleanupListeners;
 	}
