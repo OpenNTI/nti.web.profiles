@@ -1,6 +1,6 @@
 /* eslint-env jest */
 import React from 'react';
-import { render, waitFor } from '@testing-library/react';
+import { render } from '@testing-library/react';
 
 import { FakeStore } from '@nti/lib-store';
 
@@ -50,8 +50,6 @@ describe('BadgedAvatar Component', () => {
 			</FakeStore>
 		);
 
-		expect(
-			await waitFor(() => component.getByTestId('chat-window'))
-		).toBeTruthy();
+		expect(component.getByTestId('chat-window')).toBeTruthy();
 	});
 });

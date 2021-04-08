@@ -22,7 +22,7 @@ export default class Store extends Stores.SimpleStore {
 	iterator = this[Symbol.iterator];
 
 	[Symbol.iterator]() {
-		this.snapshot =
+		const snapshot =
 		[...new Set([
 			// move active to the top
 			...this.activeChatRoomParticipants || [],
@@ -30,7 +30,7 @@ export default class Store extends Stores.SimpleStore {
 			...Array.from(this.contactStore || []).map(x => x.ID),
 		])];
 
-		return [...this.snapshot];
+		return snapshot[Symbol.iterator]();
 	}
 
 	onContactChange = () => {
