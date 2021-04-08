@@ -1,35 +1,16 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import {
-	DisplayName,
-	Errors,
-	Loading,
-	User
-} from '@nti/web-commons';
+import { Errors, Loading } from '@nti/web-commons';
+import {Iterable} from '@nti/lib-commons';
 
 import {
 	ContactsButton,
 	Container,
-	EntryContainer,
 	Footer,
 	Header,
 } from './parts/expanded';
 import Store from './Store';
 import BadgedAvatar from './BadgedAvatar';
-
-const Name = styled(DisplayName)`
-	margin-left: 48px;
-	position: absolute;
-	width: 150px;
-	height: 42px;
-	color: #fff;
-	padding: 19px 4px 0 4px;
-	font-size: 14px;
-	font-weight: 200;
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
-`;
 
 const Spinner = styled(Loading.Spinner)`
 	min-height: 100px;
@@ -58,27 +39,15 @@ export default function ExpandedPanel({ toggle: collapse }) {
 					<Errors.Message error={error} />
 				) : (
 					<UsersContainer>
-						{iterator().map((entity, index) => {
-								return (
-									<User.Presence user={entity} key={index}>
-										{({presence}) => {
-											const status = presence ? presence.status : 'unavailable';
-											if (status === 'unavailable') {
-												return null;
-											}
-											return (
-												<EntryContainer>
-													<BadgedAvatar
-														entity={entity}
-														expanded
-													/>
-													<Name entity={entity} />
-												</EntryContainer>
-											);
-										}}
-									</User.Presence>
-								);
-							})}
+						{[...Iterable.map(iterator(), (entity, index) => {
+							return (
+								<BadgedAvatar
+									key={index}
+									entity={entity}
+									expanded
+								/>
+							);
+						})]}
 					</UsersContainer>
 				)}
 			</Loading.Placeholder>
