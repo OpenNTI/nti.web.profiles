@@ -3,11 +3,32 @@
 import Store from '../Store';
 
 let store;
-const activeUsers = [{ID: 'user1'}, {ID:'user2'},{ID:'user3'}];
+const activeUsers = [{ ID: 'user1' }, { ID: 'user2' }, { ID: 'user3' }];
+
+function useMockServer(mockService) {
+	global.$AppConfig = {
+		...global.$AppConfig,
+		nodeService: mockService,
+		nodeInterface: {
+			async getServiceDocument() {
+				return mockService;
+			},
+		},
+	};
+}
 
 beforeEach(() => {
+	useMockServer({
+		getContacts() {
+			return {
+				addListener() {},
+			};
+		},
+	});
 	store = new Store();
-	activeUsers.forEach(user => store.set({activeUsers: [...(store.get('activeUsers') || []), user]}));
+	activeUsers.forEach(user =>
+		store.set({ activeUsers: [...(store.get('activeUsers') || []), user] })
+	);
 });
 
 describe('Test store methods', () => {
