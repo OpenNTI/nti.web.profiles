@@ -38,14 +38,6 @@ describe('Test store methods', () => {
 		expect(store.get('selectedEntity')).toEqual('user1');
 	});
 
-	test('deselectUser', () => {
-		store.setSelectedEntity('user1');
-
-		store.setSelectedEntity();
-
-		expect(store.get('selectedEntity')).toBeFalsy();
-	});
-
 	test('clearUnreadCount and handleWindowNotify', () => {
 		for (let i = 0; i < 3; i++) {
 			store.handleWindowNotify('user1');

@@ -37,10 +37,6 @@ export default class Store extends Stores.SimpleStore {
 		this.emitChange(['contactStore', 'iterator', Symbol.iterator]);
 	}
 
-	static deselectUser() {
-		this.getStore().setSelectedEntity();
-	}
-
 	cleanup() {
 		if (this.cleanupListeners) {
 			this.cleanupListeners();
