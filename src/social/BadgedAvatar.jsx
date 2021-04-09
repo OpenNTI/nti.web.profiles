@@ -15,40 +15,16 @@ import { AvatarContainer, PresenceCircle } from './parts';
 import { EntryContainer } from './parts/expanded';
 import IconContainer from './parts/collapsed/IconContainer';
 
-const MASK_SPEC = {
-	tag: 'svg',
-	xmlns: 'http://www.w3.org/2000/svg',
-	style: {
-		position: 'absolute',
-		width: 0,
-		height: 0,
-	},
-	cn: {
-		tag: 'defs',
-		cn: {
-			tag: 'mask',
-			id: 'presence-mask',
-			maskUnits: 'objectBoundingBox',
-			maskContentUnits: 'objectBoundingBox',
-			cn: [
-				{
-					tag: 'circle',
-					cx: '.50',
-					cy: '.50',
-					r: '.50',
-					fill: 'white',
-				},
-				{
-					tag: 'circle',
-					cx: '.90',
-					cy: '.90',
-					r: '.15',
-					fill: 'black',
-				},
-			],
-		},
-	},
-};
+const MASK_SPEC = `
+<svg style="position:absolute;width:0;height:0">
+	<defs>
+		<mask id="presence-mask" maskUnits="objectBoundingBox" maskContentUnits="objectBoundingBox">
+			<circle cx=".50" cy=".50" r=".50" fill="white" />
+			<circle cx=".90" cy=".90" r=".15" fill="black" />
+		</mask>
+	</defs>
+</svg>
+`;
 
 const Name = styled(DisplayName)`
 	margin-left: 48px;
