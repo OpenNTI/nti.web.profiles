@@ -1,80 +1,55 @@
+import { SessionStorage } from '@nti/web-storage';
 import { Stores } from '@nti/lib-store';
+import { getService } from '@nti/web-client';
 
+const STATE_KEY = 'chats';
 export default class Store extends Stores.SimpleStore {
 	static Singleton = true;
 
-	static setActiveUsers(activeUsers) {
-		this.getStore().setActiveUsers(activeUsers);
+	constructor(...args) {
+		super(...args);
+
+		(async () => {
+			const service = await getService();
+			this.contactStore = await service.getContacts();
+
+			this.contactStore.addListener('change', this.onContactChange);
+
+			this.set({
+				activeChatRoomParticipants: getAllOccupantsKeyAccepted(),
+			});
+		})();
 	}
 
-	setActiveUsers(activeUsers) {
-		activeUsers = normalizeActiveUsers(activeUsers);
+	iterator = this[Symbol.iterator];
 
-		this.set({ activeUsers });
+	[Symbol.iterator]() {
+		const snapshot = [
+			...new Set([
+				// move active to the top
+				...(this.activeChatRoomParticipants || []),
+				// inactive and duplicates at the bottom
+				...Array.from(this.contactStore || []).map(x => x.ID),
+			]),
+		];
+
+		return snapshot[Symbol.iterator]();
 	}
 
-	/**
-	 * @param {string} username - user id
-	 * @param {string} presence - name of presence state
-	 * @returns {void}
-	 */
-	static updatePresence(username, presence) {
-		this.getStore().updatePresence(username, presence);
-	}
+	onContactChange = () => {
+		this.emitChange(['contactStore', 'iterator', Symbol.iterator]);
+	};
 
-	updatePresence(username, presence) {
-		if (!presence || !username) {
-			return;
+	cleanup() {
+		if (this.cleanupListeners) {
+			this.cleanupListeners();
 		}
-
-		const activeUsers = {
-			...this.get('activeUsers'),
-			[username]: presence,
-		};
-
-		if (presence === 'unavailable') {
-			delete activeUsers[username];
-		}
-
-		this.set({ activeUsers });
 	}
 
-	static removeContact(username) {
-		this.getStore().removeContact(username);
-	}
+	cleanupListeners() {
+		this.contactStore.removeListener('change', this.onContactsChange);
 
-	removeContact(username) {
-		this.set({
-			activeUsers: {
-				...this.get('activeUsers'),
-				[username]: undefined,
-			},
-		});
-	}
-
-	static addContacts(users) {
-		this.getStore().addContacts(users);
-	}
-
-	addContacts(users) {
-		this.set({
-			activeUsers: users.reduce(
-				(acc, user) => ({ ...acc, [user.Username]: user }),
-				{}
-			),
-		});
-	}
-
-	selectUser(username) {
-		this.set({ selectedUser: username });
-	}
-
-	static deselectUser() {
-		this.getStore().deselectUser();
-	}
-
-	deselectUser() {
-		this.set({ selectedUser: null });
+		delete this.cleanupListeners;
 	}
 
 	clearUnreadCount(username) {
@@ -101,23 +76,38 @@ export default class Store extends Stores.SimpleStore {
 
 	setCalendarWindow(calendarWindow) {
 		this.set({ calendarWindow });
-		calendarWindow && this.set({ chatWindow: false });
+		if (calendarWindow) {
+			this.set({ selectedEntity: null });
+		}
 	}
 
-	setChatWindow(chatWindow) {
-		this.set({ chatWindow });
-		chatWindow && this.set({ calendarWindow: false });
+	setSelectedEntity(entity) {
+		this.set({ selectedEntity: entity });
+		if (entity) {
+			this.set({ calendarWindow: false });
+		}
 	}
 }
 
-function normalizeActiveUsers(activeUsers) {
-	return Array.isArray(activeUsers)
-		? activeUsers.reduce(
-				(ret, x) => ({
-					...ret,
-					[x.username]: true,
-				}),
-				{}
-		  )
-		: { ...activeUsers };
+// TODO: use active chats
+function getSessionObject(key) {
+	let o = SessionStorage.getItem(STATE_KEY) || {};
+	if (key) {
+		return o[key];
+	}
+	return o;
+}
+
+function getAllOccupantsKeyAccepted() {
+	let accepted = getSessionObject('roomIdsAccepted') || {},
+		pairs = [],
+		key;
+
+	for (key in accepted) {
+		if (accepted.hasOwnProperty(key)) {
+			pairs.push(key);
+		}
+	}
+
+	return pairs;
 }

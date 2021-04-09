@@ -14,7 +14,7 @@ describe('Topic List test', () => {
 
 	test('Filtered', async () => {
 		DateUtils.MockDate.install(new Date('2021-01-28T01:44:00Z'));
-		const items = [
+		const itemsArray = [
 			{
 				title: 'item 1',
 				getCreatedTime: () => new Date('2021-01-28T01:43:48Z'),
@@ -28,6 +28,10 @@ describe('Topic List test', () => {
 				getCreatedTime: () => new Date('2021-01-28T01:43:48Z'),
 			},
 		];
+
+		const items = {
+			[Symbol.iterator]: () => itemsArray[Symbol.iterator](),
+		};
 
 		const { getAllByTestId } = render(
 			<List items={items} searchTerm="2" />
@@ -51,7 +55,7 @@ describe('Topic List test', () => {
 			alias: 'instructor',
 		};
 
-		const topics = [
+		const topicsArray = [
 			{
 				title: 'item 1',
 				user: student,
@@ -68,6 +72,10 @@ describe('Topic List test', () => {
 				getCreatedTime: () => new Date(),
 			},
 		];
+
+		const topics = {
+			[Symbol.iterator]: () => topicsArray[Symbol.iterator](),
+		};
 
 		const selectedTopics = new Set();
 

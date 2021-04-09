@@ -1,12 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import { DisplayName, Hooks, Tooltip } from '@nti/web-commons';
+import { Hooks } from '@nti/web-commons';
+import { Iterable } from '@nti/lib-commons';
 
 import Store from '../../Store';
-import BadgedAvatar from '../../BadgedAvatar';
-
-import IconContainer from './IconContainer';
+import ContactEntry from '../../ContactEntry';
 
 const Container = styled.div`
 	overflow: hidden;
@@ -20,7 +19,7 @@ UsersContainer.propTypes = {
 };
 
 export default function UsersContainer({ updateExpandBadge }) {
-	const { activeUsers, unreadCount } = Store.useValue();
+	const { unreadCount, selectedEntity, iterator } = Store.useValue();
 
 	const containerRef = React.useRef(null);
 
@@ -45,22 +44,17 @@ export default function UsersContainer({ updateExpandBadge }) {
 
 	return (
 		<Container ref={containerRef}>
-			{activeUsers &&
-				Object.keys(activeUsers).map((entity, index) => {
+			{[
+				...Iterable.map(iterator(), (entity, index) => {
 					return (
-						<Tooltip
+						<ContactEntry
+							entity={entity}
+							selected={selectedEntity === entity}
 							key={index}
-							label={<DisplayName entity={entity} />}
-						>
-							<IconContainer>
-								<BadgedAvatar
-									entity={entity}
-									presence={activeUsers[entity]}
-								/>
-							</IconContainer>
-						</Tooltip>
+						/>
 					);
-				})}
+				}),
+			]}
 		</Container>
 	);
 }
