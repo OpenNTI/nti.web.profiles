@@ -15,27 +15,30 @@ export default class Store extends Stores.SimpleStore {
 
 			this.contactStore.addListener('change', this.onContactChange);
 
-			this.set({activeChatRoomParticipants: getAllOccupantsKeyAccepted()});
-		}) ();
+			this.set({
+				activeChatRoomParticipants: getAllOccupantsKeyAccepted(),
+			});
+		})();
 	}
 
 	iterator = this[Symbol.iterator];
 
 	[Symbol.iterator]() {
-		const snapshot =
-		[...new Set([
-			// move active to the top
-			...this.activeChatRoomParticipants || [],
-			// inactive and duplicates at the bottom
-			...Array.from(this.contactStore || []).map(x => x.ID),
-		])];
+		const snapshot = [
+			...new Set([
+				// move active to the top
+				...(this.activeChatRoomParticipants || []),
+				// inactive and duplicates at the bottom
+				...Array.from(this.contactStore || []).map(x => x.ID),
+			]),
+		];
 
 		return snapshot[Symbol.iterator]();
 	}
 
 	onContactChange = () => {
 		this.emitChange(['contactStore', 'iterator', Symbol.iterator]);
-	}
+	};
 
 	cleanup() {
 		if (this.cleanupListeners) {
@@ -48,7 +51,6 @@ export default class Store extends Stores.SimpleStore {
 
 		delete this.cleanupListeners;
 	}
-
 
 	clearUnreadCount(username) {
 		this.set({
@@ -85,11 +87,10 @@ export default class Store extends Stores.SimpleStore {
 			this.set({ calendarWindow: false });
 		}
 	}
-
 }
 
 // TODO: use active chats
-function getSessionObject (key) {
+function getSessionObject(key) {
 	let o = SessionStorage.getItem(STATE_KEY) || {};
 	if (key) {
 		return o[key];
@@ -97,7 +98,7 @@ function getSessionObject (key) {
 	return o;
 }
 
-function getAllOccupantsKeyAccepted () {
+function getAllOccupantsKeyAccepted() {
 	let accepted = getSessionObject('roomIdsAccepted') || {},
 		pairs = [],
 		key;
@@ -110,5 +111,3 @@ function getAllOccupantsKeyAccepted () {
 
 	return pairs;
 }
-
-

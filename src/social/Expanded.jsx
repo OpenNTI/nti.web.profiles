@@ -1,14 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Errors, Loading } from '@nti/web-commons';
-import {Iterable} from '@nti/lib-commons';
+import { Iterable } from '@nti/lib-commons';
 
-import {
-	ContactsButton,
-	Container,
-	Footer,
-	Header,
-} from './parts/expanded';
+import { ContactsButton, Container, Footer, Header } from './parts/expanded';
 import Store from './Store';
 import BadgedAvatar from './BadgedAvatar';
 
@@ -39,15 +34,17 @@ export default function ExpandedPanel({ toggle: collapse }) {
 					<Errors.Message error={error} />
 				) : (
 					<UsersContainer>
-						{[...Iterable.map(iterator(), (entity, index) => {
-							return (
-								<BadgedAvatar
-									key={index}
-									entity={entity}
-									expanded
-								/>
-							);
-						})]}
+						{[
+							...Iterable.map(iterator(), (entity, index) => {
+								return (
+									<BadgedAvatar
+										key={index}
+										entity={entity}
+										expanded
+									/>
+								);
+							}),
+						]}
 					</UsersContainer>
 				)}
 			</Loading.Placeholder>

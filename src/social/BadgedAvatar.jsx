@@ -7,8 +7,8 @@ import {
 	DisplayName,
 	Hooks,
 	User,
-	Tooltip
- } from '@nti/web-commons';
+	Tooltip,
+} from '@nti/web-commons';
 
 import Store from './Store';
 import { AvatarContainer, PresenceCircle } from './parts';
@@ -113,7 +113,7 @@ export default function BadgedAvatar({ selected, entity, expanded }) {
 	};
 
 	const ConditionalWrapper = ({ condition, wrapper, children }) =>
-	condition ? wrapper(children) : children;
+		condition ? wrapper(children) : children;
 
 	let Container = IconContainer;
 
@@ -123,25 +123,40 @@ export default function BadgedAvatar({ selected, entity, expanded }) {
 
 	return (
 		<User.Presence user={entity}>
-			{({presence}) => {
+			{({ presence }) => {
 				if (!presence || presence.status === 'unavailable') {
-					return null;
+					// return null;
 				}
 				return (
-					<ConditionalWrapper condition={!expanded} wrapper={children => {
-						return (
-							<Tooltip label={<DisplayName entity={entity} />}>{children}</Tooltip>
-						);
-					}}>
+					<ConditionalWrapper
+						condition={!expanded}
+						wrapper={children => {
+							return (
+								<Tooltip
+									label={<DisplayName entity={entity} />}
+								>
+									{children}
+								</Tooltip>
+							);
+						}}
+					>
 						<Container>
-							<AvatarContainer data-testid="avatar-container" onClick={handleClick}>
+							<AvatarContainer
+								data-testid="avatar-container"
+								onClick={handleClick}
+							>
 								<Badge
-									badge={unreadCount ? unreadCount[entity] : 0}
+									badge={
+										unreadCount ? unreadCount[entity] : 0
+									}
 									position={Badge.POSITIONS.TOP_LEFT}
-									{...Badge.offset(5, 4)}>
+									{...Badge.offset(5, 4)}
+								>
 									<BorderedAvatar
 										entity={entity}
-										presence={selected ? presence.status : ''}
+										presence={
+											selected ? presence.status : ''
+										}
 										svg
 									/>
 								</Badge>

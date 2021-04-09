@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import {Hooks} from '@nti/web-commons';
-import {Iterable} from '@nti/lib-commons';
+import { Hooks } from '@nti/web-commons';
+import { Iterable } from '@nti/lib-commons';
 
 import Store from '../../Store';
 import BadgedAvatar from '../../BadgedAvatar';
@@ -18,11 +18,7 @@ UsersContainer.propTypes = {
 };
 
 export default function UsersContainer({ updateExpandBadge }) {
-	const {
-		unreadCount,
-		selectedEntity,
-		iterator
-	} = Store.useValue();
+	const { unreadCount, selectedEntity, iterator } = Store.useValue();
 
 	const containerRef = React.useRef(null);
 
@@ -47,11 +43,17 @@ export default function UsersContainer({ updateExpandBadge }) {
 
 	return (
 		<Container ref={containerRef}>
-			{[...Iterable.map(iterator(), (entity, index) => {
-				return (
-					<BadgedAvatar entity={entity} selected={selectedEntity === entity } key={index}/>
-				);
-			})]}
+			{[
+				...Iterable.map(iterator(), (entity, index) => {
+					return (
+						<BadgedAvatar
+							entity={entity}
+							selected={selectedEntity === entity}
+							key={index}
+						/>
+					);
+				}),
+			]}
 		</Container>
 	);
 }
