@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+
 import { Errors, Loading } from '@nti/web-commons';
 import { Iterable } from '@nti/lib-commons';
 
 import { ContactsButton, Container, Footer, Header } from './parts/expanded';
 import Store from './Store';
-import BadgedAvatar from './BadgedAvatar';
+import ContactEntry from './ContactEntry';
 
 const Spinner = styled(Loading.Spinner)`
 	min-height: 100px;
@@ -37,7 +38,7 @@ export default function ExpandedPanel({ toggle: collapse }) {
 						{[
 							...Iterable.map(iterator(), (entity, index) => {
 								return (
-									<BadgedAvatar
+									<ContactEntry
 										key={index}
 										entity={entity}
 										expanded

@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+
 import { Hooks } from '@nti/web-commons';
 import { Iterable } from '@nti/lib-commons';
 
 import Store from '../../Store';
-import BadgedAvatar from '../../BadgedAvatar';
+import ContactEntry from '../../ContactEntry';
 
 const Container = styled.div`
 	overflow: hidden;
@@ -46,7 +47,7 @@ export default function UsersContainer({ updateExpandBadge }) {
 			{[
 				...Iterable.map(iterator(), (entity, index) => {
 					return (
-						<BadgedAvatar
+						<ContactEntry
 							entity={entity}
 							selected={selectedEntity === entity}
 							key={index}

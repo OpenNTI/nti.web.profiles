@@ -31,13 +31,15 @@ function useMockServer(mockService) {
 	};
 }
 
-describe('BadgedAvatar Component', () => {
-	test('BadgedAvatar Click', async () => {
+describe('ContactEntry Component', () => {
+	test('ContactEntry Click', async () => {
 		useMockServer({
 			getContacts: async () => {
 				return {
 					addListener: () => 'Add event listener',
-					[Symbol.iterator]: () => ['user1'],
+					[Symbol.iterator]() {
+						return ['user1'];
+					},
 				};
 			},
 		});

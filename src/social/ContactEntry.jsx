@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import {
-	Avatar,
+	Avatar as AvatarBase,
 	Badge,
 	DisplayName,
 	Hooks,
@@ -40,7 +40,7 @@ const Name = styled(DisplayName)`
 	text-overflow: ellipsis;
 `;
 
-const BorderedAvatar = styled(Avatar)`
+const Avatar = styled(AvatarBase)`
 	border: 2px solid rgba(0, 0, 0, 0);
 
 	& rect,
@@ -61,15 +61,16 @@ const BorderedAvatar = styled(Avatar)`
 	}
 `;
 
-BadgedAvatar.propTypes = {
+ContactEntry.propTypes = {
 	entity: PropTypes.oneOfType([PropTypes.object, PropTypes.string])
 		.isRequired,
 
 	selected: PropTypes.bool,
 	expanded: PropTypes.bool,
+	onClick: PropTypes.func,
 };
 
-export default function BadgedAvatar({ selected, entity, expanded }) {
+export default function ContactEntry({ selected, entity, expanded, onClick }) {
 	const {
 		unreadCount,
 		clearUnreadCount,
@@ -79,6 +80,9 @@ export default function BadgedAvatar({ selected, entity, expanded }) {
 	Hooks.useSharedDOM(MASK_SPEC);
 
 	const handleClick = () => {
+		onClick?.(entity);
+
+		//TODO: move this out to the calling component...  and handle onClick in the parent component...
 		clearUnreadCount(entity);
 
 		if (selected) {
@@ -101,7 +105,7 @@ export default function BadgedAvatar({ selected, entity, expanded }) {
 		<User.Presence user={entity}>
 			{({ presence }) => {
 				if (!presence || presence.status === 'unavailable') {
-					// return null;
+					return null;
 				}
 				return (
 					<ConditionalWrapper
@@ -128,7 +132,7 @@ export default function BadgedAvatar({ selected, entity, expanded }) {
 									position={Badge.POSITIONS.TOP_LEFT}
 									{...Badge.offset(5, 4)}
 								>
-									<BorderedAvatar
+									<Avatar
 										entity={entity}
 										presence={
 											selected ? presence.status : ''
