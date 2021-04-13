@@ -108,4 +108,6 @@ class ProfileIdentityListItem extends React.Component {
 	}
 }
 
-export default decorate(ProfileIdentityListItem, [ResolveEntityProp('entity')]);
+export const ListItem = decorate(ProfileIdentityListItem, [
+	ResolveEntityProp('entity'),
+]);
