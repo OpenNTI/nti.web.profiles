@@ -4,3 +4,4 @@ export { default as Stream } from './stream';
 export * as Community from './community';
 export * as User from './user';
 export * as SocialFeatures from './social';
+export * as Identity from './identity';
