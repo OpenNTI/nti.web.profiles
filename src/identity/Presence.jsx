@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Text } from '@nti/web-commons';
+import { Text, User } from '@nti/web-commons';
 
 import { MenuSeparator } from './menus';
 
@@ -14,6 +14,8 @@ const Box = styled.div`
 `;
 
 export function PresenceSelect(props) {
+	const [pref] = User.usePreference('ChatPresence');
+	console.log(pref);
 	return (
 		<>
 			<Box>
