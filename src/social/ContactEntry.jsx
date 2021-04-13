@@ -5,7 +5,6 @@ import {
 	Avatar as AvatarBase,
 	Badge,
 	DisplayName,
-	Hooks,
 	User,
 	Tooltip,
 } from '@nti/web-commons';
@@ -14,17 +13,6 @@ import Store from './Store';
 import { AvatarContainer, PresenceCircle } from './parts';
 import { EntryContainer } from './parts/expanded';
 import IconContainer from './parts/collapsed/IconContainer';
-
-const MASK_SPEC = `
-<svg style="position:absolute;width:0;height:0">
-	<defs>
-		<mask id="presence-mask" maskUnits="objectBoundingBox" maskContentUnits="objectBoundingBox">
-			<circle cx=".50" cy=".50" r=".50" fill="white" />
-			<circle cx=".90" cy=".90" r=".15" fill="black" />
-		</mask>
-	</defs>
-</svg>
-`;
 
 const Name = styled(DisplayName)`
 	margin-left: 48px;
@@ -43,20 +31,15 @@ const Name = styled(DisplayName)`
 const Avatar = styled(AvatarBase)`
 	border: 2px solid rgba(0, 0, 0, 0);
 
-	& rect,
-	& image {
-		mask: url(#presence-mask);
-	}
-
-	&.presence-available {
+	&.selected-available {
 		border: 2px solid var(--presence-available);
 	}
 
-	&.presence-away {
+	&.selected-away {
 		border: 2px solid var(--presence-away);
 	}
 
-	&.presence-dnd {
+	&.selected-dnd {
 		border: 2px solid var(--presence-dnd);
 	}
 `;
@@ -76,8 +59,6 @@ export default function ContactEntry({ selected, entity, expanded, onClick }) {
 		clearUnreadCount,
 		setSelectedEntity,
 	} = Store.useValue();
-
-	Hooks.useSharedDOM(MASK_SPEC);
 
 	const handleClick = () => {
 		onClick?.(entity);
@@ -134,7 +115,8 @@ export default function ContactEntry({ selected, entity, expanded, onClick }) {
 								>
 									<Avatar
 										entity={entity}
-										presence={
+										presence
+										selected={
 											selected ? presence.status : ''
 										}
 										svg
