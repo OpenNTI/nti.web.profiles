@@ -50,6 +50,7 @@ export function Session(props) {
 
 				<MenuItem>{t('welcomeGuide')}</MenuItem>
 				<MenuItem>{t('about')}</MenuItem>
+				<MenuItem>{t('privacyForMinors')}</MenuItem>
 				<MenuItem>{t('privacy')}</MenuItem>
 				<MenuItem>{t('terms')}</MenuItem>
 				<MenuItem>{t('support')}</MenuItem>
