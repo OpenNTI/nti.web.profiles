@@ -24,7 +24,7 @@ const Trigger = React.forwardRef((props, ref) => {
 const t = scoped('session.menu', {
 	welcomeGuide: 'Welcome Guide',
 	about: 'About',
-	privacyForMinors: 'Children&apos;s Privacy',
+	privacyForMinors: 'Children’s Privacy',
 	privacy: 'Privacy',
 	terms: 'Terms of Service',
 	support: 'Technical Support',
