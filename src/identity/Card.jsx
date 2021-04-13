@@ -5,6 +5,12 @@ import {
 	Button,
 	DisplayName as DisplayNameBase,
 } from '@nti/web-commons';
+import { scoped } from '@nti/lib-locale';
+
+const t = scoped('session.identity-card', {
+	manageAccount: 'Manage Account',
+	viewProfile: 'View Profile',
+});
 
 const Box = styled.div`
 	padding: 5px;
@@ -55,8 +61,8 @@ export function IdentityCard(props) {
 			<Meta>
 				<DisplayName me />
 				<Links>
-					<Link>View Profile</Link>
-					<Link>Manage Account</Link>
+					<Link>{t('viewProfile')}</Link>
+					<Link>{t('manageAccount')}</Link>
 				</Links>
 			</Meta>
 		</Box>

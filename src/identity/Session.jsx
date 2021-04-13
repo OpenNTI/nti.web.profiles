@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { User, Flyout, Tooltip, DisplayName } from '@nti/web-commons';
+import { scoped } from '@nti/lib-locale';
 
 import { Menu, MenuSeparator, MenuItem } from './menus';
 import { Container, Box, Dot } from './parts';
@@ -20,6 +21,18 @@ const Trigger = React.forwardRef((props, ref) => {
 	);
 });
 
+const t = scoped('session.menu', {
+	welcomeGuide: 'Welcome Guide',
+	about: 'About',
+	privacyForMinors: 'Children&apos;s Privacy',
+	privacy: 'Privacy',
+	terms: 'Terms of Service',
+	support: 'Technical Support',
+	helpSite: 'Help Site',
+	impersonate: 'Impersonate User...',
+	logout: 'Sign Out',
+});
+
 export function Session(props) {
 	return (
 		<Flyout.Triggered
@@ -35,15 +48,15 @@ export function Session(props) {
 
 				<MenuSeparator />
 
-				<MenuItem>Welcome</MenuItem>
-				<MenuItem>About</MenuItem>
-				<MenuItem>Privacy</MenuItem>
-				<MenuItem>Terms of Service</MenuItem>
-				<MenuItem>Technical Support</MenuItem>
-				<MenuItem>Help Site</MenuItem>
+				<MenuItem>{t('welcomeGuide')}</MenuItem>
+				<MenuItem>{t('about')}</MenuItem>
+				<MenuItem>{t('privacy')}</MenuItem>
+				<MenuItem>{t('terms')}</MenuItem>
+				<MenuItem>{t('support')}</MenuItem>
+				<MenuItem>{t('helpSite')}</MenuItem>
 				<MenuSeparator />
-				<MenuItem>Impersonate User...</MenuItem>
-				<MenuItem>Sign Out</MenuItem>
+				<MenuItem>{t('impersonate')}</MenuItem>
+				<MenuItem>{t('logout')}</MenuItem>
 			</Menu>
 		</Flyout.Triggered>
 	);
