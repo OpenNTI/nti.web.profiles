@@ -46,8 +46,6 @@ export function Session(props) {
 
 				<PresenceSelect />
 
-				<MenuSeparator />
-
 				<MenuItem>{t('welcomeGuide')}</MenuItem>
 				<MenuItem>{t('about')}</MenuItem>
 				<MenuItem>{t('privacyForMinors')}</MenuItem>
