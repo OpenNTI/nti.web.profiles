@@ -36,21 +36,30 @@ const DisplayName = styled(DisplayNameBase)`
 const Meta = styled.div`
 	flex: 1 1 auto;
 	margin: 0 0 0 15px;
-	font: normal 400 0.9em/2 var(--body-font-family);
+	font: normal 400 0.875rem/2 var(--body-font-family);
 	padding: 8px 0 0 0;
 `;
 
 const Links = styled.div`
-	font-size: 0.8em;
+	font-size: 0.6875rem;
 	font-weight: 500;
 	line-height: 1;
 	color: var(--primary-blue);
 `;
 
 const Link = styled(Button).attrs({ plain: true })`
+	cursor: pointer;
+
+	&:hover {
+		text-decoration: underline;
+	}
+
 	&:not(:last-child)::after {
 		content: ' · ';
 		font-size: 1.1em;
+		display: inline-block;
+		margin: 0 0.3em;
+		text-decoration: none !important;
 	}
 `;
 
