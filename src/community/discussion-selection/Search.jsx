@@ -2,7 +2,9 @@ import React from 'react';
 
 import { Icons, Input } from '@nti/web-commons';
 
-const SearchIcon = styled('div').attrs({ children: <Icons.Search /> })`
+const SearchIcon = styled('div').attrs({
+	children: React.createElement(Icons.Search),
+})`
 	width: 35px;
 	border-style: inherit;
 	border-color: inherit;
