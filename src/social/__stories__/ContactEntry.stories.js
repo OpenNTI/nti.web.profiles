@@ -4,7 +4,7 @@ import { User } from '@nti/web-commons';
 
 import ContactEntry from '../ContactEntry';
 
-User.Presence.Store.setPresenceFor('quiz_tester', {
+User.Presence.Store.setPresence('quiz_tester', {
 	status: 'available',
 	show: 'chat',
 	getName() {
