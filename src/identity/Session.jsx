@@ -4,22 +4,20 @@ import { User, Flyout, Tooltip, DisplayName } from '@nti/web-commons';
 import { scoped } from '@nti/lib-locale';
 
 import { Menu, MenuSeparator, MenuItem } from './menus';
-import { Container, Box, Dot } from './parts';
+import { Container, Box, Dot } from './Session.parts';
 import { IdentityCard } from './Card.jsx';
 import { PresenceSelect } from './Presence.jsx';
 
-const Trigger = React.forwardRef((props, ref) => {
-	return (
-		<Tooltip label={<DisplayName me />}>
-			<Container {...props} ref={ref}>
-				<Box>
-					<User.Avatar me svg presence />
-					<Dot />
-				</Box>
-			</Container>
-		</Tooltip>
-	);
-});
+const Trigger = React.forwardRef((props, ref) => (
+	<Tooltip label={<DisplayName me />}>
+		<Container {...props} ref={ref}>
+			<Box>
+				<User.Avatar me svg presence />
+				<Dot />
+			</Box>
+		</Container>
+	</Tooltip>
+));
 
 const t = scoped('session.menu', {
 	welcomeGuide: 'Welcome Guide',

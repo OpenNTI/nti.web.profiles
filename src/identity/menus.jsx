@@ -17,18 +17,7 @@ export const MenuSeparator = styled.li`
 	margin: 8px 0 18px;
 `;
 
-export const MenuItem = styled('li').attrs(
-	({ onClick, href, children, ...props }) => ({
-		children: React.createElement(Button, {
-			plain: true,
-			as: 'a',
-			onClick,
-			href,
-			children,
-		}),
-		...props,
-	})
-)`
+export const MenuItemFrame = styled.li`
 	color: var(--secondary-grey);
 	font-size: 1em;
 	font-weight: 400;
@@ -42,8 +31,17 @@ export const MenuItem = styled('li').attrs(
 	white-space: nowrap;
 	text-overflow: ellipsis;
 
+	&.active,
 	&:hover {
 		background: var(--button-background, #efefef);
 		color: var(--primary-grey);
 	}
 `;
+
+export function MenuItem({ onClick, href, children, ...props }) {
+	return (
+		<MenuItemFrame {...props}>
+			<Button plain as="a" {...{ onClick, href, children }} />
+		</MenuItemFrame>
+	);
+}
