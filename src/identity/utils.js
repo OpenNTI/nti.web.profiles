@@ -15,6 +15,9 @@ export function ensureStates(pref) {
 				const value = Reflect.get(...arguments);
 
 				switch (propertyName) {
+					case 'editable':
+						return target !== MISSING;
+
 					case 'show':
 						return value || kind.toLowerCase();
 
@@ -29,7 +32,8 @@ export function ensureStates(pref) {
 						);
 
 					case 'status':
-						return value || kind;
+						// return the status string or an empty string...if pref hasn't loaded, return null.
+						return value || !pref ? null : '';
 
 					case 'defaultLabel':
 						return STATE_LABELS[kind] || kind;
