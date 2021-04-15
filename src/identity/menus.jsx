@@ -36,6 +36,13 @@ export const MenuItemFrame = styled.li`
 		background: var(--button-background, #efefef);
 		color: var(--primary-grey);
 	}
+
+	a,
+	a:link,
+	a:visited {
+		color: inherit;
+		text-decoration: none;
+	}
 `;
 
 export function MenuItem({ onClick, href, children, ...props }) {
