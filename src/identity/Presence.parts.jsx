@@ -37,7 +37,7 @@ const Save = styled(Button).attrs({ children: 'Save' })`
 	line-height: 30px;
 `;
 
-const stop = e => e.stopPropagation();
+const stop = e => e?.stopPropagation();
 
 export const LabelEditor = Label.withComponent(
 	({
@@ -50,7 +50,7 @@ export const LabelEditor = Label.withComponent(
 	}) => {
 		const [value, setValue] = useState(initialValue);
 
-		const save = () => onSave(value || defaultValue);
+		const save = e => (stop(e), onSave(value || defaultValue));
 
 		const keyHandler = e => {
 			switch (e.key) {
@@ -60,8 +60,7 @@ export const LabelEditor = Label.withComponent(
 					break;
 
 				case 'Enter':
-					save();
-					stop(e);
+					save(e);
 			}
 		};
 
