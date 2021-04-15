@@ -1,5 +1,6 @@
 import { User, useToggle } from '@nti/web-commons';
 
+import { ensureStates } from './utils';
 import { MenuSeparator } from './menus';
 import {
 	Check,
@@ -8,43 +9,54 @@ import {
 	Header,
 	Item,
 	Label,
-	TextInput,
+	LabelEditor,
 } from './Presence.parts';
 
 export function PresenceSelect(props) {
 	const [pref] = User.usePreference('ChatPresence');
-	console.log(pref);
+	const { Active, Available, Away, DND, Offline } = ensureStates(pref);
+
 	return (
 		<>
 			<>
 				<Header>My Status</Header>
-				<PresenceState presence="available" selected />
-				<PresenceState presence="away" />
-				<PresenceState presence="dnd" />
-				<PresenceState presence="offline" editable={false} />
+				{[Available, Away, DND].map((state, i) => (
+					<PresenceState
+						key={i}
+						state={state}
+						selected={Active.show === state.show}
+					/>
+				))}
+				<PresenceState state={Offline} editable={false} />
 			</>
 			<MenuSeparator />
 		</>
 	);
 }
 
-function PresenceState({ selected, presence, editable = true }) {
+function PresenceState({ selected, state, editable = true }) {
 	const [editing, edit] = useToggle();
+
+	function setStatus(v) {
+		state.status = v;
+		edit(false);
+	}
 
 	return (
 		<Item selected={selected} active={editing}>
 			<Check />
 			{editing ? (
-				<TextInput
-					defaultValue={presence}
+				<LabelEditor
+					defaultValue={state.defaultLabel}
+					value={state.status || state.defaultLabel}
 					onCancel={edit}
-					onSave={edit}
+					onSave={setStatus}
 				/>
 			) : (
 				<>
-					<Label>{presence}</Label>
+					<Label>{state.status}</Label>
 					{editable && <Edit onClick={edit} />}
-					<Dot presence={presence} />
+					<Dot presence={state.presence} />
 				</>
 			)}
 		</Item>

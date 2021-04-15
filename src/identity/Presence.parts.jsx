@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { Button, Icons, Input, Text, User } from '@nti/web-commons';
 
@@ -18,14 +18,17 @@ export const Label = styled(Text.Base)`
 	text-overflow: ellipsis;
 	font: normal 400 14px/30px var(--body-font-family);
 	color: var(--tertiary-grey);
+	display: flex;
 
 	input {
-		width: 100%;
+		flex: 1 1 auto;
+		width: 0;
 		height: auto;
 		font: inherit;
 		line-height: 1.4;
 		background: none;
 		border: 0;
+		padding-left: 0 !important;
 	}
 `;
 
@@ -34,21 +37,54 @@ const Save = styled(Button).attrs({ children: 'Save' })`
 	line-height: 30px;
 `;
 
-export const TextInput = Label.withComponent(
-	({ className, onCancel, onSave, ...props }) => (
-		<>
-			<Input.Clearable className={className} onClear={onCancel}>
-				<Input.Text
-					{...props}
-					autoFocus
-					onFocus={e =>
-						e.target.setSelectionRange(0, e.target.value.length)
-					}
-				/>
-			</Input.Clearable>
-			<Save onClick={onSave} />
-		</>
-	)
+const stop = e => e.stopPropagation();
+
+export const LabelEditor = Label.withComponent(
+	({
+		className,
+		onCancel,
+		onSave,
+		defaultValue,
+		value: initialValue,
+		...props
+	}) => {
+		const [value, setValue] = useState(initialValue);
+
+		const save = () => onSave(value || defaultValue);
+
+		const keyHandler = e => {
+			switch (e.key) {
+				case 'Escape':
+					onCancel();
+					stop(e);
+					break;
+
+				case 'Enter':
+					save();
+					stop(e);
+			}
+		};
+
+		return (
+			<>
+				<Input.Clearable
+					className={className}
+					onClick={stop}
+					onKeyDown={keyHandler}
+				>
+					<Input.Text
+						{...props}
+						placeholder={defaultValue}
+						value={value || ''}
+						onChange={setValue}
+						autoFocus
+						autoSelect
+					/>
+				</Input.Clearable>
+				<Save onClick={save} />
+			</>
+		);
+	}
 );
 
 export const Check = styled(Icons.Check).attrs({ icon: 'icon-check-10' })`
@@ -64,11 +100,16 @@ export const Edit = styled(Button).attrs(props => ({
 	display: none;
 	flex: 0 0 auto;
 	padding: 7px;
+	color: var(--tertiary-grey) !important;
 	border-style: solid;
 	border-color: #fff;
 	border-width: 0 1px;
 	& > i {
 		display: block;
+	}
+	&:hover {
+		color: inherit !important;
+		background-color: rgba(0, 0, 0, 0.1);
 	}
 `;
 
