@@ -33,7 +33,7 @@ export function ensureStates(pref) {
 
 					case 'status':
 						// return the status string or an empty string...if pref hasn't loaded, return null.
-						return value || !pref ? null : '';
+						return value || (!pref ? null : '');
 
 					case 'defaultLabel':
 						return STATE_LABELS[kind] || kind;
