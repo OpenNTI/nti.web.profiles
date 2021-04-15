@@ -1,4 +1,5 @@
 import { scoped } from '@nti/lib-locale';
+import { LinkTo } from '@nti/web-routing';
 
 import { Box, Avatar, Meta, DisplayName, Links, Link } from './Card.parts';
 
@@ -14,8 +15,12 @@ export function IdentityCard(props) {
 			<Meta>
 				<DisplayName me />
 				<Links>
-					<Link>{t('viewProfile')}</Link>
-					<Link>{t('manageAccount')}</Link>
+					<LinkTo.Name as={Link} name="profile">
+						{t('viewProfile')}
+					</LinkTo.Name>
+					<LinkTo.Name as={Link} name="account">
+						{t('manageAccount')}
+					</LinkTo.Name>
 				</Links>
 			</Meta>
 		</Box>

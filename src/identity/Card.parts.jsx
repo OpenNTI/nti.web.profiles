@@ -42,6 +42,12 @@ export const Links = styled.div`
 export const Link = styled(Button).attrs({ plain: true })`
 	cursor: pointer;
 
+	&:link,
+	&:visited {
+		text-decoration: none;
+		color: currentColor;
+	}
+
 	&:hover {
 		text-decoration: underline;
 	}
