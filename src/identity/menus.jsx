@@ -44,7 +44,9 @@ export const MenuItemFrame = styled.li`
 	> a:visited {
 		color: inherit;
 		text-decoration: none;
+	}
 
+	a:first-child:last-child {
 		/* Eat in to the parent so the click target fills */
 		margin: -7px -15px;
 		padding: 7px 15px;
