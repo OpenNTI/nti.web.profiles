@@ -37,11 +37,16 @@ export const MenuItemFrame = styled.li`
 		color: var(--primary-grey);
 	}
 
-	a,
-	a:link,
-	a:visited {
+	> a,
+	> a:link,
+	> a:visited {
 		color: inherit;
 		text-decoration: none;
+
+		/* Eat in to the parent so the click target fills */
+		margin: -7px -15px;
+		padding: 7px 15px;
+		flex: 1 1 auto;
 	}
 `;
 
