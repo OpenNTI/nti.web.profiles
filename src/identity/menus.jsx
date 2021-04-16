@@ -2,6 +2,8 @@ import React from 'react';
 
 import { Button, Utils } from '@nti/web-commons';
 
+import { collectProps } from './utils';
+
 export const Menu = styled('ul').attrs(props => Utils.filterProps(props, 'ul'))`
 	background: #fff;
 	border: 1px solid var(--border-grey-alt, #dcdcdc);
@@ -51,9 +53,15 @@ export const MenuItemFrame = styled.li`
 `;
 
 export function MenuItem({ onClick, href, children, ...props }) {
+	const dataAttrs = collectProps(props, x => /^data-/.test(x));
+
 	return (
 		<MenuItemFrame {...props}>
-			<Button plain as="a" {...{ onClick, href, children }} />
+			<Button
+				plain
+				as="a"
+				{...{ onClick, href, children, ...dataAttrs }}
+			/>
 		</MenuItemFrame>
 	);
 }

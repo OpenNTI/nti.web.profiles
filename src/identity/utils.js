@@ -1,3 +1,5 @@
+import { pop } from '@nti/lib-commons';
+
 const STATE_LABELS = {
 	// missing keys use the keys as the string.
 	DND: 'Do Not Disturb',
@@ -54,4 +56,23 @@ export function ensureStates(pref) {
 				...args
 			),
 	});
+}
+
+/**
+ * Clean the input object of matching key/values pairs, returning the removed entries.
+ *
+ * @template {string | number | symbol} K
+ * @template {*} V
+ * @param {Object.<K,V>} props input object to search
+ * @param {(key: K, value: V) => boolean} predicate a callback function to decide if the entry should be culled.
+ * @param {Object.<K,V>} [collection] A starting collection to add the culled entries to. An empty one will be used if not provided.
+ * @returns {Object.<K,V>} The collection of culled entries removed from the input object.
+ */
+export function collectProps(props, predicate, collection = {}) {
+	return Object.keys(props).reduce(
+		(out, prop) => (
+			predicate(prop, props[prop]) && (out[prop] = pop(props, prop)), out
+		),
+		collection
+	);
 }

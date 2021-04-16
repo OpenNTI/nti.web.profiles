@@ -65,25 +65,25 @@ function MenuContent() {
 
 			<PresenceSelect />
 
-			<MenuItem href={user.getLink('content.permanent_welcome_page')}>
-				{t('welcomeGuide')}
-			</MenuItem>
+			<MenuItem
+				href={user.getLink('content.permanent_welcome_page')}
+				id="welcomeGuide"
+			/>
 
-			<MenuItem href={supportLinks.about}>{t('about')}</MenuItem>
+			<MenuItem href={supportLinks.about} id="about" />
 
-			<MenuItem href={user.getLink('childrens-privacy')}>
-				{t('privacyForMinors')}
-			</MenuItem>
+			<MenuItem
+				href={user.getLink('childrens-privacy')}
+				id="privacyForMinors"
+			/>
 
-			<MenuItem href={supportLinks.privacyPolicy}>
-				{t('privacy')}
-			</MenuItem>
+			<MenuItem href={supportLinks.privacyPolicy} id="privacy" />
 
-			<MenuItem href={supportLinks.termsOfService}>{t('terms')}</MenuItem>
+			<MenuItem href={supportLinks.termsOfService} id="terms" />
 
-			<MenuItem href={supportLinks.support}>{t('support')}</MenuItem>
+			<MenuItem href={supportLinks.support} id="support" />
 
-			<MenuItem href={supportLinks.help}>{t('helpSite')}</MenuItem>
+			<MenuItem href={supportLinks.help} id="helpSite" />
 
 			<MenuSeparator />
 
@@ -91,19 +91,16 @@ function MenuContent() {
 				<MenuItem
 					href="/begin-impersonation"
 					data-testid="impersonate-button"
-				>
-					{t('impersonate')}
-				</MenuItem>
+					id="impersonate"
+				/>
 			)}
 
-			<MenuItem href="/logout" data-testid="logout-button">
-				{t('logout')}
-			</MenuItem>
+			<MenuItem href="/logout" data-testid="logout-button" id="logout" />
 		</>
 	);
 }
 
-function MenuItem({ href, ...props }) {
+function MenuItem({ href, id, ...props }) {
 	const empty = x => !x || !x.length;
 	if (empty(href)) return null;
 
@@ -112,5 +109,15 @@ function MenuItem({ href, ...props }) {
 			? null
 			: '_blank';
 
-	return <MenuItemBase target={target} href={href} {...props} />;
+	return (
+		<MenuItemBase
+			target={target}
+			href={href}
+			data-testid={id}
+			data-action={id}
+			{...props}
+		>
+			{t(id)}
+		</MenuItemBase>
+	);
 }
