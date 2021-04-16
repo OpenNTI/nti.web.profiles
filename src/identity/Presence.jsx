@@ -1,4 +1,4 @@
-import { User, useToggle, useService } from '@nti/web-commons';
+import { User, useToggle, useService, Button } from '@nti/web-commons';
 
 import { ensureStates } from './utils';
 import { MenuSeparator } from './menus';
@@ -18,6 +18,10 @@ export function PresenceSelect(props) {
 
 	const { Active, Available, Away, DND, Offline } = ensureStates(pref);
 
+	function select(state) {
+		console.log(state);
+	}
+
 	return !service.capabilities.canChat ? null : (
 		<>
 			<>
@@ -26,8 +30,9 @@ export function PresenceSelect(props) {
 					<PresenceState
 						key={i}
 						state={state}
-						selected={Active.status === state.status}
+						selected={pref && Active.status === state.status}
 						editable={state.editable}
+						onClick={select}
 					/>
 				))}
 			</>
@@ -36,7 +41,7 @@ export function PresenceSelect(props) {
 	);
 }
 
-function PresenceState({ selected, state, editable = true }) {
+function PresenceState({ selected, state, editable = true, onClick }) {
 	const [editing, edit] = useToggle();
 	const label = state.status || state.defaultLabel;
 
@@ -46,7 +51,13 @@ function PresenceState({ selected, state, editable = true }) {
 	}
 
 	return (
-		<Item selected={selected} active={editing}>
+		<Button
+			plain
+			as={Item}
+			selected={selected}
+			active={editing}
+			onClick={() => onClick?.(state)}
+		>
 			<Check />
 			{editing ? (
 				<LabelEditor
@@ -62,6 +73,6 @@ function PresenceState({ selected, state, editable = true }) {
 					<Dot presence={state.presence} />
 				</>
 			)}
-		</Item>
+		</Button>
 	);
 }
