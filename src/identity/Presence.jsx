@@ -18,8 +18,12 @@ export function PresenceSelect(props) {
 
 	const { Active, Available, Away, DND, Offline } = ensureStates(pref);
 
-	function select(state) {
-		console.log(state);
+	function select({ status, show, type }) {
+		Object.assign(Active, {
+			show,
+			status,
+			type,
+		});
 	}
 
 	return !service.capabilities.canChat ? null : (
