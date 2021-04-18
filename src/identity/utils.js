@@ -20,17 +20,30 @@ export function ensureStates(pref) {
 					case 'editable':
 						return target !== MISSING;
 
+					case 'type':
+						return kind.toLowerCase() === 'offline'
+							? 'unavailable'
+							: 'available';
+
 					case 'show':
-						return value || kind.toLowerCase();
+						return (
+							value ||
+							kind
+								.toLowerCase()
+								// nothing makes any sense about 'show' property.
+								// Available and unavailable both use 'chat'?! as a value.
+								.replace('available', 'chat')
+								// offline is unavailable, which is denoted as 'chat'??
+								.replace('offline', 'chat') ||
+							null
+						);
 
 					case 'presence':
 						// recursively call ourselves on 'show' to pick up the fill-in-the-blank logic
 						return (
 							receiver.show
 								// presence calls "chat" state "available"
-								.replace('chat', 'available')
-								// offline is 'unavailable'
-								.replace('offline', 'unavailable')
+								?.replace('chat', 'available') || 'unavailable'
 						);
 
 					case 'status':
