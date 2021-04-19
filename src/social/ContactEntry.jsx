@@ -4,9 +4,16 @@ import PropTypes from 'prop-types';
 import { Avatar, Badge, DisplayName, User, Tooltip } from '@nti/web-commons';
 
 import Store from './Store';
-import { AvatarContainer, PresenceCircle } from './parts';
 import { EntryContainer } from './parts/expanded';
 import IconContainer from './parts/collapsed/IconContainer';
+
+const PresenceCircle = styled(User.Presence)`
+	position: absolute;
+	right: 2px;
+	bottom: 2px;
+	width: 8px;
+	height: 8px;
+`;
 
 const Name = styled(DisplayName)`
 	margin-left: 48px;
@@ -20,6 +27,42 @@ const Name = styled(DisplayName)`
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
+`;
+
+const AvatarBorder = styled('div')`
+	--size: 42px;
+	--active-color: rgba(0, 0, 0, 0);
+
+	border-radius: 100%;
+	box-shadow: 0 0 0 2px var(--active-color);
+	background: var(----active-color);
+	position: absolute;
+	width: 42px;
+	height: 42px;
+	top: 5px;
+	cursor: pointer;
+
+	& img,
+	& svg {
+		width: var(--size);
+		height: var(--size);
+		border-radius: 100%;
+		background-color: var(--active-color);
+
+		/* box-shadow: 0 0 2px 0 rgb(0 0 0); */
+	}
+
+	&.selected-available {
+		--active-color: var(--presence-available);
+	}
+
+	&.selected-away {
+		--active-color: var(--presence-away);
+	}
+
+	&.selected-dnd {
+		--active-color: var(--presence-dnd);
+	}
 `;
 
 ContactEntry.propTypes = {
@@ -75,7 +118,7 @@ export default function ContactEntry({ selected, entity, expanded, onClick }) {
 						}}
 					>
 						<Container>
-							<AvatarContainer
+							<AvatarBorder
 								data-testid="avatar-container"
 								onClick={handleClick}
 								selected={selected ? presence.status : ''}
@@ -90,7 +133,7 @@ export default function ContactEntry({ selected, entity, expanded, onClick }) {
 									<Avatar entity={entity} presence svg />
 								</Badge>
 								<PresenceCircle user={entity} />
-							</AvatarContainer>
+							</AvatarBorder>
 							{expanded && <Name entity={entity} />}
 						</Container>
 					</ConditionalWrapper>
