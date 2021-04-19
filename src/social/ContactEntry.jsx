@@ -1,13 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {
-	Avatar as AvatarBase,
-	Badge,
-	DisplayName,
-	User,
-	Tooltip,
-} from '@nti/web-commons';
+import { Avatar, Badge, DisplayName, User, Tooltip } from '@nti/web-commons';
 
 import Store from './Store';
 import { AvatarContainer, PresenceCircle } from './parts';
@@ -26,22 +20,6 @@ const Name = styled(DisplayName)`
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
-`;
-
-const Avatar = styled(AvatarBase)`
-	border: 2px solid rgba(0, 0, 0, 0);
-
-	&.selected-available {
-		border: 2px solid var(--presence-available);
-	}
-
-	&.selected-away {
-		border: 2px solid var(--presence-away);
-	}
-
-	&.selected-dnd {
-		border: 2px solid var(--presence-dnd);
-	}
 `;
 
 ContactEntry.propTypes = {
@@ -64,13 +42,8 @@ export default function ContactEntry({ selected, entity, expanded, onClick }) {
 		onClick?.(entity);
 
 		//TODO: move this out to the calling component...  and handle onClick in the parent component...
-		clearUnreadCount(entity);
-
-		if (selected) {
-			setSelectedEntity(null);
-		} else {
-			setSelectedEntity(entity);
-		}
+		clearUnreadCount?.(entity);
+		setSelectedEntity?.(selected ? null : entity);
 	};
 
 	const ConditionalWrapper = ({ condition, wrapper, children }) =>
@@ -105,6 +78,7 @@ export default function ContactEntry({ selected, entity, expanded, onClick }) {
 							<AvatarContainer
 								data-testid="avatar-container"
 								onClick={handleClick}
+								selected={selected ? presence.status : ''}
 							>
 								<Badge
 									badge={
@@ -113,14 +87,7 @@ export default function ContactEntry({ selected, entity, expanded, onClick }) {
 									position={Badge.POSITIONS.TOP_LEFT}
 									{...Badge.offset(5, 4)}
 								>
-									<Avatar
-										entity={entity}
-										presence
-										selected={
-											selected ? presence.status : ''
-										}
-										svg
-									/>
+									<Avatar entity={entity} presence svg />
 								</Badge>
 								<PresenceCircle user={entity} />
 							</AvatarContainer>
