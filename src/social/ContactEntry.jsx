@@ -7,6 +7,7 @@ import Store from './Store';
 import { EntryContainer } from './parts/expanded';
 import IconContainer from './parts/collapsed/IconContainer';
 
+//#region supporting parts & paint
 const PresenceCircle = styled(User.Presence)`
 	position: absolute;
 	right: 2px;
@@ -67,6 +68,7 @@ const AvatarBorder = styled('div')`
 
 const ConditionalWrapper = ({ condition, wrapper, children }) =>
 	condition ? wrapper(children) : children;
+//#endregion
 
 ContactEntry.propTypes = {
 	entity: PropTypes.oneOfType([PropTypes.object, PropTypes.string])
