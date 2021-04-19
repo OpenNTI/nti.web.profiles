@@ -1,3 +1,7 @@
+import { Suspense } from 'react';
+
+import { setupTestClient } from '@nti/web-client/src/test-utils';
+
 import { Menu } from '../menus.jsx';
 import { PresenceSelect } from '../Presence';
 
@@ -7,6 +11,16 @@ const styles = stylesheet`
 	}
 `;
 
+setupTestClient({
+	capabilities: { canChat: true },
+	getUserPreferences() {
+		return {
+			addListener() {},
+			get() {},
+		};
+	},
+});
+
 export default {
 	title: 'Presence Selection',
 	component: PresenceSelect,
@@ -14,8 +28,10 @@ export default {
 
 export function Test() {
 	return (
-		<Menu className={styles.wrapper}>
-			<PresenceSelect />
-		</Menu>
+		<Suspense fallback={<div />}>
+			<Menu className={styles.wrapper}>
+				<PresenceSelect />
+			</Menu>
+		</Suspense>
 	);
 }
