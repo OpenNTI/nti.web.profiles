@@ -92,11 +92,7 @@ export default function ContactEntry({ selected, entity, expanded, onClick }) {
 		setSelectedEntity?.(selected ? null : entity);
 	};
 
-	let Container = IconContainer;
-
-	if (expanded) {
-		Container = EntryContainer;
-	}
+	const Container = expanded ? EntryContainer : IconContainer;
 
 	return (
 		<User.Presence user={entity}>
