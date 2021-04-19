@@ -122,9 +122,7 @@ export default function ContactEntry({ selected, entity, expanded, onClick }) {
 								selected={selected ? presence.status : ''}
 							>
 								<Badge
-									badge={
-										unreadCount ? unreadCount[entity] : 0
-									}
+									badge={unreadCount?.[entity] ?? 0}
 									position={Badge.POSITIONS.TOP_LEFT}
 									{...Badge.offset(5, 4)}
 								>
