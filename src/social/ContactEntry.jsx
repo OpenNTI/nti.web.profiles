@@ -65,6 +65,9 @@ const AvatarBorder = styled('div')`
 	}
 `;
 
+const ConditionalWrapper = ({ condition, wrapper, children }) =>
+	condition ? wrapper(children) : children;
+
 ContactEntry.propTypes = {
 	entity: PropTypes.oneOfType([PropTypes.object, PropTypes.string])
 		.isRequired,
@@ -88,9 +91,6 @@ export default function ContactEntry({ selected, entity, expanded, onClick }) {
 		clearUnreadCount?.(entity);
 		setSelectedEntity?.(selected ? null : entity);
 	};
-
-	const ConditionalWrapper = ({ condition, wrapper, children }) =>
-		condition ? wrapper(children) : children;
 
 	let Container = IconContainer;
 
