@@ -85,7 +85,7 @@ export default function ContactEntry({ selected, entity, expanded, onClick }) {
 	return (
 		<User.Presence user={entity}>
 			{({ presence }) => {
-				if (!presence || presence.status === 'unavailable') {
+				if (!presence?.status) {
 					return null;
 				}
 				return (
@@ -117,7 +117,7 @@ export default function ContactEntry({ selected, entity, expanded, onClick }) {
 										entity={entity}
 										presence
 										selected={
-											selected ? presence.status : ''
+											selected ? presence.getName() : ''
 										}
 										svg
 									/>
