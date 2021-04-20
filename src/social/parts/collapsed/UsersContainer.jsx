@@ -45,15 +45,14 @@ export default function UsersContainer({ updateExpandBadge }) {
 	return (
 		<Container ref={containerRef}>
 			{[
-				...Iterable.map(iterator(), (entity, index) => {
-					return (
+				...Iterable.map(iterator(), (entity) => (
 						<ContactEntry
 							entity={entity}
 							selected={selectedEntity === entity}
-							key={index}
+							key={entity.toString()}
 						/>
-					);
-				}),
+					)
+				),
 			]}
 		</Container>
 	);

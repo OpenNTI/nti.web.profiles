@@ -36,15 +36,14 @@ export default function ExpandedPanel({ toggle: collapse }) {
 				) : (
 					<UsersContainer>
 						{[
-							...Iterable.map(iterator(), (entity, index) => {
-								return (
+							...Iterable.map(iterator(), (entity) => (
 									<ContactEntry
-										key={index}
-										entity={entity}
+										key={entity.toString()}
+										entity={entity.toString()}
 										expanded
 									/>
-								);
-							}),
+								)
+							),
 						]}
 					</UsersContainer>
 				)}
