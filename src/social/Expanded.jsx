@@ -24,7 +24,12 @@ const UsersContainer = styled.div`
 `;
 
 export default function ExpandedPanel({ toggle: collapse }) {
-	const { loading, error, iterator } = Store.useValue();
+	const {
+		loading,
+		error,
+		iterator,
+		selectedEntity
+	} = Store.useValue();
 
 	return (
 		<Container data-testid="expanded-container">
@@ -40,6 +45,7 @@ export default function ExpandedPanel({ toggle: collapse }) {
 									<ContactEntry
 										key={entity.toString()}
 										entity={entity.toString()}
+										selected={selectedEntity === entity}
 										expanded
 									/>
 								)
