@@ -1,5 +1,5 @@
-export default styled.div.attrs({
-	className: 'social-bar-container'
+export default styled('div').attrs({
+	className: 'social-bar-container',
 })`
 	position: fixed;
 	top: 90px;
