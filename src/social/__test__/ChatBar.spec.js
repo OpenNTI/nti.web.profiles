@@ -2,19 +2,9 @@
 import React from 'react';
 import { fireEvent, render } from '@testing-library/react';
 
-import { ChatBar } from '../ChatBar';
+import { setupTestClient as useMockServer } from '@nti/web-client/test-utils';
 
-function useMockServer(mockService) {
-	global.$AppConfig = {
-		...global.$AppConfig,
-		nodeService: mockService,
-		nodeInterface: {
-			async getServiceDocument() {
-				return mockService;
-			},
-		},
-	};
-}
+import { ChatBar } from '../ChatBar';
 
 describe('Make sure gutter works', () => {
 	beforeEach(() => {
