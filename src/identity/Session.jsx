@@ -15,14 +15,14 @@ import { IdentityCard } from './Card.jsx';
 import { PresenceSelect } from './Presence.jsx';
 
 const Trigger = React.forwardRef((props, ref) => (
-	<Tooltip label={<DisplayName me />}>
-		<Container {...props} ref={ref}>
+	<Container {...props} ref={ref} data-testid="identity">
+		<Tooltip label={<DisplayName me />}>
 			<Box>
 				<User.Avatar me svg presence />
 				<Dot />
 			</Box>
-		</Container>
-	</Tooltip>
+		</Tooltip>
+	</Container>
 ));
 
 const t = scoped('session.menu', {

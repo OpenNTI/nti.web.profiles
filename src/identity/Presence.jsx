@@ -61,6 +61,7 @@ function PresenceState({ selected, state, editable = true, onClick }) {
 			selected={selected}
 			active={editing}
 			onClick={() => onClick?.(state)}
+			data-testid={state.defaultLabel}
 		>
 			<Check />
 			{editing ? (
@@ -73,7 +74,12 @@ function PresenceState({ selected, state, editable = true, onClick }) {
 			) : (
 				<>
 					<Label>{label}</Label>
-					{editable && <Edit onClick={edit} />}
+					{editable && (
+						<Edit
+							onClick={edit}
+							data-testid={'edit-' + state.defaultLabel}
+						/>
+					)}
 					<Dot presence={state.presence} />
 				</>
 			)}

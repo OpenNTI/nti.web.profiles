@@ -73,6 +73,7 @@ export const LabelEditor = Label.withComponent(
 				>
 					<Input.Text
 						{...props}
+						data-testid={'input-' + defaultValue}
 						placeholder={defaultValue}
 						value={value || ''}
 						onChange={setValue}
@@ -80,7 +81,7 @@ export const LabelEditor = Label.withComponent(
 						autoSelect
 					/>
 				</Input.Clearable>
-				<Save onClick={save} />
+				<Save onClick={save} data-testid={'save-' + defaultValue} />
 			</>
 		);
 	}
