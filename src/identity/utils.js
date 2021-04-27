@@ -33,8 +33,8 @@ export function ensureStates(pref) {
 								// nothing makes any sense about 'show' property.
 								// Available and unavailable both use 'chat'?! as a value.
 								.replace('available', 'chat')
-								// offline is unavailable, which is denoted as 'chat'??
-								.replace('offline', 'chat') ||
+								// offline is unavailable, which is denoted as ''??
+								.replace('offline', '') ||
 							null
 						);
 
