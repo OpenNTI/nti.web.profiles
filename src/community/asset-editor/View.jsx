@@ -12,18 +12,31 @@ const DefaultAssets = {
 
 const Config = {
 	avatarURL: {
-		imageEditor: { crop: { aspectRatio: Avatar.aspectRatio } },
-		solidEditor: { aspectRatio: Avatar.aspectRatio },
-		gradientEditor: { aspectRatio: Avatar.aspectRatio },
+		imageEditor: {
+			format: { crop: { aspectRatio: Avatar.aspectRatio } }
+		},
+		solidEditor: {
+			format: { aspectRatio: Avatar.aspectRatio }
+		},
+		gradientEditor: {
+			format: { aspectRatio: Avatar.aspectRatio }
+		},
 	},
 	backgroundURL: {
 		imageEditor: {
-			crop: { aspectRatio: 3 / 2 },
-			blur: { radius: 50, minBlur: 0, maxBlur: 50 },
-			darken: { color: '#000', opacity: 0.3 },
+			format: {
+				crop: { aspectRatio: 3 / 2 },
+				blur: { radius: 50, minBlur: 0, maxBlur: 50 },
+				darken: { color: '#000', opacity: 0.3 },
+			},
+			output: {maxHeight: 1000}
 		},
-		solidEditor: { aspectRatio: 3 / 2 },
-		gradientEditor: { aspectRatio: 3 / 2 },
+		solidEditor: {
+			format: { aspectRatio: 3 / 2 }
+		},
+		gradientEditor: {
+			format: { aspectRatio: 3 / 2 }
+		},
 	},
 };
 
@@ -69,9 +82,9 @@ export default function CommunityAssetEditor({
 
 	return (
 		<AssetEditor asset={asset} onSave={onSave} onCancel={onCancel}>
-			<AssetEditor.Image format={config.imageEditor} />
-			<AssetEditor.SolidColor format={config.solidEditor} />
-			<AssetEditor.LinearGradient format={config.gradientEditor} />
+			<AssetEditor.Image format={config.imageEditor.format} output={config.imageEditor.output} />
+			<AssetEditor.SolidColor format={config.solidEditor.format} />
+			<AssetEditor.LinearGradient format={config.gradientEditor.format} />
 		</AssetEditor>
 	);
 }
