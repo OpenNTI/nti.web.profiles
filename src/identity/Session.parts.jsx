@@ -8,6 +8,11 @@ export const Container = styled.div`
 	align-items: center;
 	justify-content: center;
 
+	img,
+	svg {
+		width: 100%;
+	}
+
 	&:global(.flyout-open) {
 		background-color: white;
 		box-shadow: -1px 0 0 0 #dcdcdc;
