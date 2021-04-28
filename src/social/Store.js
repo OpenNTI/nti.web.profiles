@@ -1,6 +1,7 @@
 import { SessionStorage } from '@nti/web-storage';
 import { Stores } from '@nti/lib-store';
 import { UserPresence } from '@nti/lib-interfaces';
+import { getAppUsername } from '@nti/web-client';
 
 const STATE_KEY = 'chats';
 export default class Store extends Stores.SimpleStore {
@@ -26,7 +27,9 @@ export default class Store extends Stores.SimpleStore {
 				// move active to the top
 				...(this.activeChatRoomParticipants || []),
 				// inactive and duplicates at the bottom
-				...Array.from(UserPresence).map(x => x.username),
+				...Array.from(UserPresence)
+					.map(x => x.username)
+					.filter(x => x !== getAppUsername()),
 			]),
 		];
 
