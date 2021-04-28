@@ -6,10 +6,12 @@ exports[`Topic List test Filtered 1`] = `
   layout="grid"
 >
   <div
+    className="layout-grid"
     data-testid="discussion-selection-item"
     layout="grid"
   >
     <div
+      className="layout"
       layout="grid"
     >
       <i
