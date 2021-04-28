@@ -119,7 +119,7 @@ export default function ContactEntry({ selected, entity, expanded, onClick }) {
 							<AvatarBorder
 								data-testid="avatar-container"
 								onClick={handleClick}
-								selected={selected ? presence.status : ''}
+								selected={selected ? presence.getName() : ''}
 							>
 								<Badge
 									badge={unreadCount?.[entity] ?? 0}
