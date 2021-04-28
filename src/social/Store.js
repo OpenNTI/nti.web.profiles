@@ -1,6 +1,6 @@
 import { SessionStorage } from '@nti/web-storage';
 import { Stores } from '@nti/lib-store';
-import { getService } from '@nti/web-client';
+import { UserPresence } from '@nti/lib-interfaces';
 
 const STATE_KEY = 'chats';
 export default class Store extends Stores.SimpleStore {
@@ -10,10 +10,7 @@ export default class Store extends Stores.SimpleStore {
 		super(...args);
 
 		(async () => {
-			const service = await getService();
-			this.contactStore = await service.getContacts();
-
-			this.contactStore.addListener('change', this.onContactChange);
+			UserPresence.addListener('change', this.onContactChange);
 
 			this.set({
 				activeChatRoomParticipants: getAllOccupantsKeyAccepted(),
@@ -29,7 +26,7 @@ export default class Store extends Stores.SimpleStore {
 				// move active to the top
 				...(this.activeChatRoomParticipants || []),
 				// inactive and duplicates at the bottom
-				...Array.from(this.contactStore || []).map(x => x.ID),
+				...Array.from(UserPresence).map(x => x.username),
 			]),
 		];
 
@@ -47,7 +44,7 @@ export default class Store extends Stores.SimpleStore {
 	}
 
 	cleanupListeners() {
-		this.contactStore.removeListener('change', this.onContactsChange);
+		UserPresence.removeListener('change', this.onContactsChange);
 
 		delete this.cleanupListeners;
 	}
@@ -99,15 +96,6 @@ function getSessionObject(key) {
 }
 
 function getAllOccupantsKeyAccepted() {
-	let accepted = getSessionObject('roomIdsAccepted') || {},
-		pairs = [],
-		key;
-
-	for (key in accepted) {
-		if (accepted.hasOwnProperty(key)) {
-			pairs.push(key);
-		}
-	}
-
-	return pairs;
+	const accepted = getSessionObject('roomIdsAccepted');
+	return Object.keys(accepted || {});
 }
