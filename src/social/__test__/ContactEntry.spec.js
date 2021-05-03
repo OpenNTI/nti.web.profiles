@@ -3,6 +3,7 @@ import React from 'react';
 import { render } from '@testing-library/react';
 
 import { FakeStore } from '@nti/lib-store';
+import { setupTestClient } from '@nti/web-client/test-utils';
 
 import { ChatBar } from '../ChatBar';
 import Store from '../Store';
@@ -19,21 +20,9 @@ jest.mock('../ChatWindow', () => {
 	};
 });
 
-function useMockServer(mockService) {
-	global.$AppConfig = {
-		...global.$AppConfig,
-		nodeService: mockService,
-		nodeInterface: {
-			async getServiceDocument() {
-				return mockService;
-			},
-		},
-	};
-}
-
 describe('ContactEntry Component', () => {
 	test('ContactEntry Click', async () => {
-		useMockServer({
+		setupTestClient({
 			getContacts: async () => {
 				return {
 					addListener: () => 'Add event listener',

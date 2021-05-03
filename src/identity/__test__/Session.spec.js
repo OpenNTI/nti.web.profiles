@@ -41,6 +41,7 @@ beforeEach(() => {
 					addListener() {},
 					removeListener() {},
 					get() {},
+					waitForPending() {},
 				};
 			},
 		},
