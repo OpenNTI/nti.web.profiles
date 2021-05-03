@@ -99,7 +99,7 @@ export default function ContactEntry({ selected, entity, expanded, onClick }) {
 	return (
 		<User.Presence user={entity}>
 			{({ presence }) => {
-				if (!presence?.status) {
+				if (!presence.isOnline()) {
 					return null;
 				}
 				return (
