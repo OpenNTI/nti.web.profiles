@@ -15,27 +15,32 @@ export function ensureStates(pref) {
 		new Proxy(v || MISSING, {
 			get(target, propertyName, receiver) {
 				const value = Reflect.get(...arguments);
+				const kindType = kind.toLowerCase();
 
 				switch (propertyName) {
 					case 'editable':
 						return target !== MISSING;
 
 					case 'type':
-						return kind.toLowerCase() === 'offline'
-							? 'unavailable'
-							: 'available';
+						return (
+							value ??
+							(kindType === 'offline' ||
+							receiver.presence === 'unavailable'
+								? 'unavailable'
+								: 'available')
+						);
 
 					case 'show':
 						return (
-							value ||
-							kind
-								.toLowerCase()
+							value ??
+							(kindType
+								.replace('active', '')
 								// nothing makes any sense about 'show' property.
 								// Available and unavailable both use 'chat'?! as a value.
 								.replace('available', 'chat')
 								// offline is unavailable, which is denoted as ''??
 								.replace('offline', '') ||
-							null
+								null)
 						);
 
 					case 'presence':

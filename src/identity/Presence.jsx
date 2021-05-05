@@ -34,7 +34,7 @@ export function PresenceSelect(props) {
 					<PresenceState
 						key={i}
 						state={state}
-						selected={pref && Active.status === state.status}
+						selected={pref && Active.show === state.show}
 						editable={state.editable}
 						onClick={select}
 					/>
