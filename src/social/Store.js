@@ -1,17 +1,33 @@
 import { SessionStorage } from '@nti/web-storage';
 import { Stores } from '@nti/lib-store';
 import { UserPresence } from '@nti/lib-interfaces';
-import { getAppUsername } from '@nti/web-client';
+import { getAppUsername, getService } from '@nti/web-client';
 
 const STATE_KEY = 'chats';
 export default class Store extends Stores.SimpleStore {
 	static Singleton = true;
 
+	#contacts = null;
+
 	constructor(...args) {
 		super(...args);
 
 		(async () => {
-			UserPresence.addListener('change', this.onContactChange);
+			const service = await getService();
+			const contacts = (this.#contacts = service.getContacts());
+			const presence = UserPresence;
+
+			const onChange = () => {
+				this.emitChange(['iterator', Symbol.iterator]);
+			};
+
+			presence.addListener('change', onChange);
+			contacts.addListener('change', onChange);
+
+			this.cleanupListeners = () => {
+				contacts.removeListener('change', onChange);
+				presence.removeListener('change', onChange);
+			};
 
 			this.set({
 				activeChatRoomParticipants: getAllOccupantsKeyAccepted(),
@@ -22,34 +38,28 @@ export default class Store extends Stores.SimpleStore {
 	iterator = this[Symbol.iterator];
 
 	[Symbol.iterator]() {
+		const intersection = Array.from(UserPresence)
+			.map(x => x.username)
+			.filter(
+				userId =>
+					userId !== getAppUsername() &&
+					this.#contacts?.contains(userId)
+			);
+
 		const snapshot = [
 			...new Set([
 				// move active to the top
 				...(this.activeChatRoomParticipants || []),
 				// inactive and duplicates at the bottom
-				...Array.from(UserPresence)
-					.map(x => x.username)
-					.filter(x => x !== getAppUsername()),
+				...intersection,
 			]),
 		];
 
 		return snapshot[Symbol.iterator]();
 	}
 
-	onContactChange = () => {
-		this.emitChange(['contactStore', 'iterator', Symbol.iterator]);
-	};
-
 	cleanup() {
-		if (this.cleanupListeners) {
-			this.cleanupListeners();
-		}
-	}
-
-	cleanupListeners() {
-		UserPresence.removeListener('change', this.onContactsChange);
-
-		delete this.cleanupListeners;
+		this.cleanupListeners?.();
 	}
 
 	clearUnreadCount(username) {
