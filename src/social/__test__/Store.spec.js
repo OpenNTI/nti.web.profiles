@@ -1,4 +1,12 @@
 /* eslint-env jest */
+import { setupTestClient } from '@nti/web-client/test-utils';
+jest.doMock('@nti/lib-interfaces', () => ({
+	UserPresence: {
+		[Symbol.iterator]: () => [][Symbol.iterator](),
+		addListener: jest.fn(),
+		removeListener: jest.fn(),
+	},
+}));
 
 import Store from '../Store';
 
@@ -7,6 +15,15 @@ describe('Test store methods', () => {
 	let store;
 
 	beforeEach(() => {
+		setupTestClient({
+			getContacts() {
+				return {
+					addListener: jest.fn(),
+					removeListener: jest.fn(),
+					contains() {},
+				};
+			},
+		});
 		store = new Store();
 		activeUsers.forEach(user =>
 			store.set({

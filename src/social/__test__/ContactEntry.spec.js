@@ -8,6 +8,16 @@ import { setupTestClient } from '@nti/web-client/test-utils';
 import { ChatBar } from '../ChatBar';
 import Store from '../Store';
 
+jest.doMock('@nti/lib-interfaces', () => ({
+	UserPresence: {
+		[Symbol.iterator]() {
+			return ['user1'][Symbol.iterator]();
+		},
+		addListener: jest.fn(),
+		removeListener: jest.fn(),
+	},
+}));
+
 // Mock ChatWindow override
 jest.mock('../ChatWindow', () => {
 	const mockDefault = {};
@@ -19,20 +29,18 @@ jest.mock('../ChatWindow', () => {
 		ChatWindowRef: mockDefault,
 	};
 });
+setupTestClient({
+	getContacts() {
+		return {
+			addListener: jest.fn(),
+			removeListener: jest.fn(),
+			contains: () => true,
+		};
+	},
+});
 
 describe('ContactEntry Component', () => {
 	test('ContactEntry Click', async () => {
-		setupTestClient({
-			getContacts: async () => {
-				return {
-					addListener: () => 'Add event listener',
-					[Symbol.iterator]() {
-						return ['user1'];
-					},
-				};
-			},
-		});
-
 		const store = new Store();
 
 		const component = render(
