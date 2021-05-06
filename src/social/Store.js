@@ -2,6 +2,7 @@ import { SessionStorage } from '@nti/web-storage';
 import { Stores } from '@nti/lib-store';
 import { UserPresence } from '@nti/lib-interfaces';
 import { getAppUsername, getService } from '@nti/web-client';
+import { buffer } from '@nti/lib-commons';
 
 const STATE_KEY = 'chats';
 export default class Store extends Stores.SimpleStore {
@@ -17,9 +18,9 @@ export default class Store extends Stores.SimpleStore {
 			const contacts = (this.#contacts = service.getContacts());
 			const presence = UserPresence;
 
-			const onChange = () => {
+			const onChange = buffer(100, () => {
 				this.emitChange(['iterator', Symbol.iterator]);
-			};
+			});
 
 			presence.addListener('change', onChange);
 			contacts.addListener('change', onChange);
@@ -29,10 +30,17 @@ export default class Store extends Stores.SimpleStore {
 				presence.removeListener('change', onChange);
 			};
 
-			this.set({
-				activeChatRoomParticipants: getAllOccupantsKeyAccepted(),
-			});
+			onChange();
 		})();
+	}
+
+	get activeChatRoomParticipants() {
+		const participants = new Set(getAllOccupantsKeyAccepted());
+		const unread = this.get('unreadCount') || {};
+		for (const [user, count] of Object.entries(unread)) {
+			if (count >= 0) participants.add(user);
+		}
+		return Array.from(participants);
 	}
 
 	iterator = this[Symbol.iterator];
@@ -49,7 +57,7 @@ export default class Store extends Stores.SimpleStore {
 		const snapshot = [
 			...new Set([
 				// move active to the top
-				...(this.activeChatRoomParticipants || []),
+				...this.activeChatRoomParticipants,
 				// inactive and duplicates at the bottom
 				...intersection,
 			]),
