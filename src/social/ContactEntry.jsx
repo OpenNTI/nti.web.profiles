@@ -95,11 +95,12 @@ export default function ContactEntry({ selected, entity, expanded, onClick }) {
 	};
 
 	const Container = expanded ? EntryContainer : IconContainer;
+	const unread = unreadCount?.[entity] ?? 0;
 
 	return (
 		<User.Presence user={entity}>
 			{({ presence }) => {
-				if (!presence?.isOnline()) {
+				if (!unread && !presence?.isOnline()) {
 					return null;
 				}
 				return (
@@ -119,10 +120,10 @@ export default function ContactEntry({ selected, entity, expanded, onClick }) {
 							<AvatarBorder
 								data-testid="avatar-container"
 								onClick={handleClick}
-								selected={selected ? presence.getName() : ''}
+								selected={selected ? presence?.getName() : ''}
 							>
 								<Badge
-									badge={unreadCount?.[entity] ?? 0}
+									badge={unread}
 									position={Badge.POSITIONS.TOP_LEFT}
 									{...Badge.offset(5, 4)}
 								>
