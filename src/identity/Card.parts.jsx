@@ -10,6 +10,7 @@ export const Box = styled.div`
 	display: flex;
 	flex-direction: row;
 	width: 260px;
+	overflow: hidden;
 `;
 
 export const Avatar = styled(AvatarBase)`
