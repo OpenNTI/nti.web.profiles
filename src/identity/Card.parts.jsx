@@ -31,6 +31,8 @@ export const Meta = styled.div`
 	margin: 0 0 0 15px;
 	font: normal 400 0.875rem/2 var(--body-font-family);
 	padding: 8px 0 0 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
 `;
 
 export const Links = styled.div`
