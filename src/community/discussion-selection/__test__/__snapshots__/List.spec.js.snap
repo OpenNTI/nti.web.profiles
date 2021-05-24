@@ -32,7 +32,7 @@ in this channel",
       layout="grid"
     />
     <svg
-      className="svg-icon"
+      className="svg-icon nt-icon"
     >
       <g
         fill="none"
