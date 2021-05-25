@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 
-import { setupTestClient } from '@nti/web-client/src/test-utils';
+import { setupTestClient } from '@nti/web-client/test-utils';
 
 import { Menu } from '../menus.jsx';
 import { PresenceSelect } from '../Presence';
