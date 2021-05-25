@@ -41,10 +41,10 @@ export default class CommunityMemberShipControlStore extends Stores.BoundStore {
 			return;
 		}
 
-		setImmediate(async () => {
+		setTimeout(async () => {
 			await this.community.refresh();
 			this.load();
-		});
+		}, 0);
 	}
 
 	async join() {

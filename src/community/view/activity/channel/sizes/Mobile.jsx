@@ -44,11 +44,11 @@ export default class ChannelMobileLayout extends React.Component {
 				showOptions: false,
 			},
 			() => {
-				setImmediate(() => {
+				setTimeout(() => {
 					if (setLayout) {
 						setLayout(...args);
 					}
-				});
+				}, 0);
 			}
 		);
 	};

@@ -2,6 +2,7 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 
 import * as TestUtils from '@nti/web-client/test-utils';
+import { flushPromises } from '@nti/lib-commons/test-utils';
 
 import Bookmark from '../View';
 
@@ -21,8 +22,6 @@ const onAfter = () => {
 	tearDownTestClient();
 };
 
-const flushPromises = () => new Promise(resolve => setImmediate(resolve));
-
 /* eslint-env jest */
 describe('Bookmark', () => {
 	beforeEach(onBefore);
@@ -36,27 +35,22 @@ describe('Bookmark', () => {
 				Promise.resolve([
 					[
 						{
-							NTIID:
-								'tag:nextthought.com,2011-10:IFSTA-Bundle-IFSTA_Book_Aircraft_Rescue_and_Fire_Fighting_Sixth_Edition',
+							NTIID: 'tag:nextthought.com,2011-10:IFSTA-Bundle-IFSTA_Book_Aircraft_Rescue_and_Fire_Fighting_Sixth_Edition',
 							getPresentationProperties: () => ({
-								title:
-									'Aircraft Rescue and Fire Fighting Sixth Edition',
+								title: 'Aircraft Rescue and Fire Fighting Sixth Edition',
 							}),
 						},
 						{
-							NTIID:
-								'tag:nextthought.com,2011-10:IFSTA-HTML-IFSTA_Book_Aircraft_Rescue_and_Fire_Fighting_Sixth_Edition.section:Engine_Types_and_Applications3',
+							NTIID: 'tag:nextthought.com,2011-10:IFSTA-HTML-IFSTA_Book_Aircraft_Rescue_and_Fire_Fighting_Sixth_Edition.section:Engine_Types_and_Applications3',
 							Title: 'Engine Types adn Applications',
 						},
 					],
 				]),
-			NTIID:
-				'tag:nextthought.com,2011-10:user4-OID-0x04e6fa:5573657273:nywS9Pjp8FE',
+			NTIID: 'tag:nextthought.com,2011-10:user4-OID-0x04e6fa:5573657273:nywS9Pjp8FE',
 		};
 		const context = {
 			getDefaultAssetRoot: () => '',
-			NTIID:
-				'tag:nextthought.com,2011-10:IFSTA-Bundle-IFSTA_Book_Aircraft_Rescue_and_Fire_Fighting_Sixth_Edition',
+			NTIID: 'tag:nextthought.com,2011-10:IFSTA-Bundle-IFSTA_Book_Aircraft_Rescue_and_Fire_Fighting_Sixth_Edition',
 			PlatformPresentationResources: [
 				{
 					Class: 'DisplayablePlatformPresentationResources',

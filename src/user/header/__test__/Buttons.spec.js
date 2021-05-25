@@ -2,6 +2,7 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 
 import * as TestUtils from '@nti/web-client/test-utils';
+import { flushPromises } from '@nti/lib-commons/test-utils';
 
 import Buttons from '../Buttons';
 
@@ -32,8 +33,6 @@ const onAfter = () => {
 	tearDownTestClient();
 	delete global.$AppConfig.username;
 };
-
-const flushPromises = () => new Promise(resolve => setImmediate(resolve));
 
 /* eslint-env jest */
 describe('User profile header buttons test', () => {

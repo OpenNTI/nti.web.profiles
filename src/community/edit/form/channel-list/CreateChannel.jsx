@@ -31,9 +31,9 @@ class CreateChannel extends React.Component {
 		if (createChannel) {
 			createChannel();
 
-			setImmediate(() => {
+			setTimeout(() => {
 				this.buttonRef.current?.scrollIntoView?.();
-			});
+			}, 0);
 		}
 	};
 
