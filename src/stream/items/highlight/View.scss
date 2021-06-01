@@ -48,29 +48,64 @@
 						color: var(--primary-grey);
 
 						&.colored {
-							background-color: #e3f4fe;
-							box-shadow: 0 0 3px 0 #e3f4fe;
+							&.yellow {
+								background-color: var(
+									--highlight-colors-yellow
+								);
+								box-shadow: 0 0 3px 0
+									var(--highlight-colors-yellow);
 
-							.yellow {
-								background-color: #faf8c2;
-								box-shadow: 0 0 3px 0 #faf8c2;
-							}
-
-							&.yellow.highlight-mouse-over {
-								background-color: #f9f6af;
+								&.highlight-mouse-over {
+									background-color: var(
+										--highlight-colors-yellow-hover
+									);
+								}
 							}
 
 							&.green {
-								background-color: #c9f7d9;
-								box-shadow: 0 0 3px 0 #c9f7d9;
+								background-color: var(--highlight-colors-green);
+								box-shadow: 0 0 3px 0
+									var(--highlight-colors-green);
+
+								&.highlight-mouse-over {
+									background-color: var(
+										--highlight-colors-green-hover
+									);
+								}
 							}
 
-							&.green.highlight-mouse-over {
-								background-color: #b7f5cc;
+							&,
+							&.blue {
+								background-color: var(--highlight-colors-blue);
+								box-shadow: 0 0 3px 0
+									var(--highlight-colors-blue);
+
+								&.highlight-mouse-over {
+									background-color: var(
+										--highlight-colors-blue-hover
+									);
+								}
 							}
 
-							&.highlight-mouse-over {
-								background-color: #cfecfd;
+							&.blackout.blackout {
+								&,
+								&::selection {
+									background: var(--primary-grey);
+									color: rgba(0, 0, 0, 0) !important;
+									box-shadow: none;
+								}
+
+								img,
+								a,
+								a:link,
+								a[href],
+								* {
+									visibility: hidden;
+								}
+
+								&.highlight-mouse-over {
+									background: var(--primary-grey);
+								}
 							}
 						}
 
