@@ -37,7 +37,7 @@ class Editing extends React.Component {
 			context: { router },
 		} = this;
 		const { target } = e;
-		const formId = target.getAttribute('form');
+		const formId = target.getAttribute('data-formid');
 		const form = document.querySelector(`form#${formId}`);
 
 		clearErrors();
@@ -68,7 +68,7 @@ class Editing extends React.Component {
 					</Button>
 				</LinkTo.Object>
 				<Button
-					form={formId}
+					data-formid={formId}
 					className="save"
 					disabled={!unsaved}
 					onClick={this.onSave}
