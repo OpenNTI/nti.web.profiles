@@ -5,7 +5,6 @@ exports[`User profile manage controls test (is a contact) Basic render test 1`] 
   className="contact profile-manage-controls"
 >
   <a
-    aria-haspopup="dialog"
     className="nti-button flyout-trigger message message-button-flyout flyout-closed button primary"
     onBlur={[Function]}
     onClick={[Function]}

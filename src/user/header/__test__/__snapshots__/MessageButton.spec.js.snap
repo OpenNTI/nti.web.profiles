@@ -2,7 +2,6 @@
 
 exports[`User profile message button test Test not present 1`] = `
 <a
-  aria-haspopup="dialog"
   className="nti-button flyout-trigger message message-button-flyout flyout-closed button primary"
   onBlur={[Function]}
   onClick={[Function]}
