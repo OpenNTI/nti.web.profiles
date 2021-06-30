@@ -131,6 +131,7 @@ const FIELD_GROUPS = {
 			'alias',
 			'role',
 			'email',
+			'tps_employee_id',
 			'location',
 			'home_page',
 			'facebook',
