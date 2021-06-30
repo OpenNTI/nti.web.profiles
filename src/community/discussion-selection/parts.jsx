@@ -9,10 +9,10 @@ export const LayoutContext = React.createContext({ layout: 'grid' });
 export const composeLayoutProvider = Cmp => {
 	return React.forwardRef((props, ref) => {
 		const [layout, setLayout] = useState('grid');
-		const value = useMemo(() => ({ layout, setLayout }), [
-			layout,
-			setLayout,
-		]);
+		const value = useMemo(
+			() => ({ layout, setLayout }),
+			[layout, setLayout]
+		);
 
 		if (Utils.maybeSupportsRefs(Cmp)) {
 			props.ref = ref;
@@ -159,7 +159,7 @@ export const Title = styled(HighlightedContent).attrs(
 	}
 
 	&.layout-grid {
-		font: normal 500 26px/1.35 var(--header-font-family);
+		font: normal 500 26px/1.35 var(--legacy-header-font-family);
 		font-stretch: condensed;
 		padding: 3px 4px 4px;
 		width: 100%;
