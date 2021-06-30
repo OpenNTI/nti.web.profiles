@@ -123,6 +123,25 @@ const FIELD_GROUPS = {
 	},
 	IOSDEAdminProfile: 'IOSDEStaffProfile',
 	IOSDEEducatorProfile: 'IOSDEStaffProfile',
+
+	ITheOPPUserProfile: {
+		about: [
+			'about',
+			'realname',
+			'alias',
+			'role',
+			'email',
+			'location',
+			'home_page',
+			'facebook',
+			'instagram',
+			'linkedIn',
+			'twitter',
+		],
+		education: 'education',
+		positions: 'positions',
+		interests: 'interests',
+	},
 };
 
 export function getFieldGroups(schema, type) {
