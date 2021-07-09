@@ -1,139 +1,64 @@
-import PropTypes from 'prop-types';
-import { useReducer } from 'react';
+import React, { useState } from 'react';
 
-import { StandardUI, Text } from '@nti/web-commons';
+import { DialogButtons } from '@nti/web-commons';
 import { scoped } from '@nti/lib-locale';
 import { ImageEditor } from '@nti/web-whiteboard';
 
-import Store from '../../../Store';
-
-import VIEWS from '.';
-
-const translation = scoped('nti.web.profiles.user.account-management.tabs.picture.views.edit', {
-	save: 'Save',
-	rotate: 'Rotate',
-	processing: 'Processing',
-});
-
-const Translate = Text.Translator(translation);
-
-const ImageContainer = styled.div`
-	margin: 20px;
-`;
-
-const initialState = {
-	inputKey: 1,
-	error: null,
-	filename: null,
-	editorState: null,
-	saving: false,
-};
-
-const Mask = styled(Text.Base)`
-	color: var(--primary-grey);
-`;
-
-const reducer = (state, action) => {
-	switch (action.type) {
-		case 'error':
-			return {
-				...state,
-				error: action.error,
-				saving: false,
-			};
-		case 'addFile':
-			return {
-				...state,
-				error: null,
-				filename: action.filename,
-				editorState: action.editorState,
-				inputKey: (state.inputKey ?? 0) + 1,
-				saving: false,
-			};
-
-		case 'updateEditorState':
-			return {
-				...state,
-				editorState: action.editorState,
-				saving: false,
-			};
-		case 'clear':
-			return {
-				...state,
-				filename: null,
-				editorState: null,
-				saving: false,
-			};
-		case 'saving':
-			return {
-				...state,
-				saving: true,
-			};
-		default:
-			return state;
+const t = scoped(
+	'nti.web.profiles.user.account-management.tabs.picture.views.edit',
+	{
+		save: 'Save',
+		cancel: 'Cancel',
 	}
-}
+);
 
-EditView.PropType = {
-	changeView: PropTypes.func,
-};
+const ImageEditorWrapper = styled(ImageEditor.Editor)`
+	padding: 20px 0;
+	background-color: var(--tertiary-grey);
+`;
 
-export default function EditView ( { changeView, ...otherProps } ) {
-	const { setPicture } = Store.useValue();
+export default function EditView({ onSave, image, onCancel }) {
+	const [croppedState, setCroppedState] = useState();
+	const [editorState] = useState(
+		ImageEditor.getEditorState(image, {
+			crop: { aspectRatio: 1 },
+		})
+	);
 
-	initialState.filename = otherProps?.filename;
-
-	const [
-		{ editorState, filename, saving },
-		dispatch,
-	] = useReducer(reducer, initialState);
-
-	const setEditorState = newEditorState => {
-		dispatch({ type: 'updateEditorState', editorState: newEditorState });
-	};
-
-	const handleSavePicture = async () => {
-		dispatch({type: 'saving'});
-
+	const handleSave = async () => {
 		try {
-			const size = { maxHeight: 210 };
-			const file = await ImageEditor.getBlobForEditorState(
-				editorState,
-				size
-			);
+			const img = await ImageEditor.getImageForEditorState(croppedState);
 
-			file.name = filename;
-
-			const source = await ImageEditor.getImgSrc(file);
-
-			setPicture({ file, source, filename });
-
-			changeView(VIEWS.MAIN);
+			if (img && onSave) {
+				onSave(img);
+			}
 		} catch (e) {
-			dispatch({type: 'error', error: e});
+			//Handle error
 		}
 	};
 
-	const handleCancel = () => {
-		changeView(VIEWS.MAIN);
+	const handleChange = editorState => {
+		setCroppedState(editorState);
 	};
+
+	const buttons = [
+		{
+			label: t('cancel'),
+			onClick: onCancel,
+		},
+		{
+			label: t('save'),
+			onClick: handleSave,
+		},
+	];
 
 	return (
 		<>
-			<StandardUI.Prompt.Base
-				actionType="constructive"
-				actionLabel={<Translate localeKey="save"/>}
-				onAction={handleSavePicture}
-				onCancel={handleCancel}
-				mask={saving ? <Mask>{<Translate localeKey="processing"/>}</Mask> : null}
-			>
-				<ImageContainer>
-					<ImageEditor.Editor
-						editorState={editorState}
-						onChange={setEditorState}
-					/>
-				</ImageContainer>
-			</StandardUI.Prompt.Base>
+			<ImageEditorWrapper
+				editorState={editorState}
+				onChange={handleChange}
+			/>
+			<DialogButtons buttons={buttons} />
 		</>
 	);
 }

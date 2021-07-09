@@ -1,18 +1,17 @@
-import PropTypes from 'prop-types';
-
-import {Avatar, Button, Text} from '@nti/web-commons';
-import {scoped} from '@nti/lib-locale'
+import { Avatar, Button, Text } from '@nti/web-commons';
+import { scoped } from '@nti/lib-locale';
 
 import Store from '../../../Store';
 
-import VIEWS from '.';
-
 const Container = styled.div`
 	display: flex;
+	padding: 20px;
 `;
 
 const StyledAvatar = styled(Avatar)`
-	margin-right: 10px;
+	width: 81px;
+	height: 81px;
+	margin-right: 15px;
 `;
 
 const Title = styled(Text.Base)`
@@ -34,37 +33,62 @@ const LinksContainer = styled.div`
 	}
 `;
 
-const translation = scoped('nti.profiles.user.account-management.tabs.picture.views.main', {
-	title: 'Profile Picture',
-	edit: 'Edit',
-	upload: 'Upload new Photo',
-});
+const Link = styled(Button).attrs({ plain: true })`
+	color: var(--primary-blue);
+	font-size: 12px;
+	text-decoration: none;
+	cursor: pointer;
+
+	&:link {
+		text-decoration: none;
+	}
+
+	&:hover {
+		text-decoration: underline;
+	}
+
+	&:not(:last-child)::after {
+		content: ' | ';
+		font-size: 1.1em;
+		display: contents;
+		margin: 0 0.3em;
+		text-decoration: none !important;
+		color: var(--primary-blue);
+	}
+`;
+
+const translation = scoped(
+	'nti.profiles.user.account-management.tabs.picture.views.main',
+	{
+		title: 'Profile Picture',
+		edit: 'Edit',
+		upload: 'Upload New Photo',
+	}
+);
 
 const Translate = Text.Translator(translation);
 
-MainView.PropType = {
-	changeView: PropTypes.func,
-};
+export default function MainView({ onUpload, onEdit }) {
+	const { user } = Store.useValue();
 
-export default function MainView ( { changeView } ) {
-	const {user} = Store.useValue();
-
-	const handleEditClick = () => {
-		changeView(VIEWS.EDIT);
-	};
-
-	const handleUploadClick = () => {
-		changeView(VIEWS.UPLOAD);
-	};
+	const displayEditLink = user.avatarURL;
 
 	return (
 		<Container>
 			<StyledAvatar entity={user} />
 			<div>
-				<Title as="h3"><Translate localeKey="title"/></Title>
+				<Title as="h3">
+					<Translate localeKey="title" />
+				</Title>
 				<LinksContainer>
-					<Button as="a" onClick={handleEditClick}><Translate localeKey="edit"/></Button>
-					<Button as="a" onClick={handleUploadClick}><Translate localeKey="upload"/></Button>
+					{displayEditLink && (
+						<Link onClick={onEdit}>
+							<Translate localeKey="edit" />
+						</Link>
+					)}
+					<Link onClick={onUpload}>
+						<Translate localeKey="upload" />
+					</Link>
 				</LinksContainer>
 			</div>
 		</Container>
