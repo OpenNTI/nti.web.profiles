@@ -1,11 +1,3 @@
-import Main from './Main';
-import Edit from './Edit';
-import Upload from './Upload';
-
-const VIEWS = {
-	MAIN: Main,
-	EDIT: Edit,
-	UPLOAD: Upload,
-};
-
-export default VIEWS;
+export { default as Main } from './Main';
+export { default as Edit } from './Edit';
+export { default as Upload } from './Upload';
