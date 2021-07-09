@@ -1,22 +1,53 @@
-import { Prompt } from '@nti/web-commons';
+import React, { useEffect } from 'react';
+
+import { Loading, Prompt, Text } from '@nti/web-commons';
+import { scoped } from '@nti/lib-locale';
 
 import Tabs from './tabs';
-import Header from './header';
+import Header from './Header';
 import Store from './Store';
 
-const Modal = styled(Prompt.Dialog)`
+const t = scoped('nti.web.profiles.user.account-management.modal', {
+	title: 'Manage Account',
+});
+
+const Translate = Text.Translator(t);
+
+const Modal = styled(Prompt.BaseWindow)`
 	width: 533px;
 `;
 
-function AccountManagerModal() {
-	return (
-		<Modal
-			closeOnMaskClick={false}
-			closeOnEscape={true}>
-				<Header />
-				<Tabs />
-		</Modal>
-	);
-}
+const AccountMangerPrompt = React.forwardRef(function AccountMangerPrompt(
+	{ handleClose },
+	ref
+) {
+	const { load, loading } = Store.useValue();
 
-export default Store.compose(AccountManagerModal);
+	useEffect(() => {
+		load();
+	}, [load]);
+
+	return (
+		<Prompt.Dialog
+			closeOnMaskClick={false}
+			closeOnEscape={true}
+			onBeforeDismiss={handleClose}
+		>
+			<Loading.Placeholder
+				fallback={<Loading.Spinner.Large />}
+				loading={loading}
+			>
+				<Modal
+					title={<Translate localeKey="title" />}
+					doClose={handleClose}
+					buttons={[]}
+				>
+					<Header />
+					<Tabs />
+				</Modal>
+			</Loading.Placeholder>
+		</Prompt.Dialog>
+	);
+});
+
+export default Store.compose(AccountMangerPrompt);
