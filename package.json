@@ -53,7 +53,7 @@
     "uuid": "^8.3.0"
   },
   "devDependencies": {
-    "@nti/cmp-scripts": "2.33.4"
+    "@nti/cmp-scripts": "^2.33.4"
   },
   "peerDependencies": {
     "react": "*"
