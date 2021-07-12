@@ -42,7 +42,7 @@ class AboutInput extends React.Component {
 				error={error}
 			>
 				<Input.TextArea
-					className={cx('input', 'textarea')}
+					inputClassName={cx('input', 'textarea')}
 					value={value}
 					onChange={this.onChange}
 					autoGrow
