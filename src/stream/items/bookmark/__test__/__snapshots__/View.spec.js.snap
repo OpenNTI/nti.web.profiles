@@ -1,82 +1,81 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Bookmark renders correctly 1`] = `
-<div
-  className="stream-bookmark"
->
+<DocumentFragment>
   <div
-    className="heading"
+    class="stream-bookmark"
   >
     <div
-      className="nti-link-to-path"
-      to="#"
-    >
-      <a
-        className="username"
-        rel="author"
-      >
-        Tim Jones
-      </a>
-    </div>
-     
-    created a bookmark on
-     
-    <time
-      className="ntiText"
-      dateTime="2018-08-31T00:00:00Z"
-    >
-      August 31, 2018
-    </time>
-  </div>
-  <div
-    className="nti-link-to-path"
-    to="/id/user4-OID-0x04e6fa%3A5573657273%3AnywS9Pjp8FE"
-  >
-    <div
-      className="bookmark-content"
+      class="heading"
     >
       <div
-        className="bookmark-charms"
+        class="nti-link-to-path"
+        to="#"
       >
-        <div
-          className="bookmark-favorite"
-        />
+        <a
+          class="username"
+          rel="author"
+        >
+          Tim Jones
+        </a>
       </div>
-      <img
-        className="bookmark-icon"
-        onError={[Function]}
-        src=""
-      />
+       created a bookmark on 
+      <time
+        class="ntiText"
+        datetime="2018-08-31T00:00:00Z"
+      >
+        August 31, 2018
+      </time>
+    </div>
+    <div
+      class="nti-link-to-path"
+      to="/id/user4-OID-0x04e6fa%3A5573657273%3AnywS9Pjp8FE"
+    >
       <div
-        className="bookmark-context"
+        class="bookmark-content"
       >
         <div
-          className="nti-content-breadcrumb"
+          class="bookmark-charms"
         >
           <div
-            className="nti-link-to-path"
-            to="/id/user4-OID-0x04e6fa%3A5573657273%3AnywS9Pjp8FE"
-          >
-            <ul
-              className="breadcrumb-list"
-            >
-              <li
-                className="crumb last"
-              >
-                <span>
-                  Engine Types adn Applications
-                </span>
-              </li>
-            </ul>
-          </div>
+            class="bookmark-favorite"
+          />
         </div>
+        <img
+          class="bookmark-icon"
+          src=""
+        />
         <div
-          className="page-title"
+          class="bookmark-context"
         >
-          Test
+          <div
+            class="nti-content-breadcrumb"
+          >
+            <div
+              class="nti-link-to-path"
+              to="/id/user4-OID-0x04e6fa%3A5573657273%3AnywS9Pjp8FE"
+            >
+              <ul
+                class="breadcrumb-list"
+              >
+                <li
+                  class="crumb last"
+                >
+                  <span>
+                    Engine Types adn Applications
+                  </span>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div
+            class="page-title"
+          >
+            Test
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+</DocumentFragment>
 `;

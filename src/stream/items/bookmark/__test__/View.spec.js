@@ -1,5 +1,5 @@
 import React from 'react';
-import renderer from 'react-test-renderer';
+import { render, act } from '@testing-library/react';
 
 import * as TestUtils from '@nti/web-client/test-utils';
 import { flushPromises } from '@nti/lib-commons/test-utils';
@@ -63,14 +63,14 @@ describe('Bookmark', () => {
 				},
 			],
 		};
-		const bookmarkCmp = renderer.create(
-			<Bookmark item={item} context={context} />
-		);
+		const bookmarkCmp = render(<Bookmark item={item} context={context} />);
 
-		jest.runAllTimers();
-		await flushPromises();
+		await act(async () => {
+			jest.runAllTimers();
+			await flushPromises();
+		});
 
-		const tree = bookmarkCmp.toJSON();
+		const tree = bookmarkCmp.asFragment();
 
 		expect(tree).toMatchSnapshot();
 	});

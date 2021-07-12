@@ -22,7 +22,10 @@ jest.doMock('@nti/lib-interfaces', () => ({
 jest.mock('../ChatWindow', () => {
 	const mockDefault = {};
 
-	mockDefault.getChatWindow = () => props => <div {...props}>ChatWindow</div>;
+	mockDefault.getChatWindow =
+		() =>
+		({ expanded, ...props }) =>
+			<div {...props}>ChatWindow</div>;
 
 	return {
 		__esModule: true,
