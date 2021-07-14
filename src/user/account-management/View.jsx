@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
-import { Loading, Prompt, Text } from '@nti/web-commons';
+import { Prompt, Text } from '@nti/web-commons';
 import { scoped } from '@nti/lib-locale';
 
 import Tabs from './tabs';
@@ -17,37 +17,36 @@ const Modal = styled(Prompt.BaseWindow)`
 	width: 533px;
 `;
 
-const AccountMangerPrompt = React.forwardRef(function AccountMangerPrompt(
-	{ handleClose },
-	ref
-) {
-	const { load, loading } = Store.useValue();
+function AccountMangerPrompt() {
+	const [prompt, setPrompt] = useState(true);
+	const { load } = Store.useValue();
+
+	const handleClose = () => setPrompt(false);
 
 	useEffect(() => {
 		load();
 	}, [load]);
 
 	return (
-		<Prompt.Dialog
-			closeOnMaskClick={false}
-			closeOnEscape={true}
-			onBeforeDismiss={handleClose}
-		>
-			<Loading.Placeholder
-				fallback={<Loading.Spinner.Large />}
-				loading={loading}
-			>
-				<Modal
-					title={<Translate localeKey="title" />}
-					doClose={handleClose}
-					buttons={[]}
+		<>
+			{prompt && (
+				<Prompt.Dialog
+					closeOnMaskClick={false}
+					closeOnEscape={true}
+					onBeforeDismiss={handleClose}
 				>
-					<Header />
-					<Tabs />
-				</Modal>
-			</Loading.Placeholder>
-		</Prompt.Dialog>
+					<Modal
+						title={<Translate localeKey="title" />}
+						doClose={handleClose}
+						buttons={[]}
+					>
+						<Header />
+						<Tabs />
+					</Modal>
+				</Prompt.Dialog>
+			)}
+		</>
 	);
-});
+}
 
 export default Store.compose(AccountMangerPrompt);
