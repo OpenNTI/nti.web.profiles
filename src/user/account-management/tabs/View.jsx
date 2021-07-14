@@ -3,8 +3,8 @@ import { useState } from 'react';
 import { Tabs } from '@nti/web-commons';
 
 import Picture from './picture';
-import Password from './password';
-import Preferences from './preferences';
+import Password from './Password';
+import Preferences from './Preferences';
 
 const tabs = [
 	{
