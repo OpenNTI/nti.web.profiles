@@ -5,9 +5,9 @@ import { Button, Errors, Form, Input } from '@nti/web-commons';
 import { getAppUser } from '@nti/web-client';
 
 const t = scoped('nti.web-profiles.user.account-management.tabs.password', {
-	old: 'Old Password',
-	new: 'New Password',
-	verify: 'Verify Password',
+	oldPassword: 'Old Password',
+	newPassword: 'New Password',
+	repeatedPassword: 'Verify Password',
 	save: 'Save Password',
 	error: {
 		required: '%(name) is required.',
@@ -66,7 +66,7 @@ const Success = styled.div`
 	color: var(--correct);
 `;
 
-const initialState = { old: '', new: '', verify: '' };
+const initialState = { oldPassword: '', newPassword: '', repeatedPassword: '' };
 
 export default function PasswordView() {
 	const [error, setError] = useState(null);
@@ -76,16 +76,16 @@ export default function PasswordView() {
 	const handleSubmit = async ({ json }) => {
 		setError(null);
 
-		const { new: newPassword, old, verify } = json;
+		const { newPassword, oldPassword, repeatedPassword } = json;
 
 		try {
-			if (old === newPassword) {
+			if (oldPassword === newPassword) {
 				setError(t('error.different'));
-			} else if (newPassword !== verify) {
+			} else if (newPassword !== repeatedPassword) {
 				setError(t('error.notMatching'));
 			} else {
 				const user = await getAppUser();
-				await user.changePassword(newPassword, old);
+				await user.changePassword(newPassword, oldPassword);
 
 				setSuccess(true);
 				setInputs(initialState);
@@ -98,19 +98,21 @@ export default function PasswordView() {
 	return (
 		<StyledForm onSubmit={handleSubmit}>
 			<InputsContainer>
-				{['old', 'new', 'verify'].map((name, index) => (
-					<Clearable key={index}>
-						<PasswordInput
-							value={inputs[name]}
-							onChange={value =>
-								setInputs({ ...inputs, [name]: value })
-							}
-							required
-							name={name}
-							placeholder={t(name)}
-						/>
-					</Clearable>
-				))}
+				{['oldPassword', 'newPassword', 'repeatedPassword'].map(
+					(name, index) => (
+						<Clearable key={index}>
+							<PasswordInput
+								value={inputs[name]}
+								onChange={value =>
+									setInputs({ ...inputs, [name]: value })
+								}
+								required
+								name={name}
+								placeholder={t(name)}
+							/>
+						</Clearable>
+					)
+				)}
 			</InputsContainer>
 
 			{error && (
@@ -124,7 +126,13 @@ export default function PasswordView() {
 			<ButtonContainer>
 				<Button
 					as={Form.SubmitButton}
-					disabled={!(inputs.new && inputs.old && inputs.verify)}
+					disabled={
+						!(
+							inputs.newPassword &&
+							inputs.oldPassword &&
+							inputs.repeatedPassword
+						)
+					}
 				>
 					{t('save')}
 				</Button>
