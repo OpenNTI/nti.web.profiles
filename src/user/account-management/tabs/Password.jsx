@@ -1,22 +1,25 @@
-import { scoped } from '@nti/lib-locale';
-import { Button, Error, Form, Input } from '@nti/web-commons';
+import { useState } from 'react';
 
-import Store from '../Store';
+import { scoped } from '@nti/lib-locale';
+import { Button, Errors, Form, Input } from '@nti/web-commons';
+import { getAppUser } from '@nti/web-client';
 
 const t = scoped('nti.web-profiles.user.account-management.tabs.password', {
 	old: 'Old Password',
 	new: 'New Password',
 	verify: 'Verify Password',
 	save: 'Save Password',
+	error: {
+		required: '%(name) is required.',
+		different: 'Old and new passwords must be different.',
+		notMatching: 'Passwords do not match.',
+	},
+	success: 'Password changed successfully.',
 });
 
 const StyledForm = styled(Form)`
 	padding: 20px 10px;
 	width: 100%;
-`;
-
-const ErrorContainer = styled.div`
-	margin: 10px 0;
 `;
 
 const ButtonContainer = styled.div`
@@ -34,38 +37,74 @@ const InputsContainer = styled.div`
 
 const Clearable = styled(Input.Clearable)`
 	border: 1px solid var(--secondary-grey);
-	padding-right: 30px;
 	background: #fff;
-	margin: 0 34px 0 0;
+	margin-bottom: 10px;
 	position: relative;
 	display: block;
 `;
 
 const PasswordInput = styled(Input.Text).attrs({ type: 'password' })`
 	color: var(--secondary-grey);
-	font: normal 500 14px/25px 'Open Sans', sans-serif;
 	border: 0;
 	border-left: 10px solid var(--secondary-grey);
 	background: #fff;
-	padding: 6px 10px;
-	margin: 0;
-	min-height: 39px;
-	width: calc(100% - 8px);
-	position: relative;
-	outline: none;
-	display: block;
+	width: 100%;
 	border-radius: 0;
+
+	.error {
+		color: var(--incorrect);
+		border-left: 10px solid var(--incorrect);
+	}
 `;
 
+const ErrorContainer = styled.div`
+	margin: 10px 0;
+`;
+
+const Success = styled.div`
+	margin: 10px 0;
+	color: var(--correct);
+`;
+
+const initialState = { old: '', new: '', verify: '' };
+
 export default function PasswordView() {
-	const { handlePassword, error } = Store.useValue();
+	const [error, setError] = useState(null);
+	const [success, setSuccess] = useState(null);
+	const [inputs, setInputs] = useState(initialState);
+
+	const handleSubmit = async ({ json }) => {
+		setError(null);
+
+		const { new: newPassword, old, verify } = json;
+
+		try {
+			if (old === newPassword) {
+				setError(t('error.different'));
+			} else if (newPassword !== verify) {
+				setError(t('error.notMatching'));
+			} else {
+				const user = await getAppUser();
+				await user.changePassword(newPassword, old);
+
+				setSuccess(true);
+				setInputs(initialState);
+			}
+		} catch (e) {
+			setError(e?.Message);
+		}
+	};
 
 	return (
-		<StyledForm onSubmit={handlePassword}>
+		<StyledForm onSubmit={handleSubmit}>
 			<InputsContainer>
 				{['old', 'new', 'verify'].map((name, index) => (
 					<Clearable key={index}>
 						<PasswordInput
+							value={inputs[name]}
+							onChange={value =>
+								setInputs({ ...inputs, [name]: value })
+							}
 							required
 							name={name}
 							placeholder={t(name)}
@@ -76,12 +115,19 @@ export default function PasswordView() {
 
 			{error && (
 				<ErrorContainer>
-					<Error error={error} />
+					<Errors.Message error={error} />
 				</ErrorContainer>
 			)}
 
+			{success && <Success>{t('success')}</Success>}
+
 			<ButtonContainer>
-				<Button as={Form.SubmitButton}>{t('save')}</Button>
+				<Button
+					as={Form.SubmitButton}
+					disabled={!(inputs.new && inputs.old && inputs.verify)}
+				>
+					{t('save')}
+				</Button>
 			</ButtonContainer>
 		</StyledForm>
 	);
