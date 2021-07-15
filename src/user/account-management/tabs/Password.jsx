@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import { scoped } from '@nti/lib-locale';
-import { Button, Errors, Form, Input } from '@nti/web-commons';
+import { Button, Form, Input } from '@nti/web-commons';
 import { getAppUser } from '@nti/web-client';
 
 const t = scoped('nti.web-profiles.user.account-management.tabs.password', {
@@ -43,7 +43,7 @@ const Clearable = styled(Input.Clearable)`
 	display: block;
 `;
 
-const PasswordInput = styled(Input.Text).attrs({ type: 'password' })`
+const PasswordInput = styled(Form.Input).attrs({ type: 'password' })`
 	color: var(--secondary-grey);
 	border: 0;
 	border-left: 10px solid var(--secondary-grey);
@@ -57,10 +57,6 @@ const PasswordInput = styled(Input.Text).attrs({ type: 'password' })`
 	}
 `;
 
-const ErrorContainer = styled.div`
-	margin: 10px 0;
-`;
-
 const Success = styled.div`
 	margin: 10px 0;
 	color: var(--correct);
@@ -69,29 +65,26 @@ const Success = styled.div`
 const initialState = { oldPassword: '', newPassword: '', repeatedPassword: '' };
 
 export default function PasswordView() {
-	const [error, setError] = useState(null);
 	const [success, setSuccess] = useState(null);
 	const [inputs, setInputs] = useState(initialState);
 
 	const handleSubmit = async ({ json }) => {
-		setError(null);
-
 		const { newPassword, oldPassword, repeatedPassword } = json;
 
-		try {
-			if (oldPassword === newPassword) {
-				setError(t('error.different'));
-			} else if (newPassword !== repeatedPassword) {
-				setError(t('error.notMatching'));
-			} else {
-				const user = await getAppUser();
-				await user.changePassword(newPassword, oldPassword);
+		if (oldPassword === newPassword) {
+			const e = new Error(t('error.different'));
+			e.field = 'newPassword';
+			throw e;
+		} else if (newPassword !== repeatedPassword) {
+			const e = new Error(t('error.notMatching'));
+			e.field = 'repeatedPassword';
+			throw e;
+		} else {
+			const user = await getAppUser();
+			await user.changePassword(newPassword, oldPassword);
 
-				setSuccess(true);
-				setInputs(initialState);
-			}
-		} catch (e) {
-			setError(e?.Message);
+			setSuccess(true);
+			setInputs(initialState);
 		}
 	};
 
@@ -114,12 +107,6 @@ export default function PasswordView() {
 					)
 				)}
 			</InputsContainer>
-
-			{error && (
-				<ErrorContainer>
-					<Errors.Message error={error} />
-				</ErrorContainer>
-			)}
 
 			{success && <Success>{t('success')}</Success>}
 
