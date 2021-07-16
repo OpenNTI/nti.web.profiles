@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { Prompt, Text } from '@nti/web-commons';
+import { Loading, Prompt, Text } from '@nti/web-commons';
 import { scoped } from '@nti/lib-locale';
 
 import Tabs from './tabs';
@@ -19,7 +19,7 @@ const Modal = styled(Prompt.BaseWindow)`
 
 function AccountMangerPrompt() {
 	const [prompt, setPrompt] = useState(true);
-	const { load } = Store.useValue();
+	const { load, loading } = Store.useValue();
 
 	const handleClose = () => setPrompt(false);
 
@@ -40,8 +40,13 @@ function AccountMangerPrompt() {
 						doClose={handleClose}
 						buttons={[]}
 					>
-						<Header />
-						<Tabs />
+						<Loading.Placeholder
+							loading={loading}
+							fallback={<Loading.Spinner.Large />}
+						>
+							<Header />
+							<Tabs />
+						</Loading.Placeholder>
 					</Modal>
 				</Prompt.Dialog>
 			)}

@@ -1,6 +1,8 @@
 import { useState } from 'react';
 
-import { Tabs } from '@nti/web-commons';
+import { Loading, Tabs } from '@nti/web-commons';
+
+import Store from '../Store';
 
 import Picture from './picture';
 import Password from './Password';
@@ -24,6 +26,7 @@ const tabs = [
 ];
 
 export default function TabsView() {
+	const { loading } = Store.useValue();
 	const [activeTab, setActiveTab] = useState(0);
 
 	const handleTabChange = tab => {
@@ -41,7 +44,12 @@ export default function TabsView() {
 			</Tabs.Tabs>
 
 			<Tabs.TabContent active>
-				<ActiveTab />
+				<Loading.Placeholder
+					loading={loading}
+					fallback={<Loading.Spinner.Large />}
+				>
+					<ActiveTab />
+				</Loading.Placeholder>
 			</Tabs.TabContent>
 		</>
 	);
