@@ -6,7 +6,15 @@ import Store from '../Store';
 
 import Picture from './picture';
 import Password from './Password';
-import Preferences from './Preferences';
+import Preferences from './preferences';
+
+// const t = scoped('nti.web-profiles.user.account-management.tabs', {
+// 	picture: 'Edit Profile Picture',
+// 	password: 'Change Password',
+// 	preferences: 'Preferences',
+// });
+
+// const Translate = Text.Translator(t);
 
 const tabs = [
 	{
