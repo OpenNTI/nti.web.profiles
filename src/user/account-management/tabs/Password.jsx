@@ -43,7 +43,7 @@ const Clearable = styled(Input.Clearable)`
 	display: block;
 `;
 
-const PasswordInput = styled(Form.Input).attrs({ type: 'password' })`
+const PasswordInput = styled(Form.Input.Text).attrs({ type: 'password' })`
 	color: var(--secondary-grey);
 	border: 0;
 	border-left: 10px solid var(--secondary-grey);
