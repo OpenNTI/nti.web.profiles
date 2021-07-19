@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 
 import { Checkbox, User } from '@nti/web-commons';
 import { getConfig } from '@nti/web-client';
@@ -15,6 +15,13 @@ const Container = styled.div`
 export default function Field({ name, collection, label }) {
 	const key = `${collection}.${name}`;
 	const [preference, setPreference] = User.usePreference(key);
+
+	const isInitialMount = React.useRef(true);
+
+	const onChange = React.useCallback(
+		e => setPreference(e.target.checked),
+		[preference, setPreference]
+	);
 
 	/* Add/Remove accessibility stylesheet on useHighContrast change */
 	useEffect(() => {
@@ -34,14 +41,18 @@ export default function Field({ name, collection, label }) {
 				}
 			}
 		};
-		listenForChange();
+		if (isInitialMount.current) {
+			isInitialMount.current = false;
+		} else {
+			listenForChange();
+		}
 	}, [preference]);
 
 	return (
 		<Container>
 			<Checkbox
-				checked={preference}
-				onChange={e => setPreference(e.target.checked)}
+				checked={!!preference}
+				onChange={onChange}
 				label={label}
 			/>
 		</Container>
