@@ -1,9 +1,18 @@
 import PropTypes from 'prop-types';
 
 import { scoped } from '@nti/lib-locale';
-import { Input } from '@nti/web-commons';
 
 import Field from './Field';
+
+const Fieldset = styled.fieldset`
+	border: 1px solid var(--border-grey);
+	margin-bottom: 20px;
+`;
+
+const Legend = styled.legend`
+	color: var(--secondary-grey);
+	font: normal 600 0.9em var(--body-font-family);
+`;
 
 const t = scoped('nti.web-profiles.user.account-management.tabs.Preferences', {
 	WebApp: {
@@ -32,7 +41,8 @@ Section.propType = {
 
 export default function Section({ name, fields }) {
 	return (
-		<Input.LabelPlaceholder variant="box" label={t(`${name}.title`)}>
+		<Fieldset>
+			<Legend>{t(`${name}.title`)}</Legend>
 			<>
 				{fields?.map(field => (
 					<Field
@@ -43,6 +53,6 @@ export default function Section({ name, fields }) {
 					/>
 				))}
 			</>
-		</Input.LabelPlaceholder>
+		</Fieldset>
 	);
 }

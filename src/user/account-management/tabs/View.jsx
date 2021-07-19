@@ -16,10 +16,6 @@ import Preferences from './preferences';
 
 // const Translate = Text.Translator(t);
 
-const ActiveTabContainer = styled.div`
-	padding: 40px 20px;
-`;
-
 const tabs = [
 	{
 		label: 'Edit Profile Picture',
@@ -60,9 +56,7 @@ export default function TabsView() {
 					loading={loading}
 					fallback={<Loading.Spinner.Large />}
 				>
-					<ActiveTabContainer>
-						<ActiveTab />
-					</ActiveTabContainer>
+					<ActiveTab />
 				</Loading.Placeholder>
 			</Tabs.TabContent>
 		</>

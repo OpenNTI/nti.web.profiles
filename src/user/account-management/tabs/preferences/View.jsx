@@ -1,5 +1,9 @@
 import Section from './Section';
 
+const Container = styled.div`
+	padding: 20px;
+`;
+
 const preferencesArray = [
 	{ name: 'WebApp', items: ['useHighContrast'] },
 	{
@@ -18,7 +22,7 @@ const preferencesArray = [
 
 export default function PreferencesView() {
 	return (
-		<>
+		<Container>
 			{preferencesArray.map(collection => (
 				<Section
 					key={collection.name}
@@ -26,6 +30,6 @@ export default function PreferencesView() {
 					fields={collection.items}
 				/>
 			))}
-		</>
+		</Container>
 	);
 }

@@ -15,6 +15,14 @@ const t = scoped(
 const ImageEditorWrapper = styled(ImageEditor.Editor)`
 	padding: 20px 0;
 	background-color: var(--tertiary-grey);
+
+	&canvas {
+		padding: 20px;
+	}
+`;
+
+const StyledDialogButtons = styled(DialogButtons)`
+	margin-top: 20px;
 `;
 
 export default function EditView({ onSave, image, onCancel }) {
@@ -58,7 +66,7 @@ export default function EditView({ onSave, image, onCancel }) {
 				editorState={editorState}
 				onChange={handleChange}
 			/>
-			<DialogButtons buttons={buttons} />
+			<StyledDialogButtons buttons={buttons} />
 		</>
 	);
 }

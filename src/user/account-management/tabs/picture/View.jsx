@@ -25,6 +25,7 @@ export default function PictureTab() {
 	};
 
 	const onCancel = () => {
+		setBaseImage(image);
 		setActive('main');
 	};
 
@@ -33,7 +34,7 @@ export default function PictureTab() {
 			loading={loading}
 			fallback={<Loading.Spinner.Large />}
 		>
-			<Switch.Container active={active} className="course-image-editor">
+			<Switch.Container active={active}>
 				<Switch.Item name="loading" component={Loading.Mask} />
 				<Switch.Item
 					name="main"

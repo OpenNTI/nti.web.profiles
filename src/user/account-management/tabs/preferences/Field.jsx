@@ -5,6 +5,13 @@ import { getConfig } from '@nti/web-client';
 import { addStyleSheet } from '@nti/lib-dom';
 import { URL } from '@nti/lib-commons';
 
+const Container = styled.div`
+	display: inline-block;
+	margin: 0.5em;
+	color: var(--secondary-grey);
+	font: normal normal 0.9em/2 var(--body-font-family);
+`;
+
 export default function Field({ name, collection, label }) {
 	const key = `${collection}.${name}`;
 	const [preference, setPreference] = User.usePreference(key);
@@ -31,10 +38,12 @@ export default function Field({ name, collection, label }) {
 	}, [preference]);
 
 	return (
-		<Checkbox
-			checked={preference}
-			onChange={e => setPreference(e.target.checked)}
-			label={label}
-		/>
+		<Container>
+			<Checkbox
+				checked={preference}
+				onChange={e => setPreference(e.target.checked)}
+				label={label}
+			/>
+		</Container>
 	);
 }

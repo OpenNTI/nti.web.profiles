@@ -22,7 +22,6 @@ const StyledForm = styled(Form)`
 `;
 
 const ButtonContainer = styled.div`
-	margin-top: 40px;
 	border-top: 1px solid var(--border-grey) !important;
 	overflow: hidden;
 	display: flex;
@@ -32,6 +31,7 @@ const ButtonContainer = styled.div`
 const InputsContainer = styled.div`
 	margin: 0 auto;
 	width: 100%;
+	padding: 20px;
 `;
 
 const Clearable = styled(Input.Clearable)`
