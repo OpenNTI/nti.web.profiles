@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { Checkbox, User } from '@nti/web-commons';
 import { getConfig } from '@nti/web-client';
 import { addStyleSheet } from '@nti/lib-dom';
+import { URL } from '@nti/lib-commons';
 
 export default function Field({ name, collection, label }) {
 	const key = `${collection}.${name}`;
@@ -32,7 +33,7 @@ export default function Field({ name, collection, label }) {
 	return (
 		<Checkbox
 			checked={preference}
-			onChange={value => setPreference(value)}
+			onChange={e => setPreference(e.target.checked)}
 			label={label}
 		/>
 	);
