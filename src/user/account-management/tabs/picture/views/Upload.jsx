@@ -13,7 +13,7 @@ const t = scoped(
 
 const Translate = Text.Translator(t);
 
-const ImageEditorWrapper = styled(ImageEditor.Editor)`
+const ImageEditorWrapper = styled.div`
 	padding: 20px;
 `;
 
@@ -39,7 +39,9 @@ export default function UploadView({ onSave, onCancel }) {
 
 	return (
 		<>
-			<ImageEditorWrapper onChange={onImageChange} />
+			<ImageEditorWrapper>
+				<ImageEditor.Editor onChange={onImageChange} />
+			</ImageEditorWrapper>
 			<DialogButtons buttons={buttons} />
 		</>
 	);
