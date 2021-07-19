@@ -18,7 +18,6 @@ const t = scoped('nti.web-profiles.user.account-management.tabs.password', {
 });
 
 const StyledForm = styled(Form)`
-	padding: 20px 10px;
 	width: 100%;
 `;
 
@@ -43,7 +42,7 @@ const Clearable = styled(Input.Clearable)`
 	display: block;
 `;
 
-const PasswordInput = styled(Form.Input.Text).attrs({ type: 'password' })`
+const PasswordInput = styled(Input.Text).attrs({ type: 'password' })`
 	color: var(--secondary-grey);
 	border: 0;
 	border-left: 10px solid var(--secondary-grey);

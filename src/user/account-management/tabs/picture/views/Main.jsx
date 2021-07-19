@@ -5,7 +5,6 @@ import Store from '../../../Store';
 
 const Container = styled.div`
 	display: flex;
-	padding: 20px;
 `;
 
 const StyledAvatar = styled(Avatar)`
