@@ -7,7 +7,7 @@ const Container = styled.div`
 const preferencesArray = [
 	{ name: 'WebApp', items: ['useHighContrast'] },
 	{
-		name: 'PushNotificationsEmail',
+		name: 'PushNotifications.Email',
 		items: [
 			'email_a_summary_of_interesting_changes',
 			'immediate_threadable_reply',

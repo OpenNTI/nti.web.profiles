@@ -19,7 +19,7 @@ const t = scoped('nti.web-profiles.user.account-management.tabs.Preferences', {
 		title: 'Accessibility',
 		useHighContrast: 'Enable High Contrast Mode.',
 	},
-	PushNotificationsEmail: {
+	['PushNotifications.Email']: {
 		title: 'Communications',
 		email_a_summary_of_interesting_changes:
 			'Send me email notifications about activity I may have missed.',
@@ -27,7 +27,7 @@ const t = scoped('nti.web-profiles.user.account-management.tabs.Preferences', {
 			'Send me email notifications when someone @mentions me.',
 		notify_on_mention: 'Send me email notifications when I am replied to.',
 	},
-	BadgesCourse: {
+	['Badges.Course']: {
 		title: 'Badges',
 		show_course_badges:
 			'Make badges earned for completing a course public.',
