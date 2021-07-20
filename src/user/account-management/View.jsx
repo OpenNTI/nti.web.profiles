@@ -35,19 +35,19 @@ function AccountMangerPrompt() {
 					closeOnEscape={true}
 					onBeforeDismiss={handleClose}
 				>
-					<Modal
-						title={<Translate localeKey="title" />}
-						doClose={handleClose}
-						buttons={[]}
+					<Loading.Placeholder
+						loading={loading}
+						fallback={<Loading.Spinner.Large />}
 					>
-						<Loading.Placeholder
-							loading={loading}
-							fallback={<Loading.Spinner.Large />}
+						<Modal
+							title={<Translate localeKey="title" />}
+							doClose={handleClose}
+							buttons={[]}
 						>
 							<Header />
 							<Tabs />
-						</Loading.Placeholder>
-					</Modal>
+						</Modal>
+					</Loading.Placeholder>
 				</Prompt.Dialog>
 			)}
 		</>
