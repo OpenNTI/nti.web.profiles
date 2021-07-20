@@ -27,7 +27,7 @@ export default class AccountStore extends Stores.SimpleStore {
 	}
 
 	async load() {
-		this.set('loading', true);
+		this.set('initLoading', true);
 
 		try {
 			const service = await getService();
@@ -37,11 +37,11 @@ export default class AccountStore extends Stores.SimpleStore {
 			this.set('user', user);
 			this.set('image', image);
 
-			this.set('loading', false);
+			this.set('initLoading', false);
 		} catch (error) {
 			this.set('error', error);
 
-			this.set('loading', false);
+			this.set('initLoading', false);
 		}
 	}
 }
