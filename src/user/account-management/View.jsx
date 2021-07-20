@@ -19,7 +19,7 @@ const Modal = styled(Prompt.BaseWindow)`
 
 function AccountMangerPrompt() {
 	const [prompt, setPrompt] = useState(true);
-	const { load, loading } = Store.useValue();
+	const { load, initLoading } = Store.useValue();
 
 	const handleClose = () => setPrompt(false);
 
@@ -36,7 +36,7 @@ function AccountMangerPrompt() {
 					onBeforeDismiss={handleClose}
 				>
 					<Loading.Placeholder
-						loading={loading}
+						loading={initLoading}
 						fallback={<Loading.Spinner.Large />}
 					>
 						<Modal
