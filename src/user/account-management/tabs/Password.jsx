@@ -57,7 +57,8 @@ const PasswordInput = styled(Input.Text).attrs({ type: 'password' })`
 `;
 
 const Success = styled.div`
-	margin: 10px 0;
+	margin-top: 10px;
+	margin-left: 20px;
 	color: var(--correct);
 `;
 
