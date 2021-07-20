@@ -12,17 +12,13 @@ const t = scoped(
 	}
 );
 
-const ImageEditorWrapper = styled(ImageEditor.Editor)`
-	padding: 20px 0;
-	background-color: var(--tertiary-grey);
-
-	&canvas {
-		padding: 20px;
-	}
+const Container = styled.div`
+	padding: 0 20px;
+	background-color: var(--quad-grey);
 `;
 
 const StyledDialogButtons = styled(DialogButtons)`
-	margin-top: 20px;
+	width: 100%;
 `;
 
 export default function EditView({ onSave, image, onCancel }) {
@@ -62,10 +58,13 @@ export default function EditView({ onSave, image, onCancel }) {
 
 	return (
 		<>
-			<ImageEditorWrapper
-				editorState={editorState}
-				onChange={handleChange}
-			/>
+			<Container>
+				<ImageEditor.Editor
+					allowedControls={[ImageEditor.Editor.Controls.Rotate]}
+					editorState={editorState}
+					onChange={handleChange}
+				/>
+			</Container>
 			<StyledDialogButtons buttons={buttons} />
 		</>
 	);
