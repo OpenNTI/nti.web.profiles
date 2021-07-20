@@ -15,7 +15,7 @@ const preferencesArray = [
 		],
 	},
 	{
-		name: 'BadgesCourse',
+		name: 'Badges.Course',
 		items: ['show_course_badges'],
 	},
 ];
