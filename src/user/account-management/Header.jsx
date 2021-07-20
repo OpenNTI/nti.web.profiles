@@ -57,7 +57,7 @@ const Person = styled(Icons.Person)`
 
 const Envelop = styled.div`
 	margin-right: 5px;
-	background-image: url('./account-email.png');
+	background-image: url('./assets/account-email.png');
 	width: 15px;
 	height: 11px;
 	display: inline-block;
