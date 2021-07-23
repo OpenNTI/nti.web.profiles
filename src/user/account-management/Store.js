@@ -7,7 +7,6 @@ export default class AccountStore extends Stores.SimpleStore {
 
 	constructor() {
 		super();
-		this.load();
 	}
 
 	async saveImage(image) {
@@ -32,10 +31,13 @@ export default class AccountStore extends Stores.SimpleStore {
 		try {
 			const service = await getService();
 			const user = await service.getAppUser();
-			const image = await ImageEditor.getImg(user.avatarURL);
+
+			if (user.avatarURL) {
+				const image = await ImageEditor.getImg(user.avatarURL);
+				this.set('image', image);
+			}
 
 			this.set('user', user);
-			this.set('image', image);
 
 			this.set('initLoading', false);
 		} catch (error) {

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import { scoped } from '@nti/lib-locale';
-import { Button, Form, Input } from '@nti/web-commons';
+import { Button, Errors, Form, Input } from '@nti/web-commons';
 import { getAppUser } from '@nti/web-client';
 
 const t = scoped('nti.web-profiles.user.account-management.tabs.password', {
@@ -62,29 +62,35 @@ const Success = styled.div`
 	color: var(--correct);
 `;
 
+const ErrorContainer = styled.div`
+	margin-top: 10px;
+	margin-left: 20px;
+`;
+
 const initialState = { oldPassword: '', newPassword: '', repeatedPassword: '' };
 
 export default function PasswordView() {
 	const [success, setSuccess] = useState(null);
 	const [inputs, setInputs] = useState(initialState);
+	const [error, setError] = useState(null);
 
 	const handleSubmit = async ({ json }) => {
 		const { newPassword, oldPassword, repeatedPassword } = json;
 
 		if (oldPassword === newPassword) {
-			const e = new Error(t('error.different'));
-			e.field = 'newPassword';
-			throw e;
+			setError(t('error.different'));
 		} else if (newPassword !== repeatedPassword) {
-			const e = new Error(t('error.notMatching'));
-			e.field = 'repeatedPassword';
-			throw e;
+			setError(t('error.notMatching'));
 		} else {
-			const user = await getAppUser();
-			await user.changePassword(newPassword, oldPassword);
+			try {
+				const user = await getAppUser();
+				await user.changePassword(newPassword, oldPassword);
 
-			setSuccess(true);
-			setInputs(initialState);
+				setSuccess(true);
+				setInputs(initialState);
+			} catch (e) {
+				setError(e);
+			}
 		}
 	};
 
@@ -102,13 +108,19 @@ export default function PasswordView() {
 								required
 								name={name}
 								placeholder={t(name)}
+								data-testid={`input-${name}`}
 							/>
 						</Clearable>
 					)
 				)}
 			</InputsContainer>
 
-			{success && <Success>{t('success')}</Success>}
+			{success && <Success data-testid="success">{t('success')}</Success>}
+			{error && (
+				<ErrorContainer data-testid="error">
+					<Errors.Message error={error} />
+				</ErrorContainer>
+			)}
 
 			<ButtonContainer>
 				<Button
@@ -120,6 +132,7 @@ export default function PasswordView() {
 							inputs.repeatedPassword
 						)
 					}
+					data-testid="submit-btn"
 				>
 					{t('save')}
 				</Button>

@@ -78,11 +78,11 @@ export default function Header() {
 				<IdentityContainer>
 					<IconLabel username>
 						<Person />
-						<Label>{user.Username}</Label>
+						<Label>{user?.Username}</Label>
 					</IconLabel>
 					<IconLabel email>
 						<Envelop />
-						<Label>{user.email}</Label>
+						<Label>{user?.email}</Label>
 					</IconLabel>
 				</IdentityContainer>
 			</div>
