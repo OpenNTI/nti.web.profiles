@@ -34,15 +34,20 @@ export default function UploadView({ onSave, onCancel }) {
 		}
 	};
 	const buttons = [
-		{ key: 0, label: <Translate localeKey="cancel" />, onClick: onCancel },
+		{
+			key: 0,
+			label: <Translate localeKey="cancel" />,
+			onClick: onCancel,
+			'data-testid': 'cancel-btn',
+		},
 	];
 
 	return (
-		<>
+		<div data-testid="upload-view">
 			<ImageEditorWrapper>
 				<ImageEditor.Editor onChange={onImageChange} />
 			</ImageEditorWrapper>
 			<DialogButtons buttons={buttons} />
-		</>
+		</div>
 	);
 }

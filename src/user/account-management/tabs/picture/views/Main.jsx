@@ -71,10 +71,14 @@ const Translate = Text.Translator(translation);
 export default function MainView({ onUpload, onEdit }) {
 	const { user } = Store.useValue();
 
+	if (!user) {
+		return null;
+	}
+
 	const displayEditLink = user.avatarURL;
 
 	return (
-		<Container>
+		<Container data-testid="main-view">
 			<StyledAvatar entity={user} />
 			<div>
 				<Title as="h3">
@@ -82,11 +86,11 @@ export default function MainView({ onUpload, onEdit }) {
 				</Title>
 				<LinksContainer>
 					{displayEditLink && (
-						<Link onClick={onEdit}>
+						<Link onClick={onEdit} data-testid="edit-link">
 							<Translate localeKey="edit" />
 						</Link>
 					)}
-					<Link onClick={onUpload}>
+					<Link onClick={onUpload} data-testid="upload-link">
 						<Translate localeKey="upload" />
 					</Link>
 				</LinksContainer>

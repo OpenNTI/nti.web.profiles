@@ -54,6 +54,7 @@ export default function Field({ name, collection, label }) {
 				checked={!!preference}
 				onChange={onChange}
 				label={label}
+				data-testid={`checkbox-${name}`}
 			/>
 		</Container>
 	);

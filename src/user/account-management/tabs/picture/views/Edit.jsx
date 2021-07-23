@@ -49,16 +49,18 @@ export default function EditView({ onSave, image, onCancel }) {
 		{
 			label: t('cancel'),
 			onClick: onCancel,
+			'data-testid': 'cancel-btn',
 		},
 		{
 			label: t('save'),
 			onClick: handleSave,
+			'data-testid': 'save-btn',
 		},
 	];
 
 	return (
 		<>
-			<Container>
+			<Container data-testid="edit-view">
 				<ImageEditor.Editor
 					allowedControls={[ImageEditor.Editor.Controls.Rotate]}
 					editorState={editorState}
