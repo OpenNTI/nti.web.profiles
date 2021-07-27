@@ -57,14 +57,12 @@ const PasswordInput = styled(Input.Text).attrs({ type: 'password' })`
 `;
 
 const Success = styled.div`
-	margin-top: 10px;
-	margin-left: 20px;
+	margin: 10px 0 10px 20px;
 	color: var(--correct);
 `;
 
 const ErrorContainer = styled.div`
-	margin-top: 10px;
-	margin-left: 20px;
+	margin: 10px 0 10px 20px;
 `;
 
 const initialState = { oldPassword: '', newPassword: '', repeatedPassword: '' };
@@ -87,6 +85,7 @@ export default function PasswordView() {
 				await user.changePassword(newPassword, oldPassword);
 
 				setSuccess(true);
+				setError(null);
 				setInputs(initialState);
 			} catch (e) {
 				setError(e);
