@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import { Checkbox, User } from '@nti/web-commons';
 import { getConfig } from '@nti/web-client';
@@ -16,40 +16,27 @@ export default function Field({ name, collection, label }) {
 	const key = `${collection}.${name}`;
 	const [preference, setPreference] = User.usePreference(key);
 
-	const isInitialMount = React.useRef(true);
-
 	const onChange = React.useCallback(
-		e => setPreference(e.target.checked),
-		[preference, setPreference]
-	);
+		async e => {
+			setPreference(e.target.checked);
 
-	/**
-	 * Special case field:
-	 * Add/Remove accessibility stylesheet on useHighContrast change
-	 */
-	useEffect(() => {
-		const listenForChange = async () => {
 			if (name === 'useHighContrast') {
 				const basepath = getConfig('basepath') ?? '/';
 				if (preference) {
 					await addStyleSheet(
-						URL.join(basepath, '/resources/css/accessibility.css'),
+						URL.join(basepath, '/resources/css/legacy.css'),
 						'main-stylesheet'
 					);
 				} else {
 					await addStyleSheet(
-						URL.join(basepath, '/resources/css/legacy.css'),
+						URL.join(basepath, '/resources/css/accessibility.css'),
 						'main-stylesheet'
 					);
 				}
 			}
-		};
-		if (isInitialMount.current) {
-			isInitialMount.current = false;
-		} else {
-			listenForChange();
-		}
-	}, [preference]);
+		},
+		[preference, setPreference]
+	);
 
 	return (
 		<Container>
