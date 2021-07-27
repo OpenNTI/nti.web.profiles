@@ -1,7 +1,5 @@
-import { useState } from 'react';
-
 import { scoped } from '@nti/lib-locale';
-import { Button, Errors, Form, Input } from '@nti/web-commons';
+import { Button, Errors, Form, Input, useReducerState } from '@nti/web-commons';
 import { getAppUser } from '@nti/web-client';
 
 const t = scoped('nti.web-profiles.user.account-management.tabs.password', {
@@ -68,27 +66,27 @@ const ErrorContainer = styled.div`
 const initialState = { oldPassword: '', newPassword: '', repeatedPassword: '' };
 
 export default function PasswordView() {
-	const [success, setSuccess] = useState(null);
-	const [inputs, setInputs] = useState(initialState);
-	const [error, setError] = useState(null);
+	const [{ success, inputs, error }, dispatch] = useReducerState({
+		success: null,
+		error: null,
+		inputs: initialState,
+	});
 
 	const handleSubmit = async ({ json }) => {
 		const { newPassword, oldPassword, repeatedPassword } = json;
 
 		if (oldPassword === newPassword) {
-			setError(t('error.different'));
+			dispatch({ error: t('error.different'), success: null });
 		} else if (newPassword !== repeatedPassword) {
-			setError(t('error.notMatching'));
+			dispatch({ error: t('error.notMatching'), success: null });
 		} else {
 			try {
 				const user = await getAppUser();
 				await user.changePassword(newPassword, oldPassword);
 
-				setSuccess(true);
-				setError(null);
-				setInputs(initialState);
-			} catch (e) {
-				setError(e);
+				dispatch({ success: true, error: null, inputs: initialState });
+			} catch (error) {
+				dispatch({ error });
 			}
 		}
 	};
@@ -102,7 +100,9 @@ export default function PasswordView() {
 							<PasswordInput
 								value={inputs[name]}
 								onChange={value =>
-									setInputs({ ...inputs, [name]: value })
+									dispatch({
+										inputs: { ...inputs, [name]: value },
+									})
 								}
 								required
 								name={name}
