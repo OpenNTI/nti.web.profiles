@@ -86,7 +86,7 @@ export default function PasswordView() {
 
 				dispatch({ success: true, error: null, inputs: initialState });
 			} catch (error) {
-				dispatch({ error });
+				dispatch({ error, success: null });
 			}
 		}
 	};
