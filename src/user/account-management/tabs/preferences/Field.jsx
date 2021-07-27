@@ -23,10 +23,13 @@ export default function Field({ name, collection, label }) {
 		[preference, setPreference]
 	);
 
-	/* Add/Remove accessibility stylesheet on useHighContrast change */
+	/**
+	 * Special case field:
+	 * Add/Remove accessibility stylesheet on useHighContrast change
+	 */
 	useEffect(() => {
 		const listenForChange = async () => {
-			if (name === 'useHighContrast' && preference) {
+			if (name === 'useHighContrast') {
 				const basepath = getConfig('basepath') ?? '/';
 				if (preference) {
 					await addStyleSheet(
