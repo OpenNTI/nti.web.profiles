@@ -143,6 +143,26 @@ const FIELD_GROUPS = {
 		positions: 'positions',
 		interests: 'interests',
 	},
+
+	IFSOSecurityUserProfile: {
+		about: [
+			'about',
+			'realname',
+			'alias',
+			'role',
+			'email',
+			'company',
+			'location',
+			'home_page',
+			'facebook',
+			'instagram',
+			'linkedIn',
+			'twitter',
+		],
+		education: 'education',
+		positions: 'positions',
+		interests: 'interests',
+	},
 };
 
 export function getFieldGroups(schema, type) {

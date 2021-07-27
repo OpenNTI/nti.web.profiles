@@ -13,6 +13,7 @@ const t = scoped(LOCALE_PATHS.ABOUT, {
 	editLabel: 'Tell us about yourself…',
 
 	tpsEmployeeId: 'TPS Employee ID',
+	company: 'Company'
 });
 
 const Additional = [
@@ -23,6 +24,11 @@ const Additional = [
 
 		return { label: t('tpsEmployeeId'), value: user['tps_employee_id'] };
 	},
+	user => {
+		if (!user.company) { return null; }
+
+		return  {label: t('company'), value: user.company};
+	}
 ];
 
 export default class About extends React.Component {
