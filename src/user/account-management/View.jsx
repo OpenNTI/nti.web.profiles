@@ -17,7 +17,7 @@ const Modal = styled(Prompt.BaseWindow)`
 	width: 533px;
 `;
 
-function AccountMangerPrompt() {
+const AccountPrompt = React.forwardRef(function AccountPrompt(props, ref) {
 	const [prompt, setPrompt] = useState(true);
 	const { load, initLoading } = Store.useValue();
 
@@ -52,6 +52,6 @@ function AccountMangerPrompt() {
 			)}
 		</>
 	);
-}
+});
 
-export default Store.compose(AccountMangerPrompt);
+export default Store.compose(AccountPrompt);
