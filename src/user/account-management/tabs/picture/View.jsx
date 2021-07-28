@@ -1,5 +1,3 @@
-import { useEffect } from 'react';
-
 import {
 	Loading,
 	Switch,
@@ -21,12 +19,11 @@ export default function PictureTab() {
 	const user = useAppUser();
 	const image = useImage(user);
 
-	const [{ active, baseImage, loading }, setState, reset] = useReducerState({
-		active: 'main',
-		loading: false,
-	});
-
-	useEffect(() => setState({ baseImage: image }), [image]);
+	const [{ active, baseImage = image, loading }, setState, reset] =
+		useReducerState({
+			active: 'main',
+			loading: false,
+		});
 
 	const onImageCroppingSave = async croppedImage => {
 		setState({
