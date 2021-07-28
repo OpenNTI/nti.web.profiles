@@ -1,8 +1,4 @@
-import PropTypes from 'prop-types';
-
-import { Avatar, DisplayName, Icons } from '@nti/web-commons';
-
-import Store from './Store';
+import { Avatar, DisplayName, Icons, useAppUser } from '@nti/web-commons';
 
 const Container = styled.div`
 	display: flex;
@@ -63,12 +59,8 @@ const Envelop = styled.div`
 	display: inline-block;
 `;
 
-Header.propTypes = {
-	user: PropTypes.object,
-};
-
 export default function Header() {
-	const { user } = Store.useValue();
+	const user = useAppUser();
 
 	return (
 		<Container>

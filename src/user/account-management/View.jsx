@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { Suspense, useState } from 'react';
 
 import { Loading, Prompt, Text } from '@nti/web-commons';
 import { scoped } from '@nti/lib-locale';
 
 import Tabs from './tabs';
 import Header from './Header';
-import Store from './Store';
 
 const t = scoped('nti.web.profiles.user.account-management.modal', {
 	title: 'Manage Account',
@@ -17,15 +16,10 @@ const Modal = styled(Prompt.BaseWindow)`
 	width: 533px;
 `;
 
-const AccountPrompt = React.forwardRef(function AccountPrompt(props, ref) {
+const AccountPrompt = React.forwardRef((props, ref) => {
 	const [prompt, setPrompt] = useState(true);
-	const { load, initLoading } = Store.useValue();
 
 	const handleClose = () => setPrompt(false);
-
-	useEffect(() => {
-		load();
-	}, [load]);
 
 	return (
 		<>
@@ -35,10 +29,7 @@ const AccountPrompt = React.forwardRef(function AccountPrompt(props, ref) {
 					closeOnEscape={true}
 					onBeforeDismiss={handleClose}
 				>
-					<Loading.Placeholder
-						loading={initLoading}
-						fallback={<Loading.Spinner.Large />}
-					>
+					<Suspense fallback={<Loading.Spinner.Large />}>
 						<Modal
 							title={<Translate localeKey="title" />}
 							doClose={handleClose}
@@ -47,11 +38,11 @@ const AccountPrompt = React.forwardRef(function AccountPrompt(props, ref) {
 							<Header />
 							<Tabs />
 						</Modal>
-					</Loading.Placeholder>
+					</Suspense>
 				</Prompt.Dialog>
 			)}
 		</>
 	);
 });
 
-export default Store.compose(AccountPrompt);
+export default AccountPrompt;

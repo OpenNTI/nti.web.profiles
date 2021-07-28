@@ -1,33 +1,53 @@
-import { useState } from 'react';
-
-import { Loading, Switch } from '@nti/web-commons';
-
-import Store from '../../Store';
+import {
+	Loading,
+	Switch,
+	useAppUser,
+	useAsyncValue,
+	useReducerState,
+} from '@nti/web-commons';
+import { ImageEditor } from '@nti/web-whiteboard';
 
 import { Edit, Main, Upload } from './views';
 
+const useImage = user => {
+	const { avatarURL: uri } = user;
+	const reloadNonce = user;
+	return useAsyncValue(uri, () => ImageEditor.getImg(uri), reloadNonce);
+};
+
 export default function PictureTab() {
-	const { saveImage, image, loading } = Store.useValue();
+	const user = useAppUser();
+	const image = useImage(user);
 
-	const [active, setActive] = useState('main');
-	const [baseImage, setBaseImage] = useState(image);
-	const [croppedImage, setCroppedImage] = useState();
+	const [{ active, baseImage, croppedImage, loading }, setState] =
+		useReducerState({
+			active: 'main',
+			baseImage: image,
+			croppedImage: null,
+			loading: false,
+			error: null,
+		});
 
-	const onImageCroppingSave = croppedImage => {
-		setCroppedImage(croppedImage);
-		saveImage(croppedImage);
-		setActive('main');
+	const reset = () => setState({ active: 'main' });
+
+	const onImageCroppingSave = async croppedImage => {
+		setState({
+			croppedImage,
+			active: 'main',
+			loading: true,
+			baseImage: croppedImage,
+		});
+		try {
+			await user.save({ avatarURL: croppedImage.src });
+		} catch (e) {
+			setState({ error: e });
+		} finally {
+			setState({ loading: false });
+		}
 	};
 
-	const onBaseImageSave = baseImage => {
-		setBaseImage(baseImage);
-		setActive('crop');
-	};
-
-	const onCancel = () => {
-		setBaseImage(image);
-		setActive('main');
-	};
+	const onBaseImageSave = baseImage =>
+		setState({ baseImage, active: 'crop' });
 
 	return (
 		<Loading.Placeholder
@@ -35,24 +55,23 @@ export default function PictureTab() {
 			fallback={<Loading.Spinner.Large />}
 		>
 			<Switch.Container active={active}>
-				<Switch.Item name="loading" component={Loading.Mask} />
 				<Switch.Item
 					name="main"
 					component={Main}
-					onUpload={() => setActive('picker')}
-					onEdit={() => setActive('crop')}
+					onUpload={() => setState({ active: 'picker' })}
+					onEdit={() => setState({ active: 'crop' })}
 				/>
 				<Switch.Item
 					name="crop"
 					component={Edit}
-					onCancel={onCancel}
+					onCancel={reset}
 					onSave={onImageCroppingSave}
 					image={baseImage}
 				/>
 				<Switch.Item
 					name="picker"
 					component={Upload}
-					onCancel={onCancel}
+					onCancel={reset}
 					onSave={onBaseImageSave}
 					image={croppedImage}
 					baseImage={baseImage}

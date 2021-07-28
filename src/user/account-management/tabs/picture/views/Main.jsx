@@ -1,7 +1,5 @@
-import { Avatar, Button, Text } from '@nti/web-commons';
+import { Avatar, Button, Text, useAppUser } from '@nti/web-commons';
 import { scoped } from '@nti/lib-locale';
-
-import Store from '../../../Store';
 
 const Container = styled.div`
 	display: flex;
@@ -69,11 +67,7 @@ const translation = scoped(
 const Translate = Text.Translator(translation);
 
 export default function MainView({ onUpload, onEdit }) {
-	const { user } = Store.useValue();
-
-	if (!user) {
-		return null;
-	}
+	const user = useAppUser();
 
 	const displayEditLink = user.avatarURL;
 
