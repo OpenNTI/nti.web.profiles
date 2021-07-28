@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+
 import {
 	Loading,
 	Switch,
@@ -19,20 +21,15 @@ export default function PictureTab() {
 	const user = useAppUser();
 	const image = useImage(user);
 
-	const [{ active, baseImage, croppedImage, loading }, setState] =
-		useReducerState({
-			active: 'main',
-			baseImage: image,
-			croppedImage: null,
-			loading: false,
-			error: null,
-		});
+	const [{ active, baseImage, loading }, setState, reset] = useReducerState({
+		active: 'main',
+		loading: false,
+	});
 
-	const reset = () => setState({ active: 'main' });
+	useEffect(() => setState({ baseImage: image }), [image]);
 
 	const onImageCroppingSave = async croppedImage => {
 		setState({
-			croppedImage,
 			active: 'main',
 			loading: true,
 			baseImage: croppedImage,
@@ -73,7 +70,6 @@ export default function PictureTab() {
 					component={Upload}
 					onCancel={reset}
 					onSave={onBaseImageSave}
-					image={croppedImage}
 					baseImage={baseImage}
 				/>
 			</Switch.Container>
