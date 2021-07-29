@@ -1,6 +1,6 @@
 /* eslint-env jest */
 import React from 'react';
-import renderer from 'react-test-renderer';
+import { act, create } from 'react-test-renderer';
 import { render, waitFor, fireEvent } from '@testing-library/react';
 
 import { Date as DateUtils } from '@nti/lib-commons';
@@ -40,10 +40,15 @@ describe('Topic List test', () => {
 			1
 		);
 
-		const tree = renderer
-			.create(<List items={items} searchTerm="2" />)
-			.toJSON();
-		expect(tree).toMatchSnapshot();
+		let tree;
+
+		act(() => {
+			tree = create(<List items={items} searchTerm="2" />);
+		});
+
+		expect(tree.toJSON()).toMatchSnapshot();
+
+		tree.unmount();
 	});
 
 	test('Simple list', async () => {

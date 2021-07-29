@@ -1,5 +1,5 @@
 import React from 'react';
-import renderer from 'react-test-renderer';
+import { act, create } from 'react-test-renderer';
 
 import * as TestUtils from '@nti/web-client/test-utils';
 import { flushPromises } from '@nti/lib-commons/test-utils';
@@ -49,14 +49,17 @@ describe('User profile header buttons test', () => {
 			getID: () => 'NOTtestUser',
 		};
 
-		const cmp = renderer.create(<Buttons entity={user} />);
-
-		jest.runAllTimers();
-		await flushPromises();
-		jest.runAllTimers();
+		let cmp;
+		await act(async () => {
+			cmp = create(<Buttons entity={user} />);
+			jest.runAllTimers();
+			await flushPromises();
+			jest.runAllTimers();
+		});
 
 		const tree = cmp.toJSON();
 
 		expect(tree).toMatchSnapshot();
+		cmp.unmount();
 	});
 });

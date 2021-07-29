@@ -8,7 +8,7 @@ jest.mock('@nti/util-logger', () => {
 });
 
 import React from 'react';
-import TestRenderer from 'react-test-renderer';
+import { act, create } from 'react-test-renderer';
 
 import Logger from '@nti/util-logger';
 
@@ -22,11 +22,18 @@ describe('Messages', () => {
 		},
 	};
 
-	const testRender = props => TestRenderer.create(<Messages {...props} />);
+	const testRender = props => {
+		let cmp;
+		act(() => {
+			cmp = create(<Messages {...props} />);
+		});
+		return cmp;
+	};
 
 	test('returns null when given no messages', () => {
 		const instance = testRender();
 		expect(instance.toJSON()).toBeNull();
+		instance.unmount();
 	});
 
 	test('renders a message for each validation error context (each "where" value)', () => {
@@ -38,6 +45,7 @@ describe('Messages', () => {
 
 		const instance = testRender({ fieldErrors });
 		expect(instance.root.findAllByType('li')).toHaveLength(wheres.length);
+		instance.unmount();
 	});
 
 	test('groups validation errors of the same type and context', () => {
@@ -49,11 +57,12 @@ describe('Messages', () => {
 
 		const instance = testRender({ fieldErrors });
 		expect(instance.root.findAllByType('li')).toHaveLength(2);
+		instance.unmount();
 	});
 
 	test('handles null entries in the errors array', () => {
 		const fieldErrors = [null];
-		const render = () => testRender({ fieldErrors });
+		const render = () => testRender({ fieldErrors }).unmount();
 		expect(render).not.toThrow();
 	});
 
@@ -64,7 +73,7 @@ describe('Messages', () => {
 			},
 		];
 
-		const render = () => testRender({ fieldErrors });
+		const render = () => testRender({ fieldErrors }).unmount();
 		expect(render).not.toThrow();
 		expect(Logger.get().warn).toHaveBeenCalled();
 	});
@@ -72,7 +81,7 @@ describe('Messages', () => {
 	test('handles non-object errors and logs a warning', () => {
 		const fieldErrors = ['string', 123, true];
 
-		const render = () => testRender({ fieldErrors });
+		const render = () => testRender({ fieldErrors }).unmount();
 		expect(render).not.toThrow();
 		expect(Logger.get().warn).toHaveBeenCalled();
 	});

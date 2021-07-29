@@ -16,10 +16,10 @@ describe('Make sure gutter works', () => {
 			},
 		});
 	});
-	test.skip('Gutter collapses and expands as expected', async () => {
+	test('Gutter collapses and expands as expected', async () => {
 		const view = render(<ChatBar />);
 
-		view.debug();
+		// view.debug();
 		const expandButton = await view.findByTestId('expand-button');
 
 		fireEvent.click(expandButton);
