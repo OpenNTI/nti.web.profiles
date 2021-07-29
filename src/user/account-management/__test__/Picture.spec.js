@@ -36,7 +36,9 @@ test('Navigation', async () => {
 
 	component.debug();
 
-	expect(component.queryByTestId('main-view')).toBeTruthy();
+	await waitFor(() =>
+		expect(component.queryByTestId('main-view')).toBeTruthy()
+	);
 
 	// Main to Edit to Main
 	await waitFor(() => fireEvent.click(component.queryByTestId('edit-link')));
