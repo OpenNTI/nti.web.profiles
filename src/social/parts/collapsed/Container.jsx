@@ -11,4 +11,5 @@ export default styled('div').attrs({
 	padding-bottom: 60px;
 	transition: right 0.5s;
 	min-height: 170px;
+	z-index: 1; /* NTI-10980 - above assignment header bar */
 `;
