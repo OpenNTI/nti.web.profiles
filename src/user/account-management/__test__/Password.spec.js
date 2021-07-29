@@ -3,7 +3,7 @@ import { render, fireEvent, waitFor } from '@testing-library/react';
 
 import { setupTestClient } from '@nti/web-client/test-utils';
 
-import PasswordView from '../../tabs/Password';
+import PasswordView from '../tabs/Password';
 
 const changePassword = jest.fn();
 

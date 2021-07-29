@@ -1,17 +1,17 @@
 /* eslint-env jest */
 import { render, fireEvent, waitFor } from '@testing-library/react';
+import { Suspense } from 'react';
 
-import { FakeStore } from '@nti/lib-store';
 import { setupTestClient } from '@nti/web-client/test-utils';
 
-import PictureView from '../../tabs/picture';
-import Store from '../../Store';
-import { Edit } from '../../tabs/picture/views';
+import PictureView from '../tabs/picture';
+import { Edit } from '../tabs/picture/views';
+
+jest.mock('../tabs/picture/Hooks', () => ({ useImage: () => 'image' }));
 
 jest.mock('@nti/web-whiteboard', () => ({
 	ImageEditor: {
 		...jest.requireActual('@nti/web-whiteboard').ImageEditor,
-		getImg: () => 'mock-image',
 		getEditorState: () => {
 			return { state: 'editor-state' };
 		},
@@ -21,24 +21,20 @@ jest.mock('@nti/web-whiteboard', () => ({
 
 const getMockService = () => {
 	return {
-		getAppUser: async () => {
-			return { avatarURL: 'avatar-url' };
-		},
+		getAppUser: () => ({ avatarURL: 'avatar-url' }),
 	};
 };
 
 beforeAll(() => setupTestClient(getMockService()));
 
 test('Navigation', async () => {
-	const store = new Store();
-
-	await store.load();
-
 	const component = render(
-		<FakeStore mock={store}>
+		<Suspense fallback={<div>Fallback</div>}>
 			<PictureView />
-		</FakeStore>
+		</Suspense>
 	);
+
+	component.debug();
 
 	expect(component.queryByTestId('main-view')).toBeTruthy();
 
