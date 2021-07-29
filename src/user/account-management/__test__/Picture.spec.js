@@ -34,8 +34,6 @@ test('Navigation', async () => {
 		</Suspense>
 	);
 
-	component.debug();
-
 	await waitFor(() =>
 		expect(component.queryByTestId('main-view')).toBeTruthy()
 	);
