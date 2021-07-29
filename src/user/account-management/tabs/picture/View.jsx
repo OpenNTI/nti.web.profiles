@@ -1,19 +1,7 @@
-import {
-	Loading,
-	Switch,
-	useAppUser,
-	useAsyncValue,
-	useReducerState,
-} from '@nti/web-commons';
-import { ImageEditor } from '@nti/web-whiteboard';
+import { Loading, Switch, useAppUser, useReducerState } from '@nti/web-commons';
 
+import { useImage } from './Hooks';
 import { Edit, Main, Upload } from './views';
-
-const useImage = user => {
-	const { avatarURL: uri } = user;
-	const reloadNonce = user;
-	return useAsyncValue(uri, () => ImageEditor.getImg(uri), reloadNonce);
-};
 
 export default function PictureTab() {
 	const user = useAppUser();
