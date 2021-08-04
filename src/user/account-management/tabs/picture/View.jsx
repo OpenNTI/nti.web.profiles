@@ -30,7 +30,7 @@ export default function PictureTab() {
 	};
 
 	const onBaseImageSave = baseImage =>
-		setState({ baseImage, active: 'crop' });
+		setState({ baseImage, active: 'edit' });
 
 	return (
 		<Loading.Placeholder
@@ -41,18 +41,18 @@ export default function PictureTab() {
 				<Switch.Item
 					name="main"
 					component={Main}
-					onUpload={() => setState({ active: 'picker' })}
-					onEdit={() => setState({ active: 'crop' })}
+					onUpload={() => setState({ active: 'upload' })}
+					onEdit={() => setState({ active: 'edit' })}
 				/>
 				<Switch.Item
-					name="crop"
+					name="edit"
 					component={Edit}
 					onCancel={reset}
 					onSave={onImageCroppingSave}
 					image={baseImage}
 				/>
 				<Switch.Item
-					name="picker"
+					name="upload"
 					component={Upload}
 					onCancel={reset}
 					onSave={onBaseImageSave}
