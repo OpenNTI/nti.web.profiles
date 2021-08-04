@@ -31,7 +31,10 @@ export default function EditView({ onSave, image, onCancel }) {
 
 	const handleSave = async () => {
 		try {
-			const img = await ImageEditor.getImageForEditorState(croppedState);
+			const img = await ImageEditor.getImageForEditorState(
+				croppedState,
+				400
+			);
 
 			if (img && onSave) {
 				onSave(img);

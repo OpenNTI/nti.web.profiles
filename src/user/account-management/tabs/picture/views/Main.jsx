@@ -73,7 +73,7 @@ export default function MainView({ onUpload, onEdit }) {
 
 	return (
 		<Container data-testid="main-view">
-			<StyledAvatar entity={user} />
+			<StyledAvatar me />
 			<div>
 				<Title as="h3">
 					<Translate localeKey="title" />
