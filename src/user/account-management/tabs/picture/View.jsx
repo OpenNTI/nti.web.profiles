@@ -11,6 +11,7 @@ export default function PictureTab() {
 		useReducerState({
 			active: 'main',
 			loading: false,
+			baseImage: image,
 		});
 
 	const onImageCroppingSave = async croppedImage => {
