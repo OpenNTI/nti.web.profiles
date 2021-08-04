@@ -1,6 +1,6 @@
-import React, { Suspense, useState } from 'react';
+import React, { useState } from 'react';
 
-import { Loading, Prompt, Text } from '@nti/web-commons';
+import { Prompt, Text } from '@nti/web-commons';
 import { scoped } from '@nti/lib-locale';
 
 import Tabs from './tabs';
@@ -29,16 +29,14 @@ const AccountPrompt = React.forwardRef((props, ref) => {
 					closeOnEscape={true}
 					onBeforeDismiss={handleClose}
 				>
-					<Suspense fallback={<Loading.Spinner.Large />}>
-						<Modal
-							title={<Translate localeKey="title" />}
-							doClose={handleClose}
-							buttons={[]}
-						>
-							<Header />
-							<Tabs />
-						</Modal>
-					</Suspense>
+					<Modal
+						title={<Translate localeKey="title" />}
+						doClose={handleClose}
+						buttons={[]}
+					>
+						<Header />
+						<Tabs />
+					</Modal>
 				</Prompt.Dialog>
 			)}
 		</>

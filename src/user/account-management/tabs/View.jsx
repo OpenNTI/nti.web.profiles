@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { Suspense, useState } from 'react';
 
-import { Tabs } from '@nti/web-commons';
+import { Loading, Tabs } from '@nti/web-commons';
 
 import Picture from './picture';
 import Password from './Password';
@@ -41,7 +41,7 @@ export default function TabsView() {
 	const ActiveTab = tabs[activeTab].component;
 
 	return (
-		<>
+		<Suspense fallback={<Loading.Spinner.Large />}>
 			<Tabs.Tabs active={activeTab} onChange={handleTabChange}>
 				{tabs.map(({ label }, index) => (
 					<Tabs.Tab key={index} label={label} />
@@ -51,6 +51,6 @@ export default function TabsView() {
 			<Tabs.TabContent active>
 				<ActiveTab />
 			</Tabs.TabContent>
-		</>
+		</Suspense>
 	);
 }
