@@ -14,10 +14,10 @@ const preferencesArray = [
 			'notify_on_mention',
 		],
 	},
-	{
-		name: 'Badges.Course',
-		items: ['show_course_badges'],
-	},
+	// {
+	// 	name: 'Badges.Course',
+	// 	items: ['show_course_badges'],
+	// },
 ];
 
 export default function PreferencesView() {
