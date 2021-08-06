@@ -6,7 +6,6 @@ import { addStyleSheet } from '@nti/lib-dom';
 import { URL } from '@nti/lib-commons';
 
 const Container = styled.div`
-	display: inline-block;
 	margin: 0.5em;
 	color: var(--secondary-grey);
 	font: normal normal 0.9em/2 var(--body-font-family);

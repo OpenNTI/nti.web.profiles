@@ -13,7 +13,7 @@ const t = scoped(
 );
 
 const Container = styled.div`
-	padding: 0 20px;
+	padding: 10px 20px 0 20px;
 	background-color: var(--quad-grey);
 `;
 
