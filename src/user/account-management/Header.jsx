@@ -12,38 +12,25 @@ const StyledAvatar = styled(Avatar)`
 	margin-right: 15px;
 `;
 
-const Name = styled(DisplayName)`
-	margin-bottom: 4px;
-`;
-
 const IdentityContainer = styled.div`
 	display: flex;
 	overflow: hidden;
 	white-space: nowrap;
 	text-overflow: ellipsis;
+	margin-top: 5px;
 `;
 
 const IconLabel = styled.span`
 	color: var(--tertiary-grey);
 	position: relative;
-	overflow: hidden;
+	overflow: auto;
 	white-space: nowrap;
-	text-overflow: ellipsis;
 
 	&.email {
-		max-width: 198px;
 		padding-left: 25px;
 		padding-right: 10px;
 		display: inline-block;
 	}
-
-	&.username {
-		max-width: 150px;
-	}
-`;
-
-const Label = styled.span`
-	text-overflow: ellipsis;
 `;
 
 const Person = styled(Icons.Person)`
@@ -66,15 +53,15 @@ export default function Header() {
 		<Container>
 			<StyledAvatar me />
 			<div>
-				<Name me />
+				<DisplayName me />
 				<IdentityContainer>
-					<IconLabel username>
+					<IconLabel>
 						<Person />
-						<Label>{user?.Username}</Label>
+						<span>{user?.Username}</span>
 					</IconLabel>
 					<IconLabel email>
 						<Envelop />
-						<Label>{user?.email}</Label>
+						<span>{user?.email}</span>
 					</IconLabel>
 				</IdentityContainer>
 			</div>
