@@ -2,9 +2,9 @@ import { Suspense, useState } from 'react';
 
 import { Loading, Tabs } from '@nti/web-commons';
 
-import Picture from './picture';
-import Password from './Password';
-import Preferences from './preferences';
+import { Picture } from './picture/View';
+import { Password } from './Password';
+import { Preferences } from './preferences/View';
 
 // const t = scoped('nti.web-profiles.user.account-management.tabs', {
 // 	picture: 'Edit Profile Picture',
@@ -31,7 +31,7 @@ const tabs = [
 	},
 ];
 
-export default function TabsView() {
+export function TabsView() {
 	const [activeTab, setActiveTab] = useState(0);
 
 	const handleTabChange = tab => {

@@ -11,7 +11,7 @@ const Container = styled.div`
 	font: normal normal 0.9em/2 var(--body-font-family);
 `;
 
-export default function Field({ name, collection, label }) {
+export function Field({ name, collection, label }) {
 	const key = `${collection}.${name}`;
 	const [preference, setPreference] = User.usePreference(key);
 

@@ -1,4 +1,4 @@
-import Section from './Section';
+import { Section } from './Section';
 
 const Container = styled.div`
 	padding: 20px;
@@ -14,13 +14,9 @@ const preferencesArray = [
 			'notify_on_mention',
 		],
 	},
-	// {
-	// 	name: 'Badges.Course',
-	// 	items: ['show_course_badges'],
-	// },
 ];
 
-export default function PreferencesView() {
+export function Preferences() {
 	return (
 		<Container>
 			{preferencesArray.map(collection => (

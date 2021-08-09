@@ -46,7 +46,7 @@ const Envelop = styled.div`
 	display: inline-block;
 `;
 
-export default function Header() {
+export function Header() {
 	const user = useAppUser();
 
 	return (
@@ -57,11 +57,11 @@ export default function Header() {
 				<IdentityContainer>
 					<IconLabel>
 						<Person />
-						<span>{user?.Username}</span>
+						<span>{user.Username}</span>
 					</IconLabel>
 					<IconLabel email>
 						<Envelop />
-						<span>{user?.email}</span>
+						<span>{user.email}</span>
 					</IconLabel>
 				</IdentityContainer>
 			</div>

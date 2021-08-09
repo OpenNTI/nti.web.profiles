@@ -3,8 +3,8 @@ import React, { useState } from 'react';
 import { Prompt, Text } from '@nti/web-commons';
 import { scoped } from '@nti/lib-locale';
 
-import Tabs from './tabs';
-import Header from './Header';
+import { TabsView } from './tabs/View';
+import { Header } from './Header';
 
 const t = scoped('nti.web.profiles.user.account-management.modal', {
 	title: 'Manage Account',
@@ -17,7 +17,7 @@ const Modal = styled(Prompt.BaseWindow)`
 	top: 10vh;
 `;
 
-const AccountPrompt = React.forwardRef((props, ref) => {
+export const AccountManagement = React.forwardRef((props, ref) => {
 	const [prompt, setPrompt] = useState(true);
 
 	const handleClose = () => setPrompt(false);
@@ -37,12 +37,10 @@ const AccountPrompt = React.forwardRef((props, ref) => {
 						buttons={[]}
 					>
 						<Header />
-						<Tabs />
+						<TabsView />
 					</Modal>
 				</Prompt.Dialog>
 			)}
 		</>
 	);
 });
-
-export default AccountPrompt;

@@ -1,5 +1,14 @@
+import { useCallback } from 'react';
+
 import { scoped } from '@nti/lib-locale';
-import { Button, Errors, Form, Input, useReducerState } from '@nti/web-commons';
+import {
+	Button,
+	Errors,
+	Form,
+	Input,
+	PromiseButton,
+	useReducerState,
+} from '@nti/web-commons';
 import { getAppUser } from '@nti/web-client';
 
 const t = scoped('nti.web-profiles.user.account-management.tabs.password', {
@@ -11,6 +20,7 @@ const t = scoped('nti.web-profiles.user.account-management.tabs.password', {
 		required: '%(name) is required.',
 		different: 'Old and new passwords must be different.',
 		notMatching: 'Passwords do not match.',
+		empty: 'All fields are required.',
 	},
 	success: 'Password changed successfully.',
 });
@@ -24,6 +34,17 @@ const ButtonContainer = styled.div`
 	overflow: hidden;
 	display: flex;
 	justify-content: flex-end;
+`;
+
+const ActionButton = styled(PromiseButton.impl).attrs({
+	as: Button,
+})`
+	transition: all 0.5s ease-in;
+
+	&:global(.finished) {
+		background: transparent;
+		color: var(--primary-blue);
+	}
 `;
 
 const InputsContainer = styled.div`
@@ -65,31 +86,41 @@ const ErrorContainer = styled.div`
 
 const initialState = { oldPassword: '', newPassword: '', repeatedPassword: '' };
 
-export default function PasswordView() {
+export function Password() {
 	const [{ success, inputs, error }, dispatch] = useReducerState({
 		success: null,
 		error: null,
 		inputs: initialState,
 	});
 
-	const handleSubmit = async ({ json }) => {
-		const { newPassword, oldPassword, repeatedPassword } = json;
+	const handleSubmit = useCallback(
+		async (_, selectFinalState) => {
+			const { newPassword, oldPassword, repeatedPassword } = inputs;
 
-		if (oldPassword === newPassword) {
-			dispatch({ error: t('error.different'), success: null });
-		} else if (newPassword !== repeatedPassword) {
-			dispatch({ error: t('error.notMatching'), success: null });
-		} else {
-			try {
-				const user = await getAppUser();
-				await user.changePassword(newPassword, oldPassword);
+			if (!(newPassword && oldPassword && repeatedPassword)) {
+				dispatch({ error: t('error.empty'), success: null });
+			} else if (oldPassword === newPassword) {
+				dispatch({ error: t('error.different'), success: null });
+			} else if (newPassword !== repeatedPassword) {
+				dispatch({ error: t('error.notMatching'), success: null });
+			} else {
+				try {
+					const user = await getAppUser();
+					await user.changePassword(newPassword, oldPassword);
 
-				dispatch({ success: true, error: null, inputs: initialState });
-			} catch (error) {
-				dispatch({ error, success: null });
+					dispatch({
+						success: true,
+						error: null,
+						inputs: initialState,
+					});
+				} catch (error) {
+					dispatch({ error, success: null });
+				}
 			}
-		}
-	};
+			selectFinalState.reset();
+		},
+		[inputs]
+	);
 
 	return (
 		<StyledForm onSubmit={handleSubmit}>
@@ -122,8 +153,8 @@ export default function PasswordView() {
 			)}
 
 			<ButtonContainer>
-				<Button
-					as={Form.SubmitButton}
+				<ActionButton
+					onClick={handleSubmit}
 					disabled={
 						!(
 							inputs.newPassword &&
@@ -134,7 +165,7 @@ export default function PasswordView() {
 					data-testid="submit-btn"
 				>
 					{t('save')}
-				</Button>
+				</ActionButton>
 			</ButtonContainer>
 		</StyledForm>
 	);

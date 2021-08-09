@@ -66,10 +66,10 @@ const translation = scoped(
 
 const Translate = Text.Translator(translation);
 
-export default function MainView({ onUpload, onEdit }) {
+export function Main({ onUpload, onEdit }) {
 	const user = useAppUser();
 
-	const displayEditLink = user?.avatarURL;
+	const displayEditLink = user.avatarURL;
 
 	return (
 		<Container data-testid="main-view">

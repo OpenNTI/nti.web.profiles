@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 
 import { scoped } from '@nti/lib-locale';
 
-import Field from './Field';
+import { Field } from './Field';
 
 const Fieldset = styled.fieldset`
 	border: 1px solid var(--border-grey);
@@ -27,11 +27,6 @@ const t = scoped('nti.web-profiles.user.account-management.tabs.Preferences', {
 			'Send me email notifications when someone @mentions me.',
 		notify_on_mention: 'Send me email notifications when I am replied to.',
 	},
-	['Badges.Course']: {
-		title: 'Badges',
-		show_course_badges:
-			'Make badges earned for completing a course public.',
-	},
 });
 
 Section.propType = {
@@ -39,7 +34,7 @@ Section.propType = {
 	fields: PropTypes.array.isRequired,
 };
 
-export default function Section({ name, fields }) {
+export function Section({ name, fields }) {
 	return (
 		<Fieldset>
 			<Legend>{t(`${name}.title`)}</Legend>

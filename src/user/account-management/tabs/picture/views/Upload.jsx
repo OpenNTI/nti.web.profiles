@@ -17,11 +17,11 @@ const ImageEditorWrapper = styled.div`
 	padding: 20px;
 `;
 
-UploadView.PropType = {
+Upload.PropType = {
 	onSave: PropTypes.func.isRequired,
 };
 
-export default function UploadView({ onSave, onCancel }) {
+export function Upload({ onSave, onCancel }) {
 	const onImageChange = async editorState => {
 		try {
 			const img = await ImageEditor.getImageForEditorState(editorState);

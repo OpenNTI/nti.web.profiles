@@ -21,7 +21,7 @@ const StyledDialogButtons = styled(DialogButtons)`
 	width: 100%;
 `;
 
-export default function EditView({ onSave, image, onCancel }) {
+export function Edit({ onSave, image, onCancel }) {
 	const [croppedState, setCroppedState] = useState();
 	const [editorState] = useState(
 		ImageEditor.getEditorState(image, {

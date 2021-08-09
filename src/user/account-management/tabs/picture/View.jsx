@@ -1,9 +1,11 @@
 import { Switch, useAppUser, useReducerState } from '@nti/web-commons';
 
 import { useImage } from './Hooks';
-import { Edit, Main, Upload } from './views';
+import { Main } from './views/Main';
+import { Edit } from './views/Edit';
+import { Upload } from './views/Upload';
 
-export default function PictureTab() {
+export function Picture() {
 	const user = useAppUser();
 	const image = useImage(user);
 
