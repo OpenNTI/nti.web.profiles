@@ -2,25 +2,22 @@
 
 exports[`Topic List test Filtered 1`] = `
 <div
+  className="layout-grid"
   data-testid="discussion-selection-list"
-  layout="grid"
 >
   <div
-    className="layout-grid"
+    className="layout-grid layout-grid"
     data-testid="discussion-selection-item"
-    layout="grid"
   >
     <div
-      className="layout"
-      layout="grid"
+      className="layout-grid layout"
     >
       <i
-        className="icon-discuss"
-        layout="grid"
+        className="icon-discuss layout"
       />
     </div>
     <span
-      className="ntiText"
+      className="layout-grid ntiText"
       dangerouslySetInnerHTML={
         Object {
           "__html": "Start a new discussion
@@ -29,7 +26,7 @@ in this channel",
       }
     />
     <span
-      layout="grid"
+      className="layout-grid"
     />
     <svg
       className="svg-icon nt-icon"
@@ -53,13 +50,13 @@ in this channel",
     </svg>
   </div>
   <div
+    className="layout-grid"
     data-testid="discussion-selection-item"
-    layout="grid"
     onClick={[Function]}
   >
     <div
+      className="layout"
       data-testid="discussion-selection-avatar"
-      layout="grid"
       style={
         Object {
           "backgroundImage": "url(\\"/app/resources/images/elements/discussion-icon.png\\")",
@@ -67,6 +64,7 @@ in this channel",
       }
     />
     <div
+      className="layout-grid"
       dangerouslySetInnerHTML={
         Object {
           "__html": "<span>item </span><span class=\\"highlight\\">2</span>",
@@ -76,10 +74,10 @@ in this channel",
       layout="grid"
     />
     <span
-      layout="grid"
+      className="layout-grid"
     />
     <time
-      className="ntiText"
+      className="layout-grid ntiText"
       dateTime="2021-01-28T01:43:48Z"
     >
       a few seconds ago
