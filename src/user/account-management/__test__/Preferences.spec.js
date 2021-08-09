@@ -3,7 +3,7 @@ import { render } from '@testing-library/react';
 
 import { User } from '@nti/web-commons';
 
-import Field from '../tabs/preferences/Field';
+import { Field } from '../tabs/preferences/Field';
 
 const mock = jest.fn();
 

@@ -4,8 +4,8 @@ import { Suspense } from 'react';
 
 import { setupTestClient } from '@nti/web-client/test-utils';
 
-import PictureView from '../tabs/picture';
-import { Edit } from '../tabs/picture/views';
+import { Picture } from '../tabs/picture/View';
+import { Edit } from '../tabs/picture/views/Edit';
 
 jest.mock('../tabs/picture/Hooks', () => ({ useImage: () => 'image' }));
 
@@ -30,7 +30,7 @@ beforeAll(() => setupTestClient(getMockService()));
 test('Navigation', async () => {
 	const component = render(
 		<Suspense fallback={<div>Fallback</div>}>
-			<PictureView />
+			<Picture />
 		</Suspense>
 	);
 

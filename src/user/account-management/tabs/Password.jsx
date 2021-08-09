@@ -123,7 +123,7 @@ export function Password() {
 	}, []);
 
 	return (
-		<StyledForm onSubmit={handleSubmit} ref={form}>
+		<StyledForm onSubmit={handleSubmit} ref={form} data-testid="form">
 			<InputsContainer>
 				{['oldPassword', 'newPassword', 'repeatedPassword'].map(
 					(name, index) => (
