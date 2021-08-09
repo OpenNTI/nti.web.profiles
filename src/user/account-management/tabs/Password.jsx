@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import React, { useCallback, useRef } from 'react';
 
 import { scoped } from '@nti/lib-locale';
 import {
@@ -36,8 +36,10 @@ const ButtonContainer = styled.div`
 	justify-content: flex-end;
 `;
 
+const SubmitButton = styled(Button).attrs({ as: Form.SubmitButton })``;
+
 const ActionButton = styled(PromiseButton.impl).attrs({
-	as: Button,
+	as: SubmitButton,
 })`
 	transition: all 0.5s ease-in;
 
@@ -84,57 +86,49 @@ const ErrorContainer = styled.div`
 	margin: 10px 0 10px 20px;
 `;
 
-const initialState = { oldPassword: '', newPassword: '', repeatedPassword: '' };
-
 export function Password() {
-	const [{ success, inputs, error }, dispatch] = useReducerState({
+	const form = useRef();
+	const [{ success, error }, dispatch] = useReducerState({
 		success: null,
 		error: null,
-		inputs: initialState,
 	});
 
-	const handleSubmit = useCallback(
-		async (_, selectFinalState) => {
-			const { newPassword, oldPassword, repeatedPassword } = inputs;
+	const handleSubmit = useCallback(async (_, selectFinalState) => {
+		const {
+			newPassword: { value: newPassword },
+			oldPassword: { value: oldPassword },
+			repeatedPassword: { value: repeatedPassword },
+		} = form.current;
 
-			if (!(newPassword && oldPassword && repeatedPassword)) {
-				dispatch({ error: t('error.empty'), success: null });
-			} else if (oldPassword === newPassword) {
-				dispatch({ error: t('error.different'), success: null });
-			} else if (newPassword !== repeatedPassword) {
-				dispatch({ error: t('error.notMatching'), success: null });
-			} else {
-				try {
-					const user = await getAppUser();
-					await user.changePassword(newPassword, oldPassword);
+		if (!(newPassword && oldPassword && repeatedPassword)) {
+			dispatch({ error: t('error.empty'), success: null });
+		} else if (oldPassword === newPassword) {
+			dispatch({ error: t('error.different'), success: null });
+		} else if (newPassword !== repeatedPassword) {
+			dispatch({ error: t('error.notMatching'), success: null });
+		} else {
+			try {
+				const user = await getAppUser();
+				await user.changePassword(newPassword, oldPassword);
 
-					dispatch({
-						success: true,
-						error: null,
-						inputs: initialState,
-					});
-				} catch (error) {
-					dispatch({ error, success: null });
-				}
+				dispatch({
+					success: true,
+					error: null,
+				});
+			} catch (error) {
+				dispatch({ error, success: null });
 			}
-			selectFinalState.reset();
-		},
-		[inputs]
-	);
+		}
+		selectFinalState.reset();
+	}, []);
 
 	return (
-		<StyledForm onSubmit={handleSubmit}>
+		<StyledForm onSubmit={handleSubmit} ref={form}>
 			<InputsContainer>
 				{['oldPassword', 'newPassword', 'repeatedPassword'].map(
 					(name, index) => (
 						<Clearable key={index}>
 							<PasswordInput
-								value={inputs[name]}
-								onChange={value =>
-									dispatch({
-										inputs: { ...inputs, [name]: value },
-									})
-								}
 								required
 								name={name}
 								placeholder={t(name)}
@@ -153,17 +147,7 @@ export function Password() {
 			)}
 
 			<ButtonContainer>
-				<ActionButton
-					onClick={handleSubmit}
-					disabled={
-						!(
-							inputs.newPassword &&
-							inputs.oldPassword &&
-							inputs.repeatedPassword
-						)
-					}
-					data-testid="submit-btn"
-				>
+				<ActionButton onClick={handleSubmit} data-testid="submit-btn">
 					{t('save')}
 				</ActionButton>
 			</ButtonContainer>
