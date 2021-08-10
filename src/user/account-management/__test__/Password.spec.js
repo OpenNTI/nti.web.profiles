@@ -28,37 +28,37 @@ function getInputs(component) {
 	};
 }
 
-// test('old equals new', async () => {
-// 	const component = render(<Password />);
+test('old equals new', async () => {
+	const component = render(<Password />);
 
-// 	const { oldPassword, newPassword, repeatedPassword } = getInputs(component);
+	const { oldPassword, newPassword, repeatedPassword } = getInputs(component);
 
-// 	const samePassword = 'password';
+	const samePassword = 'password';
 
-// 	fireEvent.change(oldPassword, { target: { value: samePassword } });
-// 	fireEvent.change(newPassword, { target: { value: samePassword } });
-// 	fireEvent.change(repeatedPassword, { target: { value: samePassword } });
+	userEvent.type(oldPassword, { target: { value: samePassword } });
+	userEvent.type(newPassword, { target: { value: samePassword } });
+	userEvent.type(repeatedPassword, { target: { value: samePassword } });
 
-// 	await waitFor(() => fireEvent.submit(component.queryByTestId('form')));
+	userEvent.click(component.queryByTestId('submit-btn'));
 
-// 	await waitFor(() => expect(component.queryByTestId('error')).toBeTruthy());
-// });
+	await waitFor(() => expect(component.queryByTestId('error')).toBeTruthy());
+});
 
-// test("new doesn't equal repeated", async () => {
-// 	const component = render(<Password />);
+test("new doesn't equal repeated", async () => {
+	const component = render(<Password />);
 
-// 	const { oldPassword, newPassword, repeatedPassword } = getInputs(component);
+	const { oldPassword, newPassword, repeatedPassword } = getInputs(component);
 
-// 	fireEvent.change(oldPassword, { target: { value: 'old-password' } });
-// 	fireEvent.change(newPassword, { target: { value: 'new-password' } });
-// 	fireEvent.change(repeatedPassword, {
-// 		target: { value: 'different-password' },
-// 	});
+	userEvent.type(oldPassword, { target: { value: 'old-password' } });
+	userEvent.type(newPassword, { target: { value: 'new-password' } });
+	userEvent.type(repeatedPassword, {
+		target: { value: 'different-password' },
+	});
 
-// 	await waitFor(() => fireEvent.submit(component.queryByTestId('form')));
+	userEvent.click(component.queryByTestId('submit-btn'));
 
-// 	await waitFor(() => expect(component.queryByTestId('error')).toBeTruthy());
-// });
+	await waitFor(() => expect(component.queryByTestId('error')).toBeTruthy());
+});
 
 test('Password changes successfully', async () => {
 	const component = render(<Password />);
