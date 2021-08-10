@@ -6,3 +6,4 @@ export { default as Achievements } from './achievements';
 export { default as ProfileCertificates } from './certificates';
 export { default as Transcripts } from './transcripts';
 export { default as CommunityCard } from './communities';
+export { AccountManagement } from './account-management/View';
