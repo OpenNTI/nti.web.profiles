@@ -1,5 +1,5 @@
 /* eslint-env jest */
-import { render, fireEvent, waitFor } from '@testing-library/react';
+import { render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { setupTestClient } from '@nti/web-client/test-utils';
@@ -12,8 +12,7 @@ const getMockService = () => {
 	return {
 		getAppUser: async () => {
 			return {
-				changePassword: (newPassword, oldPassword) =>
-					changePassword(newPassword, oldPassword),
+				changePassword,
 			};
 		},
 	};
@@ -73,12 +72,17 @@ test('Password changes successfully', async () => {
 	userEvent.type(repeatedPassword, 'new-password');
 
 	// Click submit to submit the form.
-	await waitFor(() => fireEvent.click(component.queryByTestId('submit-btn')));
+	userEvent.click(component.queryByTestId('submit-btn'));
 
-	// Makes sure changePassword was called with correct args.
-	expect(changePassword).toHaveBeenCalledWith('new-password', 'old-password');
-	// Make sure success message is there.
-	expect(component.queryByTestId('success')).toBeTruthy();
-	// Make sure no errors encountered.
-	expect(component.queryByTestId('error')).toBeFalsy();
+	await waitFor(() => {
+		// Makes sure changePassword was called with correct args.
+		expect(changePassword).toHaveBeenCalledWith(
+			'new-password',
+			'old-password'
+		);
+		// Make sure success message is there.
+		expect(component.queryByTestId('success')).toBeTruthy();
+		// Make sure no errors encountered.
+		expect(component.queryByTestId('error')).toBeFalsy();
+	});
 });

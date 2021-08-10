@@ -86,6 +86,15 @@ const ErrorContainer = styled.div`
 	margin: 10px 0 10px 20px;
 `;
 
+const stop = e => (e.preventDefault(), e.stopPropagation());
+const toJSON = form => {
+	const json = {};
+	for (const element of form.elements) {
+		json[element.name] = element.value;
+	}
+	return json;
+};
+
 export function Password() {
 	const form = useRef();
 	const [{ success, error }, dispatch] = useReducerState({
@@ -94,11 +103,9 @@ export function Password() {
 	});
 
 	const handleSubmit = useCallback(async (_, selectFinalState) => {
-		const {
-			newPassword: { value: newPassword },
-			oldPassword: { value: oldPassword },
-			repeatedPassword: { value: repeatedPassword },
-		} = form.current;
+		const { newPassword, oldPassword, repeatedPassword } = toJSON(
+			form.current
+		);
 
 		if (!(newPassword && oldPassword && repeatedPassword)) {
 			dispatch({ error: t('error.empty'), success: null });
@@ -123,7 +130,7 @@ export function Password() {
 	}, []);
 
 	return (
-		<StyledForm onSubmit={handleSubmit} ref={form} data-testid="form">
+		<StyledForm onSubmit={stop} ref={form} data-testid="form">
 			<InputsContainer>
 				{['oldPassword', 'newPassword', 'repeatedPassword'].map(
 					(name, index) => (
