@@ -16,21 +16,6 @@ const Title = styled(Text.Base)`
 	margin-bottom: 10px;
 `;
 
-const LinksContainer = styled.div`
-	:first-child {
-		margin-right: 5px;
-	}
-
-	:first-child::after {
-		content: '|';
-		position: absolute;
-		right: 0;
-		color: var(--tertiary-grey);
-		width: 3px;
-		font-size: 14px;
-	}
-`;
-
 const Link = styled(Button).attrs({ plain: true })`
 	color: var(--primary-blue);
 	font-size: 12px;
@@ -42,16 +27,17 @@ const Link = styled(Button).attrs({ plain: true })`
 	}
 
 	&:hover {
-		text-decoration: underline;
+		text-decoration: none;
 	}
 
-	&:not(:last-child)::after {
-		content: ' | ';
-		font-size: 1.1em;
-		display: contents;
-		margin: 0 0.3em;
-		text-decoration: none !important;
-		color: var(--primary-blue);
+	&.edit {
+		&::after {
+			content: ' | ';
+			font-size: 1.1em;
+			display: contents;
+			margin: 0 0.3em;
+			text-decoration: none !important;
+		}
 	}
 `;
 
@@ -78,16 +64,16 @@ export function Main({ onUpload, onEdit }) {
 				<Title as="h3">
 					<Translate localeKey="title" />
 				</Title>
-				<LinksContainer>
+				<>
 					{displayEditLink && (
-						<Link onClick={onEdit} data-testid="edit-link">
+						<Link onClick={onEdit} data-testid="edit-link" edit>
 							<Translate localeKey="edit" />
 						</Link>
 					)}
 					<Link onClick={onUpload} data-testid="upload-link">
 						<Translate localeKey="upload" />
 					</Link>
-				</LinksContainer>
+				</>
 			</div>
 		</Container>
 	);
