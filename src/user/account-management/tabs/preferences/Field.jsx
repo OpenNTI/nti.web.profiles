@@ -22,11 +22,12 @@ export function Field({ name, collection, label }) {
 			if (name === 'useHighContrast') {
 				const basepath = getConfig('basepath') ?? '/';
 				if (preference) {
-					document.getElementById('accessibility').remove();
+					document
+						.querySelector("head link[href$='accessibility.css']")
+						?.remove();
 				} else {
 					await addStyleSheet(
-						URL.join(basepath, '/resources/css/accessibility.css'),
-						'accessibility'
+						URL.join(basepath, '/resources/css/accessibility.css')
 					);
 				}
 			}
