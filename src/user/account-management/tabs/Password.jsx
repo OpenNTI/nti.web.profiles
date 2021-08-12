@@ -55,7 +55,7 @@ const InputsContainer = styled.div`
 	padding: 20px;
 `;
 
-const InputContainer = styled.div`
+const Clearable = styled(Input.Clearable)`
 	border: 1px solid var(--secondary-grey);
 	background: #fff;
 	margin-bottom: 10px;
@@ -134,14 +134,17 @@ export function Password() {
 			<InputsContainer>
 				{['oldPassword', 'newPassword', 'repeatedPassword'].map(
 					(name, index) => (
-						<InputContainer key={index}>
+						<Clearable
+							onClear={input => (input.value = '')}
+							key={index}
+						>
 							<PasswordInput
 								required
 								name={name}
 								placeholder={t(name)}
 								data-testid={`input-${name}`}
 							/>
-						</InputContainer>
+						</Clearable>
 					)
 				)}
 			</InputsContainer>
