@@ -134,7 +134,10 @@ export function Password() {
 			<InputsContainer>
 				{['oldPassword', 'newPassword', 'repeatedPassword'].map(
 					(name, index) => (
-						<Clearable key={index}>
+						<Clearable
+							onClear={input => (input.value = '')}
+							key={index}
+						>
 							<PasswordInput
 								required
 								name={name}
