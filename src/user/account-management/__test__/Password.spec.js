@@ -4,7 +4,7 @@ import userEvent from '@testing-library/user-event';
 
 import { setupTestClient } from '@nti/web-client/test-utils';
 
-import { Password } from '../tabs/Password';
+import { Password } from '../tabs/password/View';
 
 const changePassword = jest.fn();
 
@@ -14,6 +14,9 @@ const getMockService = () => {
 			return {
 				changePassword,
 			};
+		},
+		capabilities: {
+			canChangePassword: true,
 		},
 	};
 };
@@ -29,7 +32,7 @@ function getInputs(component) {
 }
 
 test('old equals new', async () => {
-	const component = render(<Password />);
+	const component = await waitFor(() => render(<Password />));
 
 	const { oldPassword, newPassword, repeatedPassword } = getInputs(component);
 
@@ -87,4 +90,16 @@ test('Password changes successfully', async () => {
 		// Make sure no errors encountered.
 		expect(component.queryByTestId('change-password-error')).toBeFalsy();
 	});
+});
+
+test('User cannot change password.', async () => {
+	setupTestClient({
+		capabilities: {
+			canChangePassword: false,
+		},
+	});
+
+	const component = await waitFor(() => render(<Password />));
+
+	expect(component.queryByTestId('password-cant-change')).toBeTruthy();
 });
