@@ -19,7 +19,7 @@ const SubText = styled.div`
 `;
 
 const t = scoped(
-	'nti.web-profiles.user.account-management.tabs.password.CantChange',
+	'nti.web-profiles.user.account-management.tabs.password.ChangeDisallowed',
 	{
 		title: 'Resetting your password is not allowed.',
 		subtext:
@@ -27,9 +27,9 @@ const t = scoped(
 	}
 );
 
-export function CantChange() {
+export function ChangeDisallowed() {
 	return (
-		<Container data-testid="password-cant-change">
+		<Container data-testid="password-change-disallowed">
 			<Title>{t('title')}</Title>
 			<SubText>{t('subtext')}</SubText>
 		</Container>

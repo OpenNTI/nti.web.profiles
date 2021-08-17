@@ -12,7 +12,7 @@ import {
 } from '@nti/web-commons';
 import { getAppUser } from '@nti/web-client';
 
-import { CantChange } from './CantChange';
+import { ChangeDisallowed } from './ChangeDisallowed';
 
 const t = scoped('nti.web-profiles.user.account-management.tabs.password', {
 	oldPassword: 'Old Password',
@@ -146,7 +146,7 @@ export function Password() {
 	};
 
 	if (!service.capabilities.canChangePassword) {
-		return <CantChange />;
+		return <ChangeDisallowed />;
 	}
 
 	return (

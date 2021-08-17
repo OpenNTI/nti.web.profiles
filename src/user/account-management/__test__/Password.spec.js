@@ -24,18 +24,26 @@ const getMockService = () => {
 
 beforeAll(() => setupTestClient(getMockService()));
 
-function getInputs(component) {
+async function getInputs(component) {
 	return {
-		oldPassword: component.queryByTestId('input-oldPassword'),
-		newPassword: component.queryByTestId('input-newPassword'),
-		repeatedPassword: component.queryByTestId('input-repeatedPassword'),
+		oldPassword: await component.findByTestId('input-oldPassword'),
+		newPassword: await component.findByTestId('input-newPassword'),
+		repeatedPassword: await component.findByTestId(
+			'input-repeatedPassword'
+		),
 	};
 }
 
 test('old equals new', async () => {
-	const component = await waitFor(() => render(<Password />));
+	const component = render(
+		<Suspense fallback={<div>Fallback</div>}>
+			<Password />
+		</Suspense>
+	);
 
-	const { oldPassword, newPassword, repeatedPassword } = getInputs(component);
+	const { oldPassword, newPassword, repeatedPassword } = await getInputs(
+		component
+	);
 
 	const samePassword = 'password';
 
@@ -43,9 +51,9 @@ test('old equals new', async () => {
 	userEvent.type(newPassword, samePassword);
 	userEvent.type(repeatedPassword, samePassword);
 
-	await waitFor(() => {
-		userEvent.click(component.queryByTestId('change-password-submit-btn'));
+	userEvent.click(component.queryByTestId('change-password-submit-btn'));
 
+	await waitFor(() => {
 		expect(component.queryByTestId('change-password-error')).toBeTruthy();
 	});
 });
@@ -57,7 +65,9 @@ test("new doesn't equal repeated", async () => {
 		</Suspense>
 	);
 
-	const { oldPassword, newPassword, repeatedPassword } = getInputs(component);
+	const { oldPassword, newPassword, repeatedPassword } = await getInputs(
+		component
+	);
 
 	userEvent.type(oldPassword, 'old-password');
 	userEvent.type(newPassword, 'new-password');
@@ -78,7 +88,9 @@ test('Password changes successfully', async () => {
 	);
 
 	// Get the input nodes or whatever they're called.
-	const { oldPassword, newPassword, repeatedPassword } = getInputs(component);
+	const { oldPassword, newPassword, repeatedPassword } = await getInputs(
+		component
+	);
 
 	// Fill out the inputs.
 	userEvent.type(oldPassword, 'old-password');
@@ -115,6 +127,8 @@ test('User cannot change password.', async () => {
 	);
 
 	await waitFor(() =>
-		expect(component.queryByTestId('password-cant-change')).toBeTruthy()
+		expect(
+			component.queryByTestId('password-change-disallowed')
+		).toBeTruthy()
 	);
 });
