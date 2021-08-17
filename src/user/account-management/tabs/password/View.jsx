@@ -8,8 +8,11 @@ import {
 	Input,
 	PromiseButton,
 	useReducerState,
+	useService,
 } from '@nti/web-commons';
 import { getAppUser } from '@nti/web-client';
+
+import { ChangeDisallowed } from './ChangeDisallowed';
 
 const t = scoped('nti.web-profiles.user.account-management.tabs.password', {
 	oldPassword: 'Old Password',
@@ -96,6 +99,7 @@ const toJSON = form => {
 };
 
 export function Password() {
+	const service = useService();
 	const form = useRef();
 	const [{ disabled, success, error }, dispatch] = useReducerState({
 		disabled: true,
@@ -140,6 +144,10 @@ export function Password() {
 			error: null,
 		});
 	};
+
+	if (!service.capabilities.canChangePassword) {
+		return <ChangeDisallowed />;
+	}
 
 	return (
 		<StyledForm

@@ -1,10 +1,11 @@
 /* eslint-env jest */
 import { render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { Suspense } from 'react';
 
 import { setupTestClient } from '@nti/web-client/test-utils';
 
-import { Password } from '../tabs/Password';
+import { Password } from '../tabs/password/View';
 
 const changePassword = jest.fn();
 
@@ -15,23 +16,34 @@ const getMockService = () => {
 				changePassword,
 			};
 		},
+		capabilities: {
+			canChangePassword: true,
+		},
 	};
 };
 
 beforeAll(() => setupTestClient(getMockService()));
 
-function getInputs(component) {
+async function getInputs(component) {
 	return {
-		oldPassword: component.queryByTestId('input-oldPassword'),
-		newPassword: component.queryByTestId('input-newPassword'),
-		repeatedPassword: component.queryByTestId('input-repeatedPassword'),
+		oldPassword: await component.findByTestId('input-oldPassword'),
+		newPassword: await component.findByTestId('input-newPassword'),
+		repeatedPassword: await component.findByTestId(
+			'input-repeatedPassword'
+		),
 	};
 }
 
 test('old equals new', async () => {
-	const component = render(<Password />);
+	const component = render(
+		<Suspense fallback={<div>Fallback</div>}>
+			<Password />
+		</Suspense>
+	);
 
-	const { oldPassword, newPassword, repeatedPassword } = getInputs(component);
+	const { oldPassword, newPassword, repeatedPassword } = await getInputs(
+		component
+	);
 
 	const samePassword = 'password';
 
@@ -41,15 +53,21 @@ test('old equals new', async () => {
 
 	userEvent.click(component.queryByTestId('change-password-submit-btn'));
 
-	await waitFor(() =>
-		expect(component.queryByTestId('change-password-error')).toBeTruthy()
-	);
+	await waitFor(() => {
+		expect(component.queryByTestId('change-password-error')).toBeTruthy();
+	});
 });
 
 test("new doesn't equal repeated", async () => {
-	const component = render(<Password />);
+	const component = render(
+		<Suspense fallback={<div>Fallback</div>}>
+			<Password />
+		</Suspense>
+	);
 
-	const { oldPassword, newPassword, repeatedPassword } = getInputs(component);
+	const { oldPassword, newPassword, repeatedPassword } = await getInputs(
+		component
+	);
 
 	userEvent.type(oldPassword, 'old-password');
 	userEvent.type(newPassword, 'new-password');
@@ -63,10 +81,16 @@ test("new doesn't equal repeated", async () => {
 });
 
 test('Password changes successfully', async () => {
-	const component = render(<Password />);
+	const component = render(
+		<Suspense fallback={<div>Fallback</div>}>
+			<Password />
+		</Suspense>
+	);
 
 	// Get the input nodes or whatever they're called.
-	const { oldPassword, newPassword, repeatedPassword } = getInputs(component);
+	const { oldPassword, newPassword, repeatedPassword } = await getInputs(
+		component
+	);
 
 	// Fill out the inputs.
 	userEvent.type(oldPassword, 'old-password');
@@ -87,4 +111,24 @@ test('Password changes successfully', async () => {
 		// Make sure no errors encountered.
 		expect(component.queryByTestId('change-password-error')).toBeFalsy();
 	});
+});
+
+test('User cannot change password.', async () => {
+	setupTestClient({
+		capabilities: {
+			canChangePassword: false,
+		},
+	});
+
+	const component = render(
+		<Suspense fallback={<div>Fallback</div>}>
+			<Password />
+		</Suspense>
+	);
+
+	await waitFor(() =>
+		expect(
+			component.queryByTestId('password-change-disallowed')
+		).toBeTruthy()
+	);
 });

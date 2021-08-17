@@ -1,4 +1,4 @@
-import { Avatar, Button, Text, useAppUser } from '@nti/web-commons';
+import { Avatar, Button, Text, useAppUser, useService } from '@nti/web-commons';
 import { scoped } from '@nti/lib-locale';
 
 const Container = styled.div`
@@ -53,9 +53,11 @@ const translation = scoped(
 const Translate = Text.Translator(translation);
 
 export function Main({ onUpload, onEdit }) {
+	const service = useService();
 	const user = useAppUser();
 
 	const displayEditLink = user.avatarURL;
+	const canUploadAvatar = service.capabilities.canUploadAvatar;
 
 	return (
 		<Container data-testid="main-view">
@@ -65,14 +67,16 @@ export function Main({ onUpload, onEdit }) {
 					<Translate localeKey="title" />
 				</Title>
 				<>
-					{displayEditLink && (
+					{displayEditLink && canUploadAvatar && (
 						<Link onClick={onEdit} data-testid="edit-link" edit>
 							<Translate localeKey="edit" />
 						</Link>
 					)}
-					<Link onClick={onUpload} data-testid="upload-link">
-						<Translate localeKey="upload" />
-					</Link>
+					{canUploadAvatar && (
+						<Link onClick={onUpload} data-testid="upload-link">
+							<Translate localeKey="upload" />
+						</Link>
+					)}
 				</>
 			</div>
 		</Container>
