@@ -10,8 +10,8 @@ const preferencesArray = [
 		name: 'PushNotifications.Email',
 		items: [
 			'email_a_summary_of_interesting_changes',
-			'immediate_threadable_reply',
 			'notify_on_mention',
+			'immediate_threadable_reply',
 		],
 	},
 ];

@@ -38,7 +38,7 @@ export function Upload({ onSave, onCancel }) {
 			key: 0,
 			label: <Translate localeKey="cancel" />,
 			onClick: onCancel,
-			'data-testid': 'cancel-btn',
+			'data-testid': 'upload-cancel-btn',
 		},
 	];
 
