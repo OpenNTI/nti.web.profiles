@@ -97,22 +97,23 @@ const toJSON = form => {
 
 export function Password() {
 	const form = useRef();
-	const [{ success, error }, dispatch] = useReducerState({
+	const [{ disabled, success, error }, dispatch] = useReducerState({
+		disabled: true,
 		success: null,
 		error: null,
 	});
 
-	const handleSubmit = useCallback(async (_, selectFinalState) => {
+	const handleSubmit = useCallback(async () => {
 		const { newPassword, oldPassword, repeatedPassword } = toJSON(
 			form.current
 		);
 
-		if (!(newPassword && oldPassword && repeatedPassword)) {
-			dispatch({ error: t('error.empty'), success: null });
-		} else if (oldPassword === newPassword) {
+		if (oldPassword === newPassword) {
 			dispatch({ error: t('error.different'), success: null });
+			throw Error(t('error.different'));
 		} else if (newPassword !== repeatedPassword) {
 			dispatch({ error: t('error.notMatching'), success: null });
+			throw Error(t('error.notMatching'));
 		} else {
 			try {
 				const user = await getAppUser();
@@ -124,13 +125,29 @@ export function Password() {
 				});
 			} catch (error) {
 				dispatch({ error, success: null });
+				throw error;
 			}
 		}
-		selectFinalState.reset();
 	}, []);
 
+	const handleChange = () => {
+		const { newPassword, oldPassword, repeatedPassword } = toJSON(
+			form.current
+		);
+
+		dispatch({
+			disabled: !(newPassword && oldPassword && repeatedPassword),
+			error: null,
+		});
+	};
+
 	return (
-		<StyledForm onSubmit={stop} ref={form} data-testid="form">
+		<StyledForm
+			onSubmit={stop}
+			onChange={handleChange}
+			ref={form}
+			data-testid="change-password-form"
+		>
 			<InputsContainer>
 				{['oldPassword', 'newPassword', 'repeatedPassword'].map(
 					(name, index) => (
@@ -157,7 +174,11 @@ export function Password() {
 			)}
 
 			<ButtonContainer>
-				<ActionButton onClick={handleSubmit} data-testid="submit-btn">
+				<ActionButton
+					onClick={handleSubmit}
+					disabled={disabled}
+					data-testid="submit-btn"
+				>
 					{t('save')}
 				</ActionButton>
 			</ButtonContainer>

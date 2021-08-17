@@ -18,16 +18,19 @@ const tabs = [
 	{
 		label: 'Edit Profile Picture',
 		component: () => <Picture />,
+		testId: 'picture-tab',
 	},
 
 	{
 		label: 'Change Password',
 		component: () => <Password />,
+		testId: 'password-tab',
 	},
 
 	{
 		label: 'Preferences',
 		component: () => <Preferences />,
+		testId: 'preferences-tab',
 	},
 ];
 
@@ -43,8 +46,8 @@ export function TabsView() {
 	return (
 		<Suspense fallback={<Loading.Spinner.Large />}>
 			<Tabs.Tabs active={activeTab} onChange={handleTabChange}>
-				{tabs.map(({ label }, index) => (
-					<Tabs.Tab key={index} label={label} />
+				{tabs.map(({ label, testId }, index) => (
+					<Tabs.Tab key={index} label={label} data-testid={testId} />
 				))}
 			</Tabs.Tabs>
 

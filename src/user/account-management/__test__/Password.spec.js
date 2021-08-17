@@ -35,9 +35,9 @@ test('old equals new', async () => {
 
 	const samePassword = 'password';
 
-	userEvent.type(oldPassword, { target: { value: samePassword } });
-	userEvent.type(newPassword, { target: { value: samePassword } });
-	userEvent.type(repeatedPassword, { target: { value: samePassword } });
+	userEvent.type(oldPassword, samePassword);
+	userEvent.type(newPassword, samePassword);
+	userEvent.type(repeatedPassword, samePassword);
 
 	userEvent.click(component.queryByTestId('submit-btn'));
 
@@ -49,11 +49,9 @@ test("new doesn't equal repeated", async () => {
 
 	const { oldPassword, newPassword, repeatedPassword } = getInputs(component);
 
-	userEvent.type(oldPassword, { target: { value: 'old-password' } });
-	userEvent.type(newPassword, { target: { value: 'new-password' } });
-	userEvent.type(repeatedPassword, {
-		target: { value: 'different-password' },
-	});
+	userEvent.type(oldPassword, 'old-password');
+	userEvent.type(newPassword, 'new-password');
+	userEvent.type(repeatedPassword, 'different-password');
 
 	userEvent.click(component.queryByTestId('submit-btn'));
 
