@@ -1,6 +1,7 @@
 /* eslint-env jest */
 import { render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { Suspense } from 'react';
 
 import { setupTestClient } from '@nti/web-client/test-utils';
 
@@ -42,15 +43,19 @@ test('old equals new', async () => {
 	userEvent.type(newPassword, samePassword);
 	userEvent.type(repeatedPassword, samePassword);
 
-	userEvent.click(component.queryByTestId('change-password-submit-btn'));
+	await waitFor(() => {
+		userEvent.click(component.queryByTestId('change-password-submit-btn'));
 
-	await waitFor(() =>
-		expect(component.queryByTestId('change-password-error')).toBeTruthy()
-	);
+		expect(component.queryByTestId('change-password-error')).toBeTruthy();
+	});
 });
 
 test("new doesn't equal repeated", async () => {
-	const component = render(<Password />);
+	const component = render(
+		<Suspense fallback={<div>Fallback</div>}>
+			<Password />
+		</Suspense>
+	);
 
 	const { oldPassword, newPassword, repeatedPassword } = getInputs(component);
 
@@ -66,7 +71,11 @@ test("new doesn't equal repeated", async () => {
 });
 
 test('Password changes successfully', async () => {
-	const component = render(<Password />);
+	const component = render(
+		<Suspense fallback={<div>Fallback</div>}>
+			<Password />
+		</Suspense>
+	);
 
 	// Get the input nodes or whatever they're called.
 	const { oldPassword, newPassword, repeatedPassword } = getInputs(component);
@@ -99,7 +108,13 @@ test('User cannot change password.', async () => {
 		},
 	});
 
-	const component = await waitFor(() => render(<Password />));
+	const component = render(
+		<Suspense fallback={<div>Fallback</div>}>
+			<Password />
+		</Suspense>
+	);
 
-	expect(component.queryByTestId('password-cant-change')).toBeTruthy();
+	await waitFor(() =>
+		expect(component.queryByTestId('password-cant-change')).toBeTruthy()
+	);
 });

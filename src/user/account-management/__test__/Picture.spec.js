@@ -22,6 +22,9 @@ jest.mock('@nti/web-whiteboard', () => ({
 const getMockService = () => {
 	return {
 		getAppUser: () => ({ avatarURL: 'avatar-url' }),
+		capabilities: {
+			canUploadAvatar: true,
+		},
 	};
 };
 
@@ -69,4 +72,44 @@ test('Edit save button', async () => {
 	);
 
 	expect(onSave).toBeCalledWith('image');
+});
+
+test('Upload and Edit are visible', async () => {
+	setupTestClient({
+		getAppUser: () => ({ avatarURL: 'avatar-url' }),
+		capabilities: {
+			canUploadAvatar: true,
+		},
+	});
+
+	const component = render(
+		<Suspense fallback={<div>Fallback</div>}>
+			<Picture />
+		</Suspense>
+	);
+
+	await waitFor(() => {
+		expect(component.queryByTestId('edit-link')).toBeTruthy();
+		expect(component.queryByTestId('upload-link')).toBeTruthy();
+	});
+});
+
+test('Upload and Edit are invisible', async () => {
+	setupTestClient({
+		getAppUser: () => ({ avatarURL: null }),
+		capabilities: {
+			canUploadAvatar: false,
+		},
+	});
+
+	const component = render(
+		<Suspense fallback={<div>Fallback</div>}>
+			<Picture />
+		</Suspense>
+	);
+
+	await waitFor(() => {
+		expect(component.queryByTestId('edit-link')).toBeFalsy();
+		expect(component.queryByTestId('upload-link')).toBeFalsy();
+	});
 });
