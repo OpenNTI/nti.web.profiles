@@ -146,7 +146,7 @@ export function Password() {
 			onSubmit={stop}
 			onChange={handleChange}
 			ref={form}
-			data-testid="form"
+			data-testid="change-password-form"
 		>
 			<InputsContainer>
 				{['oldPassword', 'newPassword', 'repeatedPassword'].map(
