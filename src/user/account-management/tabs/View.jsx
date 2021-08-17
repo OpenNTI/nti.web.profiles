@@ -3,7 +3,7 @@ import { Suspense, useState } from 'react';
 import { Loading, Tabs } from '@nti/web-commons';
 
 import { Picture } from './picture/View';
-import { Password } from './Password';
+import { Password } from './password/View';
 import { Preferences } from './preferences/View';
 
 // const t = scoped('nti.web-profiles.user.account-management.tabs', {
