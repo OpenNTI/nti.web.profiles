@@ -24,8 +24,9 @@ const t = scoped('nti.web-profiles.user.account-management.tabs.Preferences', {
 		email_a_summary_of_interesting_changes:
 			'Send me email notifications about activity I may have missed.',
 		immediate_threadable_reply:
+			'Send me email notifications when I am replied to.',
+		notify_on_mention:
 			'Send me email notifications when someone @mentions me.',
-		notify_on_mention: 'Send me email notifications when I am replied to.',
 	},
 });
 
