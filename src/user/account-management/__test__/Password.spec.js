@@ -39,9 +39,11 @@ test('old equals new', async () => {
 	userEvent.type(newPassword, samePassword);
 	userEvent.type(repeatedPassword, samePassword);
 
-	userEvent.click(component.queryByTestId('submit-btn'));
+	userEvent.click(component.queryByTestId('change-password-submit-btn'));
 
-	await waitFor(() => expect(component.queryByTestId('error')).toBeTruthy());
+	await waitFor(() =>
+		expect(component.queryByTestId('change-password-error')).toBeTruthy()
+	);
 });
 
 test("new doesn't equal repeated", async () => {
@@ -53,9 +55,11 @@ test("new doesn't equal repeated", async () => {
 	userEvent.type(newPassword, 'new-password');
 	userEvent.type(repeatedPassword, 'different-password');
 
-	userEvent.click(component.queryByTestId('submit-btn'));
+	userEvent.click(component.queryByTestId('change-password-submit-btn'));
 
-	await waitFor(() => expect(component.queryByTestId('error')).toBeTruthy());
+	await waitFor(() =>
+		expect(component.queryByTestId('change-password-error')).toBeTruthy()
+	);
 });
 
 test('Password changes successfully', async () => {
@@ -70,7 +74,7 @@ test('Password changes successfully', async () => {
 	userEvent.type(repeatedPassword, 'new-password');
 
 	// Click submit to submit the form.
-	userEvent.click(component.queryByTestId('submit-btn'));
+	userEvent.click(component.queryByTestId('change-password-submit-btn'));
 
 	await waitFor(() => {
 		// Makes sure changePassword was called with correct args.
@@ -79,8 +83,8 @@ test('Password changes successfully', async () => {
 			'old-password'
 		);
 		// Make sure success message is there.
-		expect(component.queryByTestId('success')).toBeTruthy();
+		expect(component.queryByTestId('change-password-success')).toBeTruthy();
 		// Make sure no errors encountered.
-		expect(component.queryByTestId('error')).toBeFalsy();
+		expect(component.queryByTestId('change-password-error')).toBeFalsy();
 	});
 });

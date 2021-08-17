@@ -42,7 +42,9 @@ test('Navigation', async () => {
 	await waitFor(() => fireEvent.click(component.queryByTestId('edit-link')));
 	expect(component.queryByTestId('edit-view')).toBeTruthy();
 
-	await waitFor(() => fireEvent.click(component.queryByTestId('cancel-btn')));
+	await waitFor(() =>
+		fireEvent.click(component.queryByTestId('edit-cancel-btn'))
+	);
 	expect(component.queryByTestId('main-view')).toBeTruthy();
 
 	// Main to Upload to Main
@@ -51,7 +53,9 @@ test('Navigation', async () => {
 	);
 	expect(component.queryByTestId('upload-view')).toBeTruthy();
 
-	await waitFor(() => fireEvent.click(component.queryByTestId('cancel-btn')));
+	await waitFor(() =>
+		fireEvent.click(component.queryByTestId('upload-cancel-btn'))
+	);
 	expect(component.queryByTestId('main-view')).toBeTruthy();
 });
 
@@ -60,7 +64,9 @@ test('Edit save button', async () => {
 
 	const component = render(<Edit onSave={onSave} />);
 
-	await waitFor(() => fireEvent.click(component.queryByTestId('save-btn')));
+	await waitFor(() =>
+		fireEvent.click(component.queryByTestId('edit-save-btn'))
+	);
 
 	expect(onSave).toBeCalledWith('image');
 });

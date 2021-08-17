@@ -166,9 +166,13 @@ export function Password() {
 				)}
 			</InputsContainer>
 
-			{success && <Success data-testid="success">{t('success')}</Success>}
+			{success && (
+				<Success data-testid="change-password-success">
+					{t('success')}
+				</Success>
+			)}
 			{error && (
-				<ErrorContainer data-testid="error">
+				<ErrorContainer data-testid="change-password-error">
 					<Errors.Message error={error} />
 				</ErrorContainer>
 			)}
@@ -177,7 +181,7 @@ export function Password() {
 				<ActionButton
 					onClick={handleSubmit}
 					disabled={disabled}
-					data-testid="submit-btn"
+					data-testid="change-password-submit-btn"
 				>
 					{t('save')}
 				</ActionButton>

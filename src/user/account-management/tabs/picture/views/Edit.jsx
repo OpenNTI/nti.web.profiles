@@ -52,12 +52,12 @@ export function Edit({ onSave, image, onCancel }) {
 		{
 			label: t('cancel'),
 			onClick: onCancel,
-			'data-testid': 'cancel-btn',
+			'data-testid': 'edit-cancel-btn',
 		},
 		{
 			label: t('save'),
 			onClick: handleSave,
-			'data-testid': 'save-btn',
+			'data-testid': 'edit-save-btn',
 		},
 	];
 
