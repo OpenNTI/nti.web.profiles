@@ -103,15 +103,12 @@ export function Password() {
 		error: null,
 	});
 
-	const handleSubmit = useCallback(async (work, selectFinalState) => {
+	const handleSubmit = useCallback(async () => {
 		const { newPassword, oldPassword, repeatedPassword } = toJSON(
 			form.current
 		);
 
-		if (!(newPassword && oldPassword && repeatedPassword)) {
-			selectFinalState.disable();
-			dispatch({ error: t('error.empty'), success: null });
-		} else if (oldPassword === newPassword) {
+		if (oldPassword === newPassword) {
 			dispatch({ error: t('error.different'), success: null });
 			throw Error(t('error.different'));
 		} else if (newPassword !== repeatedPassword) {
@@ -126,7 +123,6 @@ export function Password() {
 					success: true,
 					error: null,
 				});
-				selectFinalState.reset();
 			} catch (error) {
 				dispatch({ error, success: null });
 				throw error;
