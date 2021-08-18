@@ -46,7 +46,7 @@ const ActionButton = styled(PromiseButton.impl).attrs({
 })`
 	transition: all 0.5s ease-in;
 
-	&.disabled {
+	&:global(.disabled) {
 		background-color: var(--tertiary-grey-alt);
 	}
 
