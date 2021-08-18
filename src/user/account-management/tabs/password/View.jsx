@@ -46,6 +46,10 @@ const ActionButton = styled(PromiseButton.impl).attrs({
 })`
 	transition: all 0.5s ease-in;
 
+	&.disabled {
+		background-color: var(--tertiary-grey-alt);
+	}
+
 	&:global(.finished) {
 		background: transparent;
 		color: var(--primary-blue);
@@ -160,7 +164,10 @@ export function Password() {
 				{['oldPassword', 'newPassword', 'repeatedPassword'].map(
 					(name, index) => (
 						<Clearable
-							onClear={input => (input.value = '')}
+							onClear={input => {
+								input.value = '';
+								handleChange();
+							}}
 							key={index}
 						>
 							<PasswordInput
