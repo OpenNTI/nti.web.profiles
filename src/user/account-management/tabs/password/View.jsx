@@ -2,15 +2,14 @@ import React, { useCallback, useRef } from 'react';
 
 import { scoped } from '@nti/lib-locale';
 import {
-	Button,
 	Errors,
 	Form,
 	Input,
-	PromiseButton,
 	useReducerState,
 	useService,
 } from '@nti/web-commons';
 import { getAppUser } from '@nti/web-client';
+import { AsyncAction } from '@nti/web-core';
 
 import { ChangeDisallowed } from './ChangeDisallowed';
 
@@ -37,23 +36,6 @@ const ButtonContainer = styled.div`
 	overflow: hidden;
 	display: flex;
 	justify-content: flex-end;
-`;
-
-const SubmitButton = styled(Button).attrs({ as: Form.SubmitButton })``;
-
-const ActionButton = styled(PromiseButton.impl).attrs({
-	as: SubmitButton,
-})`
-	transition: all 0.5s ease-in;
-
-	&.disabled {
-		background-color: var(--tertiary-grey-alt);
-	}
-
-	&:global(.finished) {
-		background: transparent;
-		color: var(--primary-blue);
-	}
 `;
 
 const InputsContainer = styled.div`
@@ -85,12 +67,12 @@ const PasswordInput = styled(Input.Text).attrs({ type: 'password' })`
 `;
 
 const Success = styled.div`
-	margin: 10px 0 10px 20px;
 	color: var(--correct);
 `;
 
-const ErrorContainer = styled.div`
-	margin: 10px 0 10px 20px;
+const MessageContainer = styled.div`
+	margin: 0 0 10px 20px;
+	min-height: 25px;
 `;
 
 const stop = e => (e.preventDefault(), e.stopPropagation());
@@ -181,25 +163,30 @@ export function Password() {
 				)}
 			</InputsContainer>
 
-			{success && (
-				<Success data-testid="change-password-success">
-					{t('success')}
-				</Success>
-			)}
-			{error && (
-				<ErrorContainer data-testid="change-password-error">
-					<Errors.Message error={error} />
-				</ErrorContainer>
-			)}
+			<MessageContainer>
+				{error && (
+					<Errors.Message
+						data-testid="change-password-error"
+						error={error}
+					/>
+				)}
+
+				{success && (
+					<Success data-testid="change-password-success">
+						{t('success')}
+					</Success>
+				)}
+			</MessageContainer>
 
 			<ButtonContainer>
-				<ActionButton
+				<AsyncAction
+					type="submit"
 					onClick={handleSubmit}
 					disabled={disabled}
 					data-testid="change-password-submit-btn"
 				>
 					{t('save')}
-				</ActionButton>
+				</AsyncAction>
 			</ButtonContainer>
 		</StyledForm>
 	);
