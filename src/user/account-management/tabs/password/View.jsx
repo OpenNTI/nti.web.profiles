@@ -67,12 +67,12 @@ const PasswordInput = styled(Input.Text).attrs({ type: 'password' })`
 `;
 
 const Success = styled.div`
-	margin: 10px 0 10px 20px;
 	color: var(--correct);
 `;
 
-const ErrorContainer = styled.div`
-	margin: 10px 0 10px 20px;
+const MessageContainer = styled.div`
+	margin: 0 0 10px 20px;
+	min-height: 25px;
 `;
 
 const stop = e => (e.preventDefault(), e.stopPropagation());
@@ -163,14 +163,20 @@ export function Password() {
 				)}
 			</InputsContainer>
 
-			{success && (
-				<Success data-testid="change-password-success">
-					{t('success')}
-				</Success>
-			)}
-			<ErrorContainer data-testid="change-password-error">
-				<Errors.Message error={error} />
-			</ErrorContainer>
+			<MessageContainer>
+				{error && (
+					<Errors.Message
+						data-testid="change-password-error"
+						error={error}
+					/>
+				)}
+
+				{success && (
+					<Success data-testid="change-password-success">
+						{t('success')}
+					</Success>
+				)}
+			</MessageContainer>
 
 			<ButtonContainer>
 				<AsyncAction

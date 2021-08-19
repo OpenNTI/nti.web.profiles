@@ -48,6 +48,7 @@
     "@nti/web-reports": "NextThought/nti.web.reports",
     "@nti/web-routing": "NextThought/nti.web.routing",
     "@nti/web-whiteboard": "NextThought/nti.web.whiteboard",
+    "@nti/web-core": "NextThought/nti.web.core",
     "deep-object-diff": "^1.1.0",
     "uuid": "^8.3.0"
   },
