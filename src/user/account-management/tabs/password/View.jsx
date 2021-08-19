@@ -2,15 +2,14 @@ import React, { useCallback, useRef } from 'react';
 
 import { scoped } from '@nti/lib-locale';
 import {
-	Button,
 	Errors,
 	Form,
 	Input,
-	PromiseButton,
 	useReducerState,
 	useService,
 } from '@nti/web-commons';
 import { getAppUser } from '@nti/web-client';
+import { AsyncAction } from '@nti/web-core';
 
 import { ChangeDisallowed } from './ChangeDisallowed';
 
@@ -37,23 +36,6 @@ const ButtonContainer = styled.div`
 	overflow: hidden;
 	display: flex;
 	justify-content: flex-end;
-`;
-
-const SubmitButton = styled(Button).attrs({ as: Form.SubmitButton })``;
-
-const ActionButton = styled(PromiseButton.impl).attrs({
-	as: SubmitButton,
-})`
-	transition: all 0.5s ease-in;
-
-	&:global(.disabled) {
-		background-color: var(--tertiary-grey-alt);
-	}
-
-	&:global(.finished) {
-		background: transparent;
-		color: var(--primary-blue);
-	}
 `;
 
 const InputsContainer = styled.div`
@@ -186,20 +168,19 @@ export function Password() {
 					{t('success')}
 				</Success>
 			)}
-			{error && (
-				<ErrorContainer data-testid="change-password-error">
-					<Errors.Message error={error} />
-				</ErrorContainer>
-			)}
+			<ErrorContainer data-testid="change-password-error">
+				<Errors.Message error={error} />
+			</ErrorContainer>
 
 			<ButtonContainer>
-				<ActionButton
+				<AsyncAction
+					type="submit"
 					onClick={handleSubmit}
 					disabled={disabled}
 					data-testid="change-password-submit-btn"
 				>
 					{t('save')}
-				</ActionButton>
+				</AsyncAction>
 			</ButtonContainer>
 		</StyledForm>
 	);
