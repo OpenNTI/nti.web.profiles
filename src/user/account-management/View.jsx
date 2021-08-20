@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { Suspense, useState } from 'react';
 
-import { Prompt, Text } from '@nti/web-commons';
+import { Loading, Prompt, Text } from '@nti/web-commons';
 import { scoped } from '@nti/lib-locale';
 
 import { TabsView } from './tabs/View';
@@ -23,7 +23,7 @@ export const AccountManagement = React.forwardRef((props, ref) => {
 	const handleClose = () => setPrompt(false);
 
 	return (
-		<>
+		<Suspense fallback={<Loading.Spinner />}>
 			{prompt && (
 				<Prompt.Dialog
 					closeOnMaskClick={false}
@@ -41,6 +41,6 @@ export const AccountManagement = React.forwardRef((props, ref) => {
 					</Modal>
 				</Prompt.Dialog>
 			)}
-		</>
+		</Suspense>
 	);
 });
