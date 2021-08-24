@@ -17,10 +17,15 @@ const Modal = styled(Prompt.BaseWindow)`
 	top: 10vh;
 `;
 
-export const AccountManagement = React.forwardRef((props, ref) => {
+export const AccountManagement = React.forwardRef(({ onClose }, ref) => {
 	const [prompt, setPrompt] = useState(true);
 
-	const handleClose = () => setPrompt(false);
+	const handleClose = () => {
+		if (onClose) {
+			onClose();
+		}
+		setPrompt(false);
+	};
 
 	return (
 		<Suspense fallback={<Loading.Spinner />}>
