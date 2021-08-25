@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Button, Flyout, Icons, Text } from '@nti/web-commons';
+import { Flyout, Icons, Text } from '@nti/web-commons';
+import { Button } from "@nti/web-core";
 import { scoped } from '@nti/lib-locale';
 
 const t = scoped('nti.web.discussion-selection.ChannelSelect', {

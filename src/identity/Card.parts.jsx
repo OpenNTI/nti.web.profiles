@@ -1,8 +1,5 @@
-import {
-	Avatar as AvatarBase,
-	Button,
-	DisplayName as DisplayNameBase,
-} from '@nti/web-commons';
+import { Avatar as AvatarBase, DisplayName as DisplayNameBase } from '@nti/web-commons';
+import { Button } from "@nti/web-core";
 
 export const Box = styled.div`
 	padding: 5px;

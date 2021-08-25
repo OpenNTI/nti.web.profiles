@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 import { PropTypes as PT } from '@nti/lib-commons';
-import { Button } from '@nti/web-commons';
+import { Button } from "@nti/web-core";
 import { scoped } from '@nti/lib-locale';
 
 const t = scoped('nti-web-profile.user-profile.edit.list', {

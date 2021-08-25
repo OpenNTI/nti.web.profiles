@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { LinkTo } from '@nti/web-routing';
-import { Button } from '@nti/web-commons';
+import { Button } from "@nti/web-core";
 import { decorate } from '@nti/lib-commons';
 
 import { Store, Constants, confirmSchemaChanges } from '../edit/';

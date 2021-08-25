@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 
 import { scoped } from '@nti/lib-locale';
 import { getAppUsername } from '@nti/web-client';
-import { Text, StandardUI, Button } from '@nti/web-commons';
+import { Text, StandardUI } from '@nti/web-commons';
+import { Button } from "@nti/web-core";
 
 const t = scoped('nti-web-profile.badges.EmptyState', {
 	other: 'This user has not earned any badges.',

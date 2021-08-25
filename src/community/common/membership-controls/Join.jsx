@@ -4,7 +4,8 @@ import classnames from 'classnames/bind';
 
 import { decorate } from '@nti/lib-commons';
 import { scoped } from '@nti/lib-locale';
-import { Button, Flyout, Text, Loading, Errors } from '@nti/web-commons';
+import { Flyout, Text, Loading, Errors } from '@nti/web-commons';
+import { Button } from "@nti/web-core";
 
 import Store from './Store';
 import Styles from './Join.css';

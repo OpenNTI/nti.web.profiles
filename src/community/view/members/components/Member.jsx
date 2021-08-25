@@ -4,7 +4,8 @@ import classnames from 'classnames/bind';
 
 import { decorate } from '@nti/lib-commons';
 import { scoped } from '@nti/lib-locale';
-import { Checkbox, Text, Flyout, Button } from '@nti/web-commons';
+import { Checkbox, Text, Flyout } from '@nti/web-commons';
+import { Button } from "@nti/web-core";
 import { LinkTo } from '@nti/web-routing';
 
 import Store from '../Store';

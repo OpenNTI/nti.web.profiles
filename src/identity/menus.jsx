@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { Button, Utils } from '@nti/web-commons';
+import { Utils } from '@nti/web-commons';
+import { Button } from "@nti/web-core";
 
 import { collectProps } from './utils';
 

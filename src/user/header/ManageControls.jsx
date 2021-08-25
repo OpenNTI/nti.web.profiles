@@ -3,7 +3,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { getService, User as UserResolver } from '@nti/web-client';
-import { User, Layouts, Loading, Button } from '@nti/web-commons';
+import { User, Layouts, Loading } from '@nti/web-commons';
+import { Button } from "@nti/web-core";
 import { scoped } from '@nti/lib-locale';
 
 import MessageButton from './MessageButton';

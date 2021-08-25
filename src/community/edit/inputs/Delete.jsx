@@ -4,7 +4,8 @@ import classnames from 'classnames/bind';
 
 import { scoped } from '@nti/lib-locale';
 import { LinkTo } from '@nti/web-routing';
-import { Input, Text, Button, Prompt } from '@nti/web-commons';
+import { Input, Text, Prompt } from '@nti/web-commons';
+import { Button } from "@nti/web-core";
 
 import Styles from './Delete.css';
 
