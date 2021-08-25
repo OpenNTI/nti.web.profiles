@@ -16,7 +16,7 @@ export function Field({ name, collection, label }) {
 	const [preference, setPreference] = User.usePreference(key);
 
 	const onChange = React.useCallback(
-		async e => {
+		e => {
 			setPreference(e.target.checked);
 
 			if (name === 'useHighContrast') {
@@ -26,7 +26,7 @@ export function Field({ name, collection, label }) {
 						.querySelector("head link[href$='accessibility.css']")
 						?.remove();
 				} else {
-					await addStyleSheet(
+					addStyleSheet(
 						URL.join(basepath, '/resources/css/accessibility.css')
 					);
 				}
