@@ -8,7 +8,6 @@
     "check": "cmp-scripts check",
     "clean": "cmp-scripts clean",
     "fix": "cmp-scripts fix",
-    "legacy-test-app": "cmp-scripts start",
     "release": "cmp-scripts release",
     "start": "start-storybook -p 6006",
     "test": "cmp-scripts test"
@@ -17,19 +16,9 @@
     "type": "git",
     "url": "git+https://github.com/NextThought/nti.web.profiles.git"
   },
-  "keywords": [
-    "nextthought",
-    "profiles"
-  ],
   "author": "NextThought",
   "license": "UNLICENSED",
-  "bugs": {
-    "url": "https://github.com/NextThought/nti.web.profiles/issues"
-  },
   "homepage": "https://github.com/NextThought/nti.web.profiles#readme",
-  "publishConfig": {
-    "registry": "https://npm.nextthought.com"
-  },
   "dependencies": {
     "@nti/lib-commons": "NextThought/nti.lib.commons",
     "@nti/lib-decorators": "NextThought/nti.lib.decorators",
