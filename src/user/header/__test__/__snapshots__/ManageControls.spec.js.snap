@@ -4,8 +4,9 @@ exports[`User profile manage controls test (is a contact) Basic render test 1`] 
 <div
   className="contact profile-manage-controls"
 >
-  <a
-    className="nti-button flyout-trigger message message-button-flyout flyout-closed button primary"
+  <button
+    aria-haspopup="dialog"
+    className="flyout-trigger message message-button-flyout flyout-closed nti-button button primary medium pv-md ph-lg"
     onBlur={[Function]}
     onClick={[Function]}
     onFocus={[Function]}
@@ -13,7 +14,6 @@ exports[`User profile manage controls test (is a contact) Basic render test 1`] 
     onKeyPress={[Function]}
     onMouseEnter={[Function]}
     onMouseLeave={[Function]}
-    role="button"
     tabIndex={0}
   >
     <span>
@@ -26,13 +26,12 @@ exports[`User profile manage controls test (is a contact) Basic render test 1`] 
         Message
       </span>
     </span>
-  </a>
-  <a
-    className="nti-button unfollow button primary"
+  </button>
+  <button
+    className="unfollow nti-button button primary medium pv-md ph-lg"
     onClick={[Function]}
     onKeyDown={[Function]}
-    role="button"
-    tabIndex="0"
+    tabIndex={0}
   >
     <div
       className="content"
@@ -44,7 +43,7 @@ exports[`User profile manage controls test (is a contact) Basic render test 1`] 
         Unfollow
       </span>
     </div>
-  </a>
+  </button>
 </div>
 `;
 
@@ -52,12 +51,11 @@ exports[`User profile manage controls test (is not a contact) Basic render test 
 <div
   className="non-contact profile-manage-controls"
 >
-  <a
-    className="nti-button follow button primary"
+  <button
+    className="follow nti-button button primary medium pv-md ph-lg"
     onClick={[Function]}
     onKeyDown={[Function]}
-    role="button"
-    tabIndex="0"
+    tabIndex={0}
   >
     <div
       className="content"
@@ -69,6 +67,6 @@ exports[`User profile manage controls test (is not a contact) Basic render test 
         Follow
       </span>
     </div>
-  </a>
+  </button>
 </div>
 `;

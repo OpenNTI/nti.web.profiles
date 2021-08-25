@@ -4,8 +4,9 @@ exports[`User profile header buttons test Is not acting user 1`] = `
 <div
   className="contact profile-manage-controls"
 >
-  <a
-    className="nti-button flyout-trigger message message-button-flyout flyout-closed button primary"
+  <button
+    aria-haspopup="dialog"
+    className="flyout-trigger message message-button-flyout flyout-closed nti-button button primary medium pv-md ph-lg"
     onBlur={[Function]}
     onClick={[Function]}
     onFocus={[Function]}
@@ -13,7 +14,6 @@ exports[`User profile header buttons test Is not acting user 1`] = `
     onKeyPress={[Function]}
     onMouseEnter={[Function]}
     onMouseLeave={[Function]}
-    role="button"
     tabIndex={0}
   >
     <span>
@@ -26,13 +26,12 @@ exports[`User profile header buttons test Is not acting user 1`] = `
         Message
       </span>
     </span>
-  </a>
-  <a
-    className="nti-button unfollow button primary"
+  </button>
+  <button
+    className="unfollow nti-button button primary medium pv-md ph-lg"
     onClick={[Function]}
     onKeyDown={[Function]}
-    role="button"
-    tabIndex="0"
+    tabIndex={0}
   >
     <div
       className="content"
@@ -44,6 +43,6 @@ exports[`User profile header buttons test Is not acting user 1`] = `
         Unfollow
       </span>
     </div>
-  </a>
+  </button>
 </div>
 `;
