@@ -1,50 +1,45 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`User profile message button test Test not present 1`] = `
-<button
-  aria-haspopup="dialog"
-  className="flyout-trigger message message-button-flyout flyout-closed nti-button button primary medium pv-md ph-lg"
-  onBlur={[Function]}
-  onClick={[Function]}
-  onFocus={[Function]}
-  onKeyDown={[Function]}
-  onKeyPress={[Function]}
-  onMouseEnter={[Function]}
-  onMouseLeave={[Function]}
-  tabIndex={0}
->
-  <span>
-    <div
-      className="icon"
-    />
-    <span
-      className="text"
-    >
-      Message
+<DocumentFragment>
+  <button
+    aria-haspopup="dialog"
+    class="flyout-trigger message message-button-flyout flyout-closed nti-button button primary medium pv-md ph-lg"
+    tabindex="0"
+  >
+    <span>
+      <div
+        class="icon"
+      />
+      <span
+        class="text"
+      >
+        Message
+      </span>
     </span>
-  </span>
-</button>
+  </button>
+</DocumentFragment>
 `;
 
 exports[`User profile message button test Test present 1`] = `
-<div
-  className="nti-link-to-path"
-  to="#"
->
-  <button
-    className="message available nti-button button primary medium pv-md ph-lg"
-    onClick={[Function]}
-    onKeyDown={[Function]}
-    tabIndex={0}
+<DocumentFragment>
+  <div
+    class="nti-link-to-path"
+    to="#"
   >
-    <div
-      className="icon"
-    />
-    <span
-      className="text"
+    <button
+      class="message available nti-button button primary medium pv-md ph-lg"
+      tabindex="0"
     >
-      Message
-    </span>
-  </button>
-</div>
+      <div
+        class="icon"
+      />
+      <span
+        class="text"
+      >
+        Message
+      </span>
+    </button>
+  </div>
+</DocumentFragment>
 `;

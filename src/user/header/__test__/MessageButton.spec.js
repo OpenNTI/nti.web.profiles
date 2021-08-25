@@ -1,5 +1,5 @@
 import React from 'react';
-import { act, create } from 'react-test-renderer';
+import { render } from '@testing-library/react';
 
 import * as TestUtils from '@nti/web-client/test-utils';
 
@@ -31,24 +31,18 @@ describe('User profile message button test', () => {
 		};
 
 		const presence = {
-			status: null,
+			isOnline: () => false,
 		};
 
-		let cmp;
-		act(() => {
-			cmp = create(
-				<MessageButton
-					entity={user}
-					displayName="TEST USER"
-					presence={presence}
-				/>
-			);
-		});
+		let cmp = render(
+			<MessageButton
+				entity={user}
+				displayName="TEST USER"
+				presence={presence}
+			/>
+		);
 
-		const tree = cmp.toJSON();
-
-		expect(tree).toMatchSnapshot();
-		cmp.unmount();
+		expect(cmp.asFragment()).toMatchSnapshot();
 	});
 
 	test('Test present', async () => {
@@ -57,23 +51,17 @@ describe('User profile message button test', () => {
 		};
 
 		const presence = {
-			status: '',
+			isOnline: () => true,
 		};
 
-		let cmp;
-		act(() => {
-			cmp = create(
-				<MessageButton
-					entity={user}
-					displayName="TEST USER"
-					presence={presence}
-				/>
-			);
-		});
+		let cmp = render(
+			<MessageButton
+				entity={user}
+				displayName="TEST USER"
+				presence={presence}
+			/>
+		);
 
-		const tree = cmp.toJSON();
-
-		expect(tree).toMatchSnapshot();
-		cmp.unmount();
+		expect(cmp.asFragment()).toMatchSnapshot();
 	});
 });
