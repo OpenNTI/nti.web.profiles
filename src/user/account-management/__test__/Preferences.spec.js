@@ -30,7 +30,9 @@ test('Field component', async () => {
 		/>
 	);
 
-	expect(component.getByTestId('checkbox-useHighContrast')).toBeChecked();
+	expect(
+		component.getByTestId('checkbox-useHighContrast').querySelector('input')
+	).toBeChecked();
 
 	User.usePreference.mockReturnValue([false, mock]);
 
@@ -42,5 +44,7 @@ test('Field component', async () => {
 		/>
 	);
 
-	expect(component.getByTestId('checkbox-useHighContrast')).not.toBeChecked();
+	expect(
+		component.getByTestId('checkbox-useHighContrast').querySelector('input')
+	).not.toBeChecked();
 });
