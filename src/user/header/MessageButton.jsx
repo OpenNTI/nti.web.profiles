@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { Flyout } from '@nti/web-commons';
-import { Button } from "@nti/web-core";
+import { Button } from '@nti/web-core';
 import { scoped } from '@nti/lib-locale';
 import { LinkTo } from '@nti/web-routing';
 
@@ -23,7 +23,7 @@ export default class ManageControls extends React.Component {
 	render() {
 		const { entity, displayName, presence } = this.props;
 
-		if (presence && presence.status !== null) {
+		if (presence?.isOnline()) {
 			return (
 				<LinkTo.Object context="open-chat" object={entity}>
 					<Button className="message available">
