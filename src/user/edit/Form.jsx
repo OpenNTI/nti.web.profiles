@@ -19,6 +19,8 @@ const t = scoped('nti-profiles.user.edit.section-titles', {
 	information: 'Information',
 });
 
+const stop = e => (e.preventDefault(), e.stopPropagation());
+
 class Form extends React.Component {
 	static propTypes = {
 		fieldGroups: PropTypes.object.isRequired,
@@ -57,7 +59,11 @@ class Form extends React.Component {
 		const { fieldGroups, formId } = this.props;
 		const widgets = Object.entries(fieldGroups || {}).map(this.getSection);
 
-		return <form id={formId}>{widgets}</form>;
+		return (
+			<form id={formId} onSubmit={stop}>
+				{widgets}
+			</form>
+		);
 	}
 }
 
