@@ -27,13 +27,13 @@
 	flex-direction: row;
 }
 
-.members-actions-button:global(.nti-button.primary) {
+.members-actions-button:global(.nti-button) {
 	background: none;
 	padding: 0 0.25rem 7px;
 	color: var(--primary-grey);
 }
 
-.remove-all-members:global(.nti-button.primary) {
+.remove-all-members:global(.nti-button) {
 	background: none;
 	color: var(--primary-red);
 	font-weight: normal;
@@ -44,7 +44,7 @@
 	margin-right: var(--side-padding, 1.5rem);
 }
 
-.remove-members:global(.nti-button.primary) {
+.remove-members:global(.nti-button) {
 	background-color: white;
 	color: var(--primary-red);
 	padding: 0.25rem 0.625rem;
