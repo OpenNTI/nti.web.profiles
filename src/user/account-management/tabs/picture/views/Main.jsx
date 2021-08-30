@@ -57,7 +57,7 @@ export function Main({ onUpload, onEdit }) {
 				<Title as="h3">
 					<Translate localeKey="title" />
 				</Title>
-				<InlineList separator=" | ">
+				<InlineList separator="|">
 					{displayEditLink && canUploadAvatar && (
 						<Link onClick={onEdit} data-testid="edit-link">
 							<Translate localeKey="edit" />
