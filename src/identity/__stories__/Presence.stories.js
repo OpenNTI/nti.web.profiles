@@ -17,6 +17,7 @@ setupTestClient({
 		return {
 			addListener() {},
 			get() {},
+			waitForPending() {},
 		};
 	},
 });
