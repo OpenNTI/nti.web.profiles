@@ -19,17 +19,6 @@ const Title = styled(Text.Base)`
 
 const Link = styled(Button).attrs({ plain: true })`
 	color: var(--primary-blue);
-	font-size: 12px;
-	text-decoration: none;
-	cursor: pointer;
-
-	&:link {
-		text-decoration: none;
-	}
-
-	&:hover {
-		text-decoration: none;
-	}
 `;
 
 const translation = scoped(
