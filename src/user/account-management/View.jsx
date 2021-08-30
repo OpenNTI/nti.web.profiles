@@ -33,8 +33,8 @@ export const AccountManagement = React.forwardRef(({ onClose }, ref) => {
 				doClose={handleClose}
 				buttons={[]}
 			>
-				<Header />
 				<Suspense fallback={<Loading.Spinner />}>
+					<Header />
 					<TabsView />
 				</Suspense>
 			</Modal>
