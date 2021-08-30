@@ -10,6 +10,7 @@ User.Presence.Store.setPresence('quiz_tester', {
 	getName() {
 		return this.status;
 	},
+	isOnline: () => true,
 });
 
 const user = {
