@@ -1,5 +1,5 @@
 import { Avatar, Text, useAppUser, useService } from '@nti/web-commons';
-import { Button } from "@nti/web-core";
+import { Button, InlineList } from '@nti/web-core';
 import { scoped } from '@nti/lib-locale';
 
 const Container = styled.div`
@@ -30,16 +30,6 @@ const Link = styled(Button).attrs({ plain: true })`
 	&:hover {
 		text-decoration: none;
 	}
-
-	&.edit {
-		&::after {
-			content: ' | ';
-			font-size: 1.1em;
-			display: contents;
-			margin: 0 0.3em;
-			text-decoration: none !important;
-		}
-	}
 `;
 
 const translation = scoped(
@@ -67,9 +57,9 @@ export function Main({ onUpload, onEdit }) {
 				<Title as="h3">
 					<Translate localeKey="title" />
 				</Title>
-				<>
+				<InlineList separator=" | ">
 					{displayEditLink && canUploadAvatar && (
-						<Link onClick={onEdit} data-testid="edit-link" edit>
+						<Link onClick={onEdit} data-testid="edit-link">
 							<Translate localeKey="edit" />
 						</Link>
 					)}
@@ -78,7 +68,7 @@ export function Main({ onUpload, onEdit }) {
 							<Translate localeKey="upload" />
 						</Link>
 					)}
-				</>
+				</InlineList>
 			</div>
 		</Container>
 	);

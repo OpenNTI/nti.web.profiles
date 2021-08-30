@@ -1,16 +1,16 @@
 /* eslint-env jest */
 import { render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { Suspense } from 'react';
 
-import { setupTestClient } from '@nti/web-client/test-utils';
+import { setupTestClient, primeMockedReader } from '@nti/web-client/test-utils';
+import { useService } from '@nti/web-commons';
 
 import { Password } from '../tabs/password/View';
 
 const changePassword = jest.fn();
 
-const getMockService = () => {
-	return {
+beforeEach(async () => {
+	setupTestClient({
 		getAppUser: async () => {
 			return {
 				changePassword,
@@ -19,10 +19,10 @@ const getMockService = () => {
 		capabilities: {
 			canChangePassword: true,
 		},
-	};
-};
+	});
 
-beforeAll(() => setupTestClient(getMockService()));
+	await primeMockedReader(useService);
+});
 
 async function getInputs(component) {
 	return {
@@ -35,11 +35,7 @@ async function getInputs(component) {
 }
 
 test('old equals new', async () => {
-	const component = render(
-		<Suspense fallback={<div>Fallback</div>}>
-			<Password />
-		</Suspense>
-	);
+	const component = render(<Password />);
 
 	const { oldPassword, newPassword, repeatedPassword } = await getInputs(
 		component
@@ -59,11 +55,7 @@ test('old equals new', async () => {
 });
 
 test("new doesn't equal repeated", async () => {
-	const component = render(
-		<Suspense fallback={<div>Fallback</div>}>
-			<Password />
-		</Suspense>
-	);
+	const component = render(<Password />);
 
 	const { oldPassword, newPassword, repeatedPassword } = await getInputs(
 		component
@@ -81,11 +73,7 @@ test("new doesn't equal repeated", async () => {
 });
 
 test('Password changes successfully', async () => {
-	const component = render(
-		<Suspense fallback={<div>Fallback</div>}>
-			<Password />
-		</Suspense>
-	);
+	const component = render(<Password />);
 
 	// Get the input nodes or whatever they're called.
 	const { oldPassword, newPassword, repeatedPassword } = await getInputs(
@@ -119,12 +107,9 @@ test('User cannot change password.', async () => {
 			canChangePassword: false,
 		},
 	});
+	await primeMockedReader(useService);
 
-	const component = render(
-		<Suspense fallback={<div>Fallback</div>}>
-			<Password />
-		</Suspense>
-	);
+	const component = render(<Password />);
 
 	await waitFor(() =>
 		expect(

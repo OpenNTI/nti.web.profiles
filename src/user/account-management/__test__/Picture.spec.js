@@ -1,8 +1,8 @@
 /* eslint-env jest */
 import { render, fireEvent, waitFor } from '@testing-library/react';
-import { Suspense } from 'react';
 
-import { setupTestClient } from '@nti/web-client/test-utils';
+import { primeMockedReader, setupTestClient } from '@nti/web-client/test-utils';
+import { useAppUser, useService } from '@nti/web-commons';
 
 import { Picture } from '../tabs/picture/View';
 import { Edit } from '../tabs/picture/views/Edit';
@@ -19,23 +19,23 @@ jest.mock('@nti/web-whiteboard', () => ({
 	},
 }));
 
-const getMockService = () => {
-	return {
+const setup = async service => {
+	setupTestClient(service);
+	await primeMockedReader(useService);
+	await primeMockedReader(useAppUser);
+};
+
+beforeEach(async () => {
+	await setup({
 		getAppUser: () => ({ avatarURL: 'avatar-url' }),
 		capabilities: {
 			canUploadAvatar: true,
 		},
-	};
-};
-
-beforeAll(() => setupTestClient(getMockService()));
+	});
+});
 
 test('Navigation', async () => {
-	const component = render(
-		<Suspense fallback={<div>Fallback</div>}>
-			<Picture />
-		</Suspense>
-	);
+	const component = render(<Picture />);
 
 	await waitFor(() =>
 		expect(component.queryByTestId('main-view')).toBeTruthy()
@@ -75,18 +75,14 @@ test('Edit save button', async () => {
 });
 
 test('Upload and Edit are visible', async () => {
-	setupTestClient({
+	await setup({
 		getAppUser: () => ({ avatarURL: 'avatar-url' }),
 		capabilities: {
 			canUploadAvatar: true,
 		},
 	});
 
-	const component = render(
-		<Suspense fallback={<div>Fallback</div>}>
-			<Picture />
-		</Suspense>
-	);
+	const component = render(<Picture />);
 
 	await waitFor(() => {
 		expect(component.queryByTestId('edit-link')).toBeTruthy();
@@ -95,18 +91,14 @@ test('Upload and Edit are visible', async () => {
 });
 
 test('Upload and Edit are invisible', async () => {
-	setupTestClient({
+	await setup({
 		getAppUser: () => ({ avatarURL: null }),
 		capabilities: {
 			canUploadAvatar: false,
 		},
 	});
 
-	const component = render(
-		<Suspense fallback={<div>Fallback</div>}>
-			<Picture />
-		</Suspense>
-	);
+	const component = render(<Picture />);
 
 	await waitFor(() => {
 		expect(component.queryByTestId('edit-link')).toBeFalsy();

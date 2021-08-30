@@ -120,7 +120,7 @@ export function Password() {
 		}
 	}, []);
 
-	const handleChange = () => {
+	const handleChange = useCallback(() => {
 		const { newPassword, oldPassword, repeatedPassword } = toJSON(
 			form.current
 		);
@@ -129,7 +129,7 @@ export function Password() {
 			disabled: !(newPassword && oldPassword && repeatedPassword),
 			error: null,
 		});
-	};
+	}, []);
 
 	if (!service.capabilities.canChangePassword) {
 		return <ChangeDisallowed />;
