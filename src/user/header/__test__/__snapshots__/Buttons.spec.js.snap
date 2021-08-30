@@ -6,7 +6,7 @@ exports[`User profile header buttons test Is not acting user 1`] = `
 >
   <button
     aria-haspopup="dialog"
-    className="flyout-trigger message message-button-flyout flyout-closed nti-button button primary medium pv-md ph-lg"
+    className="flyout-trigger message message-button-flyout flyout-closed nti-button button primary medium pv-md ph-xl"
     onBlur={[Function]}
     onClick={[Function]}
     onFocus={[Function]}
@@ -28,7 +28,7 @@ exports[`User profile header buttons test Is not acting user 1`] = `
     </span>
   </button>
   <button
-    className="unfollow nti-button button primary medium pv-md ph-lg"
+    className="unfollow nti-button button primary medium pv-md ph-xl"
     onClick={[Function]}
     onKeyDown={[Function]}
     tabIndex={0}

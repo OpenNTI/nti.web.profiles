@@ -4,7 +4,7 @@ exports[`User profile message button test Test not present 1`] = `
 <DocumentFragment>
   <button
     aria-haspopup="dialog"
-    class="flyout-trigger message message-button-flyout flyout-closed nti-button button primary medium pv-md ph-lg"
+    class="flyout-trigger message message-button-flyout flyout-closed nti-button button primary medium pv-md ph-xl"
     tabindex="0"
   >
     <span>
@@ -28,7 +28,7 @@ exports[`User profile message button test Test present 1`] = `
     to="#"
   >
     <button
-      class="message available nti-button button primary medium pv-md ph-lg"
+      class="message available nti-button button primary medium pv-md ph-xl"
       tabindex="0"
     >
       <div
