@@ -23,13 +23,17 @@ export default class AssetsInput extends React.Component {
 
 	state = {};
 
-	openEditAvatar = () => {
+	openEditAvatar = e => {
+		e.preventDefault();
+		e.stopPropagation();
 		this.setState({
 			editAvatar: true,
 		});
 	};
 
-	openEditBackground = () => {
+	openEditBackground = e => {
+		e.preventDefault();
+		e.stopPropagation();
 		this.setState({
 			editBackground: true,
 		});
