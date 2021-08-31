@@ -1,5 +1,3 @@
-@import '~@nti/style-common';
-
 .profile-head-summary {
 	&.has-role {
 		margin-top: 0.875em;
@@ -17,7 +15,7 @@
 		color: var(--tertiary-grey);
 		display: block;
 
-		@include respond-to(handhelds) {
+		@media (--respond-to-handhelds) {
 			margin-top: 0;
 			margin-bottom: -1em;
 		}
@@ -44,7 +42,7 @@
 			text-overflow: ellipsis;
 			line-height: 1;
 
-			@include respond-to(handhelds) {
+			@media (--respond-to-handhelds) {
 				max-width: calc(100% - 10px);
 				line-height: 1.3;
 			}
@@ -55,7 +53,7 @@
 		font-size: 0.875rem;
 		font-weight: 300;
 
-		@include respond-to(handhelds) {
+		@media (--respond-to-handhelds) {
 			font-size: 0.6875rem;
 			letter-spacing: 1px;
 			margin-bottom: 0.25rem;

@@ -1,5 +1,3 @@
-@import '~@nti/style-common';
-
 .profile-header-nav-link.profile-header-nav-link {
 	display: block;
 	font: normal 400 0.875rem/2.5 var(--body-font-family);
@@ -8,7 +6,7 @@
 	transition: 0.1s color;
 	color: var(--tertiary-grey);
 
-	@include responsive-range(mobile) {
+	@media (--respond-to-handhelds) {
 		padding: 0 1.125rem;
 	}
 
