@@ -4,6 +4,10 @@ const Container = styled.div`
 	display: flex;
 	align-items: center;
 	padding: 20px;
+	& > div {
+		flex: 0 1 auto;
+		overflow: hidden;
+	}
 `;
 
 const StyledAvatar = styled(Avatar)`
@@ -14,23 +18,21 @@ const StyledAvatar = styled(Avatar)`
 
 const IdentityContainer = styled.div`
 	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-start;
+	justify-items: flex-start;
 	overflow: hidden;
-	white-space: nowrap;
 	text-overflow: ellipsis;
 	margin-top: 5px;
+	gap: 0 25px;
 `;
 
 const IconLabel = styled.span`
 	color: var(--tertiary-grey);
-	position: relative;
-	overflow: auto;
 	white-space: nowrap;
-
-	&.email {
-		padding-left: 25px;
-		padding-right: 10px;
-		display: inline-block;
-	}
+	flex: 0 1 auto;
+	overflow: hidden;
+	text-overflow: ellipsis;
 `;
 
 const Person = styled(Icons.Person)`
@@ -59,7 +61,7 @@ export function Header() {
 						<Person />
 						<span>{user.Username}</span>
 					</IconLabel>
-					<IconLabel email>
+					<IconLabel>
 						<Envelop />
 						<span>{user.email}</span>
 					</IconLabel>
