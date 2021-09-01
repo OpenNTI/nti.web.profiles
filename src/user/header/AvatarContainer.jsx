@@ -1,7 +1,7 @@
 import React from 'react';
 import cx from 'classnames';
 
-import { Avatar } from '@nti/web-commons';
+import { Avatar, Layouts } from '@nti/web-commons';
 import { LinkTo, Matches } from '@nti/web-routing';
 
 const UserAvatar = styled(Avatar)`
@@ -30,15 +30,20 @@ export default function AvatarContainer({ className, entity }) {
 		<Container className={cx('avatar-container', className)}>
 			<UserAvatar entity={entity} />
 
-			<Matches.Object
-				object={entity}
-				context="edit"
-				render={({ match }) =>
-					!match || !entity ? null : (
-						<Edit object={entity} className="edit-avatar">
-							<i className="icon-edit" />
-						</Edit>
-					)
+			<Layouts.Responsive.Item
+				query={Layouts.Responsive.isWebappContext}
+				render={
+					<Matches.Object
+						object={entity}
+						context="edit"
+						render={({ match }) =>
+							!match || !entity ? null : (
+								<Edit object={entity} className="edit-avatar">
+									<i className="icon-edit" />
+								</Edit>
+							)
+						}
+					/>
 				}
 			/>
 		</Container>
