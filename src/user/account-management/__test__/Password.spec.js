@@ -3,7 +3,7 @@ import { render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { setupTestClient, primeMockedReader } from '@nti/web-client/test-utils';
-import { useService } from '@nti/web-commons';
+import { useService } from '@nti/web-core';
 
 import { Password } from '../tabs/password/View';
 

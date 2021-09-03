@@ -1,12 +1,7 @@
 import React, { Suspense } from 'react';
 
-import {
-	User,
-	Flyout,
-	Tooltip,
-	DisplayName,
-	useService,
-} from '@nti/web-commons';
+import { User, Flyout, Tooltip, DisplayName } from '@nti/web-commons';
+import { useService } from '@nti/web-core';
 import { scoped } from '@nti/lib-locale';
 
 import { Menu, MenuSeparator, MenuItem as MenuItemBase } from './menus';

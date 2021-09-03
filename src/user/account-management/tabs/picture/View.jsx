@@ -1,4 +1,5 @@
-import { Switch, useAppUser, useReducerState } from '@nti/web-commons';
+import { Switch } from '@nti/web-commons';
+import { useAppUser, useReducerState } from '@nti/web-core';
 
 import { useImage } from './Hooks';
 import { Main } from './views/Main';

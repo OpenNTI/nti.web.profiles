@@ -1,7 +1,7 @@
 import { v4 as uuid } from 'uuid';
 import { useEffect } from 'react';
 
-import { useAsyncValue } from '@nti/web-commons';
+import { useAsyncValue } from '@nti/web-core';
 import { ImageEditor } from '@nti/web-whiteboard';
 
 export const useImage = user => {

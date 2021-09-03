@@ -2,7 +2,7 @@
 import { render, fireEvent, waitFor } from '@testing-library/react';
 
 import { primeMockedReader, setupTestClient } from '@nti/web-client/test-utils';
-import { useAppUser, useService } from '@nti/web-commons';
+import { useAppUser, useService } from '@nti/web-core';
 
 import { Picture } from '../tabs/picture/View';
 import { Edit } from '../tabs/picture/views/Edit';

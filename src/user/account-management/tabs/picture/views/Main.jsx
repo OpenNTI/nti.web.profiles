@@ -1,5 +1,5 @@
-import { Avatar, Text, useAppUser, useService } from '@nti/web-commons';
-import { Button, InlineList } from '@nti/web-core';
+import { Avatar, Text } from '@nti/web-commons';
+import { useAppUser, useService, Button, InlineList } from '@nti/web-core';
 import { scoped } from '@nti/lib-locale';
 
 const Container = styled.div`

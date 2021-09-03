@@ -1,5 +1,5 @@
 import { scoped } from '@nti/lib-locale';
-import { useAppUser } from '@nti/web-commons';
+import { useAppUser } from '@nti/web-core';
 import { LinkTo } from '@nti/web-routing';
 
 import { Box, Avatar, Meta, DisplayName, Links, Link } from './Card.parts';

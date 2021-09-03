@@ -1,5 +1,5 @@
-import { User, useToggle, useService } from '@nti/web-commons';
-import { Button } from "@nti/web-core";
+import { User, useToggle } from '@nti/web-commons';
+import { useService, Button } from '@nti/web-core';
 
 import { ensureStates } from './utils';
 import { MenuSeparator } from './menus';
