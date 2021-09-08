@@ -13,6 +13,27 @@ const t = scoped('nti-web-profiles.user.header.ManageControls', {
 	isOffline: '%(name)s is offline',
 });
 
+const Icon = styled.span`
+	background-image: url(./assets/message.svg);
+	width: 30px;
+	height: 30px;
+	margin: -7px 0.5em -7px 0;
+`;
+
+const Message = styled(Button).attrs({})`
+	background: #ddd;
+	color: var(--tertiary-grey);
+
+	&.available {
+		background-color: var(--primary-blue);
+		color: white;
+
+		${Icon} {
+			background-image: url(./assets/message-w.svg);
+		}
+	}
+`;
+
 export default class ManageControls extends React.Component {
 	static propTypes = {
 		entity: PropTypes.object.isRequired,
@@ -26,10 +47,10 @@ export default class ManageControls extends React.Component {
 		if (presence?.isOnline()) {
 			return (
 				<LinkTo.Object context="open-chat" object={entity}>
-					<Button className="message available">
-						<div className="icon" />
-						<span className="text">{t('message')}</span>
-					</Button>
+					<Message available>
+						<Icon />
+						<span>{t('message')}</span>
+					</Message>
 				</LinkTo.Object>
 			);
 		} else {
@@ -37,12 +58,10 @@ export default class ManageControls extends React.Component {
 				<Flyout.Triggered
 					className="message-button-flyout"
 					trigger={
-						<Button className="message">
-							<span>
-								<div className="icon" />
-								<span className="text">{t('message')}</span>
-							</span>
-						</Button>
+						<Message>
+							<Icon />
+							<span>{t('message')}</span>
+						</Message>
 					}
 					verticalAlign={Flyout.ALIGNMENTS.TOP}
 					horizontalAlign={Flyout.ALIGNMENTS.CENTER}

@@ -5,8 +5,7 @@ exports[`User profile header buttons test Is not acting user 1`] = `
   className="contact profile-manage-controls"
 >
   <button
-    aria-haspopup="dialog"
-    className="flyout-trigger message message-button-flyout flyout-closed nti-button button primary medium pv-md ph-xl"
+    className="flyout-trigger message-button-flyout flyout-closed nti-button button primary medium pv-md ph-xl"
     onBlur={[Function]}
     onClick={[Function]}
     onFocus={[Function]}
@@ -16,16 +15,14 @@ exports[`User profile header buttons test Is not acting user 1`] = `
     onMouseLeave={[Function]}
     tabIndex={0}
   >
-    <span>
-      <div
-        className="icon"
-      />
-      <span
-        className="text"
-      >
+    <div
+      data-button-label={true}
+    >
+      <span />
+      <span>
         Message
       </span>
-    </span>
+    </div>
   </button>
   <button
     className="unfollow nti-button button primary medium pv-md ph-xl"
@@ -35,6 +32,7 @@ exports[`User profile header buttons test Is not acting user 1`] = `
   >
     <div
       className="content"
+      data-button-label={true}
     >
       <i
         className="icon-unfollow"
