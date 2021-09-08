@@ -1,8 +1,10 @@
 .profile-head-summary {
 	margin-top: 0.875em;
 
-	&.has-role {
-		margin-top: 0;
+	@media (--respond-to-handhelds) {
+		&.has-role {
+			margin-top: 0;
+		}
 	}
 
 	a {
