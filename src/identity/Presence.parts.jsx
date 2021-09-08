@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import { Icons, Input, Text, User } from '@nti/web-commons';
-import { Button } from "@nti/web-core";
+import { Button } from '@nti/web-core';
 
 import { MenuItemFrame } from './menus';
 
@@ -17,7 +17,7 @@ export const Label = styled(Text.Base)`
 	overflow: hidden;
 	white-space: nowrap;
 	text-overflow: ellipsis;
-	font: normal 400 14px/30px var(--body-font-family);
+	font: normal 400 14px/32px var(--body-font-family);
 	color: var(--tertiary-grey);
 	display: flex;
 
@@ -120,9 +120,13 @@ export const Dot = styled(User.Presence.Dot)`
 `;
 
 export const Item = styled(MenuItemFrame)`
-	align-items: center;
-	display: flex;
-	padding: 0;
+	&,
+	& > [data-button-label] {
+		align-items: center;
+		display: flex;
+		padding: 0;
+		flex: 1 1 auto;
+	}
 
 	&.selected ${Check} {
 		visibility: visible;

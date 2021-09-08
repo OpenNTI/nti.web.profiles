@@ -1,5 +1,10 @@
-import { Avatar as AvatarBase, DisplayName as DisplayNameBase } from '@nti/web-commons';
-import { Button } from "@nti/web-core";
+import React from 'react';
+
+import {
+	Avatar as AvatarBase,
+	DisplayName as DisplayNameBase,
+} from '@nti/web-commons';
+import { Button } from '@nti/web-core';
 
 export const Box = styled.div`
 	padding: 5px;
@@ -32,11 +37,32 @@ export const Meta = styled.div`
 	text-overflow: ellipsis;
 `;
 
-export const Links = styled.div`
+const Dot = styled('span').attrs({ children: ' · ' })`
+	font-size: 1.1em;
+	display: inline-block;
+	margin: 0 0.3em;
+`;
+
+function injectDots({ children, ...props }) {
+	return {
+		...props,
+		children: React.Children.toArray(children).reduce(
+			(children, child, index, array) => [
+				...children,
+				child,
+				index < array.length - 1 ? <Dot key={`dot-${index}`} /> : null,
+			],
+			[]
+		),
+	};
+}
+
+export const Links = styled('div').attrs(injectDots)`
 	font-size: 0.6875rem;
 	font-weight: 500;
 	line-height: 1;
 	color: var(--primary-blue);
+	display: flex;
 `;
 
 export const Link = styled(Button).attrs({ plain: true })`
@@ -50,13 +76,5 @@ export const Link = styled(Button).attrs({ plain: true })`
 
 	&:hover {
 		text-decoration: underline;
-	}
-
-	&:not(:last-child)::after {
-		content: ' · ';
-		font-size: 1.1em;
-		display: inline-block;
-		margin: 0 0.3em;
-		text-decoration: none !important;
 	}
 `;
