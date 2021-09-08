@@ -18,11 +18,6 @@
 		text-transform: uppercase;
 		color: var(--tertiary-grey);
 		display: block;
-
-		@media (--respond-to-handhelds) {
-			margin-top: 0;
-			margin-bottom: -1em;
-		}
 	}
 
 	.username-wrapper {
