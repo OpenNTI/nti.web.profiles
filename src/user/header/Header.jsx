@@ -11,10 +11,9 @@ const Avatar = styled(AvatarContainer)`
 	width: 180px;
 	height: 180px;
 	grid-row: span 2;
+	align-self: flex-start;
 
 	@media (--respond-to-handhelds) {
-		float: left;
-		margin-right: 1rem;
 		max-width: var(--small-avatar);
 		max-height: var(--small-avatar);
 	}
@@ -36,6 +35,10 @@ const SummaryInfo = styled(Summary)`
 
 const SocialLinks = styled(Social)`
 	justify-self: end;
+	@media (--respond-to-handhelds) {
+		grid-column: 2 / end;
+		justify-self: start;
+	}
 `;
 
 const Head = styled.header`
@@ -52,8 +55,10 @@ const Head = styled.header`
 	column-gap: var(--gap);
 
 	@media (--respond-to-handhelds) {
-		display: block;
+		--gap: 5px;
+
 		padding: 0.5rem 0.5rem 0;
+		grid-template-columns: 45px 1fr;
 	}
 
 	nav {
@@ -62,6 +67,7 @@ const Head = styled.header`
 		margin-left: calc(var(--gap) * -1);
 
 		@media (--respond-to-handhelds) {
+			grid-column: 1 / end;
 			margin: 0.5rem -0.5rem 0;
 		}
 	}
