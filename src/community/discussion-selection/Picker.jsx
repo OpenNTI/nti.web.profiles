@@ -1,7 +1,8 @@
 import React, { useEffect, useMemo, useReducer } from 'react';
 import PropTypes from 'prop-types';
 
-import { Hooks, Prompt } from '@nti/web-commons';
+import { useDebounce, Prompt } from '@nti/web-commons';
+import { useChanges } from '@nti/web-core';
 import { Models } from '@nti/lib-interfaces';
 import { Create } from '@nti/web-discussions';
 
@@ -52,7 +53,7 @@ const LOADING = Object.assign([], { hasMore: true });
 
 function DiscussionPicker({ course, onSelect }) {
 	const community = course.getCommunity();
-	Hooks.useChanges(community);
+	useChanges(community);
 	const [firstChannel] = community;
 	const [
 		{ create, newTopic, selected, selectedChannel = firstChannel, search },
@@ -76,7 +77,7 @@ function DiscussionPicker({ course, onSelect }) {
 		[create, selectedChannel, searchChanging, searchTerm]
 	);
 
-	Hooks.useChanges(list);
+	useChanges(list);
 
 	moveNewTopicIntoSelection(dispatch, newTopic, list);
 	fireOnSelect(selected, onSelect);
@@ -159,7 +160,7 @@ function moveNewTopicIntoSelection(dispatch, newTopic, items) {
 }
 
 function useSearching(searchInput) {
-	const searchTerm = Hooks.useDebounce(searchInput);
+	const searchTerm = useDebounce(searchInput);
 	return {
 		searchTerm,
 		searchChanging: searchTerm !== searchInput,

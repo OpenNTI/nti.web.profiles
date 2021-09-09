@@ -2,11 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { scoped } from '@nti/lib-locale';
-import { Image, Hooks } from '@nti/web-commons';
+import { Image } from '@nti/web-commons';
+import { useChanges } from '@nti/web-core';
 
 import DefaultCommunityAvatar from './assets/default-community-avatar.png';
-
-const {useChanges} = Hooks;
 
 const aspectRatio = 334 / 175;
 const t = scoped('nti-profiles.community.common.Avatar', {
