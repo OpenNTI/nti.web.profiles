@@ -17,10 +17,19 @@ export function IdentityCard(props) {
 			<Meta>
 				<DisplayName me />
 				<Links>
-					<LinkTo.Object as={Link} object={user}>
+					<LinkTo.Object
+						as={Link}
+						object={user}
+						data-testid="view-profile"
+					>
 						{t('viewProfile')}
 					</LinkTo.Object>
-					<LinkTo.Object as={Link} object={user} context="account">
+					<LinkTo.Object
+						as={Link}
+						object={user}
+						context="account"
+						data-testid="manage-account"
+					>
 						{t('manageAccount')}
 					</LinkTo.Object>
 				</Links>
