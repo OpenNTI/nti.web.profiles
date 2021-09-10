@@ -20,23 +20,21 @@ export const AccountManagement = React.forwardRef(({ onClose }, ref) => {
 	const handleClose = useCallback(() => void onClose?.(), [onClose]);
 
 	return (
-		prompt && (
-			<Prompt.Dialog
-				closeOnMaskClick={false}
-				closeOnEscape={true}
-				onBeforeDismiss={handleClose}
+		<Prompt.Dialog
+			closeOnMaskClick={false}
+			closeOnEscape={true}
+			onBeforeDismiss={handleClose}
+		>
+			<Modal
+				title={<Translate localeKey="title" />}
+				doClose={handleClose}
+				buttons={[]}
 			>
-				<Modal
-					title={<Translate localeKey="title" />}
-					doClose={handleClose}
-					buttons={[]}
-				>
-					<Suspense fallback={<Loading.Spinner />}>
-						<Header />
-						<TabsView />
-					</Suspense>
-				</Modal>
-			</Prompt.Dialog>
-		)
+				<Suspense fallback={<Loading.Spinner />}>
+					<Header />
+					<TabsView />
+				</Suspense>
+			</Modal>
+		</Prompt.Dialog>
 	);
 });
