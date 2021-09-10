@@ -13,9 +13,7 @@ const t = scoped('nti.web.profiles.user.account-management.modal', {
 const Translate = Text.Translator(t);
 
 const Modal = styled(Prompt.BaseWindow)`
-	max-width: 100vw;
-	width: 530px;
-	top: 10vh;
+	max-width: 550px;
 `;
 
 export const AccountManagement = React.forwardRef(({ onClose }, ref) => {
@@ -26,7 +24,6 @@ export const AccountManagement = React.forwardRef(({ onClose }, ref) => {
 			closeOnMaskClick={false}
 			closeOnEscape={true}
 			onBeforeDismiss={handleClose}
-			tall
 		>
 			<Modal
 				title={<Translate localeKey="title" />}
