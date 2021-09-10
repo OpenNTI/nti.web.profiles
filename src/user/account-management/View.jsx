@@ -13,30 +13,30 @@ const t = scoped('nti.web.profiles.user.account-management.modal', {
 const Translate = Text.Translator(t);
 
 const Modal = styled(Prompt.BaseWindow)`
-	width: fit-content;
-	top: 5vh;
+	max-width: 500px;
 `;
 
 export const AccountManagement = React.forwardRef(({ onClose }, ref) => {
 	const handleClose = useCallback(() => void onClose?.(), [onClose]);
 
 	return (
-		<Prompt.Dialog
-			closeOnMaskClick={false}
-			closeOnEscape={true}
-			onBeforeDismiss={handleClose}
-			tall
-		>
-			<Modal
-				title={<Translate localeKey="title" />}
-				doClose={handleClose}
-				buttons={[]}
-			>
-				<Suspense fallback={<Loading.Spinner />}>
-					<Header />
-					<TabsView />
-				</Suspense>
-			</Modal>
-		</Prompt.Dialog>
+		<Suspense fallback={<Loading.Spinner />}>
+			{prompt && (
+				<Prompt.Dialog
+					closeOnMaskClick={false}
+					closeOnEscape={true}
+					onBeforeDismiss={handleClose}
+				>
+					<Modal
+						title={<Translate localeKey="title" />}
+						doClose={handleClose}
+						buttons={[]}
+					>
+						<Header />
+						<TabsView />
+					</Modal>
+				</Prompt.Dialog>
+			)}
+		</Suspense>
 	);
 });
