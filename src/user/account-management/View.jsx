@@ -13,7 +13,8 @@ const t = scoped('nti.web.profiles.user.account-management.modal', {
 const Translate = Text.Translator(t);
 
 const Modal = styled(Prompt.BaseWindow)`
-	max-width: 550px;
+	max-width: 100vw;
+	width: 550px;
 `;
 
 export const AccountManagement = React.forwardRef(({ onClose }, ref) => {
