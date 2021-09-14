@@ -3,7 +3,7 @@ import React from 'react';
 import { Checkbox, User } from '@nti/web-commons';
 import { getConfig } from '@nti/web-client';
 import { addStyleSheet } from '@nti/lib-dom';
-import { URL } from '@nti/lib-commons';
+import { url } from '@nti/lib-commons';
 
 const Container = styled.div`
 	margin: 0.5em;
@@ -27,7 +27,7 @@ export function Field({ name, collection, label }) {
 						?.remove();
 				} else {
 					addStyleSheet(
-						URL.join(basepath, '/resources/css/accessibility.css')
+						url.join(basepath, '/resources/css/accessibility.css')
 					);
 				}
 			}
