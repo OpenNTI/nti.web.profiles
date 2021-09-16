@@ -14,7 +14,7 @@ const t = scoped('nti-web-profile.certificates.View', {
 export default class CertificatePreview extends React.Component {
 	static propTypes = {
 		course: PropTypes.object.isRequired,
-		showPreviewFrame: PropTypes.bool,
+		inlineCertificatePreview: PropTypes.bool,
 	};
 
 	state = {};
@@ -30,11 +30,11 @@ export default class CertificatePreview extends React.Component {
 	};
 
 	renderPreviewImage() {
-		const { course, showPreviewFrame } = this.props;
+		const { course, inlineCertificatePreview } = this.props;
 
 		const certLink = course.getLink('Certificate');
 
-		if (showPreviewFrame) {
+		if (inlineCertificatePreview) {
 			return <div className="preview-image" onClick={this.onImgClick} />;
 		}
 

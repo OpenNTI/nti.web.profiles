@@ -32,11 +32,11 @@ class ProfileCertificatesView extends React.Component {
 		loading: PropTypes.bool,
 		inProgressCourses: PropTypes.arrayOf(PropTypes.object),
 		completedCourses: PropTypes.arrayOf(PropTypes.object),
-		showPreviewFrame: PropTypes.bool,
+		inlineCertificatePreview: PropTypes.bool,
 	};
 
 	static defaultProps = {
-		showPreviewFrame: true,
+		inlineCertificatePreview: true,
 	};
 
 	componentDidMount() {
@@ -50,7 +50,7 @@ class ProfileCertificatesView extends React.Component {
 			<CertificatePreview
 				key={course.CatalogEntry.ProviderUniqueID}
 				course={course}
-				showPreviewFrame={this.props.showPreviewFrame}
+				inlineCertificatePreview={this.props.inlineCertificatePreview}
 			/>
 		);
 	};
@@ -69,12 +69,8 @@ class ProfileCertificatesView extends React.Component {
 	}
 
 	render() {
-		const {
-			loading,
-			entity,
-			inProgressCourses,
-			completedCourses,
-		} = this.props;
+		const { loading, entity, inProgressCourses, completedCourses } =
+			this.props;
 
 		const userContext = (entity || {}).isAppUser ? 'me' : 'them';
 		const isEmpty =

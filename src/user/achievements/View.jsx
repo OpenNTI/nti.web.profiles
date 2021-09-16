@@ -3,6 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { scoped } from '@nti/lib-locale';
+import { Layouts } from '@nti/web-commons';
 
 import { MaybeEmpty } from '../../common';
 import Badges from '../badges';
@@ -28,7 +29,10 @@ export default class View extends React.Component {
 			<MaybeEmpty message={t('empty')}>
 				<div className="nti-profiles-achievements">
 					<Badges entity={entity} />
-					<Certificates entity={entity} />
+					<Certificates
+						entity={entity}
+						inlineCertificatePreview={Layouts.Responsive.isWebappContext()}
+					/>
 				</div>
 			</MaybeEmpty>
 		);
