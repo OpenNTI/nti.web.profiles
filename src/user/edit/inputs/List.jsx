@@ -3,8 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-import { PropTypes as PT } from '@nti/lib-commons';
-import { Button } from "@nti/web-core";
+import { Button } from '@nti/web-core';
 import { scoped } from '@nti/lib-locale';
 
 const t = scoped('nti-web-profile.user-profile.edit.list', {
@@ -36,7 +35,7 @@ export default class List extends React.Component {
 				schema: PropTypes.object,
 			}),
 		}),
-		component: PT.component,
+		component: PropTypes.elementType,
 	};
 
 	addEntry = () => {
@@ -109,7 +108,7 @@ class Item extends React.Component {
 		onChange: PropTypes.func.isRequired,
 		onRemove: PropTypes.func,
 		schema: PropTypes.object,
-		component: PT.component,
+		component: PropTypes.elementType,
 	};
 
 	onChange = value => {
