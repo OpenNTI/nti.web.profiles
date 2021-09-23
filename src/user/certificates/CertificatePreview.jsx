@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { Button } from '@nti/web-core';
 import { scoped } from '@nti/lib-locale';
 import { DateTime, Prompt, Iframe } from '@nti/web-commons';
 
@@ -35,7 +36,9 @@ export default class CertificatePreview extends React.Component {
 		const certLink = course.getLink('Certificate');
 
 		if (inlineCertificatePreview) {
-			return <div className="preview-image" onClick={this.onImgClick} />;
+			return (
+				<Button className="preview-image" onClick={this.onImgClick} />
+			);
 		}
 
 		return (
