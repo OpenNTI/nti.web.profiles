@@ -1,5 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Button } from '@nti/web-core';
+import { Text } from '@nti/web-commons';
+
+const MessageText = styled(Text.Base)`
+	color: #fff;
+	font-size: 16px;
+	line-height: 40px;
+	text-align: center;
+`;
 
 export default class Message extends React.PureComponent {
 	static propTypes = {
@@ -18,6 +27,10 @@ export default class Message extends React.PureComponent {
 	render() {
 		const { message } = this.props;
 
-		return <div onClick={this.onClick}>{message}</div>;
+		return (
+			<Button onClick={this.onClick} plain>
+				<MessageText>{message}</MessageText>
+			</Button>
+		);
 	}
 }
