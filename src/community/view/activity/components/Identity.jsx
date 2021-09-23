@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 
+import { Button } from '@nti/web-core';
 import { scoped } from '@nti/lib-locale';
 import { Text } from '@nti/web-commons';
 import { LinkTo } from '@nti/web-routing';
@@ -49,9 +50,13 @@ export default function CommunityIdentity({
 					{title || community.displayName}
 				</Text.Condensed>
 				{showOptions && (
-					<span className={cx('show-options')} onClick={showOptions}>
+					<Button
+						className={cx('show-options')}
+						onClick={showOptions}
+						plain
+					>
 						...
-					</span>
+					</Button>
 				)}
 				{showJoin && (
 					<MembershipControls.Join

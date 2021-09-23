@@ -23,7 +23,7 @@
 }
 
 .community-join:global(.nti-button).joined {
-	background: white;
+	background: transparent;
 	text-align: left;
 }
 
