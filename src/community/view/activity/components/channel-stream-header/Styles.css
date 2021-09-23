@@ -89,18 +89,6 @@
 	position: relative;
 }
 
-.layout .option:first-of-type::after {
-	content: '';
-	position: absolute;
-	top: 17px;
-	bottom: 17px;
-	left: auto;
-	right: 0;
-	width: 1px;
-	opacity: 0.2;
-	background: var(--secondary-grey-alt);
-}
-
 .avatar-square {
 	display: flex;
 	flex-direction: column;

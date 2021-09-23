@@ -2,11 +2,31 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 
+import { Button } from '@nti/web-core';
+
 import { Grid, List } from '../../Constants';
 
 import Styles from './Styles.css';
 
 const cx = classnames.bind(Styles);
+
+const OptionButton = styled(Button)`
+	background: none;
+	color: black;
+	padding: 0;
+
+	&.grid::after {
+		content: '';
+		position: absolute;
+		top: 17px;
+		bottom: 17px;
+		left: auto;
+		right: 0;
+		width: 1px;
+		opacity: 0.2;
+		background: var(--secondary-grey-alt);
+	}
+`;
 
 export default class Layout extends React.PureComponent {
 	static propTypes = {
@@ -34,18 +54,20 @@ export default class Layout extends React.PureComponent {
 
 		return (
 			<div className={cx('layout')}>
-				<i
-					className={cx('option', 'icon-grid', {
-						selected: layout === Grid,
-					})}
-					onClick={this.selectGrid}
-				/>
-				<i
-					className={cx('option', 'icon-list', {
-						selected: layout === List,
-					})}
-					onClick={this.selectList}
-				/>
+				<OptionButton onClick={this.selectGrid} grid plain>
+					<i
+						className={cx('option', 'icon-grid', {
+							selected: layout === Grid,
+						})}
+					/>
+				</OptionButton>
+				<OptionButton onClick={this.selectList} plain>
+					<i
+						className={cx('option', 'icon-list', {
+							selected: layout === List,
+						})}
+					/>
+				</OptionButton>
 			</div>
 		);
 	}
