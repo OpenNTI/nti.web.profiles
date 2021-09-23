@@ -7,6 +7,20 @@ jest.mock('@nti/util-logger', () => {
 	return { get: () => logger };
 });
 
+jest.mock('@nti/web-core', () => ({
+	Button: props => {
+		return <button {...props}></button>;
+	},
+}));
+
+jest.mock('@nti/web-commons', () => ({
+	Text: {
+		Base: props => {
+			return <div {...props}>Test</div>;
+		},
+	},
+}));
+
 import React from 'react';
 import { act, create } from 'react-test-renderer';
 
