@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { Button } from '@nti/web-core';
+
 import RowDetail from '../rowdetail/RowDetail';
 
 export default class DetailViewable extends React.Component {
@@ -17,9 +19,9 @@ export default class DetailViewable extends React.Component {
 		const { children } = this.props;
 
 		return (
-			<div className="detail-viewable" onClick={this.openWindow}>
+			<Button className="detail-viewable" onClick={this.openWindow} plain>
 				{children}
-			</div>
+			</Button>
 		);
 	}
 }
