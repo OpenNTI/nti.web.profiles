@@ -3,6 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
+import { Button } from '@nti/web-core';
 import { Prompt, Checkbox } from '@nti/web-commons';
 import { decorate } from '@nti/lib-commons';
 import { scoped } from '@nti/lib-locale';
@@ -98,9 +99,9 @@ class FilterMenu extends React.Component {
 		const cls = cx('option', 'date-filter', { selected });
 
 		return (
-			<div className={cls} onClick={clickHandler}>
+			<Button className={cls} onClick={clickHandler} plain>
 				{label}
-			</div>
+			</Button>
 		);
 	}
 
@@ -120,7 +121,9 @@ class FilterMenu extends React.Component {
 		return (
 			<div key={option} className={cls}>
 				<Checkbox onChange={clickHandler} checked={selected} />
-				<span onClick={clickHandler}>{option}</span>
+				<Button onClick={clickHandler} plain>
+					{option}
+				</Button>
 			</div>
 		);
 	};
@@ -141,9 +144,9 @@ class FilterMenu extends React.Component {
 		return (
 			<div className={cls}>
 				{canReset && (
-					<div className="reset" onClick={this.resetAll}>
+					<Button className="reset" onClick={this.resetAll} plain>
 						{t('reset')}
-					</div>
+					</Button>
 				)}
 				<div className="option-title">{t('dateRange')}</div>
 				{this.renderDateOption(
