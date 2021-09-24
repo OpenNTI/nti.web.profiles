@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
+import { Button } from '@nti/web-core';
 import { Flyout, Prompt } from '@nti/web-commons';
 import { decorate } from '@nti/lib-commons';
 import { scoped } from '@nti/lib-locale';
@@ -184,13 +185,13 @@ class TranscriptsContentsContainer extends React.Component {
 			dialog = Prompt.modal(
 				<div className="filter-menu-container">
 					<div className="controls">
-						<div className="reset" onClick={doReset}>
+						<Button className="reset" onClick={doReset}>
 							{t('reset')}
-						</div>
+						</Button>
 						<div className="header">{t('filterHeader')}</div>
-						<div className="confirm" onClick={fulfill}>
+						<Button className="confirm" onClick={fulfill}>
 							{t('confirm')}
-						</div>
+						</Button>
 					</div>
 					<FilterMenu fullScreenDatePicker />
 				</div>,
@@ -203,9 +204,9 @@ class TranscriptsContentsContainer extends React.Component {
 
 	renderFilterDialog() {
 		return (
-			<div className="filter-trigger" onClick={this.launchFilterMenu}>
+			<Button className="filter-trigger" onClick={this.launchFilterMenu}>
 				Filters
-			</div>
+			</Button>
 		);
 	}
 
@@ -234,12 +235,8 @@ class TranscriptsContentsContainer extends React.Component {
 
 	render() {
 		const { canAddCredit } = this.state;
-		const {
-			dateFilter,
-			typeFilter,
-			showSidePanel,
-			showFiltersAsModal,
-		} = this.props;
+		const { dateFilter, typeFilter, showSidePanel, showFiltersAsModal } =
+			this.props;
 		const realData = this.getRealData();
 		const noData = realData.length === 0 && !dateFilter && !typeFilter;
 		const cls = cx('nti-profile-transcripts-container', {
