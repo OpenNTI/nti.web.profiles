@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { Button } from '@nti/web-core';
 export default class TypeFilterOption extends React.Component {
 	static propTypes = {
 		option: PropTypes.string.isRequired,
@@ -19,9 +20,9 @@ export default class TypeFilterOption extends React.Component {
 		const { option } = this.props;
 
 		return (
-			<div className="type-filter-option" onClick={this.onClick}>
+			<Button className="type-filter-option" onClick={this.onClick} plain>
 				{option}
-			</div>
+			</Button>
 		);
 	}
 }
