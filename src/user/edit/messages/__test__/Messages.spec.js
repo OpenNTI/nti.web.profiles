@@ -2,16 +2,11 @@
 jest.mock('@nti/util-logger', () => {
 	const logger = {
 		warn: jest.fn(() => {}),
+		debug: jest.fn(() => {}),
 	};
 
 	return { get: () => logger };
 });
-
-jest.mock('@nti/web-core', () => ({
-	Button: props => {
-		return <button {...props}></button>;
-	},
-}));
 
 import React from 'react';
 import { act, create } from 'react-test-renderer';
