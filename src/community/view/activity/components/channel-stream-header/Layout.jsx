@@ -10,7 +10,7 @@ import Styles from './Styles.css';
 
 const cx = classnames.bind(Styles);
 
-const OptionButton = styled(Button)`
+const Option = styled(Button).attrs({ plain: true })`
 	background: none;
 	color: black;
 	padding: 0;
@@ -54,20 +54,20 @@ export default class Layout extends React.PureComponent {
 
 		return (
 			<div className={cx('layout')}>
-				<OptionButton onClick={this.selectGrid} grid plain>
+				<Option onClick={this.selectGrid} grid>
 					<i
 						className={cx('option', 'icon-grid', {
 							selected: layout === Grid,
 						})}
 					/>
-				</OptionButton>
-				<OptionButton onClick={this.selectList} plain>
+				</Option>
+				<Option onClick={this.selectList}>
 					<i
 						className={cx('option', 'icon-list', {
 							selected: layout === List,
 						})}
 					/>
-				</OptionButton>
+				</Option>
 			</div>
 		);
 	}
