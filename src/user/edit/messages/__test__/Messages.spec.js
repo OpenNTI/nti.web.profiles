@@ -13,14 +13,6 @@ jest.mock('@nti/web-core', () => ({
 	},
 }));
 
-jest.mock('@nti/web-commons', () => ({
-	Text: {
-		Base: props => {
-			return <div {...props}>Test</div>;
-		},
-	},
-}));
-
 import React from 'react';
 import { act, create } from 'react-test-renderer';
 
