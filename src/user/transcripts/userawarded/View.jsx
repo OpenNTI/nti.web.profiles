@@ -2,6 +2,7 @@ import './View.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { Button } from '@nti/web-core';
 import {
 	Input,
 	Flyout,
@@ -318,13 +319,13 @@ export default class UserAwardedCreditView extends React.Component {
 		return (
 			<div className="short-header">
 				<div className="controls">
-					<div className="cancel" onClick={this.onCancel}>
+					<Button className="cancel" onClick={this.onCancel} plain>
 						{t('cancel')}
-					</div>
+					</Button>
 					<div className="header">{t('awardCredit')}</div>
-					<div className="save" onClick={this.onSave}>
+					<Button className="save" onClick={this.onSave} plain>
 						{t('save')}
-					</div>
+					</Button>
 				</div>
 			</div>
 		);

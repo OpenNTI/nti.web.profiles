@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Button } from '@nti/web-core';
 
 export default class TranscriptsView extends React.Component {
 	static propTypes = {
@@ -19,9 +20,9 @@ export default class TranscriptsView extends React.Component {
 		const { option } = this.props;
 
 		return (
-			<div className="award-type-option" onClick={this.onClick}>
+			<Button className="award-type-option" onClick={this.onClick} plain>
 				{option.type + ' ' + option.unit}
-			</div>
+			</Button>
 		);
 	}
 }

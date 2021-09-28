@@ -2,6 +2,7 @@ import './DateRange.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { Button } from '@nti/web-core';
 import { DayPickerRange } from '@nti/web-commons';
 import { scoped } from '@nti/lib-locale';
 
@@ -73,12 +74,12 @@ export default class DateFilter extends React.Component {
 				/>
 				<div className="controls">
 					<div className="buttons">
-						<div className="cancel" onClick={this.cancel}>
+						<Button className="cancel" onClick={this.cancel} plain>
 							{t('cancel')}
-						</div>
-						<div className="save" onClick={this.save}>
+						</Button>
+						<Button className="save" onClick={this.save} plain>
 							{t('ok')}
-						</div>
+						</Button>
 					</div>
 				</div>
 			</div>

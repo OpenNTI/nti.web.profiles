@@ -2,6 +2,7 @@
 jest.mock('@nti/util-logger', () => {
 	const logger = {
 		warn: jest.fn(() => {}),
+		debug: jest.fn(() => {}),
 	};
 
 	return { get: () => logger };

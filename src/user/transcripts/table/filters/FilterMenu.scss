@@ -56,6 +56,10 @@
 		}
 
 		&.date-filter {
+			display: block;
+			width: 100%;
+			text-align: inherit;
+
 			&.selected {
 				background-color: rgba(var(--primary-blue-rgb), 0.15);
 				box-shadow: inset 3px 0 0 0 var(--primary-blue);

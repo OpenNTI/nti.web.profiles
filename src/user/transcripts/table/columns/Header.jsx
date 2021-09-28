@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
+import { Button } from '@nti/web-core';
+
 export default class Header extends React.Component {
 	static propTypes = {
 		store: PropTypes.object,
@@ -27,7 +29,7 @@ export default class Header extends React.Component {
 		});
 
 		return (
-			<div onClick={this.sort} className={classes}>
+			<Button onClick={this.sort} className={classes} plain>
 				<span>{children}</span>
 				{isSorted ? (
 					direction === 'ascending' ? (
@@ -36,7 +38,7 @@ export default class Header extends React.Component {
 						<i className="icon-chevron-up" />
 					)
 				) : null}
-			</div>
+			</Button>
 		);
 	}
 }

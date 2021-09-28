@@ -282,6 +282,9 @@ $header-ranges: (
 			padding: 0.5rem;
 			color: var(--secondary-grey);
 			cursor: pointer;
+			display: block;
+			width: 100%;
+			text-align: left;
 		}
 	}
 }

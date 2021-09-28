@@ -6,6 +6,7 @@ import cx from 'classnames';
 import { decorate } from '@nti/lib-commons';
 
 import Store from '../../Store';
+import { Button } from '@nti/web-core';
 
 class AggregateTranscriptTable extends React.Component {
 	static propTypes = {
@@ -62,14 +63,14 @@ class AggregateTranscriptTable extends React.Component {
 					: [...aggregateItems].splice(0, 3)
 				).map(this.renderRow)}
 				{!viewingMore && (aggregateItems || []).length > 3 && (
-					<div className="view-more" onClick={this.viewMore}>
+					<Button className="view-more" onClick={this.viewMore} plain>
 						View More
-					</div>
+					</Button>
 				)}
 				{viewingMore && (
-					<div className="show-less" onClick={this.showLess}>
+					<Button className="show-less" onClick={this.showLess} plain>
 						Show Less
-					</div>
+					</Button>
 				)}
 			</div>
 		);
