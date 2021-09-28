@@ -14,8 +14,8 @@ const Option = styled(Button).attrs({ plain: true })`
 	background: none;
 	color: black;
 	padding: 0;
-
-	&.grid::after {
+	position: relative;
+	&:not(:last-child)::after {
 		content: '';
 		position: absolute;
 		top: 17px;
@@ -54,7 +54,7 @@ export default class Layout extends React.PureComponent {
 
 		return (
 			<div className={cx('layout')}>
-				<Option onClick={this.selectGrid} grid>
+				<Option onClick={this.selectGrid}>
 					<i
 						className={cx('option', 'icon-grid', {
 							selected: layout === Grid,

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Button } from '@nti/web-core';
 
-const AccessibleMessage = styled(Button).attrs({ plain: true })`
+const MessageContent = styled(Button).attrs({ plain: true })`
 	color: #fff;
 	font-size: 16px;
 	text-align: center;
@@ -26,9 +26,7 @@ export default class Message extends React.PureComponent {
 		const { message } = this.props;
 
 		return (
-			<AccessibleMessage onClick={this.onClick}>
-				{message}
-			</AccessibleMessage>
+			<MessageContent onClick={this.onClick}>{message}</MessageContent>
 		);
 	}
 }
