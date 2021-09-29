@@ -12,7 +12,7 @@ import Store from './Store';
 import Table from './table/View';
 import UserAwardedCredit from './userawarded/View';
 import FilterMenu from './table/filters/FilterMenu';
-import AggreggateTable from './table/aggregate/View';
+import AggregateTable from './table/aggregate/View';
 
 const t = scoped('nti-web-profile.transcripts.View', {
 	aggregate: 'Summary',
@@ -246,7 +246,7 @@ class TranscriptsContentsContainer extends React.Component {
 		return (
 			<div className={cls}>
 				<div className="nti-profile-transcripts">
-					<AggreggateTable {...this.props} />
+					<AggregateTable {...this.props} />
 					<div className="credit-details">
 						<div
 							className={cx('top-controls', {
