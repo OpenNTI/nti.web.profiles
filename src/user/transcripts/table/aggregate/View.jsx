@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 import { decorate } from '@nti/lib-commons';
+import { Button } from '@nti/web-core';
 
 import Store from '../../Store';
-import { Button } from '@nti/web-core';
 
 class AggregateTranscriptTable extends React.Component {
 	static propTypes = {
