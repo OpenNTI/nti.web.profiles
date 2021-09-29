@@ -43,13 +43,7 @@ export default class Value extends React.Component {
 			return null;
 		}
 
-		return (
-			<div>
-				{parseFloat(Math.round(item.amount * 100) / 100).toFixed(2) +
-					' ' +
-					item.creditDefinition.unit}
-			</div>
-		);
+		return <div>{item.getFormattedAmount({ unit: true })}</div>;
 	}
 
 	render() {
