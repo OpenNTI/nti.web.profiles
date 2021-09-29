@@ -6,7 +6,7 @@ exports[`Topic List test Filtered 1`] = `
   data-testid="discussion-selection-list"
 >
   <div
-    className="layout-grid layout-grid"
+    className="layout-grid"
     data-testid="discussion-selection-item"
   >
     <div
