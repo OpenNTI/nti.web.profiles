@@ -13,6 +13,7 @@ import getWidget from './inputs';
 
 const t = scoped('nti-profiles.user.edit.section-titles', {
 	about: 'About',
+	contactInfo: 'Contact Info',
 	education: 'Education',
 	positions: 'Professional',
 	community: 'Community',

@@ -8,6 +8,7 @@ import { decorate } from '@nti/lib-commons';
 
 import { SET_FIELD_VALUE } from '../Store';
 
+import { Addresses } from './Addresses';
 import Bool from './Boolean';
 import Choice from './Choice';
 import DateTime from './DateTime';
@@ -15,6 +16,7 @@ import Education from './Education';
 import FieldContainer from './FieldContainer';
 import List from './List';
 import MultipleSelect from './MultipleSelect';
+import { Phones } from './Phones';
 import HTML from './HTML';
 import Interests from './Interests';
 import Position from './Position';
@@ -35,7 +37,9 @@ const t = scoped('nti-profiles.user.edit.field-labels', {
 
 const NAMES = {
 	about: HTML,
+	addresses: Addresses,
 	education: List.of(Education),
+	phones: Phones,
 	positions: List.of(Position),
 	interests: Interests,
 };
@@ -46,6 +50,7 @@ const CACHE = {};
 
 /**
  * Returns an input component for the given field schema
+ *
  * @param  {Object} schema The schema for the field
  * @returns {Component} A react component to handle editing of the field
  */

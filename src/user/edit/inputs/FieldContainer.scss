@@ -42,6 +42,11 @@
 		@include fieldborder;
 	}
 
+	.nti-labeled-input .label {
+		color: var(--tertiary-grey);
+		font-weight: 600;
+	}
+
 	.nti-profile-editor {
 		@include fieldborder;
 	}
