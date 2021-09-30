@@ -178,6 +178,14 @@ class CommunityMembersStore extends Stores.BoundStore {
 				return;
 			}
 
+			// NTI-11236 tl;dr: if an event fired during the `community.removeMembers` action,
+			// this may be null or different than when we started...
+			//
+			// The exhibiting error: `items` was null because applySearchTerm was called before
+			//  this method resumed after community.removeMembers() returned. The source of the
+			//  bug was a silly `null !== undefined` in Searchable mixin, and once that was
+			//  fixed it fixed this, however, I'm leaving this comment for the future since
+			//  this  may come back to bite us again (race condition)
 			const items = this.get('items');
 			const { Removed } = resp;
 			const removedMap = Removed.reduce(
