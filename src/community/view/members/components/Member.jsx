@@ -5,7 +5,7 @@ import classnames from 'classnames/bind';
 import { decorate } from '@nti/lib-commons';
 import { scoped } from '@nti/lib-locale';
 import { Checkbox, Text, Flyout } from '@nti/web-commons';
-import { Button } from "@nti/web-core";
+import { Button } from '@nti/web-core';
 import { LinkTo } from '@nti/web-routing';
 
 import Store from '../Store';
@@ -65,7 +65,7 @@ class CommunityMember extends React.Component {
 		return (
 			<div className={cx('community-member', { selected: isSelected })}>
 				{canRemoveMembers && (
-					<Checkbox checked={isSelected} onChange={this.select} />
+					<Checkbox checked={!!isSelected} onChange={this.select} />
 				)}
 				<ListItem className={cx('member-identity')} entity={member} />
 				{canRemoveMembers && (
