@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 
 import { scoped } from '@nti/lib-locale';
 import { Input } from '@nti/web-commons';
@@ -6,7 +6,6 @@ import { Input } from '@nti/web-commons';
 const t = scoped('nti-profiles.user.edit.inputs.Phones', {
 	home: 'Home Phone',
 	work: 'Work Phone',
-	cell: 'Cell Phone',
 });
 
 const PhoneInput = styled(Input.Text).attrs({
@@ -22,18 +21,20 @@ export function Phones({
 	onChange,
 	onInvalid,
 }) {
-	const { home, work, cell } = value ?? {};
+	const { home, work } = value ?? {};
 
-	const onValueChange = (number, e) => {
-		const { name } = e.target;
+	const onValueChange = useCallback(
+		(number, e) => {
+			const { name } = e.target;
 
-		onChange({
-			home,
-			work,
-			cell,
-			[name]: number,
-		});
-	};
+			onChange({
+				home,
+				work,
+				[name]: number,
+			});
+		},
+		[onChange, home, work]
+	);
 
 	return (
 		<>
@@ -48,13 +49,6 @@ export function Phones({
 				<PhoneInput
 					name="work"
 					value={work ?? ''}
-					onChange={onValueChange}
-				/>
-			</Input.Label>
-			<Input.Label label={t('cell')}>
-				<PhoneInput
-					name="cell"
-					value={cell ?? ''}
 					onChange={onValueChange}
 				/>
 			</Input.Label>
