@@ -1,7 +1,8 @@
 import { Stores } from '@nti/lib-store';
 import { getService } from '@nti/web-client';
+import { Models } from '@nti/lib-interfaces';
 
-// const AGG_KEY = 'agg';
+const { AggregateCredit } = Models.credit;
 const DEFAULT_KEY = 'defaultKey';
 
 const FIELD_MAP = {
@@ -164,47 +165,8 @@ export default class TranscriptTableStore extends Stores.SimpleStore {
 		return this.getReport('report-UserTranscriptReport', 'application/pdf');
 	}
 
-	// TODO: let server do this
-	buildAggregates(items) {
-		let agg = [];
-		let aggMap = {};
-		let defMap = {};
-
-		items.forEach(item => {
-			if (!item.creditDefinition) {
-				return;
-			}
-
-			let key =
-				item.creditDefinition.type + ' ' + item.creditDefinition.unit;
-			if (aggMap[key]) {
-				aggMap[key] += item.amount;
-			} else {
-				aggMap[key] = item.amount;
-			}
-
-			defMap[key] = item.creditDefinition;
-		});
-
-		Object.keys(aggMap).forEach(k => {
-			const def = defMap[k];
-			agg.push({ creditDefinition: def, amount: aggMap[k] });
-		});
-
-		agg.sort(function (a, b) {
-			const lowerAType = a.creditDefinition.type.toLowerCase();
-			const lowerBType = b.creditDefinition.type.toLowerCase();
-
-			return (lowerAType > lowerBType) - (lowerAType < lowerBType);
-		});
-
-		return agg;
-	}
-
 	getAggregateValues() {
-		const items = this.get('items') || [];
-
-		return this.buildAggregates(items);
+		return AggregateCredit.from(this.get('items') || []);
 	}
 
 	getAvailableTypes() {
