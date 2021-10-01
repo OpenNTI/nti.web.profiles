@@ -1,5 +1,4 @@
 import { Stores } from '@nti/lib-store';
-import { getService } from '@nti/web-client';
 import { Models } from '@nti/lib-interfaces';
 
 const { AggregateCredit } = Models.credit;
@@ -190,10 +189,12 @@ export default class TranscriptTableStore extends Stores.SimpleStore {
 	}
 
 	async addUserAwardedCredit(data, creditDefinition) {
-		const transcriptLink = this.entity.getLink('transcript');
-		const service = await getService();
+		if (!data.MimeType) {
+			data.MimeType =
+				'application/vnd.nextthought.credit.userawardedcredit';
+		}
 
-		await service.put(transcriptLink, data);
+		await this.entity.putToLink('transcript', data);
 
 		this.maybeAddToAvailableTypes(creditDefinition);
 
@@ -201,10 +202,7 @@ export default class TranscriptTableStore extends Stores.SimpleStore {
 	}
 
 	async editUserAwardedCredit(credit, data, creditDefinition) {
-		const itemLink = credit.getLink('edit');
-		const service = await getService();
-
-		await service.put(itemLink, data);
+		await credit.putToLink('edit', data);
 
 		this.maybeAddToAvailableTypes(creditDefinition);
 
@@ -212,10 +210,7 @@ export default class TranscriptTableStore extends Stores.SimpleStore {
 	}
 
 	async deleteUserAwardedCredit(credit) {
-		const deleteLink = credit.getLink('delete');
-		const service = await getService();
-
-		await service.delete(deleteLink);
+		await credit.deleteLink('delete');
 
 		await this.loadTranscript();
 	}
@@ -257,12 +252,9 @@ export default class TranscriptTableStore extends Stores.SimpleStore {
 			params.sortOrder = this.getSortOrder();
 		}
 
-		const service = await getService();
-		const results = await service.getBatch(
-			this.entity.getLink('transcript'),
-			params
-		);
-		const items = (results && results.Items) || [];
+		const items =
+			(await this.entity.fetchLink('transcript', params, 'batch'))
+				?.Items || [];
 
 		if (!this._availableTypes) {
 			this._availableTypes = Array.from(

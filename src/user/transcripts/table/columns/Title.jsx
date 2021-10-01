@@ -1,7 +1,8 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { Suspense } from 'react';
 
 import { scoped } from '@nti/lib-locale';
+import { useToggle, Prompt } from '@nti/web-commons';
+import { useStoreValue } from '@nti/lib-store';
 
 import UserAwardedCredit from '../../userawarded/View';
 
@@ -11,45 +12,59 @@ const t = scoped('nti-web-profile.transcripts.table.columns.Title', {
 	headerTitle: 'Title',
 });
 
-export default class Title extends React.Component {
-	static propTypes = {
-		item: PropTypes.object.isRequired,
-		store: PropTypes.object.isRequired,
-	};
+const PropGrabber = ({ children, ...props }) => children(props);
 
-	static cssClassName = 'title-col';
+Title.cssClassName = 'title-col';
 
-	static HeaderComponent = ({ store }) => <div>{t('headerTitle')}</div>;
+Title.HeaderComponent = () => <div>{t('headerTitle')}</div>;
 
-	launchUserAwardedEditor = () => {
-		UserAwardedCredit.show(
-			this.props.store.getEntity(),
-			null,
-			this.props.store
-		);
-	};
+export default function Title({ item }) {
+	const { getEntity } = useStoreValue();
+	const [show, toggle] = useToggle();
 
-	render() {
-		if (this.props.item.isAddRow) {
-			return (
-				<div
-					className="transcript-add-row"
-					onClick={this.launchUserAwardedEditor}
+	return !item.isAddRow ? (
+		<DetailViewable item={item}>
+			<div className="transcript-row-title">{item.title}</div>
+		</DetailViewable>
+	) : (
+		<>
+			<div className="transcript-add-row" onClick={toggle}>
+				<div className="add-icon">
+					<i className="icon-add" />
+				</div>
+				<div className="add-label">Add Credit</div>
+			</div>
+			{show && (
+				<Prompt.Dialog
+					className="user-awarded-view-container"
+					onBeforeDismiss={toggle}
+					css={css`
+						@media (max-width: 600px) {
+							background-color: white;
+							dialog {
+								width: 100%;
+								height: 100%;
+							}
+						}
+
+						& > :global(.icon-close) {
+							display: none;
+						}
+					`}
 				>
-					<div className="add-icon">
-						<i className="icon-add" />
-					</div>
-					<div className="add-label">Add Credit</div>
-				</div>
-			);
-		}
-
-		return (
-			<DetailViewable item={this.props.item}>
-				<div className="transcript-row-title">
-					{this.props.item.title}
-				</div>
-			</DetailViewable>
-		);
-	}
+					<PropGrabber>
+						{props => (
+							<Suspense fallback={<div />}>
+								<UserAwardedCredit
+									entity={getEntity()}
+									credit={null}
+									onDismiss={props.onDismiss}
+								/>
+							</Suspense>
+						)}
+					</PropGrabber>
+				</Prompt.Dialog>
+			)}
+		</>
+	);
 }

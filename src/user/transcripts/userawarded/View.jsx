@@ -1,39 +1,22 @@
-import './View.scss';
 import React from 'react';
-import PropTypes from 'prop-types';
+import cx from 'classnames';
 
-import { Button } from '@nti/web-core';
-import {
-	Input,
-	Flyout,
-	DateTime,
-	DayPicker,
-	Prompt,
-	DialogButtons,
-	Panels,
-} from '@nti/web-commons';
-import { scoped } from '@nti/lib-locale';
+import { Input, DialogButtons, Panels } from '@nti/web-commons';
+import { useAsyncValue, useReducerState } from '@nti/web-core';
 import { getService } from '@nti/web-client';
+import { useStoreValue } from '@nti/lib-store';
 
-import TypeOption from './TypeOption';
+import t from './strings';
+import { ErrorMessage } from './ErrorMessage';
+import { AwardedDateInput } from './AwardedDateInput';
+import { CreditTypeInput } from './CreditTypeInput';
+import { MobileHeader } from './MobileHeader';
 
 const FIELD_MAP = {
 	title: 'Title',
 	amount: 'Credit amount',
 	credit_definition: 'Credit type',
 };
-
-const t = scoped('nti-web-profile.transcripts.userawarded.View', {
-	awardCredit: 'Award Credit',
-	issuer: 'Issuer',
-	amount: 'Credit Amount',
-	title: 'Title',
-	titlePlaceholder: 'Course or event name',
-	description: 'Description',
-	awardedDate: 'Awarded Date',
-	save: 'Add',
-	cancel: 'Cancel',
-});
 
 const ERROR_MESSAGES = {
 	RequiredMissing: e =>
@@ -43,345 +26,247 @@ const ERROR_MESSAGES = {
 		`${FIELD_MAP[e.field] || e.field} value is invalid.`,
 };
 
-export default class UserAwardedCreditView extends React.Component {
-	static propTypes = {
-		entity: PropTypes.object.isRequired,
-		credit: PropTypes.object,
-		store: PropTypes.object.isRequired,
-		onDismiss: PropTypes.func,
-	};
+//#region paint
+const addCls = cls => p => ({
+	...p,
+	className: cx(cls, p.className),
+});
 
-	static show(entity, credit, store) {
-		return new Promise((fulfill, reject) => {
-			Prompt.modal(
-				<UserAwardedCreditView
-					entity={entity}
-					credit={credit}
-					store={store}
-					onSave={fulfill}
-					onCancel={reject}
-				/>,
-				'user-awarded-view-container'
-			);
-		});
-	}
+const ValueContainer = styled('div').attrs(addCls('values-container'))`
+	padding: 5px;
+`;
 
-	state = {
-		types: [],
-	};
+const Label = styled('div').attrs(addCls('label'))`
+	width: 10rem;
+	font-size: 10px;
+	padding-top: 0.3rem;
+	text-transform: uppercase;
+	font-weight: 600;
+	color: var(--tertiary-grey);
+	text-align: left;
+	margin-bottom: 4px;
+`;
 
-	attachInputRef = x => (this.input = x);
+const Text = styled(Input.Text)`
+	width: 270px;
+	height: 40px;
+	background-color: white;
+	font-weight: 300;
+`;
 
-	attachFlyoutRef = x => (this.flyout = x);
+const Description = styled(Input.TextArea)`
+	&& {
+		box-shadow: none;
+		background-color: white;
+		width: 100%;
 
-	attachDateFlyoutRef = x => (this.dateFlyout = x);
-
-	componentDidMount() {
-		this.init();
-	}
-
-	async init() {
-		const { credit } = this.props;
-
-		const service = await getService();
-
-		let initState = {};
-
-		const defsCollection = service.getCollection(
-			'CreditDefinitions',
-			'Global'
-		);
-		const allDefs = await service.getBatch(defsCollection.href);
-
-		if (credit) {
-			const def =
-				typeof credit === 'string'
-					? await service.getObject(credit)
-					: credit;
-
-			initState.item = def;
-			initState.title = def.title;
-			initState.description = def.description;
-			initState.issuer = def.issuer;
-			initState.date = def.getAwardedDate();
-			initState.amount = def.amount;
-			initState.selectedType = def.creditDefinition;
-		} else {
-			initState.date = new Date();
-			initState.selectedType = allDefs.Items && allDefs.Items[0];
+		textarea {
+			font-weight: 300 !important;
 		}
-
-		this.setState({ ...initState, types: allDefs.Items });
 	}
+`;
 
-	updateIssuer = val => {
-		this.setState({ issuer: val });
-	};
+const FieldGroup = styled.div`
+	display: flex;
+	flex-wrap: wrap;
+	max-width: 318px;
+	padding: 20px 20px 60px;
 
-	renderIssuerInput() {
-		return (
-			<Input.Text
-				value={this.state.issuer}
-				onChange={this.updateIssuer}
-				placeholder="Name or organization"
-			/>
-		);
+	@media (min-width: 600px) {
+		max-width: 600px;
 	}
-
-	updateAmount = val => {
-		this.setState({ amount: val });
-	};
-
-	renderAmountInput() {
-		return (
-			<Input.Text
-				value={this.state.amount}
-				maxLength="6"
-				onChange={this.updateAmount}
-				pattern="[0-9]*[.,]?[0-9]+"
-				ref={this.attachInputRef}
-				placeholder="1.00"
-			/>
-		);
+	@media (max-width: 600px) {
+		margin: 0 auto;
 	}
+`;
 
-	renderDateIcon() {
-		return (
-			<div className="calendar-icon">
-				<div className="calendar-hanger" />
-				<div className="calendar-top" />
-				<div className="calendar-bottom" />
-			</div>
-		);
-	}
+//#endregion
 
-	renderDateTrigger() {
-		const { date } = this.state;
+export default function UserAwardedCreditView({ credit, onDismiss }) {
+	const init = useAsyncValue(
+		`UserAwardedCreditView-${typeof credit}-${credit?.NTIID ?? credit}`,
+		() => resolveInitialState(credit),
+		credit
+	);
+	const [
+		{ amount, date, description, error, item, issuer, selectedType, title },
+		setState,
+	] = useReducerState(init, [init]);
+	const { addUserAwardedCredit, editUserAwardedCredit } = useStoreValue();
 
-		return (
-			<div className="award-credit-date-value">
-				{this.renderDateIcon()}
-				<div className="date-value">
-					{date && DateTime.format(date)}
-				</div>
-				<i className="icon-chevron-down" />
-			</div>
-		);
-	}
-
-	updateDate = val => {
-		this.setState({ date: val });
-
-		this.dateFlyout.dismiss();
-	};
-
-	renderAwardedDateInput() {
-		return (
-			<Flyout.Triggered
-				className="award-credit-date"
-				trigger={this.renderDateTrigger()}
-				horizontalAlign={Flyout.ALIGNMENTS.LEFT}
-				sizing={Flyout.SIZES.MATCH_SIDE}
-				ref={this.attachDateFlyoutRef}
-			>
-				<div>
-					<DayPicker
-						value={this.state.date}
-						onChange={this.updateDate}
-					/>
-				</div>
-			</Flyout.Triggered>
-		);
-	}
-
-	onTypeSelected = option => {
-		this.flyout.dismiss();
-
-		this.setState({ selectedType: option });
-	};
-
-	renderTrigger() {
-		const { selectedType } = this.state;
-		return (
-			<div className="selected-credit-type">
-				<div className="type-value">
-					{selectedType &&
-						selectedType.type + ' ' + selectedType.unit}
-				</div>
-				<i className="icon-chevron-down" />
-			</div>
-		);
-	}
-
-	renderOption = type => {
-		return (
-			<TypeOption
-				key={type.type + ' ' + type.unit}
-				option={type}
-				onClick={this.onTypeSelected}
-			/>
-		);
-	};
-
-	renderCreditTypeInput() {
-		return (
-			<Flyout.Triggered
-				className="award-credit-type"
-				trigger={this.renderTrigger()}
-				ref={this.attachFlyoutRef}
-				horizontalAlign={Flyout.ALIGNMENTS.LEFT}
-			>
-				<div>{(this.state.types || []).map(this.renderOption)}</div>
-			</Flyout.Triggered>
-		);
-	}
-
-	updateTitle = val => {
-		this.setState({ title: val });
-	};
-
-	renderTitleInput() {
-		return (
-			<Input.Text
-				value={this.state.title}
-				onChange={this.updateTitle}
-				placeholder={t('titlePlaceholder')}
-			/>
-		);
-	}
-
-	updateDescription = val => {
-		this.setState({ description: val });
-	};
-
-	renderDescriptionInput() {
-		return (
-			<Input.TextArea
-				value={this.state.description}
-				onChange={this.updateDescription}
-				placeholder="Write Something..."
-			/>
-		);
-	}
-
-	onSave = async () => {
-		const { onDismiss, store } = this.props;
-		const { item } = this.state;
-
+	const onSave = async () => {
 		let payload = {
-			description: this.state.description,
-			title: this.state.title && this.state.title.trim(),
-			amount: this.state.amount || 1,
-			credit_definition:
-				this.state.selectedType && this.state.selectedType.NTIID,
-			issuer: this.state.issuer,
-			awarded_date: this.state.date && this.state.date.getTime() / 1000,
+			description,
+			title: title?.trim(),
+			amount: amount ?? 1,
+			credit_definition: selectedType?.NTIID,
+			issuer,
+			awarded_date: date?.getTime() / 1000,
 		};
 
 		try {
 			if (item) {
 				// saving an existing object
-				await store.editUserAwardedCredit(
-					item,
-					payload,
-					this.state.selectedType
-				);
+				await editUserAwardedCredit(item, payload, selectedType);
 			} else {
 				// adding a new object
-				payload.MimeType =
-					'application/vnd.nextthought.credit.userawardedcredit';
-
-				await store.addUserAwardedCredit(
-					payload,
-					this.state.selectedType
-				);
+				await addUserAwardedCredit(payload, selectedType);
 			}
 
-			if (onDismiss) {
-				onDismiss();
-			}
+			onDismiss?.();
 		} catch (e) {
 			const error = (
 				ERROR_MESSAGES[e.code] || (err => err.message || err)
 			)(e);
-			this.setState({ error });
+			setState({ error });
 		}
 	};
 
-	onCancel = () => {
-		const { onDismiss } = this.props;
+	return (
+		<div
+			className="user-awarded-credits"
+			css={css`
+				background-color: white;
+				@media (max-width: 600px) {
+					height: 100%;
+				}
+			`}
+		>
+			<div className="content">
+				<Panels.TitleBar
+					title={t('awardCredit')}
+					iconAction={onDismiss}
+					css={css`
+						background-color: var(--panel-background);
+						box-shadow: 0 1px 0 0 #e2e2e2;
+						padding-left: 25px;
+						padding-right: 10px;
 
-		if (onDismiss) {
-			onDismiss();
-		}
-	};
-	renderShortHeader() {
-		return (
-			<div className="short-header">
-				<div className="controls">
-					<Button className="cancel" onClick={this.onCancel} plain>
-						{t('cancel')}
-					</Button>
-					<div className="header">{t('awardCredit')}</div>
-					<Button className="save" onClick={this.onSave} plain>
-						{t('save')}
-					</Button>
-				</div>
-			</div>
-		);
-	}
+						i {
+							font-size: 30px;
+						}
 
-	render() {
-		const { error } = this.state;
-
-		return (
-			<div className="user-awarded-credits">
-				<div className="content">
-					<Panels.TitleBar
-						title={t('awardCredit')}
-						iconAction={this.onCancel}
-					/>
-					{this.renderShortHeader()}
-					<div className="error">{error}</div>
-					<div className="credit-fields">
-						<div className="values-container title">
-							<div className="label">{t('title')}</div>
-							{this.renderTitleInput()}
-						</div>
-						<div className="values-container issuer">
-							<div className="label">{t('issuer')}</div>
-							{this.renderIssuerInput()}
-						</div>
-						<div className="values-container description">
-							<div className="label">{t('description')}</div>
-							{this.renderDescriptionInput()}
-						</div>
-						<div className="values-container date">
-							<div className="label">{t('awardedDate')}</div>
-							{this.renderAwardedDateInput()}
-						</div>
-						<div className="values-container awards">
-							<div className="label">{t('amount')}</div>
-							<div className="inputs">
-								{this.renderAmountInput()}
-								{this.renderCreditTypeInput()}
-							</div>
-						</div>
-					</div>
-				</div>
-				<DialogButtons
-					buttons={[
-						{
-							label: t('cancel'),
-							onClick: this.onCancel,
-						},
-						{
-							label: t('save'),
-							onClick: this.onSave,
-						},
-					]}
+						@media (max-width: 600px) {
+							display: none;
+						}
+					`}
 				/>
+				<MobileHeader onSave={onSave} onCancel={onDismiss} />
+				<ErrorMessage error={error} />
+
+				<FieldGroup className="credit-fields">
+					<ValueContainer className="title">
+						<Label>{t('title')}</Label>
+						<Text
+							value={title}
+							onChange={title => setState({ title })}
+							placeholder={t('titlePlaceholder')}
+						/>
+					</ValueContainer>
+					<ValueContainer className="issuer">
+						<Label>{t('issuer')}</Label>
+						<Text
+							value={issuer}
+							onChange={val => setState({ issuer: val })}
+							placeholder="Name or organization"
+						/>
+					</ValueContainer>
+					<ValueContainer
+						className="description"
+						css={css`
+							width: 100%;
+						`}
+					>
+						<Label>{t('description')}</Label>
+						<Description
+							value={description}
+							onChange={description => setState({ description })}
+							placeholder="Write Something..."
+						/>
+					</ValueContainer>
+					<ValueContainer className="date">
+						<Label>{t('awardedDate')}</Label>
+						<AwardedDateInput
+							value={date}
+							onChange={date => setState({ date })}
+						/>
+					</ValueContainer>
+					<ValueContainer className="awards">
+						<Label>{t('amount')}</Label>
+						<div
+							className="inputs"
+							css={css`
+								display: flex;
+							`}
+						>
+							<Text
+								value={amount}
+								maxLength="6"
+								onChange={val => setState({ amount: val })}
+								pattern="[0-9]*[.,]?[0-9]+"
+								placeholder="1.00"
+								css={css`
+									width: 90px;
+
+									&:invalid {
+										background-color: rgba(
+											var(--primary-red-rgb),
+											0.1
+										);
+									}
+								`}
+							/>
+							<CreditTypeInput
+								value={selectedType}
+								onChange={selectedType =>
+									setState({ selectedType })
+								}
+							/>
+						</div>
+					</ValueContainer>
+				</FieldGroup>
 			</div>
-		);
+			<DialogButtons
+				buttons={[
+					{
+						label: t('cancel'),
+						onClick: onDismiss,
+					},
+					{
+						label: t('save'),
+						onClick: onSave,
+					},
+				]}
+				css={css`
+					@media (max-width: 600px) {
+						display: none;
+					}
+				`}
+			/>
+		</div>
+	);
+}
+
+async function resolveInitialState(credit) {
+	if (credit) {
+		const def =
+			typeof credit === 'string'
+				? await (await getService()).getObject(credit)
+				: credit;
+
+		return {
+			item: def,
+			title: def.title,
+			description: def.description,
+			issuer: def.issuer,
+			date: def.getAwardedDate(),
+			amount: def.amount,
+			selectedType: def.creditDefinition,
+		};
 	}
+
+	return {
+		date: new Date(),
+		selectedType: null,
+	};
 }
