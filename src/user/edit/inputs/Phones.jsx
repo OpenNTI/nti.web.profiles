@@ -24,16 +24,22 @@ export function Phones({
 	const { home, work } = value ?? {};
 
 	const onValueChange = useCallback(
-		(number, e) => {
-			const { name } = e.target;
-
-			onChange({
-				home,
-				work,
-				[name]: number,
-			});
-		},
+		value =>
+			!value.home && !value.work ? onChange(null) : onChange(value),
 		[onChange, home, work]
+	);
+
+	const onHomeChange = useCallback(
+		number =>
+			number
+				? onValueChange({ home: number, work })
+				: onValueChange({ work }),
+		[work, home, onValueChange]
+	);
+
+	const onWorkChange = useCallback(
+		number => (number ? onChange({ home, work: number }) : onChange(home)),
+		[work, home, onValueChange]
 	);
 
 	return (
@@ -42,14 +48,14 @@ export function Phones({
 				<PhoneInput
 					name="home"
 					value={home ?? ''}
-					onChange={onValueChange}
+					onChange={onHomeChange}
 				/>
 			</Input.Label>
 			<Input.Label label={t('work')}>
 				<PhoneInput
 					name="work"
 					value={work ?? ''}
-					onChange={onValueChange}
+					onChange={onWorkChange}
 				/>
 			</Input.Label>
 		</>

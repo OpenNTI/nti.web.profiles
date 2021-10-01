@@ -16,6 +16,9 @@ const state = 'state';
 const zip = 'postal_code';
 const country = 'country';
 
+const isEmpty = a =>
+	[fullName, street1, street2, city, state, zip, country].every(f => !a[f]);
+
 const TextInput = styled(Input.Text)`
 	display: block;
 `;
@@ -176,14 +179,28 @@ export function Addresses({
 }) {
 	const { mailing, billing } = value ?? {};
 
+	const onAddressesChange = useCallback(
+		newAddresses =>
+			!newAddresses.mailing && !newAddresses.billing
+				? onChange(null)
+				: onChange(newAddresses),
+		[onChange]
+	);
+
 	const onMailingChange = useCallback(
-		newMailing => onChange({ mailing: newMailing, billing }),
-		[value, onChange]
+		newMailing =>
+			isEmpty(newMailing)
+				? onAddressesChange({ billing })
+				: onAddressesChange({ mailing: newMailing, billing }),
+		[value, onAddressesChange]
 	);
 
 	const onBillingChange = useCallback(
-		newBilling => onChange({ mailing, billing: newBilling }),
-		[value, onChange]
+		newBilling =>
+			isEmpty(newBilling)
+				? onAddressesChange({ mailing })
+				: onAddressesChange({ mailing, billing: newBilling }),
+		[value, onAddressesChange]
 	);
 
 	return (
