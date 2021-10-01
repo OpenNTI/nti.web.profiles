@@ -8,6 +8,7 @@ const t = scoped('nti-profiles.user.edit.inputs.Addresses', {
 	billing: 'Billing Address',
 });
 
+const fullName = 'full_name';
 const street1 = 'street_address_1';
 const street2 = 'street_address_2';
 const city = 'city';
@@ -15,23 +16,35 @@ const state = 'state';
 const zip = 'postal_code';
 const country = 'country';
 
-const Street = styled(Input.Text)`
+const TextInput = styled(Input.Text)`
 	display: block;
 `;
 
-const City = styled(Input.Text)`
+const FullName = styled(Input.Label)`
 	display: block;
 `;
 
-const State = styled(Input.Text)`
+const Street1 = styled(Input.Label)`
 	display: block;
 `;
 
-const Zip = styled(Input.Text)`
+const Street2 = styled(Input.Label)`
 	display: block;
 `;
 
-const Country = styled(Input.Text)`
+const City = styled(Input.Label)`
+	display: block;
+`;
+
+const State = styled(Input.Label)`
+	display: block;
+`;
+
+const Zip = styled(Input.Label)`
+	display: block;
+`;
+
+const Country = styled(Input.Label)`
 	display: block;
 `;
 
@@ -40,9 +53,40 @@ const Address = styled('fieldset')`
 	padding: 0;
 
 	display: grid;
-	grid-template-columns: 1fr;
-	grid-template-rows: repeat(auto, 6);
-	row-gap: 0.625rem;
+	grid-template: auto / 1fr 25% 25%;
+	gap: 0.625rem;
+
+	${FullName} {
+		grid-row: 1 / 2;
+		grid-column: 1 / -1;
+	}
+
+	${Street1} {
+		grid-row: 2 / 3;
+		grid-column: 1 / -1;
+	}
+
+	${Street2} {
+		grid-row: 3 / 4;
+		grid-column: 1 / -1;
+	}
+
+	${City} {
+		grid-row: 4 / 5;
+	}
+
+	${State} {
+		grid-row: 4 / 5;
+	}
+
+	${Zip} {
+		grid-row: 4 / 5;
+	}
+
+	${Country} {
+		grid-row: 5 / 6;
+		grid-column: 1 / -1;
+	}
 `;
 
 function AddressInput({ value, schema, onChange }) {
@@ -50,6 +94,8 @@ function AddressInput({ value, schema, onChange }) {
 		(newValue, e) =>
 			onChange({
 				...value,
+				Class: 'Address',
+				MimeType: 'application/vnd.nextthought.address',
 				[e.target.name]: newValue,
 			}),
 		[onChange, value]
@@ -60,54 +106,62 @@ function AddressInput({ value, schema, onChange }) {
 
 	return (
 		<Address>
-			<Input.Label label={label(street1)}>
-				<Street
+			<FullName label={label(fullName)}>
+				<TextInput
+					name={fullName}
+					value={value[fullName]}
+					onChange={handleChange}
+					placeholder={placeholder(fullName)}
+				/>
+			</FullName>
+			<Street1 label={label(street1)}>
+				<TextInput
 					name={street1}
 					value={value[street1]}
 					onChange={handleChange}
 					placeholder={placeholder(street1)}
 				/>
-			</Input.Label>
-			<Input.Label label={label(street2)}>
-				<Street
+			</Street1>
+			<Street2 label={label(street2)}>
+				<TextInput
 					name={street2}
 					value={value[street2]}
 					onChange={handleChange}
 					placeholder={placeholder(street2)}
 				/>
-			</Input.Label>
-			<Input.Label label={label(city)}>
-				<City
+			</Street2>
+			<City label={label(city)}>
+				<TextInput
 					name={city}
 					value={value[city]}
 					onChange={handleChange}
 					placeholder={placeholder(city)}
 				/>
-			</Input.Label>
-			<Input.Label label={label(state)}>
-				<State
+			</City>
+			<State label={label(state)}>
+				<TextInput
 					name={state}
 					value={value[state]}
 					onChange={handleChange}
 					placeholder={placeholder(state)}
 				/>
-			</Input.Label>
-			<Input.Label label={label(zip)}>
-				<Zip
+			</State>
+			<Zip label={label(zip)}>
+				<TextInput
 					name={zip}
 					value={value[zip]}
 					onChange={handleChange}
 					placeholder={placeholder(zip)}
 				/>
-			</Input.Label>
-			<Input.Label label={label(country)}>
-				<Country
+			</Zip>
+			<Country label={label(country)}>
+				<TextInput
 					name={country}
 					value={value[country]}
 					onChange={handleChange}
 					placeholder={placeholder(country)}
 				/>
-			</Input.Label>
+			</Country>
 		</Address>
 	);
 }
