@@ -10,7 +10,13 @@ const t = scoped('nti-web-profile.user-profile.contact-info', {
 	title: 'Contact Info',
 	homePhone: 'Home Phone',
 	workPhone: 'Work Phone',
+	mailing: 'Mailing Address',
+	billing: 'Billing Address',
 });
+
+const Address = ({ address }) => (
+	<span>{Object.values(address).join('\n')}</span>
+);
 
 const Fields = [
 	user => {
@@ -30,6 +36,30 @@ const Fields = [
 		}
 
 		return { label: t('workPhone'), value: phones.work };
+	},
+	user => {
+		const { addresses } = user;
+
+		if (!addresses?.mailing) {
+			return null;
+		}
+
+		return {
+			label: t('mailing'),
+			value: <Address address={addresses.mailing} />,
+		};
+	},
+	user => {
+		const { addresses } = user;
+
+		if (!addresses?.billing) {
+			return null;
+		}
+
+		return {
+			label: t('billing'),
+			value: <Address address={addresses.billing} />,
+		};
 	},
 ];
 

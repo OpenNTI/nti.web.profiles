@@ -98,7 +98,7 @@ function AddressInput({ value, schema, onChange }) {
 			onChange({
 				...value,
 				Class: 'Address',
-				MimeType: 'application/vnd.nextthought.address',
+				MimeType: 'application/vnd.nextthought.users.address',
 				[e.target.name]: newValue,
 			}),
 		[onChange, value]
