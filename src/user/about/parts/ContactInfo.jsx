@@ -16,7 +16,7 @@ const Fields = [
 	user => {
 		const { phones } = user;
 
-		if (!phones.home) {
+		if (!phones?.home) {
 			return null;
 		}
 
@@ -25,7 +25,7 @@ const Fields = [
 	user => {
 		const { phones } = user;
 
-		if (!phones.work) {
+		if (!phones?.work) {
 			return null;
 		}
 
