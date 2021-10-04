@@ -1,18 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-import { Button } from '@nti/web-core';
+import { Button, useReducerState } from '@nti/web-core';
 import { Flyout, Prompt } from '@nti/web-commons';
-import { decorate } from '@nti/lib-commons';
 import { scoped } from '@nti/lib-locale';
-import { getService } from '@nti/web-client';
+import { useStoreValue } from '@nti/lib-store';
 
 import Store from './Store';
 import Table from './table/View';
-import UserAwardedCredit from './userawarded/View';
 import FilterMenu from './table/filters/FilterMenu';
 import AggregateTable from './table/aggregate/View';
+import { PropGrabber } from './userawarded/Dialog';
 
 const t = scoped('nti-web-profile.transcripts.View', {
 	aggregate: 'Summary',
@@ -27,226 +26,41 @@ const t = scoped('nti-web-profile.transcripts.View', {
 	filterHeader: 'Filters',
 });
 
-class TranscriptsContentsContainer extends React.Component {
-	static propTypes = {
-		entity: PropTypes.object,
-		store: PropTypes.object,
-		items: PropTypes.arrayOf(PropTypes.object),
-		dateFilter: PropTypes.object,
-		typeFilter: PropTypes.arrayOf(PropTypes.string),
-		availableTypes: PropTypes.arrayOf(PropTypes.string),
-		csvLink: PropTypes.string,
-		pdfLink: PropTypes.string,
-		showSidePanel: PropTypes.bool,
-		showFiltersAsModal: PropTypes.bool,
-	};
+export default Store.compose(TranscriptsContentsContainer);
 
-	state = {};
+TranscriptsContentsContainer.propTypes = {
+	entity: PropTypes.object,
+	showSidePanel: PropTypes.bool,
+	showFiltersAsModal: PropTypes.bool,
+};
 
-	attachFlyoutRef = x => (this.flyout = x);
+function TranscriptsContentsContainer({
+	entity,
+	showSidePanel,
+	showFiltersAsModal,
+}) {
+	const canAddCredit = Boolean(entity?.hasLink('add_credit'));
+	const { dateFilter, loadTranscript, typeFilter } = useStoreValue();
+	const [{ show }, setState] = useReducerState({
+		/** @type {null|'flyout'|'prompt'|'editor'} */
+		show: null,
+	});
 
-	attachFilterRef = x => (this.filterFlyout = x);
+	useEffect(() => {
+		loadTranscript(entity);
+	}, [entity]);
 
-	componentDidMount() {
-		const { entity, store } = this.props;
+	const empty = useIsEmpty();
+	const noData = empty && !dateFilter && !typeFilter;
+	const cls = cx('nti-profile-transcripts-container', {
+		'has-side-panel': showSidePanel,
+	});
 
-		store.loadTranscript(entity);
-
-		getService().then(service => {
-			if (entity.hasLink('add_credit')) {
-				this.setState({ canAddCredit: true });
-			}
-		});
-	}
-
-	componentDidUpdate(oldProps) {
-		const { entity: oldEntity } = oldProps;
-		const { entity: newEntity } = this.props;
-
-		if (oldEntity === null || oldEntity.Username !== newEntity.Username) {
-			this.props.store.loadTranscript(newEntity);
-		}
-	}
-
-	renderDownloadTrigger() {
-		let cls = 'download';
-		const realData = this.getRealData();
-
-		if (realData == null || realData.length === 0) {
-			cls += ' disabled';
-		}
-
-		return (
-			<div className={cls}>
-				<i className="icon-download" />
-				<span>{t('download')}</span>
-			</div>
-		);
-	}
-
-	launchUserAwardedEditor = () => {
-		UserAwardedCredit.show(this.state.entity, null, this.props.store);
-	};
-
-	renderEmptyMessage() {
-		const { dateFilter, typeFilter } = this.props;
-
-		if (dateFilter || typeFilter) {
-			return (
-				<div className="empty-message">
-					No credits match your filter
-				</div>
-			);
-		}
-
-		return <div className="empty-message">No credits received yet</div>;
-	}
-
-	renderContent() {
-		const { items } = this.props;
-
-		if (items && items.length > 0) {
-			return (
-				<div className="table-container">
-					<Table {...this.props} />
-					{this.getRealData().length === 0 &&
-						this.renderEmptyMessage()}
-				</div>
-			);
-		}
-
-		return this.renderEmptyMessage();
-	}
-
-	dismissDownloadFlyout = () => {
-		this.flyout.dismiss();
-	};
-
-	renderDownloadButton() {
-		const { csvLink, pdfLink } = this.props;
-
-		return (
-			<Flyout.Triggered
-				className="transcript-download"
-				trigger={this.renderDownloadTrigger()}
-				horizontalAlign={Flyout.ALIGNMENTS.LEFT}
-				sizing={Flyout.SIZES.MATCH_SIDE}
-				ref={this.attachFlyoutRef}
-			>
-				<div>
-					<div
-						className={cx('download-option', {
-							disabled: !csvLink,
-						})}
-						onClick={this.dismissDownloadFlyout}
-					>
-						<a
-							target="_blank"
-							rel="noopener noreferrer"
-							download
-							href={csvLink}
-						>
-							{t('csv')}
-						</a>
-					</div>
-					<div
-						className={cx('download-option', {
-							disabled: !pdfLink,
-						})}
-						onClick={this.dismissDownloadFlyout}
-					>
-						<a
-							target="_blank"
-							rel="noopener noreferrer"
-							download
-							href={pdfLink}
-						>
-							{t('pdf')}
-						</a>
-					</div>
-				</div>
-			</Flyout.Triggered>
-		);
-	}
-
-	renderFilterTrigger() {
-		return <div className="filter-trigger">Filters</div>;
-	}
-
-	launchFilterMenu = () => {
-		let dialog = null;
-
-		return new Promise((fulfill, reject) => {
-			const doReset = () => {
-				this.props.store.setDateFilter(null);
-				this.props.store.resetTypeFilters();
-			};
-
-			dialog = Prompt.modal(
-				<div className="filter-menu-container">
-					<div className="controls">
-						<Button className="reset" onClick={doReset}>
-							{t('reset')}
-						</Button>
-						<div className="header">{t('filterHeader')}</div>
-						<Button className="confirm" onClick={fulfill}>
-							{t('confirm')}
-						</Button>
-					</div>
-					<FilterMenu fullScreenDatePicker />
-				</div>,
-				{ className: 'transcript-filter-modal' }
-			);
-		}).then(savedEntry => {
-			dialog && dialog.dismiss();
-		});
-	};
-
-	renderFilterDialog() {
-		return (
-			<Button className="filter-trigger" onClick={this.launchFilterMenu}>
-				Filters
-			</Button>
-		);
-	}
-
-	renderFilterFlyout() {
-		return (
-			<Flyout.Triggered
-				className="transcript-filter"
-				trigger={this.renderFilterTrigger()}
-				horizontalAlign={Flyout.ALIGNMENTS.RIGHT}
-				verticalAlign={Flyout.ALIGNMENTS.BOTTOM}
-				sizing={Flyout.SIZES.MATCH_SIDE}
-				ref={this.attachFilterRef}
-			>
-				<div>
-					<FilterMenu canReset />
-				</div>
-			</Flyout.Triggered>
-		);
-	}
-
-	getRealData() {
-		const { items } = this.props;
-
-		return (items || []).filter(x => !x.isAddRow);
-	}
-
-	render() {
-		const { canAddCredit } = this.state;
-		const { dateFilter, typeFilter, showSidePanel, showFiltersAsModal } =
-			this.props;
-		const realData = this.getRealData();
-		const noData = realData.length === 0 && !dateFilter && !typeFilter;
-		const cls = cx('nti-profile-transcripts-container', {
-			'has-side-panel': showSidePanel,
-		});
-
-		return (
+	return (
+		<>
 			<div className={cls}>
 				<div className="nti-profile-transcripts">
-					<AggregateTable {...this.props} />
+					<AggregateTable entity={entity} />
 					<div className="credit-details">
 						<div
 							className={cx('top-controls', {
@@ -254,41 +68,183 @@ class TranscriptsContentsContainer extends React.Component {
 							})}
 						>
 							<div className="transcript-actions">
-								{/* {this.state.canAddCredit && <Button className="award-credit" onClick={this.launchUserAwardedEditor} rounded>{t('addCredit')}</Button>} */}
+								{/* {canAddCredit && <Button className="award-credit" onClick={() => setState({show: 'editor'})} rounded>{t('addCredit')}</Button>} */}
 								<div className="section-title">
 									{t('credits')}
 								</div>
 								<div className="controls">
 									{!noData &&
 										!showSidePanel &&
-										showFiltersAsModal &&
-										this.renderFilterDialog()}
-									{!noData &&
-										!showSidePanel &&
-										!showFiltersAsModal &&
-										this.renderFilterFlyout()}
-									{this.renderDownloadButton()}
+										(showFiltersAsModal ? (
+											<Button
+												className="filter-trigger"
+												onClick={() =>
+													setState({
+														show: 'prompt',
+													})
+												}
+											>
+												Filters
+											</Button>
+										) : (
+											<Flyout.Triggered
+												className="transcript-filter"
+												trigger={
+													<div className="filter-trigger">
+														Filters
+													</div>
+												}
+												horizontalAlign={
+													Flyout.ALIGNMENTS.RIGHT
+												}
+												verticalAlign={
+													Flyout.ALIGNMENTS.BOTTOM
+												}
+												sizing={Flyout.SIZES.MATCH_SIDE}
+											>
+												<div>
+													<FilterMenu canReset />
+												</div>
+											</Flyout.Triggered>
+										))}
+									<DownloadButton />
 								</div>
 							</div>
 						</div>
-						{this.renderContent()}
+						<Content />
 					</div>
 				</div>
 				{showSidePanel && <FilterMenu canReset />}
 			</div>
-		);
-	}
+			{show === 'prompt' && (
+				<ModalFilterMenu onDismiss={() => setState({ show: null })} />
+			)}
+		</>
+	);
 }
 
-export default decorate(TranscriptsContentsContainer, [
-	Store.connect({
-		loading: 'loading',
-		dateFilter: 'dateFilter',
-		typeFilter: 'typeFilter',
-		items: 'items',
-		aggregateItems: 'aggregateItems',
-		availableTypes: 'availableTypes',
-		csvLink: 'csvLink',
-		pdfLink: 'pdfLink',
-	}),
-]);
+function ModalFilterMenu({ onDismiss }) {
+	const { resetTypeFilters, setDateFilter } = useStoreValue();
+	const doReset = () => {
+		setDateFilter(null);
+		resetTypeFilters();
+	};
+
+	return (
+		<Prompt.Dialog
+			className="transcript-filter-modal"
+			onBeforeDismiss={onDismiss}
+		>
+			<PropGrabber>
+				{props => (
+					<div className="filter-menu-container">
+						<div className="controls">
+							<Button className="reset" onClick={doReset}>
+								{t('reset')}
+							</Button>
+							<div className="header">{t('filterHeader')}</div>
+							<Button
+								className="confirm"
+								onClick={props.onDismiss}
+							>
+								{t('confirm')}
+							</Button>
+						</div>
+						<FilterMenu fullScreenDatePicker />
+					</div>
+				)}
+			</PropGrabber>
+		</Prompt.Dialog>
+	);
+}
+
+function useIsEmpty() {
+	const { items } = useStoreValue();
+	return (items || []).filter(x => !x.isAddRow).length === 0;
+}
+
+function useIsFiltered() {
+	const { dateFilter, typeFilter } = useStoreValue();
+	return Boolean(dateFilter || typeFilter);
+}
+
+function Content() {
+	const empty = useIsEmpty();
+	const filtered = useIsFiltered();
+	const { items } = useStoreValue();
+	return items?.length > 0 ? (
+		<div className="table-container">
+			<Table />
+			{empty && <EmptyMessage filtered={filtered} />}
+		</div>
+	) : (
+		<EmptyMessage filtered={filtered} />
+	);
+}
+
+function EmptyMessage({ filtered }) {
+	return filtered ? (
+		<div className="empty-message">No credits match your filter</div>
+	) : (
+		<div className="empty-message">No credits received yet</div>
+	);
+}
+
+const DownloadTrigger = React.forwardRef(({ className, ...props }, ref) => {
+	const disabled = useIsEmpty();
+
+	return (
+		<div
+			ref={ref}
+			className={cx('download', className, { disabled })}
+			{...props}
+		>
+			<i className="icon-download" />
+			<span>{t('download')}</span>
+		</div>
+	);
+});
+
+function DownloadButton() {
+	const { pdfLink, csvLink } = useStoreValue();
+	return (
+		<Flyout.Triggered
+			autoDismissOnAction
+			className="transcript-download"
+			trigger={<DownloadTrigger />}
+			horizontalAlign={Flyout.ALIGNMENTS.LEFT}
+			sizing={Flyout.SIZES.MATCH_SIDE}
+		>
+			<div>
+				<div
+					className={cx('download-option', {
+						disabled: !csvLink,
+					})}
+				>
+					<a
+						target="_blank"
+						rel="noopener noreferrer"
+						download
+						href={csvLink}
+					>
+						{t('csv')}
+					</a>
+				</div>
+				<div
+					className={cx('download-option', {
+						disabled: !pdfLink,
+					})}
+				>
+					<a
+						target="_blank"
+						rel="noopener noreferrer"
+						download
+						href={pdfLink}
+					>
+						{t('pdf')}
+					</a>
+				</div>
+			</div>
+		</Flyout.Triggered>
+	);
+}

@@ -1,8 +1,8 @@
 import './View.scss';
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import { Loading, Table } from '@nti/web-commons';
+import { useStoreValue } from '@nti/lib-store';
 
 import TitleColumn from './columns/Title';
 import DateColumn from './columns/Date';
@@ -18,27 +18,14 @@ const columns = [
 	OptionsColumn,
 ];
 
-export default class TranscriptTable extends React.Component {
-	static propTypes = {
-		entity: PropTypes.object,
-		store: PropTypes.object,
-		loading: PropTypes.bool,
-		items: PropTypes.arrayOf(PropTypes.object),
-	};
+export default function TranscriptTable() {
+	const { loading, items } = useStoreValue();
 
-	render() {
-		if (this.props.loading) {
-			return <Loading.Ellipsis />;
-		}
-
-		return (
-			<div className="nti-profile-transcripts-table">
-				<Table.Table
-					items={this.props.items}
-					columns={columns}
-					store={this.props.store}
-				/>
-			</div>
-		);
-	}
+	return loading ? (
+		<Loading.Ellipsis />
+	) : (
+		<div className="nti-profile-transcripts-table">
+			<Table.Table items={items} columns={columns} />
+		</div>
+	);
 }

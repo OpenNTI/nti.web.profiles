@@ -82,7 +82,7 @@ const FieldGroup = styled.div`
 
 //#endregion
 
-export default function UserAwardedCreditView({ credit, onDismiss }) {
+export function UserAwardedCreditView({ credit, onDismiss }) {
 	const init = useAsyncValue(
 		`UserAwardedCreditView-${typeof credit}-${credit?.NTIID ?? credit}`,
 		() => resolveInitialState(credit),

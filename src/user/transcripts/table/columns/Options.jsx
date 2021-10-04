@@ -1,81 +1,72 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import { scoped } from '@nti/lib-locale';
-import { Prompt, Flyout } from '@nti/web-commons';
+import { Prompt, Flyout, useToggle } from '@nti/web-commons';
+import { useStoreValue } from '@nti/lib-store';
 
-import UserAwardedCreditView from '../../userawarded/View';
+import { PropGrabber, UserAwardedCreditDialog } from '../../userawarded/Dialog';
 
 const t = scoped('nti-web-profile.transcripts.table.columns.Options', {
 	edit: 'Edit',
 	delete: 'Delete',
 });
 
-export default class Options extends React.Component {
-	static propTypes = {
-		item: PropTypes.object.isRequired,
-		store: PropTypes.object,
-	};
+const Trigger = React.forwardRef((props, ref) => (
+	<div className="credit-row-option-trigger" {...props} ref={ref}>
+		<i className="icon-settings" />
+	</div>
+));
 
-	static cssClassName = 'options-col';
+Options.cssClassName = 'options-col';
 
-	attachFlyoutRef = x => (this.flyout = x);
+export default function Options({ item }) {
+	const [edit, toggleEdit] = useToggle();
+	const { deleteUserAwardedCredit } = useStoreValue();
 
-	launchUserAwardedEditor = () => {
-		const { store, item } = this.props;
-
-		this.flyout.dismiss();
-
-		UserAwardedCreditView.show(store.getEntity(), item, store);
-	};
-
-	deleteUserAwardedCredit = () => {
-		const { store, item } = this.props;
-
-		this.flyout.dismiss();
-
+	const handleDelete = () => {
 		Prompt.areYouSure('Do you want to delete this credit?').then(() => {
-			store.deleteUserAwardedCredit(item);
+			deleteUserAwardedCredit(item);
 		});
 	};
 
-	renderTrigger() {
+	if (!item.isAddRow && item.hasLink('edit')) {
 		return (
-			<div className="credit-row-option-trigger">
-				<i className="icon-settings" />
-			</div>
+			<>
+				<Flyout.Triggered
+					className="credit-row-options"
+					trigger={<Trigger />}
+					horizontalAlign={Flyout.ALIGNMENTS.RIGHT}
+				>
+					<PropGrabber>
+						{({ dismissFlyout }) => (
+							<div>
+								<div
+									className="credit-row-option"
+									onClick={() => (
+										dismissFlyout(), toggleEdit()
+									)}
+								>
+									{t('edit')}
+								</div>
+								<div
+									className="credit-row-option delete"
+									onClick={handleDelete}
+								>
+									{t('delete')}
+								</div>
+							</div>
+						)}
+					</PropGrabber>
+				</Flyout.Triggered>
+				{edit && (
+					<UserAwardedCreditDialog
+						onBeforeDismiss={toggleEdit}
+						credit={item}
+					/>
+				)}
+			</>
 		);
 	}
 
-	render() {
-		const { item } = this.props;
-
-		if (!item.isAddRow && item.hasLink('edit')) {
-			return (
-				<Flyout.Triggered
-					className="credit-row-options"
-					trigger={this.renderTrigger()}
-					ref={this.attachFlyoutRef}
-					horizontalAlign={Flyout.ALIGNMENTS.RIGHT}
-				>
-					<div>
-						<div
-							className="credit-row-option"
-							onClick={this.launchUserAwardedEditor}
-						>
-							{t('edit')}
-						</div>
-						<div
-							className="credit-row-option delete"
-							onClick={this.deleteUserAwardedCredit}
-						>
-							{t('delete')}
-						</div>
-					</div>
-				</Flyout.Triggered>
-			);
-		}
-
-		return null;
-	}
+	return null;
 }
