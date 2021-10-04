@@ -51,6 +51,7 @@
 }
 
 .show-options {
+	color: var(--primary-grey);
 	font-size: 1.25rem;
 	line-height: 1.3;
 	display: inline-block;
