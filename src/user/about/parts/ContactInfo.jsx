@@ -3,6 +3,7 @@ import React from 'react';
 import { scoped } from '@nti/lib-locale';
 
 import { Card } from '../../../common';
+import { Address } from '../../../common/Address';
 
 import LabelValueList from './LabelValueList';
 
@@ -10,13 +11,8 @@ const t = scoped('nti-web-profile.user-profile.contact-info', {
 	title: 'Contact Info',
 	homePhone: 'Home Phone',
 	workPhone: 'Work Phone',
-	mailing: 'Mailing Address',
-	billing: 'Billing Address',
+	address: 'Address',
 });
-
-const Address = ({ address }) => (
-	<span>{Object.values(address).join('\n')}</span>
-);
 
 const Fields = [
 	user => {
@@ -45,20 +41,8 @@ const Fields = [
 		}
 
 		return {
-			label: t('mailing'),
+			label: t('address'),
 			value: <Address address={addresses.mailing} />,
-		};
-	},
-	user => {
-		const { addresses } = user;
-
-		if (!addresses?.billing) {
-			return null;
-		}
-
-		return {
-			label: t('billing'),
-			value: <Address address={addresses.billing} />,
 		};
 	},
 ];

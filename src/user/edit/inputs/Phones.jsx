@@ -21,25 +21,26 @@ export function Phones({
 	onChange,
 	onInvalid,
 }) {
-	const { home, work } = value ?? {};
+	const { home, work, ...others } = value ?? {};
 
-	const onValueChange = useCallback(
-		value =>
-			!value.home && !value.work ? onChange(null) : onChange(value),
-		[onChange, home, work]
-	);
+	const onValueChange = useCallback(newValue => onChange(newValue), [
+		onChange,
+	]);
 
 	const onHomeChange = useCallback(
 		number =>
 			number
-				? onValueChange({ home: number, work })
-				: onValueChange({ work }),
-		[work, home, onValueChange]
+				? onValueChange({ home: number, work, ...others })
+				: onValueChange({ work, ...others }),
+		[value, onValueChange]
 	);
 
 	const onWorkChange = useCallback(
-		number => (number ? onChange({ home, work: number }) : onChange(home)),
-		[work, home, onValueChange]
+		number =>
+			number
+				? onChange({ home, work: number, ...others })
+				: onChange({ home, ...others }),
+		[value, onValueChange]
 	);
 
 	return (

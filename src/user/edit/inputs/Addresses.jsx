@@ -3,9 +3,19 @@ import React, { useCallback } from 'react';
 import { scoped } from '@nti/lib-locale';
 import { Input } from '@nti/web-commons';
 
+import {
+	FullName,
+	Street1,
+	Street2,
+	City,
+	State,
+	Zip,
+	Country,
+	Address,
+} from '../../../common/Address';
+
 const t = scoped('nti-profiles.user.edit.inputs.Addresses', {
-	mailing: 'Mailing Address',
-	billing: 'Billing Address',
+	address: 'Address',
 });
 
 const fullName = 'full_name';
@@ -21,75 +31,6 @@ const isEmpty = a =>
 
 const TextInput = styled(Input.Text)`
 	display: block;
-`;
-
-const FullName = styled(Input.Label)`
-	display: block;
-`;
-
-const Street1 = styled(Input.Label)`
-	display: block;
-`;
-
-const Street2 = styled(Input.Label)`
-	display: block;
-`;
-
-const City = styled(Input.Label)`
-	display: block;
-`;
-
-const State = styled(Input.Label)`
-	display: block;
-`;
-
-const Zip = styled(Input.Label)`
-	display: block;
-`;
-
-const Country = styled(Input.Label)`
-	display: block;
-`;
-
-const Address = styled('fieldset')`
-	border: none;
-	padding: 0;
-
-	display: grid;
-	grid-template: auto / 1fr 25% 25%;
-	gap: 0.625rem;
-
-	${FullName} {
-		grid-row: 1 / 2;
-		grid-column: 1 / -1;
-	}
-
-	${Street1} {
-		grid-row: 2 / 3;
-		grid-column: 1 / -1;
-	}
-
-	${Street2} {
-		grid-row: 3 / 4;
-		grid-column: 1 / -1;
-	}
-
-	${City} {
-		grid-row: 4 / 5;
-	}
-
-	${State} {
-		grid-row: 4 / 5;
-	}
-
-	${Zip} {
-		grid-row: 4 / 5;
-	}
-
-	${Country} {
-		grid-row: 5 / 6;
-		grid-column: 1 / -1;
-	}
 `;
 
 function AddressInput({ value, schema, onChange }) {
@@ -108,8 +49,8 @@ function AddressInput({ value, schema, onChange }) {
 	const placeholder = n => schema[n].title;
 
 	return (
-		<Address>
-			<FullName label={label(fullName)}>
+		<Address input as="fieldset">
+			<FullName as={Input.Label} label={label(fullName)}>
 				<TextInput
 					name={fullName}
 					value={value[fullName]}
@@ -117,7 +58,7 @@ function AddressInput({ value, schema, onChange }) {
 					placeholder={placeholder(fullName)}
 				/>
 			</FullName>
-			<Street1 label={label(street1)}>
+			<Street1 as={Input.Label} label={label(street1)}>
 				<TextInput
 					name={street1}
 					value={value[street1]}
@@ -125,7 +66,7 @@ function AddressInput({ value, schema, onChange }) {
 					placeholder={placeholder(street1)}
 				/>
 			</Street1>
-			<Street2 label={label(street2)}>
+			<Street2 as={Input.Label} label={label(street2)}>
 				<TextInput
 					name={street2}
 					value={value[street2]}
@@ -133,7 +74,7 @@ function AddressInput({ value, schema, onChange }) {
 					placeholder={placeholder(street2)}
 				/>
 			</Street2>
-			<City label={label(city)}>
+			<City as={Input.Label} label={label(city)}>
 				<TextInput
 					name={city}
 					value={value[city]}
@@ -141,7 +82,7 @@ function AddressInput({ value, schema, onChange }) {
 					placeholder={placeholder(city)}
 				/>
 			</City>
-			<State label={label(state)}>
+			<State as={Input.Label} label={label(state)}>
 				<TextInput
 					name={state}
 					value={value[state]}
@@ -149,7 +90,7 @@ function AddressInput({ value, schema, onChange }) {
 					placeholder={placeholder(state)}
 				/>
 			</State>
-			<Zip label={label(zip)}>
+			<Zip as={Input.Label} label={label(zip)}>
 				<TextInput
 					name={zip}
 					value={value[zip]}
@@ -157,7 +98,7 @@ function AddressInput({ value, schema, onChange }) {
 					placeholder={placeholder(zip)}
 				/>
 			</Zip>
-			<Country label={label(country)}>
+			<Country as={Input.Label} label={label(country)}>
 				<TextInput
 					name={country}
 					value={value[country]}
@@ -177,49 +118,30 @@ export function Addresses({
 	onChange,
 	onInvalid,
 }) {
-	const { mailing, billing } = value ?? {};
+	const { mailing, ...others } = value ?? {};
 
 	const onAddressesChange = useCallback(
-		newAddresses =>
-			!newAddresses.mailing && !newAddresses.billing
-				? onChange(null)
-				: onChange(newAddresses),
+		newAddresses => onChange(newAddresses),
 		[onChange]
 	);
 
-	const onMailingChange = useCallback(
+	const onAddressChange = useCallback(
 		newMailing =>
 			isEmpty(newMailing)
-				? onAddressesChange({ billing })
-				: onAddressesChange({ mailing: newMailing, billing }),
-		[value, onAddressesChange]
-	);
-
-	const onBillingChange = useCallback(
-		newBilling =>
-			isEmpty(newBilling)
-				? onAddressesChange({ mailing })
-				: onAddressesChange({ mailing, billing: newBilling }),
+				? onAddressesChange(others)
+				: onAddressesChange({ mailing: newMailing, ...others }),
 		[value, onAddressesChange]
 	);
 
 	return (
 		<div>
-			<Input.Label label={t('mailing')}>
+			<Input.Label label={t('address')}>
 				<span></span>
 			</Input.Label>
 			<AddressInput
 				value={mailing ?? {}}
 				schema={valueType?.schema}
-				onChange={onMailingChange}
-			/>
-			<Input.Label label={t('billing')}>
-				<span></span>
-			</Input.Label>
-			<AddressInput
-				value={billing ?? {}}
-				schema={valueType?.schema}
-				onChange={onBillingChange}
+				onChange={onAddressChange}
 			/>
 		</div>
 	);
