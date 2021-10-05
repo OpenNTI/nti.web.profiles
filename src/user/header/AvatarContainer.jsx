@@ -13,7 +13,7 @@ const Edit = styled(LinkTo.Object).attrs({ context: 'account' })`
 	position: absolute;
 	top: 5px;
 	right: 5px;
-	color: white;
+	color: white !important;
 	background-color: var(--primary-grey);
 	opacity: 0.8;
 	padding: 0.3rem 0.45rem;
