@@ -33,7 +33,7 @@ class TitleInput extends React.Component {
 					className={cx('input', 'title')}
 					value={value}
 					onChange={onChange}
-					placeholder={!readOnly && t('placeholder')}
+					placeholder={(!readOnly && t('placeholder')) || null}
 					readOnly={readOnly}
 				/>
 			</Input.Label>

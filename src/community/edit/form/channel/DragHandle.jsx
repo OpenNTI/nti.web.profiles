@@ -11,7 +11,7 @@ const cx = classnames.bind(Styles);
 
 class DragHandle extends React.Component {
 	static propTypes = {
-		connect: PropTypes.func.isRequired,
+		connect: PropTypes.func,
 		pinned: PropTypes.bool,
 	};
 
