@@ -25,7 +25,13 @@ export default function TranscriptTable() {
 		<Loading.Ellipsis />
 	) : (
 		<div className="nti-profile-transcripts-table">
-			<Table.Table items={items} columns={columns} />
+			<Table.Table
+				items={items}
+				columns={columns}
+				css={css`
+					table-layout: auto;
+				`}
+			/>
 		</div>
 	);
 }

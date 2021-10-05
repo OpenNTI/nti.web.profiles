@@ -28,6 +28,56 @@ const t = scoped('nti-web-profile.transcripts.View', {
 
 export default Store.compose(TranscriptsContentsContainer);
 
+const TriggerButton = styled(Button).attrs({ plain: true })`
+	cursor: pointer;
+	font-size: 14px;
+	display: inline-block;
+	margin-right: 0.5rem;
+	height: 40px;
+	line-height: 40px;
+	border: 1px solid #e2e2e2;
+	border-radius: 3px;
+	padding: 0 1.5rem;
+	color: var(--secondary-grey);
+	white-space: nowrap;
+
+	i {
+		margin-right: 5px;
+	}
+`;
+
+const Buttons = styled.div`
+	display: flex;
+	gap: 5px;
+
+	@media (max-width: 475px) {
+		flex-direction: column;
+	}
+`;
+
+const TitleBar = styled.div`
+	padding: 1rem 0;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+
+	& > * {
+		flex: 1 1 auto;
+		&:not(:first-child) {
+			flex: 0 0 auto;
+		}
+	}
+
+	@media (--respond-to-smallest-handhelds) {
+		display: flex;
+		flex-direction: column;
+		gap: 5px;
+		margin-bottom: 10px;
+		align-items: stretch;
+	}
+`;
+
 TranscriptsContentsContainer.propTypes = {
 	entity: PropTypes.object,
 	showSidePanel: PropTypes.bool,
@@ -39,7 +89,6 @@ function TranscriptsContentsContainer({
 	showSidePanel,
 	showFiltersAsModal,
 }) {
-	const canAddCredit = Boolean(entity?.hasLink('add_credit'));
 	const { dateFilter, loadTranscript, typeFilter } = useStoreValue();
 	const [{ show }, setState] = useReducerState({
 		/** @type {null|'flyout'|'prompt'|'editor'} */
@@ -62,55 +111,46 @@ function TranscriptsContentsContainer({
 				<div className="nti-profile-transcripts">
 					<AggregateTable entity={entity} />
 					<div className="credit-details">
-						<div
-							className={cx('top-controls', {
-								'can-add-credit': canAddCredit,
-							})}
-						>
-							<div className="transcript-actions">
-								{/* {canAddCredit && <Button className="award-credit" onClick={() => setState({show: 'editor'})} rounded>{t('addCredit')}</Button>} */}
-								<div className="section-title">
-									{t('credits')}
-								</div>
-								<div className="controls">
-									{!noData &&
-										!showSidePanel &&
-										(showFiltersAsModal ? (
-											<Button
-												className="filter-trigger"
-												onClick={() =>
-													setState({
-														show: 'prompt',
-													})
-												}
-											>
-												Filters
-											</Button>
-										) : (
-											<Flyout.Triggered
-												className="transcript-filter"
-												trigger={
-													<div className="filter-trigger">
-														Filters
-													</div>
-												}
-												horizontalAlign={
-													Flyout.ALIGNMENTS.RIGHT
-												}
-												verticalAlign={
-													Flyout.ALIGNMENTS.BOTTOM
-												}
-												sizing={Flyout.SIZES.MATCH_SIDE}
-											>
-												<div>
-													<FilterMenu canReset />
-												</div>
-											</Flyout.Triggered>
-										))}
-									<DownloadButton />
-								</div>
-							</div>
-						</div>
+						<TitleBar className={cx('top-controls')}>
+							<div className="section-title">{t('credits')}</div>
+							<Buttons>
+								{!noData &&
+									!showSidePanel &&
+									(showFiltersAsModal ? (
+										<TriggerButton
+											className="filter-trigger"
+											onClick={() =>
+												setState({
+													show: 'prompt',
+												})
+											}
+										>
+											Filters
+										</TriggerButton>
+									) : (
+										<Flyout.Triggered
+											className="transcript-filter"
+											trigger={
+												<TriggerButton className="filter-trigger">
+													Filters
+												</TriggerButton>
+											}
+											horizontalAlign={
+												Flyout.ALIGNMENTS.RIGHT
+											}
+											verticalAlign={
+												Flyout.ALIGNMENTS.BOTTOM
+											}
+											sizing={Flyout.SIZES.MATCH_SIDE}
+										>
+											<div>
+												<FilterMenu canReset />
+											</div>
+										</Flyout.Triggered>
+									))}
+								<DownloadButton />
+							</Buttons>
+						</TitleBar>
 						<Content />
 					</div>
 				</div>
@@ -139,13 +179,14 @@ function ModalFilterMenu({ onDismiss }) {
 				{props => (
 					<div className="filter-menu-container">
 						<div className="controls">
-							<Button className="reset" onClick={doReset}>
+							<Button className="reset" onClick={doReset} plain>
 								{t('reset')}
 							</Button>
 							<div className="header">{t('filterHeader')}</div>
 							<Button
 								className="confirm"
 								onClick={props.onDismiss}
+								plain
 							>
 								{t('confirm')}
 							</Button>
@@ -194,14 +235,14 @@ const DownloadTrigger = React.forwardRef(({ className, ...props }, ref) => {
 	const disabled = useIsEmpty();
 
 	return (
-		<div
+		<TriggerButton
 			ref={ref}
-			className={cx('download', className, { disabled })}
-			{...props}
+			className={cx('download', className)}
+			{...{ ...props, disabled }}
 		>
 			<i className="icon-download" />
 			<span>{t('download')}</span>
-		</div>
+		</TriggerButton>
 	);
 });
 

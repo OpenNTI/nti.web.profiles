@@ -22,7 +22,7 @@ $header-ranges: (
 }
 
 .transcript-filter-modal {
-	z-index: 5000;
+	// z-index: 5000;
 
 	dialog {
 		width: 100%;
@@ -45,6 +45,9 @@ $header-ranges: (
 				text-align: center;
 				background-color: white;
 				border-bottom: solid 1px #ddd;
+				display: flex;
+				align-items: center;
+				justify-content: space-around;
 
 				.header {
 					display: block;
@@ -61,17 +64,8 @@ $header-ranges: (
 					font-family: var(--legacy-header-font-family);
 				}
 
-				.reset {
-					position: absolute;
-					left: 10px;
-					top: 0;
-				}
-
 				.confirm {
 					color: var(--primary-blue);
-					position: absolute;
-					right: 10px;
-					top: 0;
 				}
 			}
 		}
@@ -100,124 +94,14 @@ $header-ranges: (
 			}
 		}
 
-		.top-controls {
-			padding: 1rem 0;
-
-			.nti-button {
-				text-align: center;
-			}
-
-			@include responsive-range(four-column, $header-ranges) {
-				display: flex;
-				justify-content: space-between;
-				align-items: center;
-
-				.transcript-filters {
-					flex: 0 0 auto;
-
-					.transcript-date-filter-value {
-						margin-right: 0.5rem;
-					}
-				}
-
-				.transcript-actions {
-					flex: 0 0 auto;
-
-					.nti-button {
-						width: 7rem;
-					}
-
-					.award-credit {
-						margin-right: 0.5rem;
-					}
-				}
-			}
-
-			@include responsive-range(two-column, $header-ranges) {
-				.transcript-filters,
-				.transcript-actions {
-					max-width: 460px;
-				}
-
-				.transcript-filters {
-					display: flex;
-					justify-content: space-between;
-					margin-bottom: 1rem;
-				}
-
-				.transcript-actions {
-					display: flex;
-
-					.nti-button {
-						width: 224px;
-					}
-				}
-
-				&.can-add-credit {
-					.transcript-actions {
-						justify-content: space-between;
-					}
-				}
-			}
-
-			@include responsive-range(one-column, $header-ranges) {
-				.transcript-filters,
-				.transcript-actions {
-					width: 224px;
-					display: flex;
-					flex-wrap: wrap;
-
-					.nti-button,
-					.profile-transcript-filter-button {
-						margin-bottom: 0.5rem;
-					}
-
-					.nti-button {
-						width: 100%;
-					}
-
-					.controls > div {
-						margin-bottom: 10px;
-					}
-				}
-			}
-		}
-
 		.transcript-actions {
 			width: 100%;
-
-			.controls {
-				float: right;
-			}
 
 			.section-title {
 				line-height: 36px;
 				font-size: 24px;
 				font-weight: 300;
 				display: inline-block;
-			}
-
-			.download,
-			.filter-trigger {
-				cursor: pointer;
-				font-size: 14px;
-				display: inline-block;
-				margin-right: 0.5rem;
-				height: 40px;
-				line-height: 40px;
-				border: 1px solid #e2e2e2;
-				border-radius: 3px;
-				padding: 0 1.5rem;
-				color: var(--secondary-grey);
-
-				&.disabled {
-					opacity: 0.5;
-					pointer-events: none;
-				}
-
-				i {
-					margin-right: 5px;
-				}
 			}
 		}
 

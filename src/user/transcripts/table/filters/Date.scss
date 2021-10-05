@@ -21,6 +21,10 @@
 }
 
 .transcript-date-filter-value {
+	@media (max-width: 488px) {
+		margin-right: 0.5rem;
+	}
+
 	.calendar-icon {
 		.calendar-hanger {
 			border-left: solid 2px var(--tertiary-grey);
