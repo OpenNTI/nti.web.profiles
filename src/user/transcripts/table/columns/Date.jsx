@@ -35,11 +35,9 @@ export default class Date extends React.Component {
 
 		return (
 			date && (
-				<DateTime
-					as={DetailViewable}
-					item={this.props.item}
-					date={date}
-				/>
+				<DetailViewable item={this.props.item}>
+					<DateTime date={date} />
+				</DetailViewable>
 			)
 		);
 	}
