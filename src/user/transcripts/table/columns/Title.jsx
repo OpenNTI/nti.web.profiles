@@ -5,7 +5,7 @@ import { useToggle } from '@nti/web-commons';
 
 import { UserAwardedCreditDialog } from '../../userawarded/Dialog';
 
-import DetailViewable from './DetailViewable';
+import { DetailViewable } from './DetailViewable';
 
 const t = scoped('nti-web-profile.transcripts.table.columns.Title', {
 	headerTitle: 'Title',
@@ -19,8 +19,8 @@ export default function Title({ item }) {
 	const [show, toggle] = useToggle();
 
 	return !item.isAddRow ? (
-		<DetailViewable item={item}>
-			<div className="transcript-row-title">{item.title}</div>
+		<DetailViewable item={item} className="transcript-row-title">
+			{item.title}
 		</DetailViewable>
 	) : (
 		<>

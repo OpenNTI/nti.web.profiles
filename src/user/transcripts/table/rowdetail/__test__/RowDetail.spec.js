@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 
-import RowDetail from '../RowDetail';
+import { RowDetail } from '../RowDetail';
 
 /* eslint-env jest */
 describe('RowDetail test', () => {

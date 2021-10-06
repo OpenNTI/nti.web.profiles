@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { scoped } from '@nti/lib-locale';
 
 import Header from './Header';
-import DetailViewable from './DetailViewable';
+import { DetailViewable } from './DetailViewable';
 
 const t = scoped('nti-web-profile.transcripts.table.columns.Value', {
 	headerTitle: 'Amount',

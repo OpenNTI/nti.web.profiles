@@ -3,9 +3,9 @@ import React from 'react';
 import { Button } from '@nti/web-core';
 import { Prompt, useToggle } from '@nti/web-commons';
 
-import RowDetail from '../rowdetail/RowDetail';
+import { RowDetail } from '../rowdetail/RowDetail';
 
-export default function DetailViewable({ item, ...props }) {
+export function DetailViewable({ item, ...props }) {
 	const [show, toggle] = useToggle();
 	return (
 		<>

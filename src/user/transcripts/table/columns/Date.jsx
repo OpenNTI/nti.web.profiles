@@ -5,7 +5,7 @@ import { DateTime } from '@nti/web-commons';
 import { scoped } from '@nti/lib-locale';
 
 import Header from './Header';
-import DetailViewable from './DetailViewable';
+import { DetailViewable } from './DetailViewable';
 
 const t = scoped('nti-web-profile.transcripts.table.columns.Date', {
 	headerTitle: 'Date',
@@ -34,9 +34,13 @@ export default class Date extends React.Component {
 		const date = item.getAwardedDate();
 
 		return (
-			<DetailViewable item={this.props.item}>
-				<div>{date && DateTime.format(date)}</div>
-			</DetailViewable>
+			date && (
+				<DateTime
+					as={DetailViewable}
+					item={this.props.item}
+					date={date}
+				/>
+			)
 		);
 	}
 }
