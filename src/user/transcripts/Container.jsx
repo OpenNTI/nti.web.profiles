@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 import { Button, useReducerState } from '@nti/web-core';
-import { Flyout, Prompt } from '@nti/web-commons';
+import { Flyout } from '@nti/web-commons';
 import { scoped } from '@nti/lib-locale';
 import { useStoreValue } from '@nti/lib-store';
 
@@ -11,9 +11,9 @@ import Store from './Store';
 import Table from './table/View';
 import FilterMenu from './table/filters/FilterMenu';
 import AggregateTable from './table/aggregate/View';
-import { PropGrabber } from './userawarded/Dialog';
+import { ModalFilterMenu } from './ModalFilterMenu';
 
-const t = scoped('nti-web-profile.transcripts.View', {
+export const t = scoped('nti-web-profile.transcripts.View', {
 	aggregate: 'Summary',
 	detailed: 'Detailed',
 	csv: 'CSV',
@@ -160,42 +160,6 @@ function TranscriptsContentsContainer({
 				<ModalFilterMenu onDismiss={() => setState({ show: null })} />
 			)}
 		</>
-	);
-}
-
-function ModalFilterMenu({ onDismiss }) {
-	const { resetTypeFilters, setDateFilter } = useStoreValue();
-	const doReset = () => {
-		setDateFilter(null);
-		resetTypeFilters();
-	};
-
-	return (
-		<Prompt.Dialog
-			className="transcript-filter-modal"
-			onBeforeDismiss={onDismiss}
-		>
-			<PropGrabber>
-				{props => (
-					<div className="filter-menu-container">
-						<div className="controls">
-							<Button className="reset" onClick={doReset} plain>
-								{t('reset')}
-							</Button>
-							<div className="header">{t('filterHeader')}</div>
-							<Button
-								className="confirm"
-								onClick={props.onDismiss}
-								plain
-							>
-								{t('confirm')}
-							</Button>
-						</div>
-						<FilterMenu fullScreenDatePicker />
-					</div>
-				)}
-			</PropGrabber>
-		</Prompt.Dialog>
 	);
 }
 

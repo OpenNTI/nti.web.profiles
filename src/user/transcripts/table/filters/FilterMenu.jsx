@@ -139,8 +139,9 @@ class FilterMenu extends React.Component {
 			fullScreenDatePicker,
 			loading,
 			canReset,
+			className,
 		} = this.props;
-		const cls = cx('transcript-filter-menu', {
+		const cls = cx('transcript-filter-menu', className, {
 			'full-screen': fullScreenDatePicker,
 			disabled: loading,
 		});
