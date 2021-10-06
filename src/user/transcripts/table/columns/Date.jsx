@@ -36,7 +36,12 @@ export default class Date extends React.Component {
 		return (
 			date && (
 				<DetailViewable item={this.props.item}>
-					<DateTime date={date} />
+					<DateTime
+						date={date}
+						css={css`
+							white-space: nowrap;
+						`}
+					/>
 				</DetailViewable>
 			)
 		);
