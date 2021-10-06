@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-import { Button } from '@nti/web-core';
+import { Button as _Button } from '@nti/web-core';
 import { Prompt, Checkbox } from '@nti/web-commons';
 import { decorate } from '@nti/lib-commons';
 import { scoped } from '@nti/lib-locale';
@@ -27,6 +27,10 @@ const DATE_FILTERS = {
 	PAST_6_MONTHS: 'past6Months',
 	CUSTOM_RANGE: 'customRange',
 };
+
+const Button = styled(_Button)`
+	color: inherit;
+`;
 
 class FilterMenu extends React.Component {
 	static propTypes = {
