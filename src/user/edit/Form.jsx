@@ -22,6 +22,10 @@ const t = scoped('nti-profiles.user.edit.section-titles', {
 
 const stop = e => (e.preventDefault(), e.stopPropagation());
 
+const privateSections = {
+	contactInfo: true,
+};
+
 class Form extends React.Component {
 	static propTypes = {
 		fieldGroups: PropTypes.object.isRequired,
@@ -41,7 +45,11 @@ class Form extends React.Component {
 
 		return (
 			<ErrorContext.Provider key={key} value={errorContext}>
-				<Card className={slugify(key)} title={title}>
+				<Card
+					className={slugify(key)}
+					title={title}
+					private={privateSections[key]}
+				>
 					{inputs.map(input => {
 						const Cmp = getWidget(input);
 
