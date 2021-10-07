@@ -29,7 +29,12 @@ export default function TranscriptTable() {
 				items={items}
 				columns={columns}
 				css={css`
-					table-layout: auto !important;
+					table&& {
+						table-layout: auto !important;
+						@media (max-width: 700px) {
+							width: auto;
+						}
+					}
 				`}
 			/>
 		</div>
