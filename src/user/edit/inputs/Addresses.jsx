@@ -1,4 +1,5 @@
 import React, { useCallback } from 'react';
+import cx from 'classnames';
 
 import { scoped } from '@nti/lib-locale';
 import { Input } from '@nti/web-commons';
@@ -48,12 +49,16 @@ function AddressInput({ value, schema, onChange }) {
 		[onChange, value]
 	);
 
-	const label = n => schema[n].description;
 	const placeholder = n => schema[n].title;
+	const label = n => ({
+		as: Input.Label,
+		label: schema[n].description,
+		className: cx({ required: schema[n].required }),
+	});
 
 	return (
 		<Address input as="fieldset">
-			<FullName as={Input.Label} label={label(fullName)}>
+			<FullName {...label(fullName)}>
 				<TextInput
 					name={fullName}
 					value={value[fullName]}
@@ -61,7 +66,7 @@ function AddressInput({ value, schema, onChange }) {
 					placeholder={placeholder(fullName)}
 				/>
 			</FullName>
-			<Street1 as={Input.Label} label={label(street1)}>
+			<Street1 {...label(street1)}>
 				<TextInput
 					name={street1}
 					value={value[street1]}
@@ -69,7 +74,7 @@ function AddressInput({ value, schema, onChange }) {
 					placeholder={placeholder(street1)}
 				/>
 			</Street1>
-			<Street2 as={Input.Label} label={label(street2)}>
+			<Street2 {...label(street2)}>
 				<TextInput
 					name={street2}
 					value={value[street2]}
@@ -77,7 +82,7 @@ function AddressInput({ value, schema, onChange }) {
 					placeholder={placeholder(street2)}
 				/>
 			</Street2>
-			<City as={Input.Label} label={label(city)}>
+			<City {...label(city)}>
 				<TextInput
 					name={city}
 					value={value[city]}
@@ -85,7 +90,7 @@ function AddressInput({ value, schema, onChange }) {
 					placeholder={placeholder(city)}
 				/>
 			</City>
-			<State as={Input.Label} label={label(state)}>
+			<State {...label(state)}>
 				<TextInput
 					name={state}
 					value={value[state]}
@@ -93,7 +98,7 @@ function AddressInput({ value, schema, onChange }) {
 					placeholder={placeholder(state)}
 				/>
 			</State>
-			<Zip as={Input.Label} label={label(zip)}>
+			<Zip {...label(zip)}>
 				<TextInput
 					name={zip}
 					value={value[zip]}
@@ -101,7 +106,7 @@ function AddressInput({ value, schema, onChange }) {
 					placeholder={placeholder(zip)}
 				/>
 			</Zip>
-			<Country as={Input.Label} label={label(country)}>
+			<Country {...label(country)}>
 				<TextInput
 					name={country}
 					value={value[country]}
