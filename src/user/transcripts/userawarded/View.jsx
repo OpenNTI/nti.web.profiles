@@ -182,7 +182,14 @@ export function UserAwardedCreditView({ credit, onDismiss }) {
 						<Label>{t('description')}</Label>
 						<Description
 							value={description}
-							onChange={description => setState({ description })}
+							onChange={description =>
+								setState({
+									description: description.replace(
+										/[\n\r]/g,
+										''
+									),
+								})
+							}
 							placeholder="Write Something..."
 						/>
 					</ValueContainer>
