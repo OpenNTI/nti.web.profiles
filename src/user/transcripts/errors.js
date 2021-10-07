@@ -15,5 +15,5 @@ const ERROR_MESSAGES = {
 };
 
 export function getError(e) {
-	return (ERROR_MESSAGES[e?.code] || (err => err.message || err))(e);
+	return (ERROR_MESSAGES[e?.code] || (err => err?.message || err))(e);
 }
