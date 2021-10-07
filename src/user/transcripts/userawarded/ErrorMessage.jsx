@@ -1,7 +1,7 @@
-import { Info } from '@nti/web-course';
+import { getError } from '../errors';
 
 export function ErrorMessage({ error }) {
-	error = Info.TranscriptCredit.getError(error);
+	error = getError(error);
 	return !error ? null : (
 		<div
 			className="error"
