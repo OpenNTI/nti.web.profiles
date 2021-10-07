@@ -26,8 +26,11 @@ const state = 'state';
 const zip = 'postal_code';
 const country = 'country';
 
-const isEmpty = a =>
-	[fullName, street1, street2, city, state, zip, country].every(f => !a[f]);
+const properties = [fullName, street1, street2, city, state, zip, country];
+
+const isEmpty = a => properties.every(f => !a[f]);
+const existing = a =>
+	properties.reduce((acc, prop) => ({ ...acc, [prop]: a[prop] }), {});
 
 const TextInput = styled(Input.Text)`
 	display: block;
@@ -37,7 +40,7 @@ function AddressInput({ value, schema, onChange }) {
 	const handleChange = useCallback(
 		(newValue, e) =>
 			onChange({
-				...value,
+				...existing(value),
 				Class: 'Address',
 				MimeType: 'application/vnd.nextthought.users.address',
 				[e.target.name]: newValue,
