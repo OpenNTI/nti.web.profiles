@@ -41,6 +41,11 @@ const TriggerButton = styled(Button).attrs({ plain: true })`
 	color: var(--secondary-grey);
 	white-space: nowrap;
 
+	&[disabled] {
+		opacity: 0.5;
+		pointer-events: none;
+	}
+
 	i {
 		margin-right: 5px;
 	}
@@ -196,7 +201,10 @@ function EmptyMessage({ filtered }) {
 }
 
 const DownloadTrigger = React.forwardRef(({ className, ...props }, ref) => {
-	const disabled = useIsEmpty();
+	const { pdfLink, csvLink } = useStoreValue();
+	const empty = useIsEmpty();
+
+	const disabled = (!pdfLink && !csvLink) || empty;
 
 	return (
 		<TriggerButton
