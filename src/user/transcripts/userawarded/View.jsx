@@ -193,8 +193,11 @@ export function UserAwardedCreditView({ credit, onDismiss }) {
 								value={amount}
 								maxLength="6"
 								onChange={val => setState({ amount: val })}
+								// pattern={`[0-9]*[.,]?[0-9]{0,${
+								// 	selectedType?.precision ?? 2
+								// }}`}
 								pattern="[0-9]*[.,]?[0-9]+"
-								placeholder="1.00"
+								placeholder={selectedType?.format(1) ?? '1.00'}
 								css={css`
 									width: 90px;
 
