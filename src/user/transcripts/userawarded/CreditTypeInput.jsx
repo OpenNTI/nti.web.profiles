@@ -54,7 +54,7 @@ export function CreditTypeInput({ value, onChange }) {
 		useAsyncValue('CreditTypeInput--credit-types', async () =>
 			(await getService())
 				.getCollection('CreditDefinitions', 'Global')
-				?.fetchLinkParsed('self')
+				?.fetchLink('self')
 		) ?? [];
 
 	useEffect(() => {

@@ -70,7 +70,10 @@ export default class ProfileUpdateStore extends Stores.SimpleStore {
 		this.emitChange('loading', 'entity');
 
 		try {
-			const profile = await entity.fetchLink('account.profile');
+			const profile = await entity.fetchLink({
+				mode: 'raw',
+				rel: 'account.profile',
+			});
 			const {
 				ProfileSchema: schema,
 				ProfileType: type,

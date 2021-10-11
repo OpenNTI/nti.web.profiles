@@ -253,8 +253,13 @@ export default class TranscriptTableStore extends Stores.SimpleStore {
 		}
 
 		const items =
-			(await this.entity.fetchLink('transcript', params, 'batch'))
-				?.Items || [];
+			(
+				await this.entity.fetchLink({
+					mode: 'batch',
+					rel: 'transcript',
+					params,
+				})
+			)?.Items || [];
 
 		if (!this._availableTypes) {
 			this._availableTypes = Array.from(
