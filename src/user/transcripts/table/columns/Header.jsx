@@ -5,10 +5,9 @@ import { Button } from '@nti/web-core';
 import { useStoreValue } from '@nti/lib-store';
 
 export default function Header({ field, sortKey, children }) {
-	const { getSortOn, getSortOrder } = useStoreValue();
+	const { getSortOn, getSortOrder, setSortOn } = useStoreValue();
 	const sort = () => {
-		const { store, sortKey, field } = this.props;
-		return store && store.setSortOn(field, sortKey);
+		setSortOn?.(field, sortKey);
 	};
 
 	const isSorted = getSortOn?.(sortKey) === field;
