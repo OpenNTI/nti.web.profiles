@@ -1,5 +1,4 @@
 import './View.scss';
-import React from 'react';
 
 import { Loading, Table } from '@nti/web-commons';
 import { useStoreValue } from '@nti/lib-store';

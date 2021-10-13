@@ -1,4 +1,3 @@
-import React from 'react';
 import cx from 'classnames';
 
 import { Input, DialogButtons, Panels } from '@nti/web-commons';

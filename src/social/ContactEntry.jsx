@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 
 import { Avatar, Badge, DisplayName, User, Tooltip } from '@nti/web-commons';

@@ -40,12 +40,14 @@ export class Store extends Stores.SimpleStore {
 	/**
 	 * The schema we're currently operating with; used to render the form, validate, etc.
 	 * Preflight may change this value
+	 *
 	 * @type {Object}
 	 */
 	#schema;
 
 	/**
 	 * The user's original profile schema. We diff this against the 'current' schema to identify changes
+	 *
 	 * @type {Object}
 	 */
 	#initialSchema;
@@ -53,6 +55,7 @@ export class Store extends Stores.SimpleStore {
 	/**
 	 * The type of profile we're currently operating with; used to determine groupings.
 	 * Preflight may change this value
+	 *
 	 * @type {string}
 	 */
 	#profileType;
@@ -280,7 +283,9 @@ export class Store extends Stores.SimpleStore {
 
 	/**
 	 * Computes the difference between the initial and current schema, optionally filtering for specific property changes
+	 *
 	 * @param {string[]} properties - The property changes of interest (array or vararg)
+	 * @param props
 	 * @returns {Object} - The portion of the schema that changed, grouped according to field.group
 	 */
 	// [SCHEMA_CHANGES] = (...properties) => { // would be nice to accept either an array or varargs, but…

@@ -1,5 +1,4 @@
 import './Summary.scss';
-import React from 'react';
 import cx from 'classnames';
 
 import { Array as ArrayUtils } from '@nti/lib-commons';

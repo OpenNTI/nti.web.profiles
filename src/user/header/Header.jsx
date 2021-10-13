@@ -1,4 +1,3 @@
-import React from 'react';
 
 import Buttons from './Buttons';
 import Nav from './Nav';

@@ -46,6 +46,7 @@ export default class Experience extends React.PureComponent {
 		 * 	}
 		 * }
 		 * ```
+		 *
 		 * @type {Object}
 		 */
 		fieldMeta: PropTypes.object,

@@ -1,4 +1,3 @@
-import React from 'react';
 
 import { Utils } from '@nti/web-commons';
 import { Button } from "@nti/web-core";

@@ -25,6 +25,7 @@ const unknown = errors =>
 
 /**
  * Bin errors by type (e.g. field validation vs. server error)
+ *
  * @param {Array} errors array of error objects
  * @returns {Object} A mapping of type to errors: {server: [error, error, ...], field: [error, error, ...]}
  */

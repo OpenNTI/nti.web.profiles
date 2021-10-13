@@ -36,6 +36,7 @@ export default class Breadcrumb extends React.Component {
 		 * The context we are viewing the breadcrumb in.
 		 * If the context is in the breadcrumb of item
 		 * we will only display everything after context.
+		 *
 		 * @type {Object}
 		 */
 		context: PropTypes.shape({
@@ -44,6 +45,7 @@ export default class Breadcrumb extends React.Component {
 
 		/**
 		 * If true, the content-aquire-prompt will show on 403 instead of showing the just the course name.
+		 *
 		 * @type {boolean}
 		 */
 		showPrompt: PropTypes.bool,

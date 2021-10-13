@@ -1,4 +1,3 @@
-import React from 'react';
 
 import { Button as _button } from '@nti/web-core';
 import { Prompt } from '@nti/web-commons';

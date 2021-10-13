@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import { Suspense } from 'react';
 
 import { Prompt } from '@nti/web-commons';
 import { useStoreValue } from '@nti/lib-store';

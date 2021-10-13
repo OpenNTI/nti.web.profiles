@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types';
-import React from 'react';
 
 import { Errors, Loading } from '@nti/web-commons';
 import { Iterable } from '@nti/lib-commons';

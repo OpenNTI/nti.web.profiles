@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from 'react';
+import { useCallback, useRef } from 'react';
 
 import { scoped } from '@nti/lib-locale';
 import { Errors, Form, Input } from '@nti/web-commons';

@@ -9,6 +9,7 @@ const OTHER = 'other';
 
 /**
  * Buckets schema fields according to their group property
+ *
  * @param  {Object} schema - The profile schema
  * @param  {string|Array} fields - The fields of interest.
  * @returns {Object} a mapping of group name => schema fragments

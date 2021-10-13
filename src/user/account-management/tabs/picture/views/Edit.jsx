@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 import { DialogButtons } from '@nti/web-commons';
 import { scoped } from '@nti/lib-locale';

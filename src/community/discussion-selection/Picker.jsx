@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useReducer } from 'react';
+import { useEffect, useMemo, useReducer } from 'react';
 import PropTypes from 'prop-types';
 
 import { useDebounce, Prompt } from '@nti/web-commons';

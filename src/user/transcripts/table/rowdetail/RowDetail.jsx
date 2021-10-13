@@ -1,5 +1,4 @@
 import './RowDetail.scss';
-import React from 'react';
 import PropTypes from 'prop-types';
 
 import { DateTime, DialogButtons, Panels } from '@nti/web-commons';

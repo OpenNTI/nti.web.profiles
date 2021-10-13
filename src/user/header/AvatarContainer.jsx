@@ -1,4 +1,3 @@
-import React from 'react';
 import cx from 'classnames';
 
 import { Avatar, Layouts } from '@nti/web-commons';
