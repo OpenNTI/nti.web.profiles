@@ -1,10 +1,10 @@
-import React from 'react';
+import { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { scoped } from '@nti/lib-locale';
 import { getAppUsername } from '@nti/web-client';
 import { Text, StandardUI } from '@nti/web-commons';
-import { Button } from "@nti/web-core";
+import { Button } from '@nti/web-core';
 
 const t = scoped('nti-web-profile.badges.EmptyState', {
 	other: 'This user has not earned any badges.',
@@ -62,11 +62,9 @@ UserBadgeEmptyState.propTypes = {
 	entity: PropTypes.object,
 };
 export default function UserBadgeEmptyState({ entity }) {
-	const [connect, setConnect] = React.useState(false);
-	const showConnect = React.useCallback(() => setConnect(true), [setConnect]);
-	const hideConnect = React.useCallback(() => setConnect(false), [
-		setConnect,
-	]);
+	const [connect, setConnect] = useState(false);
+	const showConnect = useCallback(() => setConnect(true), [setConnect]);
+	const hideConnect = useCallback(() => setConnect(false), [setConnect]);
 
 	const appUser = isAppUser(entity);
 

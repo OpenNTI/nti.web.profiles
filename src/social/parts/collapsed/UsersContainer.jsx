@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import { useEffect, useRef } from 'react';
 
 import { Hooks } from '@nti/web-commons';
 import { Iterable } from '@nti/lib-commons';
@@ -21,7 +21,7 @@ UsersContainer.propTypes = {
 export default function UsersContainer({ updateExpandBadge }) {
 	const { unreadCount, selectedEntity, iterator } = Store.useValue();
 
-	const containerRef = React.useRef(null);
+	const containerRef = useRef(null);
 
 	const { height } = Hooks.useWindowSize();
 
@@ -29,7 +29,7 @@ export default function UsersContainer({ updateExpandBadge }) {
 		? Hooks.useVisibleCount(ICON_HEIGHT, containerRef)
 		: -1;
 
-	React.useEffect(() => {
+	useEffect(() => {
 		const hiddenSum =
 			unreadCount &&
 			Object.keys(unreadCount)
@@ -45,14 +45,13 @@ export default function UsersContainer({ updateExpandBadge }) {
 	return (
 		<Container ref={containerRef}>
 			{[
-				...Iterable.map(iterator(), (entity) => (
-						<ContactEntry
-							entity={entity}
-							selected={selectedEntity === entity}
-							key={entity.toString()}
-						/>
-					)
-				),
+				...Iterable.map(iterator(), entity => (
+					<ContactEntry
+						entity={entity}
+						selected={selectedEntity === entity}
+						key={entity.toString()}
+					/>
+				)),
 			]}
 		</Container>
 	);

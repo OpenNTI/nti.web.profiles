@@ -1,4 +1,4 @@
-import React from 'react';
+import { useCallback } from 'react';
 
 import { Checkbox, User } from '@nti/web-commons';
 import { getConfig } from '@nti/web-client';
@@ -15,7 +15,7 @@ export function Field({ name, collection, label }) {
 	const key = `${collection}.${name}`;
 	const [preference, setPreference] = User.usePreference(key);
 
-	const onChange = React.useCallback(
+	const onChange = useCallback(
 		e => {
 			setPreference(e.target.checked);
 

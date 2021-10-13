@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { LinkTo } from '@nti/web-routing';
@@ -30,14 +30,10 @@ CollapsedPanel.propTypes = {
 };
 
 export default function CollapsedPanel({ toggle: expand, children }) {
-	const {
-		loading,
-		error,
-		setCalendarWindow,
-		calendarWindow,
-	} = Store.useValue();
+	const { loading, error, setCalendarWindow, calendarWindow } =
+		Store.useValue();
 
-	const [hiddenCountsSum, setHiddenCountsSum] = React.useState(0);
+	const [hiddenCountsSum, setHiddenCountsSum] = useState(0);
 
 	const handleExpandButtonClick = () => {
 		calendarWindow && setCalendarWindow(false);

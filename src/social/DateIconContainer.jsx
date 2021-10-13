@@ -1,4 +1,4 @@
-import React from 'react';
+import { useRef } from 'react';
 
 import { Tooltip } from '@nti/web-commons';
 import { DateIcon } from '@nti/web-calendar';
@@ -9,7 +9,7 @@ import Store from './Store';
 export default function DateIconContainer() {
 	const { setCalendarWindow, calendarWindow } = Store.useValue();
 
-	const iconRef = React.useRef();
+	const iconRef = useRef();
 
 	const CalendarWindow = CalendarWindowRef.getCalendarWindow();
 
