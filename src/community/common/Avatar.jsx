@@ -13,11 +13,11 @@ const t = scoped('nti-profiles.community.common.Avatar', {
 
 CommunityAvatar.aspectRatio = aspectRatio;
 CommunityAvatar.Default = DefaultCommunityAvatar;
-CommunityAvatar.hasAvatar = community => community && !community.noAvatar;
+CommunityAvatar.hasAvatar = community => community?.avatar !== false;
 CommunityAvatar.propTypes = {
 	className: PropTypes.string,
 	community: PropTypes.shape({
-		noAvatar: PropTypes.bool,
+		avatar: PropTypes.bool,
 		avatarURL: PropTypes.string,
 		displayName: PropTypes.string,
 	}),
@@ -29,7 +29,7 @@ export default function CommunityAvatar({
 }) {
 	useChanges(community);
 
-	if (!community || community.noAvatar) {
+	if (!community || community.avatar === false) {
 		return null;
 	}
 
