@@ -67,7 +67,9 @@ export default function CommunityIdentity({
 				)}
 			</div>
 			{community.isModifiable && (
-				<LinkTo.Object
+				<Button
+					as={LinkTo.Object}
+					plain
 					object={community}
 					className={cx('edit', 'community-edit-link')}
 					context="edit"
@@ -76,7 +78,7 @@ export default function CommunityIdentity({
 					<Text.Base className={cx('edit-label')}>
 						{t('edit')}
 					</Text.Base>
-				</LinkTo.Object>
+				</Button>
 			)}
 			<Text.Base as="div" className={cx('about')}>
 				{community.about}

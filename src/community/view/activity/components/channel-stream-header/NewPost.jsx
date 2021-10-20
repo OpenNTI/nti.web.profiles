@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 
+import { Button } from '@nti/web-core';
 import { getAppUsername } from '@nti/web-client';
 import { User, Text } from '@nti/web-commons';
 import { LinkTo } from '@nti/web-routing';
@@ -38,6 +39,8 @@ export default function NewPost({ channel }) {
 		</div>
 	) : (
 		<LinkTo.Object
+			as={Button}
+			plain
 			object={{ isTopic: true, isNewTopic: true }}
 			className={cx('new-post')}
 			title={t('placeholder')}
