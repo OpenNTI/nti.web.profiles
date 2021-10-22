@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
-import { Icons, Input, Text, User } from '@nti/web-commons';
-import { Button } from '@nti/web-core';
+import { Input, Text, User } from '@nti/web-commons';
+import { Button, Icons } from '@nti/web-core';
 
 import { MenuItemFrame } from './menus';
 

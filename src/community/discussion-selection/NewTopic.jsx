@@ -1,5 +1,5 @@
-
-import { Icons, Text } from '@nti/web-commons';
+import { Text } from '@nti/web-commons';
+import { Icons } from '@nti/web-core';
 import { scoped } from '@nti/lib-locale';
 
 import {

@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { Icons, Input } from '@nti/web-commons';
+import { Input } from '@nti/web-commons';
+import { Icons } from '@nti/web-core';
 
 const SearchIcon = styled('div').attrs({
 	children: React.createElement(Icons.Search),

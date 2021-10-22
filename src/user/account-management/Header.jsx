@@ -1,5 +1,5 @@
-import { Avatar, DisplayName, Icons } from '@nti/web-commons';
-import { useAppUser } from '@nti/web-core';
+import { Avatar, DisplayName } from '@nti/web-commons';
+import { Icons, useAppUser } from '@nti/web-core';
 
 const Container = styled.div`
 	display: flex;
