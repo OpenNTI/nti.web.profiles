@@ -1,6 +1,6 @@
 {
   "name": "@nti/web-profiles",
-  "version": "1.65.0",
+  "version": "1.66.0-alpha",
   "description": "NextThought components for profiles",
   "main": "src/index.js",
   "module": "src/index.js",
