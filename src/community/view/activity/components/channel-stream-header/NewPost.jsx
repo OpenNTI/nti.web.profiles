@@ -38,8 +38,8 @@ export default function NewPost({ channel }) {
 			</div>
 		</div>
 	) : (
-		<LinkTo.Object
-			as={Button}
+		<Button
+			as={LinkTo.Object}
 			plain
 			object={{ isTopic: true, isNewTopic: true }}
 			className={cx('new-post')}
@@ -51,6 +51,6 @@ export default function NewPost({ channel }) {
 					{t('placeholder')}
 				</Text.Base>
 			</div>
-		</LinkTo.Object>
+		</Button>
 	);
 }
