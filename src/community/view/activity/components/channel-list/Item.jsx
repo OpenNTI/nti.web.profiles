@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 
+import { Button } from '@nti/web-core';
 import { LinkTo } from '@nti/web-routing';
 import { Text } from '@nti/web-commons';
 import { Launch } from '@nti/web-reports';
@@ -19,7 +20,9 @@ ChannelListItem.propTypes = {
 };
 export default function ChannelListItem({ channel, active }) {
 	return (
-		<LinkTo.Object
+		<Button
+			as={LinkTo.Object}
+			plain
 			object={channel}
 			className={cx('channel', { active })}
 			title={channel.title}
@@ -31,6 +34,6 @@ export default function ChannelListItem({ channel, active }) {
 				report={channel.Reports && channel.Reports[0]}
 				className={cx('channel-report')}
 			/>
-		</LinkTo.Object>
+		</Button>
 	);
 }

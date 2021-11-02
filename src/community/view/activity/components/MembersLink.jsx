@@ -4,6 +4,7 @@ import classnames from 'classnames/bind';
 import { scoped } from '@nti/lib-locale';
 import { Text } from '@nti/web-commons';
 import { LinkTo } from '@nti/web-routing';
+import { Button } from '@nti/web-core';
 
 import Styles from './MembersLink.css';
 
@@ -30,7 +31,9 @@ export default function MembersLink({ community }) {
 	}
 
 	return (
-		<LinkTo.Object
+		<Button
+			as={LinkTo.Object}
+			plain
 			object={community}
 			context="members"
 			className={cx('community-members-link')}
@@ -39,6 +42,6 @@ export default function MembersLink({ community }) {
 			<Text.Base>
 				{community.canManageMembers ? t('manage') : t('view')}
 			</Text.Base>
-		</LinkTo.Object>
+		</Button>
 	);
 }
