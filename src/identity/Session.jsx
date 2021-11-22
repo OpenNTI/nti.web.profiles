@@ -65,7 +65,11 @@ function MenuContent() {
 				id="welcomeGuide"
 			/>
 
-			<MenuItem href={supportLinks.about} id="about" />
+			<MenuItem
+				href={supportLinks.about}
+				id="about"
+				className="settings-menu-about-item"
+			/>
 
 			<MenuItem
 				href={user.getLink('childrens-privacy')}
@@ -76,9 +80,17 @@ function MenuContent() {
 
 			<MenuItem href={supportLinks.termsOfService} id="terms" />
 
-			<MenuItem href={supportLinks.support} id="support" />
+			<MenuItem
+				href={supportLinks.support}
+				id="support"
+				className="settings-menu-contact-item"
+			/>
 
-			<MenuItem href={supportLinks.help} id="helpSite" />
+			<MenuItem
+				href={supportLinks.help}
+				id="helpSite"
+				className="setting-help-site-menu-item"
+			/>
 
 			<MenuSeparator />
 
