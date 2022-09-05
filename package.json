@@ -39,7 +39,7 @@
     "@nti/web-routing": "NextThought/nti.web.routing",
     "@nti/web-whiteboard": "NextThought/nti.web.whiteboard",
     "deep-object-diff": "^1.1.0",
-    "uuid": "^8.3.0"
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "@nti/cmp-scripts": "^2.33.4"
